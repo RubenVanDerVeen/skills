@@ -1,6 +1,6 @@
-# <Project Name> — Agent Notes
+# <Project Name>: Agent Notes
 
-Context for AI agents (Claude, etc.) working on this repo. Loaded automatically each session — start here.
+Context for AI coding agents (opencode, Claude Code, Codex, Cursor, etc.) working on this repo. Loaded automatically each session. Start here.
 
 ## What this is
 
@@ -8,13 +8,13 @@ Context for AI agents (Claude, etc.) working on this repo. Loaded automatically 
 
 ## Stack
 
-- **<Framework>** — <one-line role>.
+- **<Framework>**: <one-line role>.
 - **<Language>:** <version, key idioms / features used>.
-- **<Build tool / package manager>** — <name + version pin if relevant>.
+- **<Build tool / package manager>**: <name + version pin if relevant>.
 
 ## Critical conventions
 
-<The non-obvious things Claude will get wrong without being told. Examples:>
+<The non-obvious things an agent will get wrong without being told. Examples:>
 
 ### <Convention area 1>
 
@@ -34,4 +34,4 @@ Context for AI agents (Claude, etc.) working on this repo. Loaded automatically 
 - Repo: <url>
 - No commit/push unless user explicitly says to.
 - Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`).
-- <Any other project-specific rules — branch model, hooks, signing.>
+- <Any other project-specific rules: branch model, hooks, signing.>

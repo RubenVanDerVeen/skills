@@ -6,8 +6,8 @@ The format is based on [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.
 
 <!--
 Grouping:
-- For projects with semver releases: use `[X.Y.Z] — YYYY-MM-DD` headings.
-- For sprint-based projects: use `[Sprint N] — YYYY-MM-DD (description)` headings.
+- For projects with semver releases: use `[X.Y.Z]: YYYY-MM-DD` headings.
+- For sprint-based projects: use `[Sprint N]: YYYY-MM-DD (description)` headings.
 - For continuous-delivery projects: use `[YYYY-MM-DD]` headings per milestone.
 -->
 
@@ -17,21 +17,21 @@ Grouping:
 
 Work in progress for upcoming milestones. Items here are confirmed needed but not yet committed.
 
-### Added — pending
+### Added: pending
 
-- _TBD_ — <future addition>
+- _TBD_: <future addition>
 
-### Changed — pending
+### Changed: pending
 
-- _TBD_ — <future change>
+- _TBD_: <future change>
 
-### Removed — pending
+### Removed: pending
 
-- _TBD_ — <future removal>
+- _TBD_: <future removal>
 
 ---
 
-## [<First Version or Sprint>] — YYYY-MM-DD
+## [<First Version or Sprint>]: YYYY-MM-DD
 
 <Short summary of what this version / sprint represents.>
 

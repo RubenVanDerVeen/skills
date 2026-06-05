@@ -1,4 +1,4 @@
-# <Project Name> — Claude Context
+# <Project Name>: Agent Context
 
 ## Overview
 
@@ -38,7 +38,7 @@
 
 ## Standards Stack
 
-This project follows the standards stack documented in `docs/research/<paper>.pdf`. For Claude operating notes on the stack, see the `rubens-project-standardization` skill, reference `standards-stack.md`. Do **not** inline the standards stack into this file — it lives in `README.md` and the paper.
+This project follows the standards stack documented in `docs/research/<paper>.pdf`. For agent operating notes on the stack, see the `project-standardization` skill, reference `standards-stack.md`. Do **not** inline the standards stack into this file; it lives in `README.md` and the paper.
 
 ## Git & Workflow
 
@@ -49,26 +49,36 @@ This project follows the standards stack documented in `docs/research/<paper>.pd
 - Naming: kebab-case ASCII paths, English structural paths, ISO 8601 date prefix for time-based filenames.
 - <Branch model, hooks, signing rules.>
 
-@claude/<auto-loaded-1>.md
-@claude/<auto-loaded-2>.md
+## Auto-loaded on-demand files
+
+<!--
+List the few on-demand files that should be loaded every session. Tool-specific syntax:
+- Claude Code: @agents/<file>.md
+- opencode: agents/<file>.md is honoured automatically
+- Codex / Cursor: include in the on-demand table below and load on reference
+-->
+
+@agents/<auto-loaded-1>.md
+@agents/<auto-loaded-2>.md
 
 ## On-demand Context
 
 | File | Purpose |
 |------|---------|
-| `claude/todolist.md` | Pending tasks (also mirrored in Plane if configured) |
-| `claude/<domain>.md` | <what it covers> |
-| `claude/<domain>.md` | <what it covers> |
-| `claude/<domain>/<sub>.md` | <what it covers> |
+| `agents/todolist.md` | Pending tasks (also mirrored in Plane if configured) |
+| `agents/<domain>.md` | <what it covers> |
+| `agents/<domain>.md` | <what it covers> |
+| `agents/<domain>/<sub>.md` | <what it covers> |
 
-<!-- Load on demand (not auto-imported):
-  - claude/<file>.md           — <purpose>
-  - claude/<file>.md           — <purpose>
+<!--
+Additional on-demand files (one-line purposes):
+  - agents/<file>.md: <purpose>
+  - agents/<file>.md: <purpose>
 -->
 
 ## Sprint Workflow Reminders
 
-- At sprint close: export `docs/source/<topic>/` → `docs/deliverables/sprint<N>-<topic>/`.
+- At sprint close: export `docs/source/<topic>/` to `docs/deliverables/sprint<N>-<topic>/`.
 - Add retrospective note to `docs/project-management/retrospectives/` (ISO 8601 prefix).
-- Update `CHANGELOG.md` with a `## [Sprint N] — YYYY-MM-DD` section.
+- Update `CHANGELOG.md` with a `## [Sprint N]: YYYY-MM-DD` section.
 - Update component test docs under `docs/components/<component>/test/`.

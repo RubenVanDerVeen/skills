@@ -1,16 +1,26 @@
 # Cross-session memory
 
-Memory lives at `~/.claude/projects/<project-slug>/memory/`. The slug is derived from the working directory path — e.g. `C:\Users\ruben\projects\hobby\homelab` → `C--Users-ruben-projects-hobby-homelab`.
+Every major AI coding agent ships with a cross-session memory mechanism. The exact location and file format vary by tool, but the **concept** is the same: facts that survive across sessions, indexed by an always-loaded file, with topic files loaded on demand.
 
-Memory persists across Claude Code sessions. The `MEMORY.md` index is auto-loaded into context; individual memory files are loaded on demand when relevant.
+## Tool-specific memory locations
+
+| Tool | Memory location | Notes |
+|------|-----------------|-------|
+| Claude Code | `~/.claude/projects/<project-slug>/memory/` | Slug derived from the working directory path. `C:\Users\ruben\projects\hobby\homelab` → `C--Users-ruben-projects-hobby-homelab`. |
+| opencode | `<project>/.opencode/memory/` (or tool-defined) | Per-project by default; check the opencode docs for the current location. |
+| Codex | `<project>/AGENTS.md` and per-directory `AGENTS.md` files | Memory is split across the AGENTS.md hierarchy rather than a single directory. |
+| Cursor | `<project>/.cursor/memory/` or per-rule `.cursor/rules/` | Cursor rules replace much of what memory covers; treat them as the memory layer. |
+| Aider | `<project>/.aider/memory/` or per-conversation | Conversation-scoped by default; opt into persistent files via conventions. |
+
+The **shape of memory** is roughly the same across tools. The `MEMORY.md` index + typed topic files (user / feedback / project / reference) described below works for any tool that lets you keep a directory of small markdown files. Adapt the path; the structure stays.
 
 ## Layout
 
 ```
-~/.claude/projects/<slug>/memory/
+<memory-dir>/
 ├── MEMORY.md                      ← index, always loaded, ≤ 200 lines, one line per entry
 ├── user.md                        ← user role, expertise, preferences
-├── feedback_<topic>.md            ← behavioural rules — what to do / avoid and why
+├── feedback_<topic>.md            ← behavioural rules: what to do / avoid and why
 ├── reference_<topic>.md           ← pointers to external systems
 └── project_<topic>.md             ← decisions, constraints, deadlines not visible in code
 ```
@@ -21,27 +31,28 @@ Memory persists across Claude Code sessions. The `MEMORY.md` index is auto-loade
 
 ### `user.md`
 
-User role, expertise, ongoing focus. Information that helps tailor Claude's communication to this specific user.
+User role, expertise, ongoing focus. Information that helps tailor the agent's communication to this specific user.
 
-**When to write:** when you learn something about the user that affects how you collaborate — their level of expertise, their primary language, their current focus area.
+**When to write:** when you learn something about the user that affects how you collaborate: their level of expertise, their primary language, their current focus area.
 
 **Example content:**
 
 ```markdown
 ---
 name: user
-description: User role and expertise — Ruben, second-year HBO student
+description: User role and expertise: Ruben, second-year HBO student
 type: user
 ---
 
-Ruben is a second-year HBO student at NHL Stenden (Embedded Systems Engineering track). Strong on hardware-software boundary work — Tauri / Rust / embedded firmware / Typst. Newer to deep front-end framework patterns. Dutch native; reads English fluently; prefers terse technical communication.
+Ruben is a second-year HBO student at NHL Stenden (Embedded Systems Engineering track). Strong on hardware-software boundary work: Tauri / Rust / embedded firmware / Typst. Newer to deep front-end framework patterns. Dutch native; reads English fluently; prefers terse technical communication.
 ```
 
 ### `feedback_<topic>.md`
 
-Guidance the user gave about how to approach work — corrections AND confirmations. Record from failure and success. Without confirmations the memory drifts toward over-cautious behaviour.
+Guidance the user gave about how to approach work: corrections AND confirmations. Record from failure and success. Without confirmations the memory drifts toward over-cautious behaviour.
 
 **When to write:**
+
 - User corrects the approach ("don't do X", "stop doing Y").
 - User confirms an unusual approach worked ("yes, single bundled PR was right").
 
@@ -56,9 +67,9 @@ type: feedback
 
 Integration tests for this project hit a real database. Do not mock the DB layer in integration tests.
 
-**Why:** Q3 incident — mocked tests passed, prod migration failed because the mocks did not capture a real schema constraint.
+**Why:** Q3 incident: mocked tests passed, prod migration failed because the mocks did not capture a real schema constraint.
 
-**How to apply:** when adding integration tests, spin up a real test DB (Docker-compose `test-db` service). Unit tests at the function level may still mock — the rule is for `tests/integration/` only.
+**How to apply:** when adding integration tests, spin up a real test DB (Docker-compose `test-db` service). Unit tests at the function level may still mock: the rule is for `tests/integration/` only.
 ```
 
 ### `project_<topic>.md`
@@ -76,7 +87,7 @@ description: Merge freeze for mobile release cut on 2026-05-14
 type: project
 ---
 
-Non-critical PRs are frozen after 2026-05-14 until 2026-05-21 — mobile team is cutting a release branch.
+Non-critical PRs are frozen after 2026-05-14 until 2026-05-21: mobile team is cutting a release branch.
 
 **Why:** mobile release window depends on a stable backend; PR churn during the cut burns oncall.
 
@@ -98,7 +109,7 @@ type: reference
 
 Project tasks for this repo live in Plane at `plane.rvdv-lab.nl/workspace`. Workspace slug: `homelab`. Project ID: `8d2c4f1e-...`.
 
-**Why:** task management is mirrored between `claude/todolist.md` and Plane. Plane is source of truth for assignees, priorities, due dates.
+**Why:** task management is mirrored between `agents/todolist.md` and Plane. Plane is source of truth for assignees, priorities, due dates.
 
 **How to apply:** when adding a `[ ]` entry to `todolist.md`, also create a Plane issue. When marking `[x]`, move the Plane issue to Done.
 ```
@@ -108,13 +119,13 @@ Project tasks for this repo live in Plane at `plane.rvdv-lab.nl/workspace`. Work
 One line per entry. Under ~150 characters. No frontmatter on `MEMORY.md` itself.
 
 ```markdown
-- [User profile](user.md) — Ruben, HBO ESE, prefers terse technical
-- [DB tests](feedback_database_tests.md) — integration tests must hit real DB
-- [Merge freeze](project_merge_freeze.md) — non-critical PR freeze 2026-05-14 → 2026-05-21
-- [Plane workspace](reference_plane_workspace.md) — task tracking at plane.rvdv-lab.nl
+- [User profile](user.md): Ruben, HBO ESE, prefers terse technical
+- [DB tests](feedback_database_tests.md): integration tests must hit real DB
+- [Merge freeze](project_merge_freeze.md): non-critical PR freeze 2026-05-14 → 2026-05-21
+- [Plane workspace](reference_plane_workspace.md): task tracking at plane.rvdv-lab.nl
 ```
 
-**Keep under 30 entries.** Prune stale entries (older than ~1 month and no longer relevant). `MEMORY.md` is always loaded into context — every line costs tokens every session.
+**Keep under 30 entries.** Prune stale entries (older than ~1 month and no longer relevant). `MEMORY.md` is always loaded into context: every line costs tokens every session.
 
 ## Memory file format
 
@@ -123,7 +134,7 @@ Frontmatter is required:
 ```markdown
 ---
 name: <short identifier>
-description: <one-line — used to judge relevance in future sessions>
+description: <one-line: used to judge relevance in future sessions>
 type: user | feedback | project | reference
 ---
 
@@ -139,14 +150,14 @@ The `**Why:**` and `**How to apply:**` footer is **required for `feedback` and `
 
 These belong elsewhere:
 
-- **Code patterns, architecture, file paths, project structure** — derivable by reading the current project state.
-- **Git history, recent changes, who-changed-what** — `git log` / `git blame` are authoritative.
-- **Debugging solutions or fix recipes** — the fix is in the code; the commit message has the context.
-- **Anything already documented in `CLAUDE.md`** — duplicates rot independently.
-- **Ephemeral task details** — in-progress work is TodoWrite, not memory.
-- **Plan content** — plans live in `docs/artifacts/plans/`, not memory.
+- **Code patterns, architecture, file paths, project structure**: derivable by reading the current project state.
+- **Git history, recent changes, who-changed-what**: `git log` / `git blame` are authoritative.
+- **Debugging solutions or fix recipes**: the fix is in the code; the commit message has the context.
+- **Anything already documented in `AGENTS.md`**: duplicates rot independently.
+- **Ephemeral task details**: in-progress work belongs in the in-tool task list (TodoWrite, todos, plan mode), not memory.
+- **Plan content**: plans live in `docs/artifacts/plans/`, not memory.
 
-The exclusions apply **even when the user explicitly asks you to save**. If the user asks to save a PR list or activity summary, ask what was *surprising* or *non-obvious* about it — that is the part worth keeping.
+The exclusions apply **even when the user explicitly asks you to save**. If the user asks to save a PR list or activity summary, ask what was *surprising* or *non-obvious* about it: that is the part worth keeping.
 
 ## When to access memory
 
@@ -167,19 +178,20 @@ A memory that names a specific function, file, or flag is a claim about a moment
 
 ## Memory vs other persistence
 
-- **Memory** — cross-session facts. Lives in `~/.claude/projects/<slug>/memory/`.
-- **Plans** — committed implementation steps with checkpoints. Lives in `docs/artifacts/plans/`.
-- **Specs** — committed design rationale. Lives in `docs/artifacts/specs/`.
-- **TodoWrite tasks** — per-session work tracking. Lives in the harness, not on disk.
-- **`CLAUDE.md`** — project-specific session context. Auto-loaded.
-- **`claude/<topic>.md`** — on-demand session context. Loaded by Claude when relevant.
+- **Memory**: cross-session facts. Lives at the tool's default memory location (see table above).
+- **Plans**: committed implementation steps with checkpoints. Lives in `docs/artifacts/plans/`.
+- **Specs**: committed design rationale. Lives in `docs/artifacts/specs/`.
+- **In-tool task list**: per-session work tracking. Lives in the harness (TodoWrite, todos, plan mode), not on disk.
+- **`AGENTS.md`** (or `CLAUDE.md` on Claude Code): project-specific session context. Auto-loaded.
+- **`agents/<topic>.md`**: on-demand session context. Loaded when the agent decides the topic is relevant.
 
-If unsure which mechanism to use: cross-session = memory; this-conversation only = TodoWrite; design rationale = spec; implementation steps = plan; baseline project context = `CLAUDE.md` or `claude/`.
+If unsure which mechanism to use: cross-session = memory; this-conversation only = in-tool task list; design rationale = spec; implementation steps = plan; baseline project context = `AGENTS.md` or `agents/`.
 
 ## Anti-patterns
 
-- Writing `feedback_*.md` content directly into `MEMORY.md`. `MEMORY.md` is the index — one line per entry.
-- Skipping `**Why:**` on feedback / project memories. Without the reason, the memory cannot be applied to edge cases — it can only be followed blindly.
+- Writing `feedback_*.md` content directly into `MEMORY.md`. `MEMORY.md` is the index, one line per entry.
+- Skipping `**Why:**` on feedback / project memories. Without the reason, the memory cannot be applied to edge cases: it can only be followed blindly.
 - Writing memories using relative dates ("next Thursday", "yesterday"). Convert to absolute dates at save time.
-- Saving a memory and then writing the same fact into `CLAUDE.md`. Pick one. Memory is for things that span projects or change frequently; `CLAUDE.md` is for project-stable facts.
+- Saving a memory and then writing the same fact into `AGENTS.md`. Pick one. Memory is for things that span projects or change frequently; `AGENTS.md` is for project-stable facts.
 - Letting `MEMORY.md` grow past 200 lines. Truncate / prune. Stale memory silently shapes new sessions.
+- Hard-coding a `~/.claude/`-style path when the active tool uses a different memory location. Always resolve the active tool's path first; the universal structure is the same, the path is not.

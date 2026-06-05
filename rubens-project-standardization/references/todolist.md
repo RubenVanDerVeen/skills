@@ -1,8 +1,8 @@
-# `claude/todolist.md` — pending tasks
+# `agents/todolist.md`: pending tasks
 
-A flat markdown file with GitHub-flavoured checkboxes. One pending improvement / open task per line. Lives at `claude/todolist.md` (medium and large tiers; small tier usually skips this).
+A flat markdown file with GitHub-flavoured checkboxes. One pending improvement / open task per line. Lives at `agents/todolist.md` (medium and large tiers; small tier usually skips this).
 
-Distinct from TodoWrite tasks — TodoWrite is per-session work tracking that lives in the harness; `todolist.md` is persistent, committed-to-the-repo backlog that survives across sessions and across people.
+Distinct from the in-tool task list (TodoWrite on Claude Code, todos on opencode, plan mode on Codex, etc.). The in-tool task list is per-session work tracking that lives in the harness; `todolist.md` is a persistent, committed-to-the-repo backlog that survives across sessions and across people.
 
 ## Format
 
@@ -17,26 +17,26 @@ GitHub-flavoured markdown. One task per line. No sub-bullets, no nesting.
 | Marker | Meaning |
 |--------|---------|
 | `[ ]` | Open / not done |
-| `[x]` | Done — kept in the file so history is visible |
+| `[x]` | Done, kept in the file so history is visible |
 
 ## Rules
 
 - One task per line. No sub-bullets, no nested checklists.
 - Keep completed (`[x]`) items in the file. They are the record of what shipped.
 - Order: priority descending (most important first), or grouped by area with a heading.
-- Tasks are concise — one sentence. If a task needs paragraphs of context, it should be a spec in `docs/artifacts/specs/`, not a todo line.
+- Tasks are concise: one sentence. If a task needs paragraphs of context, it should be a spec in `docs/artifacts/specs/`, not a todo line.
 
-## Interaction with TodoWrite
+## Interaction with the in-tool task list
 
-When the user asks "what is on the todo list", or asks Claude to work through pending items:
+When the user asks "what is on the todo list", or asks the agent to work through pending items:
 
-1. Read `claude/todolist.md`.
+1. Read `agents/todolist.md`.
 2. **Filter to open items** (lines with `[ ]`, not `[x]`).
-3. Create one TodoWrite task per open item.
-4. As each item is completed, **update `claude/todolist.md` in place**: change `[ ]` to `[x]` on the corresponding line.
+3. Create one in-tool task per open item (TodoWrite on Claude Code, todos on opencode, etc.).
+4. As each item is completed, **update `agents/todolist.md` in place**: change `[ ]` to `[x]` on the corresponding line.
 5. Do not delete completed lines.
 
-TodoWrite is per-session and disappears. `todolist.md` is the persistent record.
+The in-tool task list is per-session and disappears. `todolist.md` is the persistent record.
 
 ## Example
 
@@ -58,7 +58,7 @@ A `#` heading at the top is fine. No deeper structure needed.
 ```markdown
 # Pending improvements
 
-## Sprint 2 — sub-function demo (2026-05-13)
+## Sprint 2: sub-function demo (2026-05-13)
 - [ ] Component test plan: remote-controller
 - [ ] Sprint 1 design-proposal PDF export
 
@@ -95,20 +95,20 @@ If the project mirrors `todolist.md` to a Plane workspace, add a sync note at th
 
 The Plane MCP tools (`mcp__homelab__plane_*`) are available when MCP is configured for the project. Use the dedicated `plane` subagent for bulk operations; for single-task sync, direct tool calls are fine.
 
-## When to use `todolist.md` vs TodoWrite vs memory
+## When to use `todolist.md` vs in-tool task list vs memory
 
 | Use this | For |
 |----------|-----|
-| `claude/todolist.md` | Persistent backlog. Survives sessions and authors. Committed. |
-| TodoWrite | Per-session work tracking. Disappears at end of session. |
+| `agents/todolist.md` | Persistent backlog. Survives sessions and authors. Committed. |
+| In-tool task list (TodoWrite / todos / plan mode) | Per-session work tracking. Disappears at end of session. |
 | Memory (`project_*.md`) | Cross-session facts, decisions, deadlines. NOT tasks. |
 | `docs/artifacts/plans/` | Multi-step implementation plans with checkpoints. NOT a backlog. |
 
-A new feature request from the user that will take several sessions to land: `todolist.md` entry + (when starting) a TodoWrite task per step.
+A new feature request from the user that will take several sessions to land: `todolist.md` entry + (when starting) an in-tool task per step.
 
 ## When to skip `todolist.md`
 
-Skip on small projects. With 0–2 pending tasks, chat history and TodoWrite are enough. Create `todolist.md` only when:
+Skip on small projects. With 0–2 pending tasks, chat history and the in-tool task list are enough. Create `todolist.md` only when:
 
 - More than 3 pending items have accumulated.
 - The same items are being re-derived session after session.
@@ -116,8 +116,8 @@ Skip on small projects. With 0–2 pending tasks, chat history and TodoWrite are
 
 ## Anti-patterns
 
-- Deleting completed `[x]` lines to "keep the file clean". The completed lines are the history — keep them.
+- Deleting completed `[x]` lines to "keep the file clean". The completed lines are the history: keep them.
 - Nesting sub-bullets under a task (`  - [ ] sub-task`). One line per task. If a task has sub-tasks, it should be split into separate top-level items.
 - Putting design rationale or paragraph-long context inside a task. Move that to a spec; the todo line just references the spec.
 - Mirroring `todolist.md` to Plane without setting up the sync note. Future readers cannot tell the two are mirrored.
-- Adding tasks that are already done as `[x]` for "completeness". `todolist.md` tracks work that was on this list before being completed — not historical pre-list work.
+- Adding tasks that are already done as `[x]` for "completeness". `todolist.md` tracks work that was on this list before being completed: not historical pre-list work.

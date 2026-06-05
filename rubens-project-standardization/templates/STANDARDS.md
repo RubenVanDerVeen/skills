@@ -1,8 +1,8 @@
 # Project standards
 
-Human-readable summary of the standards this repository follows. Aimed at contributors who do not use Claude Code or the `rubens-project-standardization` skill.
+Human-readable summary of the standards this repository follows. Aimed at contributors who do not use an AI coding agent or the `project-standardization` skill.
 
-For the Claude-facing operating notes (when to load which reference, bootstrap checklist, etc.), see the skill itself. **This file is the human contract; the skill is the agent contract.**
+For the agent-facing operating notes (when to load which reference, bootstrap checklist, etc.), see the skill itself. **This file is the human contract; the skill is the agent contract.**
 
 ---
 
@@ -28,7 +28,7 @@ Mark each row `yes` / `no` per what is actually in force here. Delete rows that 
 
 ---
 
-## Naming rules — the floor
+## Naming rules: the floor
 
 These apply to every file and directory.
 
@@ -45,7 +45,7 @@ Lowercase letters, digits, and hyphens only. No spaces, no underscores, no Pasca
 ❌ ESP32_C3_Datasheet.pdf
 ```
 
-Exceptions for conventional uppercase filenames: `README.md`, `CLAUDE.md`, `CHANGELOG.md`, `LICENSE`, `Makefile`, `Cargo.toml`, `package.json`. Everything else is kebab-case.
+Exceptions for conventional uppercase filenames: `README.md`, `AGENTS.md`, `CLAUDE.md` (legacy alias for Claude Code), `CHANGELOG.md`, `LICENSE`, `Makefile`, `Cargo.toml`, `package.json`. Everything else is kebab-case.
 
 ### English structural paths
 
@@ -66,7 +66,7 @@ The date must come first so sort-by-filename produces chronological order.
 
 ---
 
-## Commit messages — Conventional Commits 1.0.0
+## Commit messages: Conventional Commits 1.0.0
 
 Format: `<type>(<scope>): <description>`.
 
@@ -84,7 +84,7 @@ Scope is the **module or component**, not the discipline. `feat(remote-controlle
 
 ---
 
-## Changelog — Keep a Changelog 1.1.0
+## Changelog: Keep a Changelog 1.1.0
 
 `CHANGELOG.md` at repo root. Grouped by version (semver) or milestone (sprint). Sections: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`.
 
@@ -101,9 +101,11 @@ project-root/
 ├── README.md
 ├── CHANGELOG.md
 ├── STANDARDS.md                    ← this file
+├── AGENTS.md                       ← agent context file (auto-loaded)
 ├── mechanical/                     ← <discipline> ownership
 ├── electrical/                     ← <discipline> ownership
 ├── software/                       ← <discipline> ownership
+├── agents/                         ← on-demand agent context files
 ├── docs/
 │   ├── source/                     ← editable source documents
 │   ├── deliverables/               ← per-sprint exports
@@ -130,9 +132,9 @@ A `.docx` of a Typst-sourced document is **not** a source. It is a deliverable.
 
 `docs/artifacts/` holds process meta-documents:
 
-- `docs/artifacts/specs/YYYY-MM-DD-<topic>-design.md` — design specs.
-- `docs/artifacts/plans/YYYY-MM-DD-<topic>-plan.md` — implementation plans.
-- `docs/artifacts/reviews/YYYY-MM-DD-<topic>-review.md` — audits and reviews.
+- `docs/artifacts/specs/YYYY-MM-DD-<topic>-design.md`: design specs.
+- `docs/artifacts/plans/YYYY-MM-DD-<topic>-plan.md`: implementation plans.
+- `docs/artifacts/reviews/YYYY-MM-DD-<topic>-review.md`: audits and reviews.
 
 Each is append-only history. If a spec changes mid-implementation, edit in place + add an `## Amendments` section. Do not create a second spec for the same topic.
 
@@ -154,3 +156,4 @@ Each is append-only history. If a spec changes mid-implementation, edit in place
 - Conventional Commits 1.0.0: <https://www.conventionalcommits.org/en/v1.0.0/>
 - Keep a Changelog 1.1.0: <https://keepachangelog.com/en/1.1.0/>
 - ISO 8601 date format: <https://www.iso.org/iso-8601-date-and-time-format.html>
+- `AGENTS.md` convention: <https://agents.md>
