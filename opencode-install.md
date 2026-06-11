@@ -41,9 +41,12 @@ npx claude-mem install --ide opencode
 
 Requires Python 3.10+ and `uv` (install uv with `winget install astral-sh.uv` on Windows).
 
+Run the install from your home directory, not from a project folder. `graphify install --platform opencode` writes its plugin into `<cwd>/.opencode/`, so launching it from a project pollutes that project with runtime config. The user-level install lands in `~/.config/opencode/opencode.jsonc`, alongside the `superpowers` plugin entry that is already there.
+
 ```
+cd ~
 uv tool install graphifyy
-graphify opencode install
+graphify install --platform opencode
 ```
 
 ### 5. Point opencode at the personal skills repo

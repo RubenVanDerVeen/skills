@@ -52,6 +52,8 @@ Source: https://github.com/thedotmack/claude-mem
 
 Builds a queryable knowledge graph (interactive HTML viewer + `graph.json` + `GRAPH_REPORT.md`) from a folder of code, SQL, scripts, docs, PDFs, images, or video. The CLI ships an `opencode` install target that registers a `/graphify` skill and a hook that nudges the assistant to query the graph before grepping.
 
+Install path note: run `graphify install --platform opencode` from your home directory (`~`), not from a project folder. The installer writes its plugin into `<cwd>/.opencode/`, so launching it from a project pollutes that project with runtime config. The user-level install lands in `~/.config/opencode/opencode.jsonc` alongside the `superpowers` plugin entry.
+
 Triggers: "I need an overview of this codebase", "find the connections between these modules", "which parts touch the auth flow", "rebuild the project wiki from source".
 
 Source: https://github.com/safishamsi/graphify
