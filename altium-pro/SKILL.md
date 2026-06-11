@@ -14,6 +14,8 @@ Personal knowledge base for Altium Designer. Two jobs:
 
 The full human-readable record is **references/troubleshooting.md**. This SKILL.md is the index: scan it, then open the reference for detail. When the user describes a new issue or a new flow, **append it to references/troubleshooting.md** (see "Adding an entry" below).
 
+Hotkeys live separately in **references/hotkeys.md** — add keyboard shortcuts there, not in the troubleshooting log.
+
 ## When to use
 
 - User mentions: Altium, Altium Designer, PCB, schematic, room, query, design rule, polygon pour, gerber, output job, BOM (from Altium), footprint, `.PcbDoc`, `.SchDoc`, `.PrjPcb`.
@@ -30,6 +32,8 @@ The full human-readable record is **references/troubleshooting.md**. This SKILL.
 | Rooms disappear on Update PCB / Import Changes | Issue | references/troubleshooting.md → "Rooms disappear" |
 | PGND vs GND split on switching converters | Design note | references/troubleshooting.md → "PGND vs GND split" |
 | Polygon pours — place, net, edit, settings | Flow | references/troubleshooting.md → "Polygon pours" |
+| Find Similar Objects — bulk-select + bulk-edit | Flow | references/troubleshooting.md → "Find Similar Objects" |
+| Pour won't flood over same-net trace/pad | Issue | references/troubleshooting.md → "Pour won't flood over" |
 
 > Keep this table in sync with references/troubleshooting.md. One row per documented flow/issue.
 

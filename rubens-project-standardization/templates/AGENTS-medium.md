@@ -31,11 +31,7 @@
 ## Auto-loaded on-demand files
 
 <!--
-List the few on-demand files that should be loaded every session. Tool-specific syntax:
-- Claude Code: @agents/<file>.md
-- opencode: agents/<file>.md is honoured automatically (AGENTS.md is read at any depth)
-- Codex / Cursor: include in this file's "On-demand context" table and load on reference
-Substitute the syntax your tool recognises. The goal is "few enough to stay in budget, important enough to be present".
+List the few on-demand files that should be loaded every session. Tool-specific syntax varies; substitute the syntax your active agent recognises (some agents use `@path`, some auto-load by reference). The goal is "few enough to stay in budget, important enough to be present".
 -->
 
 @agents/<auto-loaded-file>.md
@@ -43,7 +39,7 @@ Substitute the syntax your tool recognises. The goal is "few enough to stay in b
 
 ## On-demand Context
 
-<!-- Read on demand (not auto-imported). Tool-specific path: most tools read agents/<file>.md automatically when mentioned; Claude Code needs the explicit @path syntax. -->
+<!-- Read on demand (not auto-imported). Tool-specific path: most tools read agents/<file>.md automatically when mentioned; some agents need an explicit @path import. -->
 
 | File | Purpose |
 |------|---------|

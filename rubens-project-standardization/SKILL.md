@@ -1,13 +1,13 @@
 ---
 name: project-standardization
-description: Use when bootstrapping or restructuring a project for any AI coding agent (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot, etc.): creating the agent context file, scaffolding the on-demand subdirectory, choosing directory layout, setting up `docs/artifacts/` for specs/plans/reviews, seeding cross-session memory, or applying the ISO/IEC/IEEE + industry standards stack (kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog). Triggers: "set up agent context", "scaffold project", "bootstrap project", "standardize this repo", "create AGENTS.md", "create CLAUDE.md", "project layout", "init repo structure", "where should X go". Covers three project-size tiers (small / medium / large) with separate references so the irrelevant guidance is not loaded. Replaces the older Claude-Code-specific `rubens-project-standardization` skill.
+description: Use when bootstrapping or restructuring a project for any AI coding agent that follows the agents.md convention (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.): creating the agent context file, scaffolding the on-demand subdirectory, choosing directory layout, setting up `docs/artifacts/` for specs/plans/reviews, seeding cross-session memory, or applying the ISO/IEC/IEEE + industry standards stack (kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog). Triggers: "set up agent context", "scaffold project", "bootstrap project", "standardize this repo", "create AGENTS.md", "create CLAUDE.md", "project layout", "init repo structure", "where should X go". Covers three project-size tiers (small / medium / large) with separate references so the irrelevant guidance is not loaded. Replaces the older Claude-Code-specific `rubens-project-standardization` skill.
 ---
 
 # Project standardization skill
 
 The user runs many projects of different sizes: single-script utilities, multi-component homelab infra, and full team school projects. Each tier needs a different amount of agent scaffolding. **Loading large-project guidance into a small repo is the failure mode this skill exists to prevent.**
 
-This skill is **tool-agnostic**. It targets the cross-tool convention codified at [agents.md](https://agents.md): a file called `AGENTS.md` at the repo root (and optionally in subdirectories) that every major agent reads on startup. Claude Code, opencode, Codex, Cursor, Aider, and GitHub Copilot all honour this convention. Claude Code also accepts `CLAUDE.md` as a legacy alias: see "Tool-specific filenames" below.
+This skill is **tool-agnostic**. It targets the cross-tool convention codified at [agents.md](https://agents.md): a file called `AGENTS.md` at the repo root (and optionally in subdirectories) that every major agent reads on startup. Most agents (opencode, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.) honour this convention directly. For tools that read a different filename or subdir, the "Tool-specific filenames" table below is the lookup.
 
 The skill provides:
 
@@ -22,8 +22,7 @@ The conventions below are written against `AGENTS.md` and `agents/<topic>.md`. M
 
 | Tool | Context file (root) | On-demand subdir | Notes |
 |------|--------------------|--------------------|-------|
-| `AGENTS.md` convention (opencode, Codex, Cursor, Aider, GitHub Copilot, etc.) | `AGENTS.md` | `agents/<topic>.md` | Baseline. |
-| Claude Code | `CLAUDE.md` or `AGENTS.md` | `.claude/<topic>.md` or `agents/<topic>.md` | Reads both. `@path` syntax is Claude Code specific; other tools typically include a whole file by reference or by listing it in a "read when relevant" table. |
+| `AGENTS.md` convention (opencode, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.) | `AGENTS.md` | `agents/<topic>.md` | Baseline. |
 | opencode | `AGENTS.md` | `agents/<topic>.md` (configurable via `~/.config/opencode/`) | `AGENTS.md` honoured at any depth. |
 | Codex | `AGENTS.md` | `AGENTS.md` files at any path | No subdir convention; one file per scope. |
 | Cursor | `AGENTS.md` (or `.cursorrules`) | project rules in `.cursor/rules/` | `.cursorrules` is the older single-file format. |
@@ -58,10 +57,10 @@ When the user asks to bootstrap a project ("set up agent context", "scaffold", "
 4. **Scaffold the agent context file**: copy the matching template from `templates/AGENTS-<tier>.md` to the project root. Substitute `AGENTS.md` for the tool's preferred filename if needed (see "Tool-specific filenames"). Fill in overview, key facts, git rules, reference table. Keep under 80 lines for small/medium, under 200 for large.
 5. **Scaffold the on-demand subdirectory** (medium + large only): create `agents/` (or the tool's preferred subdir). For medium, add `agents/todolist.md` from `templates/todolist.md`. For large, add per-domain `.md` files (one per major area; see `references/large.md`).
 6. **Scaffold `docs/artifacts/`** (medium when there is any design history; large always): create `specs/`, `plans/`, `reviews/` per `references/artifacts.md`.
-7. **Seed cross-session memory** (always): every major agent has a memory mechanism. Consult the tool's docs to find the path for the current working directory (Claude Code: `~/.claude/projects/<slug>/memory/`; opencode: typically `<project>/.opencode/memory/` or agent-defined). At minimum, create a `MEMORY.md` index and a `user.md` if not already present. See `references/memory.md`. Substitute the tool's path.
+7. **Seed cross-session memory** (always): every major agent has a memory mechanism. Consult the tool's docs to find the path for the current working directory (opencode: typically `<project>/.opencode/memory/` or agent-defined; the path differs per tool). At minimum, create a `MEMORY.md` index and a `user.md` if not already present. See `references/memory.md`. Substitute the tool's path.
 8. **Add `CHANGELOG.md`** (medium + large; small only if releases are versioned): copy `templates/CHANGELOG.md`. Keep a Changelog 1.1.0 format.
 9. **Add `STANDARDS.md`** (medium + large with collaborators or public visibility; skip for solo small): copy `templates/STANDARDS.md` to the repo root. This file is the **human contract**: it lets contributors who don't use an agent or this skill still see which standards the project follows. Fill in the `yes/no` column per which standards actually apply. The skill remains the agent contract; `STANDARDS.md` is the contributor-facing summary, not a duplicate of the skill.
-10. **Verify**: consult the tool's context-usage indicator (Claude Code: `/context`; opencode: `/context` or `tokens` panel) to confirm auto-loaded context is under budget (see "Token budget" below). Prune auto-imports if the budget is blown.
+10. **Verify**: consult the tool's context-usage indicator (opencode: `/context` or `tokens` panel) to confirm auto-loaded context is under budget (see "Token budget" below). Prune auto-imports if the budget is blown.
 
 For a **restructure** of an existing project rather than a fresh bootstrap: skip steps that already exist, but still create task-list items so the gaps are visible.
 
@@ -97,7 +96,7 @@ For the full standards stack (ISO 26515 agile docs, ISO 26514 user docs, ISO 291
 
 Check with the tool's context-usage indicator. If over budget, move auto-imports to the on-demand table.
 
-> Tool-specific limits vary. opencode and Claude Code both default to 200k but display usage differently. The numbers above are **soft targets**, not hard limits: the goal is "small enough that an unrelated session still fits", not "exactly 5000 tokens".
+> Tool-specific limits vary. Most agents default to 200k context but display usage differently. The numbers above are **soft targets**, not hard limits: the goal is "small enough that an unrelated session still fits", not "exactly 5000 tokens".
 
 ## References (read on demand)
 

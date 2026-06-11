@@ -6,8 +6,7 @@ The goal is **a slim auto-loaded core plus on-demand depth**. Most facts live in
 
 > Tool-specific notes for the on-demand subdirectory:
 >
-> - **opencode / Codex / Cursor / Aider / GitHub Copilot**: `agents/<topic>.md` is read automatically when the file name or path is mentioned (the `AGENTS.md` convention is honoured at any depth).
-> - **Claude Code**: `agents/<topic>.md` works as a plain markdown file, OR you can use `.claude/<topic>.md` and reference it via the `@path` syntax from `CLAUDE.md`. The two layouts are interchangeable.
+> - **opencode / Codex / Cursor / Aider / GitHub Copilot / Hermes**: `agents/<topic>.md` is read automatically when the file name or path is mentioned (the `AGENTS.md` convention is honoured at any depth). Substitute the syntax your active agent recognises for auto-imports.
 
 ## Directory layout
 
@@ -75,7 +74,7 @@ Skeleton:
 | `agents/<topic>.md`  | <what it covers> |
 ```
 
-> The `@path` syntax above is Claude Code. opencode and Codex honour `agents/<file>.md` automatically; Cursor includes the file when its name is referenced. Adjust the imports section to the syntax your tool recognises: or skip it entirely on tools that read all `AGENTS.md` files unconditionally.
+> Adjust the imports section to the syntax your active tool recognises. opencode and Codex honour `agents/<file>.md` automatically; Cursor includes the file when its name is referenced; some tools read all `AGENTS.md` files unconditionally and need no explicit import.
 
 ## Picking what goes in auto-imports vs on-demand
 
@@ -89,7 +88,7 @@ Rule of thumb: **if you reference it in more than 50% of sessions, auto-import i
 | Critical "do not break X" rules | Setup / install / troubleshooting notes |
 | _(keep the todolist on-demand: it can grow large)_ | |
 
-Watch the token budget. Total auto-loaded ≤ 4k tokens. Use the tool's context-usage indicator (Claude Code: `/context`; opencode: `/context` or `tokens` panel) after scaffolding; if over, demote one of the imports.
+Watch the token budget. Total auto-loaded ≤ 4k tokens. Use the tool's context-usage indicator (opencode: `/context` or `tokens` panel) after scaffolding; if over, demote one of the imports.
 
 ## Naming convention for `agents/<topic>.md`
 
@@ -143,7 +142,7 @@ Until then, the directory is just noise. See `references/artifacts.md` for the f
 
 ## Memory
 
-Cross-session memory at the tool's default memory location (Claude Code: `~/.claude/projects/<slug>/memory/`; opencode: `<project>/.opencode/memory/` or tool-defined). Medium projects typically have:
+Cross-session memory at the tool's default memory location (opencode: `<project>/.opencode/memory/` or tool-defined; the path differs per tool). Medium projects typically have:
 
 - `user.md`: user role.
 - `feedback_<topic>.md`: behavioural rules learned per area.

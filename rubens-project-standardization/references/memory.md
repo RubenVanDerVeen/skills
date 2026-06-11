@@ -6,7 +6,6 @@ Every major AI coding agent ships with a cross-session memory mechanism. The exa
 
 | Tool | Memory location | Notes |
 |------|-----------------|-------|
-| Claude Code | `~/.claude/projects/<project-slug>/memory/` | Slug derived from the working directory path. `C:\Users\ruben\projects\hobby\homelab` → `C--Users-ruben-projects-hobby-homelab`. |
 | opencode | `<project>/.opencode/memory/` (or tool-defined) | Per-project by default; check the opencode docs for the current location. |
 | Codex | `<project>/AGENTS.md` and per-directory `AGENTS.md` files | Memory is split across the AGENTS.md hierarchy rather than a single directory. |
 | Cursor | `<project>/.cursor/memory/` or per-rule `.cursor/rules/` | Cursor rules replace much of what memory covers; treat them as the memory layer. |
@@ -182,7 +181,7 @@ A memory that names a specific function, file, or flag is a claim about a moment
 - **Plans**: committed implementation steps with checkpoints. Lives in `docs/artifacts/plans/`.
 - **Specs**: committed design rationale. Lives in `docs/artifacts/specs/`.
 - **In-tool task list**: per-session work tracking. Lives in the harness (TodoWrite, todos, plan mode), not on disk.
-- **`AGENTS.md`** (or `CLAUDE.md` on Claude Code): project-specific session context. Auto-loaded.
+- **`AGENTS.md`** (or the tool's preferred filename; see the "Tool-specific filenames" table in the main skill): project-specific session context. Auto-loaded.
 - **`agents/<topic>.md`**: on-demand session context. Loaded when the agent decides the topic is relevant.
 
 If unsure which mechanism to use: cross-session = memory; this-conversation only = in-tool task list; design rationale = spec; implementation steps = plan; baseline project context = `AGENTS.md` or `agents/`.
@@ -194,4 +193,4 @@ If unsure which mechanism to use: cross-session = memory; this-conversation only
 - Writing memories using relative dates ("next Thursday", "yesterday"). Convert to absolute dates at save time.
 - Saving a memory and then writing the same fact into `AGENTS.md`. Pick one. Memory is for things that span projects or change frequently; `AGENTS.md` is for project-stable facts.
 - Letting `MEMORY.md` grow past 200 lines. Truncate / prune. Stale memory silently shapes new sessions.
-- Hard-coding a `~/.claude/`-style path when the active tool uses a different memory location. Always resolve the active tool's path first; the universal structure is the same, the path is not.
+- Hard-coding a tool-specific path (e.g. Claude Code's `~/.claude/projects/.../memory/`) when the active tool uses a different memory location. Always resolve the active tool's path first; the universal structure is the same, the path is not.

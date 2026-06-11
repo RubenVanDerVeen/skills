@@ -14,7 +14,7 @@ Generate `.drawio` files in the user's standardized visual style. Two diagram fa
 
 When this skill loads, **prefer the templates and palettes below over hand-rolling colors, edge styles, or shape choices**. Only fall back to free-form drawio when the user explicitly asks for a non-standard look.
 
-The fallback / generic drawio skill (the public one shipped with Claude) has CLI lookup, post-processing, and export instructions — the **process** parts (locating the CLI, running export, opening the result) are still valid. This skill **adds** the user's visual style on top of that process.
+The fallback / generic drawio skill (the public one shipped with most agent harnesses) has CLI lookup, post-processing, and export instructions. The **process** parts (locating the CLI, running export, opening the result) are still valid. This skill **adds** the user's visual style on top of that process.
 
 ## When to use
 

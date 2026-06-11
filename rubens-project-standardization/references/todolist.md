@@ -2,7 +2,7 @@
 
 A flat markdown file with GitHub-flavoured checkboxes. One pending improvement / open task per line. Lives at `agents/todolist.md` (medium and large tiers; small tier usually skips this).
 
-Distinct from the in-tool task list (TodoWrite on Claude Code, todos on opencode, plan mode on Codex, etc.). The in-tool task list is per-session work tracking that lives in the harness; `todolist.md` is a persistent, committed-to-the-repo backlog that survives across sessions and across people.
+Distinct from the in-tool task list (the agent's own task primitive: TodoWrite, todos, plan mode, etc.). The in-tool task list is per-session work tracking that lives in the harness; `todolist.md` is a persistent, committed-to-the-repo backlog that survives across sessions and across people.
 
 ## Format
 
@@ -32,7 +32,7 @@ When the user asks "what is on the todo list", or asks the agent to work through
 
 1. Read `agents/todolist.md`.
 2. **Filter to open items** (lines with `[ ]`, not `[x]`).
-3. Create one in-tool task per open item (TodoWrite on Claude Code, todos on opencode, etc.).
+3. Create one in-tool task per open item (the agent's own task primitive).
 4. As each item is completed, **update `agents/todolist.md` in place**: change `[ ]` to `[x]` on the corresponding line.
 5. Do not delete completed lines.
 

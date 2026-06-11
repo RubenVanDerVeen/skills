@@ -45,7 +45,7 @@ Lowercase letters, digits, and hyphens only. No spaces, no underscores, no Pasca
 ❌ ESP32_C3_Datasheet.pdf
 ```
 
-Exceptions for conventional uppercase filenames: `README.md`, `AGENTS.md`, `CLAUDE.md` (legacy alias for Claude Code), `CHANGELOG.md`, `LICENSE`, `Makefile`, `Cargo.toml`, `package.json`. Everything else is kebab-case.
+Exceptions for conventional uppercase filenames: `README.md`, `AGENTS.md`, `CLAUDE.md` (legacy alias for `AGENTS.md`, kept for older Claude Code installs), `CHANGELOG.md`, `LICENSE`, `Makefile`, `Cargo.toml`, `package.json`. Everything else is kebab-case.
 
 ### English structural paths
 

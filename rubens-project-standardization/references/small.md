@@ -2,7 +2,7 @@
 
 Single-author utilities, libraries, tools. One language or runtime. Fewer than ~30 source files. No team, no sprints, no graded deliverables. Examples in the user's portfolio: `Tools/synctool` (Tauri+Svelte desktop app), `Tools/TypstTools` (Typst package).
 
-The goal is **the smallest amount of agent scaffolding that still makes sessions productive.** Everything goes in one `AGENTS.md` (or the tool's equivalent, e.g. `CLAUDE.md` for Claude Code). No on-demand subdirectory. No `docs/artifacts/` until the project graduates.
+The goal is **the smallest amount of agent scaffolding that still makes sessions productive.** Everything goes in one `AGENTS.md` (or the tool's preferred filename; see the "Tool-specific filenames" table in the main skill). No on-demand subdirectory. No `docs/artifacts/` until the project graduates.
 
 ## Directory layout
 
@@ -17,7 +17,7 @@ project-root/
 
 That is the whole structure. No `agents/`, no `docs/artifacts/`, no `specs/`, no `plans/`. Once any of those become useful, graduate to the medium pattern.
 
-> Tool alias: Claude Code reads `CLAUDE.md` as a legacy alias for `AGENTS.md`. If you target Claude Code specifically, name the file `CLAUDE.md` and the rest of this skill applies unchanged.
+> Tool alias: this reference assumes the canonical `AGENTS.md` name. For tools that read a different filename, see the "Tool-specific filenames" table in the main skill.
 
 ### When to use a CHANGELOG.md
 
@@ -78,7 +78,7 @@ Same shape: one `AGENTS.md`, no `agents/` subdir. The valuable content is the **
 
 ## Memory
 
-Cross-session memory is provided by the active tool. The location and format depend on the tool (Claude Code: `~/.claude/projects/<slug>/memory/`; opencode: typically `<project>/.opencode/memory/` or a tool-defined path). See `references/memory.md` for the universal structure (the `MEMORY.md` index + `user.md` / `feedback_*.md` / `project_*.md` / `reference_*.md` files) and tool-specific paths.
+Cross-session memory is provided by the active tool. The location and format depend on the tool (opencode: typically `<project>/.opencode/memory/` or a tool-defined path; the path differs per tool). See `references/memory.md` for the universal structure (the `MEMORY.md` index + `user.md` / `feedback_*.md` / `project_*.md` / `reference_*.md` files) and tool-specific paths.
 
 For a small project, the memory entries are usually just:
 

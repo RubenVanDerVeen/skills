@@ -1,6 +1,6 @@
 # <Project Name>: Agent Notes
 
-Context for AI coding agents (opencode, Claude Code, Codex, Cursor, etc.) working on this repo. Loaded automatically each session. Start here.
+Context for AI coding agents that follow the agents.md convention (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.) working on this repo. Loaded automatically each session. Start here.
 
 ## What this is
 

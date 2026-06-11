@@ -56,7 +56,7 @@ project-root/
 
 The discipline directories at the top (`mechanical/`, `electrical/`, `software/`) reflect ownership boundaries. For non-school large projects, replace them with whatever the actual top-level partitioning is (`backend/`, `frontend/`, `infra/`, `mobile/`, etc.): the principle is one top-level dir per major ownership boundary.
 
-> Tool alias: at this tier, on a Claude Code project, the file may be `CLAUDE.md` instead of `AGENTS.md`; the on-demand subdir is typically `.claude/`. Everything else in this reference is the same.
+> Tool alias: this reference assumes the canonical `AGENTS.md` / `agents/<topic>.md` names. For tools that read a different filename or subdir, see the "Tool-specific filenames" table in the main skill.
 
 ## `AGENTS.md` content
 
@@ -133,7 +133,7 @@ Empty subdirectories are fine if a component is in early stages, but each compon
 
 ## Memory
 
-Cross-session memory at the tool's default memory location (Claude Code: `~/.claude/projects/<slug>/memory/`; opencode: `<project>/.opencode/memory/` or tool-defined). Large projects typically have:
+Cross-session memory at the tool's default memory location (opencode: `<project>/.opencode/memory/` or tool-defined; the path differs per tool). Large projects typically have:
 
 - `user.md`: user role.
 - `feedback_*.md`: behavioural rules.

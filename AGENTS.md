@@ -2,7 +2,7 @@
 
 ## What this is
 
-Personal skills catalog for AI coding agents (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot). Each skill lives in its own folder as `<name>/SKILL.md`. Top-level `.md` files (`README.md`, `opencode-install.md`) are repo docs, not skills.
+Personal skills catalog for AI coding agents that follow the [agents.md](https://agents.md) convention (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.). Each skill lives in its own folder as `<name>/SKILL.md`. Top-level `.md` files (`README.md`, `opencode-install.md`, `external-skills.md`) are repo docs, not skills.
 
 The user adds, refines, and shares skills over time. Auto-loaded for any agent that opens this repo.
 
@@ -20,6 +20,7 @@ The user adds, refines, and shares skills over time. Auto-loaded for any agent t
 skills/
 ├── README.md                                  <- catalog overview
 ├── opencode-install.md                        <- bootstrap doc
+├── external-skills.md                         <- external skill catalog
 ├── AGENTS.md                                  <- this file
 ├── drawio-pro/SKILL.md
 ├── typst-pro/SKILL.md
@@ -29,7 +30,7 @@ skills/
     └── templates/
 ```
 
-A skill lives in a folder. A folder without `SKILL.md` is not a skill. Top-level `.md` files are repo docs, not skills, and they should not have frontmatter (the `opencode-install.md` exception exists because it doubles as a discoverable skill; keep it as-is).
+A skill lives in a folder. A folder without `SKILL.md` is not a skill. Top-level `.md` files are repo docs, not skills, and they should not have frontmatter. Two exceptions exist because each doubles as a discoverable skill: `opencode-install.md` (install doc) and `external-skills.md` (external skill catalog). Keep both as-is.
 
 ### `SKILL.md` frontmatter rules
 
@@ -64,8 +65,10 @@ description: <triggering conditions only>
 |---|---|---|
 | `drawio-pro/` | `drawio-pro` | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
 | `typst-pro/` | `typst-pro` | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
+| `altium-pro/` | `altium-pro` | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
 | `rubens-project-standardization/` | `project-standardization` | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
-| `opencode-install.md` (top-level doc) | `opencode-install` | Bootstrap doc: superpowers + caveman + this repo's path. |
+| `opencode-install.md` (top-level doc) | `opencode-install` | Bootstrap doc: install commands for superpowers, caveman, claude-mem, graphify, plus the personal skills repo path. |
+| `external-skills.md` (top-level doc) | `external-skills` | Catalog of external skills/tools (superpowers, caveman, claude-mem, graphify): what each does, when to use, install pointers. |
 
 The `rubens-project-standardization/` directory keeps the old name for backwards compatibility. The skill's identity is `project-standardization`. Renaming the folder is a future chore.
 

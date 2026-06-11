@@ -96,7 +96,7 @@ Lowercase letters, digits, and hyphens. No spaces, no underscores, no PascalCase
 
 **Why:** cross-platform safe (Windows / macOS / Linux), URL-safe, shell-safe, sorts consistently, no case-sensitivity bugs on case-insensitive filesystems.
 
-**Exceptions:** conventional uppercase filenames are kept: `README.md`, `AGENTS.md`, `CLAUDE.md` (legacy alias for Claude Code), `CHANGELOG.md`, `LICENSE`, `Makefile`, `Cargo.toml`, `package.json`. Anything else is kebab-case.
+**Exceptions:** conventional uppercase filenames are kept: `README.md`, `AGENTS.md`, `CLAUDE.md` (legacy alias for `AGENTS.md`, kept for older Claude Code installs), `CHANGELOG.md`, `LICENSE`, `Makefile`, `Cargo.toml`, `package.json`. Anything else is kebab-case.
 
 ### English structural paths
 

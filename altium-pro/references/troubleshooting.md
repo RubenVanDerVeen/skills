@@ -143,4 +143,46 @@ Notes:
 - Without auto-repour, edits leave the pour stale until you manually `Tools > Polygon Pours >
   Repour`.
 
+## Find Similar Objects — bulk-select + bulk-edit (e.g. resize all vias)
+
+Goal: select every object of one kind (all vias, all tracks on a layer, all pads of a net…)
+and change a property on all of them at once.
+
+1. Right-click any object of the target kind → **Find Similar Objects**.
+2. In the dialog, set the matching field to **Same** and leave the rest **Any**. For "all
+   vias": set **Object Kind = Via → Same**.
+3. (Optional) tick **Select Matching** / **Open Properties** so the matches get selected and
+   the panel opens. OK.
+4. The **Properties / PCB Inspector** panel now edits all selected at once — change e.g. via
+   **Diameter** + **Hole Size** once → applies to every selected via.
+5. Clear the filter afterwards with **`Shift+C`** (or click empty space) so the board isn't
+   left masked/dimmed.
+
+Notes:
+
+- Also reachable via the **PCB panel** (bottom-right `PCB` tab) for filter-based multi-select,
+  or a query like `IsVia` in the filter bar.
+- If the objects are governed by a **design rule** (e.g. `Design > Rules > Routing > Routing
+  Via Style`), prefer fixing the rule — a manual resize can be overridden on the next
+  interactive route/repour.
+
+## Pour won't flood over / connect to a same-net trace or pad
+
+- **Symptom:** A polygon pour leaves a black clearance ring (gap) around a trace/pad that's on
+  the **same net**, so they don't bond. Ratsnest airwire stays unconnected.
+- **Cause:** The pour's **"Pour Over..."** mode is set to *Don't Pour Over Same Net Objects*,
+  so it keeps clearance even from its own net instead of flooding over and connecting.
+- **Fix:**
+  1. Double-click the pour → **Properties**.
+  2. Set the **"Pour Over..."** dropdown to **Pour Over All Same Net Objects and Connect**
+     (or *Pour Over All Same Net Objects*).
+  3. Repour: `Tools > Polygon Pours > Repour Selected`. Gap closes, ratsnest clears.
+- **Notes:**
+  - First confirm the pour **Net** actually matches the trace (a wrong/blank net causes the
+    same clearance gap for a different reason — fix net, repour).
+  - Also check `Design > Rules > Plane > Polygon Connect Style` is Direct/Relief, not
+    **No Connect**.
+  - After changing the pour net, Altium keeps showing the **old** shape until you repour — a
+    stale pour can masquerade as "not connecting".
+
 <!-- Add new sections below this line -->

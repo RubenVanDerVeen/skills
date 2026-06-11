@@ -52,10 +52,7 @@ This project follows the standards stack documented in `docs/research/<paper>.pd
 ## Auto-loaded on-demand files
 
 <!--
-List the few on-demand files that should be loaded every session. Tool-specific syntax:
-- Claude Code: @agents/<file>.md
-- opencode: agents/<file>.md is honoured automatically
-- Codex / Cursor: include in the on-demand table below and load on reference
+List the few on-demand files that should be loaded every session. Tool-specific syntax varies; substitute the syntax your active agent recognises (some agents use `@path`, some auto-load by reference).
 -->
 
 @agents/<auto-loaded-1>.md
