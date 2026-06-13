@@ -13,9 +13,21 @@ Skills live in folders as `SKILL.md`. The top level holds repo-level docs (this 
 | [`altium-pro`](./altium-pro/SKILL.md) | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
 | [`rubens-project-standardization`](./rubens-project-standardization/SKILL.md) | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 
+## External skills
+
+Beyond the personal skills in this repo, several external sources are installed in the same environment. See [`external-skills.md`](./external-skills.md) for what each does and when to reach for it; install commands live in [`opencode-install.md`](./opencode-install.md).
+
+- **superpowers** - process discipline skills (TDD, debugging, brainstorming, ...)
+- **caveman** - terse, low-token output style
+- **claude-mem** - persistent cross-session memory
+- **graphify** - codebase knowledge graph builder
+- **vercel-labs/agent-skills** - React / Next.js / React Native / web-design pack
+- **stop-slop** - removes AI writing patterns from prose
+- **gsd-core** - spec-driven phase-loop framework
+
 ## Install
 
-See [`opencode-install.md`](./opencode-install.md) for the full bootstrap (superpowers + caveman + this repo).
+See [`opencode-install.md`](./opencode-install.md) for the full 8-step bootstrap.
 
 Quick version:
 
@@ -37,6 +49,7 @@ On Windows, step 3 means adding `C:\Users\ruben\Projects\Tools\skills` to openco
 skills/
 ├── README.md                                    <- you are here
 ├── opencode-install.md                          <- install / bootstrap
+├── external-skills.md                           <- external skill catalog
 ├── drawio-pro/SKILL.md
 ├── typst-pro/SKILL.md
 ├── altium-pro/SKILL.md
