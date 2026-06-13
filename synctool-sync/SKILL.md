@@ -30,6 +30,17 @@ cargo install --path crates/synctool-cli
 2. Pick the target job + direction. If unstated, ask which side wins (push = local->remote, pull = remote->local).
 3. `synctool dry-run <id> --push|--pull` — read-only preview. Report the trailing `Summary: N add, N update, N delete` and any `SELECTION DRIFT` line.
 4. **copy/update only:** after the user explicitly approves the dry-run, run `synctool run <id> --push|--pull`.
+
+### Scoping to a subpath (copy/update jobs)
+
+To sync only part of a job, pass `--subdir <REL>` (repeatable; a dir or file relpath under the job source) and/or `--exclude <REL>` (repeatable carve-out) on both `dry-run` and `run`. Use this when the user wants one folder of a broad job, e.g. just `Tools/skills` of a whole-`Projects` job:
+
+```
+synctool dry-run projects-to-nas --push --subdir Tools/skills
+synctool run     projects-to-nas --push --subdir Tools/skills
+```
+
+`--exclude` without `--subdir` means "whole side minus these". Paths are validated against the source; a missing relpath errors out. **`--subdir`/`--exclude` are rejected on mirror jobs** — mirror runs whole-job only, so scoping is a copy/update feature.
 5. **mirror:** stop. Show the dry-run deltas (especially deletions), then give the user the command to run themselves and tell them they must type the job id at the confirm prompt.
 6. Report the final `Done: N add, N update, N delete`. Logs land in `<log_dir>/<id>-<ISO-ts>.log`.
 
@@ -46,7 +57,7 @@ A `dry-run` of a **copy** or **update** job can show `- ` lines and a non-zero d
 
 ## Scope
 
-The CLI runs **saved jobs only**. There is no ad-hoc / Quick Sync from the CLI (that is GUI-only). To sync a path that has no job, tell the user to use the SyncTool app or create a job first.
+The CLI runs **saved jobs only**, but `--subdir` can scope a run to a subpath *within* a job's source (see Scoping above). There is still no ad-hoc / Quick Sync from the CLI (GUI-only): to sync a path not covered by any job's source tree, tell the user to use the SyncTool app or create a job first.
 
 ## Quick reference
 
@@ -56,8 +67,9 @@ The CLI runs **saved jobs only**. There is no ad-hoc / Quick Sync from the CLI (
 | Preview a push | `synctool dry-run <id> --push` |
 | Preview a pull | `synctool dry-run <id> --pull` |
 | Run copy/update (push) | `synctool run <id> --push` |
+| Scope to a subpath | `synctool run <id> --push --subdir <REL>` (repeatable; `--exclude <REL>` to carve out) |
 | Run when drift was approved | `"y" \| synctool run <id> --push` |
-| Mirror job | dry-run only -> hand command back to user |
+| Mirror job | dry-run only -> hand command back to user (no `--subdir`/`--exclude`) |
 
 ## Common mistakes
 
