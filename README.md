@@ -12,6 +12,7 @@ Skills live in folders as `SKILL.md`. The top level holds repo-level docs (this 
 | [`typst-pro`](./typst-pro/SKILL.md) | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
 | [`altium-pro`](./altium-pro/SKILL.md) | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
 | [`rubens-project-standardization`](./rubens-project-standardization/SKILL.md) | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
+| [`synctool-sync`](./synctool-sync/SKILL.md) | Drive the `synctool` CLI to run saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
 
 ## External skills
 
@@ -53,7 +54,8 @@ skills/
 ├── drawio-pro/SKILL.md
 ├── typst-pro/SKILL.md
 ├── altium-pro/SKILL.md
-└── rubens-project-standardization/SKILL.md
+├── rubens-project-standardization/SKILL.md
+└── synctool-sync/SKILL.md
 ```
 
 ## Adding a skill
