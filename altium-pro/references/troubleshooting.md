@@ -185,4 +185,29 @@ Notes:
   - After changing the pour net, Altium keeps showing the **old** shape until you repour — a
     stale pour can masquerade as "not connecting".
 
+## Polygon pours -- shelve and restore (hide fills for clarity)
+
+Goal: temporarily hide polygon pours so they don't obscure routing, vias, and pads; restore
+them when done.
+
+Shelve (hide):
+
+1. `Tools > Polygon Pours > Shelve N Polygon(s)` where N is the count of active pours.
+2. All pours disappear -- the board shows only traces, pads, and vias.
+
+Restore:
+
+1. `Tools > Polygon Pours > Restore N Shelved Polygon(s)`.
+2. Pours reappear; Altium does NOT automatically repour -- see note below.
+
+Notes:
+
+- Shelved pours are kept in memory until restored or the file is closed. They are not deleted.
+- After restoring, run `Tools > Polygon Pours > Repour All` (or `Repour Modified`) if the
+  board was edited while shelved -- otherwise the pour shape is stale.
+- "Restore N Shelved Polygon(s)" is greyed out when no pours are shelved (N = 0), as shown
+  in the menu.
+- Shortcut path: the Polygon Pour submenu is also at `Right-click canvas > Polygon Pours` when
+  no object is selected.
+
 <!-- Add new sections below this line -->

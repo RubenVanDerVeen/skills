@@ -34,6 +34,7 @@ Hotkeys live separately in **references/hotkeys.md** — add keyboard shortcuts 
 | Polygon pours — place, net, edit, settings | Flow | references/troubleshooting.md → "Polygon pours" |
 | Find Similar Objects — bulk-select + bulk-edit | Flow | references/troubleshooting.md → "Find Similar Objects" |
 | Pour won't flood over same-net trace/pad | Issue | references/troubleshooting.md → "Pour won't flood over" |
+| Polygon pours -- shelve and restore (hide fills) | Flow | references/troubleshooting.md → "Polygon pours -- shelve and restore" |
 
 > Keep this table in sync with references/troubleshooting.md. One row per documented flow/issue.
 
