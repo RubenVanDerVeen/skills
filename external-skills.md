@@ -8,7 +8,7 @@ For install commands, see `opencode-install.md`.
 
 ## When to use
 
-- "What is claude-mem / graphify / caveman / superpowers / vercel-* / stop-slop / gsd-core?"
+- "What is claude-mem / graphify / caveman / superpowers / vercel-* / stop-slop / gsd-core / ponytail?"
 - Picking which tool to reach for when several could apply.
 - Briefing a new agent session on what is available.
 
@@ -23,6 +23,7 @@ For install commands, see `opencode-install.md`.
 | vercel-labs/agent-skills | Skill pack | Curated React/Next.js/React Native/web-design skills maintained by Vercel Engineering. |
 | stop-slop | Single skill | Removes AI tells from prose: banned phrases, structural clichés, and sentence-level rules (no em-dashes, no Wh- starters, active voice). |
 | gsd-core | Skill pack | Meta-prompting and spec-driven development framework. Runs a five-step phase loop (Discuss, Plan, Execute, Verify, Ship) with fresh-context subagents to avoid context rot. |
+| ponytail | Skill pack | Lazy-dev philosophy + six skills that force the laziest solution that works. Default mode (`full`) ships YAGNI-first output and bakes itself into every response. |
 
 ## Per-source notes
 
@@ -100,6 +101,26 @@ Triggers: "drive this project from spec to PR", "plan and ship a milestone", "I 
 
 Source: https://github.com/open-gsd/gsd-core
 Install: `npx @opengsd/gsd-core@latest` (interactive, picks runtime + global/local).
+
+### ponytail
+
+Lazy-dev philosophy + six skills. The base `ponytail` skill flips the assistant into a "lazy senior dev" mode by default (level: `full`) that pushes every response toward the smallest correct solution: YAGNI first, stdlib next, native platform features next, already-installed dependencies next, one line before fifty, and only then the minimum code that works. Five sibling skills cover the recurring workflows:
+
+| Skill | What it does |
+|---|---|
+| `ponytail` | The mode itself. Auto-active by default; switch levels with `/ponytail lite|full|ultra`, deactivate with "stop ponytail". |
+| `ponytail-review` | Diff-scoped over-engineering review. One finding per line: `<tag> <what to cut>. <replacement>.` Tags: `delete:`, `stdlib:`, `native:`, `yagni:`, `shrink:`. |
+| `ponytail-audit` | Whole-repo over-engineering scan. Same tag vocabulary, ranked biggest cut first. |
+| `ponytail-debt` | Harvests every `ponytail:` comment in the codebase into a debt ledger with ceiling + upgrade path per row. |
+| `ponytail-gain` | One-shot benchmark scoreboard (code lines, cost, speed). Honest boundary: never reports a per-repo number. |
+| `ponytail-help` | Quick-reference card: levels, commands, deactivate, update, configure default mode. |
+
+Ponytail governs what gets built, not how the assistant talks (pair with `caveman` for terse prose). Never simplifies away trust-boundary validation, error handling that prevents data loss, security, accessibility basics, or anything explicitly requested.
+
+Triggers: "make this less over-engineered", "simplify this", "I want a lazy review", "is this over-engineered?", "review for over-engineering", "audit this codebase for bloat", "what can I delete from this repo", "show ponytail debt", "what did we defer", "show ponytail impact", "ponytail help".
+
+Source: https://github.com/DietrichGebert/ponytail
+Install: see `opencode-install.md` step 9. Manual install (current setup) is `git clone https://github.com/DietrichGebert/ponytail.git C:/tools/ponytail` and add `"C:/tools/ponytail/.opencode/plugins/ponytail.mjs"` to the `plugin` array in `~/.opencode/opencode.json`.
 
 ## Install
 

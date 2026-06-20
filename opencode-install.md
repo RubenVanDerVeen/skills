@@ -1,18 +1,18 @@
 ---
 name: opencode-install
-description: Use when installing superpowers, caveman, claude-mem, graphify, vercel-labs/agent-skills, stop-slop, or gsd-core for opencode, or when configuring opencode to load the user's personal skills from C:\Users\ruben\Projects\Tools\skills.
+description: Use when installing superpowers, caveman, claude-mem, graphify, vercel-labs/agent-skills, stop-slop, gsd-core, or ponytail for opencode, or when configuring opencode to load the user's personal skills from C:\Users\ruben\Projects\Tools\skills.
 ---
 
 # opencode-install
 
 ## Overview
 
-Install steps for the external skill/tool sources (superpowers, caveman, claude-mem, graphify, vercel-labs/agent-skills, stop-slop, gsd-core) and the personal skills repo path. For what each source is and when to use it, see `external-skills.md`.
+Install steps for the external skill/tool sources (superpowers, caveman, claude-mem, graphify, vercel-labs/agent-skills, stop-slop, gsd-core, ponytail) and the personal skills repo path. For what each source is and when to use it, see `external-skills.md`.
 
 ## When to use
 
 - Setting up opencode on a new machine or after a clean reinstall.
-- "How do I install superpowers / caveman / claude-mem / graphify / vercel-labs / stop-slop / gsd-core?"
+- "How do I install superpowers / caveman / claude-mem / graphify / vercel-labs / stop-slop / gsd-core / ponytail?"
 - opencode is not seeing the personal skills in `C:\Users\ruben\Projects\Tools\skills`.
 
 ## Install
@@ -80,7 +80,28 @@ npx @opengsd/gsd-core@latest
 
 See `external-skills.md` for what gsd-core does, the per-skill breakdown, and the overlap note with `superpowers`.
 
-### 8. Point opencode at the personal skills repo
+### 8. Ponytail
+
+Lazy-dev philosophy + six skills (`ponytail`, `ponytail-review`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help`). Ponytail does not yet have an opencode installer; install is `git clone` + plugin-path entry.
+
+```
+git clone https://github.com/DietrichGebert/ponytail.git C:/tools/ponytail
+```
+
+Then register the opencode plugin in `~/.opencode/opencode.json` (the global one, not `~/.config/opencode/opencode.json`; opencode reads from both, the global plugin array lives in `~/.opencode/`). Add the plugin path to the `plugin` array:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "C:/tools/ponytail/.opencode/plugins/ponytail.mjs"
+  ]
+}
+```
+
+The plugin auto-activates `ponytail` at level `full` every session. Change the default via the env var `PONYTAIL_DEFAULT_MODE` (set to `lite`, `full`, `ultra`, or `off`) or via `~/.config/ponytail/config.json` (`{"defaultMode": "lite"}`). See `C:/tools/ponytail/skills/ponytail-help/SKILL.md` for the full reference.
+
+### 9. Point opencode at the personal skills repo
 
 Make sure opencode loads skills from this repo's root:
 
@@ -94,7 +115,7 @@ The exact configuration step depends on how opencode is set up to discover skill
 
 ## Verify
 
-After all eight steps, start a new opencode session and confirm each source is reachable:
+After all nine steps, start a new opencode session and confirm each source is reachable:
 
 - A superpowers skill (e.g. `test-driven-development`).
 - A caveman skill.
@@ -103,9 +124,10 @@ After all eight steps, start a new opencode session and confirm each source is r
 - A vercel-labs skill (e.g. `vercel-react-best-practices`): ask for a React/Next.js review and confirm Vercel-specific guidance shows up.
 - The `stop-slop` skill: paste a paragraph of AI-flavored prose and ask for a slop review.
 - A gsd-core skill: invoke `gsd-new-project` (or `gsd-help`) and confirm the phase-loop workflow is reachable.
+- The `ponytail` skill: ask for any coding task and confirm the response uses YAGNI/stdlib-first framing (the mode is active by default).
 - A personal skill from this repo (e.g. `drawio-pro`).
 
-If a personal skill is missing, re-check step 8.
+If a personal skill is missing, re-check step 9.
 
 ## Related
 
