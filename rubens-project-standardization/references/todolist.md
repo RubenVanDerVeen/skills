@@ -1,6 +1,6 @@
-# `agents/todolist.md`: pending tasks
+# `.agents/todolist.md`: pending tasks
 
-A flat markdown file with GitHub-flavoured checkboxes. One pending improvement / open task per line. Lives at `agents/todolist.md` (medium and large tiers; small tier usually skips this).
+A flat markdown file with GitHub-flavoured checkboxes. One pending improvement / open task per line. Lives at `.agents/todolist.md` (medium and large tiers; small tier usually skips this).
 
 Distinct from the in-tool task list (the agent's own task primitive: TodoWrite, todos, plan mode, etc.). The in-tool task list is per-session work tracking that lives in the harness; `todolist.md` is a persistent, committed-to-the-repo backlog that survives across sessions and across people.
 
@@ -30,10 +30,10 @@ GitHub-flavoured markdown. One task per line. No sub-bullets, no nesting.
 
 When the user asks "what is on the todo list", or asks the agent to work through pending items:
 
-1. Read `agents/todolist.md`.
+1. Read `.agents/todolist.md`.
 2. **Filter to open items** (lines with `[ ]`, not `[x]`).
 3. Create one in-tool task per open item (the agent's own task primitive).
-4. As each item is completed, **update `agents/todolist.md` in place**: change `[ ]` to `[x]` on the corresponding line.
+4. As each item is completed, **update `.agents/todolist.md` in place**: change `[ ]` to `[x]` on the corresponding line.
 5. Do not delete completed lines.
 
 The in-tool task list is per-session and disappears. `todolist.md` is the persistent record.
@@ -99,7 +99,7 @@ The Plane MCP tools (`mcp__homelab__plane_*`) are available when MCP is configur
 
 | Use this | For |
 |----------|-----|
-| `agents/todolist.md` | Persistent backlog. Survives sessions and authors. Committed. |
+| `.agents/todolist.md` | Persistent backlog. Survives sessions and authors. Committed. |
 | In-tool task list (TodoWrite / todos / plan mode) | Per-session work tracking. Disappears at end of session. |
 | Memory (`project_*.md`) | Cross-session facts, decisions, deadlines. NOT tasks. |
 | `docs/artifacts/plans/` | Multi-step implementation plans with checkpoints. NOT a backlog. |

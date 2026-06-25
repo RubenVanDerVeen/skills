@@ -108,7 +108,7 @@ type: reference
 
 Project tasks for this repo live in Plane at `plane.rvdv-lab.nl/workspace`. Workspace slug: `homelab`. Project ID: `8d2c4f1e-...`.
 
-**Why:** task management is mirrored between `agents/todolist.md` and Plane. Plane is source of truth for assignees, priorities, due dates.
+**Why:** task management is mirrored between `.agents/todolist.md` and Plane. Plane is source of truth for assignees, priorities, due dates.
 
 **How to apply:** when adding a `[ ]` entry to `todolist.md`, also create a Plane issue. When marking `[x]`, move the Plane issue to Done.
 ```
@@ -182,9 +182,9 @@ A memory that names a specific function, file, or flag is a claim about a moment
 - **Specs**: committed design rationale. Lives in `docs/artifacts/specs/`.
 - **In-tool task list**: per-session work tracking. Lives in the harness (TodoWrite, todos, plan mode), not on disk.
 - **`AGENTS.md`** (or the tool's preferred filename; see the "Tool-specific filenames" table in the main skill): project-specific session context. Auto-loaded.
-- **`agents/<topic>.md`**: on-demand session context. Loaded when the agent decides the topic is relevant.
+- **`.agents/<topic>.md`**: on-demand session context. Loaded when the agent decides the topic is relevant.
 
-If unsure which mechanism to use: cross-session = memory; this-conversation only = in-tool task list; design rationale = spec; implementation steps = plan; baseline project context = `AGENTS.md` or `agents/`.
+If unsure which mechanism to use: cross-session = memory; this-conversation only = in-tool task list; design rationale = spec; implementation steps = plan; baseline project context = `AGENTS.md` or `.agents/`.
 
 ## Anti-patterns
 

@@ -45,7 +45,7 @@ Lowercase letters, digits, and hyphens only. No spaces, no underscores, no Pasca
 ❌ ESP32_C3_Datasheet.pdf
 ```
 
-Exceptions for conventional uppercase filenames: `README.md`, `AGENTS.md`, `CLAUDE.md` (legacy alias for `AGENTS.md`, kept for older Claude Code installs), `CHANGELOG.md`, `LICENSE`, `Makefile`, `Cargo.toml`, `package.json`. Everything else is kebab-case.
+Exceptions for conventional uppercase filenames: `README.md`, `AGENTS.md`, `CLAUDE.md` (one-line shim that `@import`s `AGENTS.md` for Claude Code, which does not read `AGENTS.md` natively), `CHANGELOG.md`, `STANDARDS.md`, `LICENSE`, `Makefile`, `Cargo.toml`, `package.json`. Everything else is kebab-case.
 
 ### English structural paths
 
@@ -105,7 +105,7 @@ project-root/
 ├── mechanical/                     ← <discipline> ownership
 ├── electrical/                     ← <discipline> ownership
 ├── software/                       ← <discipline> ownership
-├── agents/                         ← on-demand agent context files
+├── .agents/                        ← on-demand agent context files
 ├── docs/
 │   ├── source/                     ← editable source documents
 │   ├── deliverables/               ← per-sprint exports

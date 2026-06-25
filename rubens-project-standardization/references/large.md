@@ -2,7 +2,7 @@
 
 Team projects with sprints, formal deliverables, multi-discipline content. The canonical example is `Schoolprojects/Aardbei-Plukkers`: an NHL Stenden IDP team project with mechanical / electrical / software disciplines, sprints, a research-paper-backed standards stack, and a graded portfolio.
 
-The goal is **a layered context: slim auto-load, rich on-demand `agents/`, committed design history in `docs/artifacts/`, and a configuration-managed `docs/` tree for sources, deliverables, components, and project-management artefacts.**
+The goal is **a layered context: slim auto-load, rich on-demand `.agents/`, committed design history in `docs/artifacts/`, and a configuration-managed `docs/` tree for sources, deliverables, components, and project-management artefacts.**
 
 ## Directory layout
 
@@ -13,7 +13,7 @@ project-root/
 ├── CHANGELOG.md                       ← Keep a Changelog, grouped by sprint
 ├── .gitignore
 │
-├── agents/                            ← on-demand context sub-files
+├── .agents/                            ← on-demand context sub-files
 │   ├── todolist.md                    ← pending tasks (on-demand)
 │   ├── censoring.md                   ← public/private sanitization (auto-load if relevant)
 │   ├── <domain>.md                    ← per major area (auto-load if used every session)
@@ -56,7 +56,7 @@ project-root/
 
 The discipline directories at the top (`mechanical/`, `electrical/`, `software/`) reflect ownership boundaries. For non-school large projects, replace them with whatever the actual top-level partitioning is (`backend/`, `frontend/`, `infra/`, `mobile/`, etc.): the principle is one top-level dir per major ownership boundary.
 
-> Tool alias: this reference assumes the canonical `AGENTS.md` / `agents/<topic>.md` names. For tools that read a different filename or subdir, see the "Tool-specific filenames" table in the main skill.
+> Tool alias: this reference assumes the canonical `AGENTS.md` / `.agents/<topic>.md` names. For tools that read a different filename or subdir, see the "Tool-specific filenames" table in the main skill.
 
 ## `AGENTS.md` content
 
@@ -68,7 +68,7 @@ Slim entry point. Target ~200 lines, ~3k tokens. Must contain:
 4. **Standards stack reference**: one line: "follows `docs/research/<paper>.pdf`; see also `references/standards-stack.md` in the skill". Do not inline the standards table in `AGENTS.md`; that lives in `README.md` and the research paper.
 5. **Git & workflow rules**: Conventional Commits, Keep a Changelog, branch model.
 6. **Auto-imports**: only what is needed every session (usually: censoring, services if relevant, MCP if used).
-7. **On-demand table**: every other `agents/` file.
+7. **On-demand table**: every other `.agents/` file.
 
 The skeleton mirrors the medium tier; differences are:
 
@@ -174,7 +174,7 @@ When a medium project graduates to large, the migration is:
 3. Move existing editable sources into `docs/source/`. Move existing exports into `docs/deliverables/`.
 4. Add `CHANGELOG.md` if not present.
 5. Add `reference/` for provided material.
-6. Keep `agents/`: but trim items that are now redundant with the new structure. For example: an `agents/repo-structure.md` becomes redundant once `README.md` documents the structure.
+6. Keep `.agents/`: but trim items that are now redundant with the new structure. For example: an `.agents/repo-structure.md` becomes redundant once `README.md` documents the structure.
 
 ## Anti-patterns for large projects
 
@@ -183,4 +183,4 @@ When a medium project graduates to large, the migration is:
 - Standards stack inlined into `AGENTS.md`. It belongs in `README.md` and the research paper. `AGENTS.md` references it.
 - Diátaxis structure (`tutorials/`, `how-to/`, `reference/`, `explanation/`) at the top of `docs/`. The standards stack explicitly rejects this for deliverable-driven projects. See `references/standards-stack.md` §Diátaxis.
 - Mirroring directory naming between `docs/components/<component>/` and `software/<component>/`. They serve different purposes: `software/<component>/` is the source code, `docs/components/<component>/` is the documentation. Use the same component name in both, but do not collapse them.
-- Adding `agents/project-standardization.md` to the project. Use this skill; do not duplicate it locally.
+- Adding `.agents/project-standardization.md` to the project. Use this skill; do not duplicate it locally.

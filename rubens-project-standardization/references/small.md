@@ -15,7 +15,7 @@ project-root/
 └── <project files>            ← language-natural layout, no agent-specific dirs
 ```
 
-That is the whole structure. No `agents/`, no `docs/artifacts/`, no `specs/`, no `plans/`. Once any of those become useful, graduate to the medium pattern.
+That is the whole structure. No `.agents/`, no `docs/artifacts/`, no `specs/`, no `plans/`. Once any of those become useful, graduate to the medium pattern.
 
 > Tool alias: this reference assumes the canonical `AGENTS.md` name. For tools that read a different filename, see the "Tool-specific filenames" table in the main skill.
 
@@ -59,7 +59,7 @@ synctool/
 ├── tests/, e2e/, scripts/
 ```
 
-`AGENTS.md` is the only context file. No `agents/` directory. The critical conventions section (Svelte runes file extensions, IPC command registration pattern, Tauri 2 ACL, per-OS path tokens) is what makes this `AGENTS.md` valuable: none of those are inferable from reading the code.
+`AGENTS.md` is the only context file. No `.agents/` directory. The critical conventions section (Svelte runes file extensions, IPC command registration pattern, Tauri 2 ACL, per-OS path tokens) is what makes this `AGENTS.md` valuable: none of those are inferable from reading the code.
 
 ### TypstTools (Typst package, single language)
 
@@ -74,7 +74,7 @@ TypstTools/
 ├── docs/, examples/
 ```
 
-Same shape: one `AGENTS.md`, no `agents/` subdir. The valuable content is the **architecture** section (entrypoint, types vs templates vs components vs renderers, standards module, styles) plus the **key conventions** (section-DB pattern, Dutch heading numbering, translation file location). All of that would be slow to re-derive from source every session.
+Same shape: one `AGENTS.md`, no `.agents/` subdir. The valuable content is the **architecture** section (entrypoint, types vs templates vs components vs renderers, standards module, styles) plus the **key conventions** (section-DB pattern, Dutch heading numbering, translation file location). All of that would be slow to re-derive from source every session.
 
 ## Memory
 
@@ -91,17 +91,17 @@ No `project_*.md` needed for a small project; the project facts fit in `AGENTS.m
 
 Move to the medium pattern when **any** of these become true:
 
-- More than one on-demand topic file would naturally exist (e.g. you find yourself wanting both `agents/api.md` and `agents/db.md`).
+- More than one on-demand topic file would naturally exist (e.g. you find yourself wanting both `.agents/api.md` and `.agents/db.md`).
 - The `AGENTS.md` exceeds ~120 lines.
 - A todolist becomes useful: multiple pending tasks accumulate that don't fit in chat.
 - Design decisions start needing written rationale (a spec or plan emerges).
 - The project gains a second runtime, deployment target, or service.
 
-To graduate: create `agents/`, split `AGENTS.md` into `AGENTS.md` + one or two `agents/<topic>.md` files, list the auto-loaded ones in the imports section. See `references/medium.md`.
+To graduate: create `.agents/`, split `AGENTS.md` into `AGENTS.md` + one or two `.agents/<topic>.md` files, list the auto-loaded ones in the imports section. See `references/medium.md`.
 
 ## Anti-patterns for small projects
 
-- Creating `agents/` with one empty file "to match the pattern". The pattern is "as small as possible", not "always use `agents/`".
+- Creating `.agents/` with one empty file "to match the pattern". The pattern is "as small as possible", not "always use `.agents/`".
 - Creating `docs/artifacts/{specs,plans,reviews}/` before there is a spec, plan, or review to put in them. Empty directories are noise.
 - Copying a 200-line `AGENTS.md` template from a larger project. The template should match the tier.
-- Adding `agents/todolist.md` for a project with 0–2 pending tasks. Use chat / in-tool task list for that scale.
+- Adding `.agents/todolist.md` for a project with 0–2 pending tasks. Use chat / in-tool task list for that scale.

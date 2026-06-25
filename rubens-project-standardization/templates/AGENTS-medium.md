@@ -15,7 +15,7 @@
 ## Git & Workflow
 
 - Repo: <url>
-- No commit/push unless user explicitly says to.
+- **No commit/push unless user explicitly says to.** Carve-out: during plan execution (e.g. GSD-style phase plans), commit-per-phase is the expected behaviour; the agent commits each phase as it lands.
 - Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`).
 - Changelog: Keep a Changelog 1.1.0, grouped by release / milestone.
 - <Any project-specific git rules.>
@@ -34,22 +34,22 @@
 List the few on-demand files that should be loaded every session. Tool-specific syntax varies; substitute the syntax your active agent recognises (some agents use `@path`, some auto-load by reference). The goal is "few enough to stay in budget, important enough to be present".
 -->
 
-@agents/<auto-loaded-file>.md
-@agents/<auto-loaded-file>.md
+@.agents/<auto-loaded-file>.md
+@.agents/<auto-loaded-file>.md
 
 ## On-demand Context
 
-<!-- Read on demand (not auto-imported). Tool-specific path: most tools read agents/<file>.md automatically when mentioned; some agents need an explicit @path import. -->
+<!-- Read on demand (not auto-imported). Tool-specific path: most tools read .agents/<file>.md automatically when mentioned; some agents need an explicit @path import. -->
 
 | File | Purpose |
 |------|---------|
-| `agents/todolist.md` | Pending improvements / task list |
-| `agents/<topic>.md` | <what it covers> |
-| `agents/<topic>.md` | <what it covers> |
-| `agents/<domain>/<sub>.md` | <what it covers> |
+| `.agents/todolist.md` | Pending improvements / task list |
+| `.agents/<topic>.md` | <what it covers> |
+| `.agents/<topic>.md` | <what it covers> |
+| `.agents/<domain>/<sub>.md` | <what it covers> |
 
 <!--
 Additional on-demand files (one-line purposes):
-  - agents/<file>.md: <purpose>
-  - agents/<file>.md: <purpose>
+  - .agents/<file>.md: <purpose>
+  - .agents/<file>.md: <purpose>
 -->

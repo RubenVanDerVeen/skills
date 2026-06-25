@@ -43,7 +43,7 @@ This project follows the standards stack documented in `docs/research/<paper>.pd
 ## Git & Workflow
 
 - Repo: <url>
-- No commit/push unless user explicitly says to.
+- **No commit/push unless user explicitly says to.** Carve-out: during plan execution (e.g. GSD-style phase plans), commit-per-phase is the expected behaviour; the agent commits each phase as it lands.
 - Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`).
 - Changelog: `CHANGELOG.md` grouped by sprint, Keep a Changelog 1.1.0.
 - Naming: kebab-case ASCII paths, English structural paths, ISO 8601 date prefix for time-based filenames.
@@ -55,22 +55,22 @@ This project follows the standards stack documented in `docs/research/<paper>.pd
 List the few on-demand files that should be loaded every session. Tool-specific syntax varies; substitute the syntax your active agent recognises (some agents use `@path`, some auto-load by reference).
 -->
 
-@agents/<auto-loaded-1>.md
-@agents/<auto-loaded-2>.md
+@.agents/<auto-loaded-1>.md
+@.agents/<auto-loaded-2>.md
 
 ## On-demand Context
 
 | File | Purpose |
 |------|---------|
-| `agents/todolist.md` | Pending tasks (also mirrored in Plane if configured) |
-| `agents/<domain>.md` | <what it covers> |
-| `agents/<domain>.md` | <what it covers> |
-| `agents/<domain>/<sub>.md` | <what it covers> |
+| `.agents/todolist.md` | Pending tasks (also mirrored in Plane if configured) |
+| `.agents/<domain>.md` | <what it covers> |
+| `.agents/<domain>.md` | <what it covers> |
+| `.agents/<domain>/<sub>.md` | <what it covers> |
 
 <!--
 Additional on-demand files (one-line purposes):
-  - agents/<file>.md: <purpose>
-  - agents/<file>.md: <purpose>
+  - .agents/<file>.md: <purpose>
+  - .agents/<file>.md: <purpose>
 -->
 
 ## Sprint Workflow Reminders

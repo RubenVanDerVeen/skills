@@ -2,11 +2,11 @@
 
 Multi-component projects: infra, multi-service stacks, multi-runtime tools, anything with multiple distinct subsystems that each need separate notes. Examples in the user's portfolio: `Hobby/Homelab` (Proxmox + ~10 VMs + dozens of containers + Cloudflare + DNS + reverse proxy + backups).
 
-The goal is **a slim auto-loaded core plus on-demand depth**. Most facts live in `agents/<topic>.md` files. Only the few that are referenced every session are auto-imported.
+The goal is **a slim auto-loaded core plus on-demand depth**. Most facts live in `.agents/<topic>.md` files. Only the few that are referenced every session are auto-imported.
 
 > Tool-specific notes for the on-demand subdirectory:
 >
-> - **opencode / Codex / Cursor / Aider / GitHub Copilot / Hermes**: `agents/<topic>.md` is read automatically when the file name or path is mentioned (the `AGENTS.md` convention is honoured at any depth). Substitute the syntax your active agent recognises for auto-imports.
+> - **opencode / Codex / Cursor / Aider / GitHub Copilot / Hermes**: `.agents/<topic>.md` is read automatically when the file name or path is mentioned (the `AGENTS.md` convention is honoured at any depth). Substitute the syntax your active agent recognises for auto-imports.
 
 ## Directory layout
 
@@ -17,7 +17,7 @@ project-root/
 ├── CHANGELOG.md               ← grouped by release or milestone
 ├── .gitignore
 │
-├── agents/                    ← on-demand context sub-files
+├── .agents/                    ← on-demand context sub-files
 │   ├── todolist.md            ← pending tasks (open on demand)
 │   ├── <topic>.md             ← per major area (auto-loaded or on-demand)
 │   └── <topic>/               ← sub-directory when a topic has 3+ sub-files
@@ -42,9 +42,9 @@ Slim entry point. Target ~120 lines, ~2k tokens. Must contain:
 1. **Overview**: what this project is, the stack, who runs it.
 2. **Key facts table**: IPs, URLs, conventions, constraints. The non-obvious things an agent must know baseline.
 3. **Git & workflow rules**: repo URL(s), commit/push policy, any branch model.
-4. **One reference table**: services, endpoints, VMs, components, or whatever the central "what lives where" table is. Slim version only; full detail in `agents/<topic>.md`.
-5. **Auto-imports**: the few `agents/<file>.md` that are needed every session.
-6. **On-demand table**: every other `agents/` file with one-line purpose.
+4. **One reference table**: services, endpoints, VMs, components, or whatever the central "what lives where" table is. Slim version only; full detail in `.agents/<topic>.md`.
+5. **Auto-imports**: the few `.agents/<file>.md` that are needed every session.
+6. **On-demand table**: every other `.agents/` file with one-line purpose.
 
 Skeleton:
 
@@ -64,17 +64,17 @@ Skeleton:
 ## <Central reference table>
 <one table: e.g. services, VMs, endpoints>
 
-@agents/<auto-loaded-1>.md
-@agents/<auto-loaded-2>.md
+@.agents/<auto-loaded-1>.md
+@.agents/<auto-loaded-2>.md
 
 ## On-demand Context
 | File | Purpose |
 |------|---------|
-| `agents/todolist.md` | Pending improvements |
-| `agents/<topic>.md`  | <what it covers> |
+| `.agents/todolist.md` | Pending improvements |
+| `.agents/<topic>.md`  | <what it covers> |
 ```
 
-> Adjust the imports section to the syntax your active tool recognises. opencode and Codex honour `agents/<file>.md` automatically; Cursor includes the file when its name is referenced; some tools read all `AGENTS.md` files unconditionally and need no explicit import.
+> Adjust the imports section to the syntax your active tool recognises. opencode and Codex honour `.agents/<file>.md` automatically; Cursor includes the file when its name is referenced; some tools read all `AGENTS.md` files unconditionally and need no explicit import.
 
 ## Picking what goes in auto-imports vs on-demand
 
@@ -90,26 +90,26 @@ Rule of thumb: **if you reference it in more than 50% of sessions, auto-import i
 
 Watch the token budget. Total auto-loaded ≤ 4k tokens. Use the tool's context-usage indicator (opencode: `/context` or `tokens` panel) after scaffolding; if over, demote one of the imports.
 
-## Naming convention for `agents/<topic>.md`
+## Naming convention for `.agents/<topic>.md`
 
 | Filename | Use |
 |----------|-----|
-| `agents/todolist.md` | Always named `todolist`. Pending improvements. |
-| `agents/censoring.md` | Public/private repo split rules. |
-| `agents/mcp.md` | MCP server tools + setup. |
-| `agents/services.md` | Slim service/endpoint table, auto-loaded. |
-| `agents/<name>.md` | Domain file. Name matches the topic (`api.md`, `db.md`, `auth.md`). |
-| `agents/<domain>/<sub>.md` | Sub-dir when a domain has 3+ distinct sub-topics (e.g. `agents/vms/remotedock.md`). |
+| `.agents/todolist.md` | Always named `todolist`. Pending improvements. |
+| `.agents/censoring.md` | Public/private repo split rules. |
+| `.agents/mcp.md` | MCP server tools + setup. |
+| `.agents/services.md` | Slim service/endpoint table, auto-loaded. |
+| `.agents/<name>.md` | Domain file. Name matches the topic (`api.md`, `db.md`, `auth.md`). |
+| `.agents/<domain>/<sub>.md` | Sub-dir when a domain has 3+ distinct sub-topics (e.g. `.agents/vms/remotedock.md`). |
 
 ## What "medium" looks like in practice: Homelab annotated
 
 ```
 Homelab/
 ├── AGENTS.md                  ← hardware, Proxmox node, IP convention, VM table, Docker version, git workflow, key services summary
-│                              ends with: @agents/services.md @agents/censoring.md @agents/mcp.md
+│                              ends with: @.agents/services.md @.agents/censoring.md @.agents/mcp.md
 │                              + on-demand table for containers, todolist, vms/*
 ├── README.md
-├── agents/
+├── .agents/
 │   ├── services.md            ← @import: Cloudflare tunnel + DNS quick ref
 │   ├── censoring.md           ← @import: public-repo sanitization rules
 │   ├── mcp.md                 ← @import: MCP servers + tools available
@@ -127,8 +127,8 @@ Homelab/
 Key observations:
 
 - `AGENTS.md` ends with three `@imports` for the always-needed quick references. Everything else is in an on-demand HTML comment block (`<!-- Load on demand ... -->`).
-- The VM table lives in `AGENTS.md` (one line per VM, ~20 rows). Per-VM detail lives in `agents/vms/<name>.md`.
-- The `agents/vms/` sub-directory is used because there are 5+ VMs: the "3+ sub-topics → sub-directory" threshold applies.
+- The VM table lives in `AGENTS.md` (one line per VM, ~20 rows). Per-VM detail lives in `.agents/vms/<name>.md`.
+- The `.agents/vms/` sub-directory is used because there are 5+ VMs: the "3+ sub-topics → sub-directory" threshold applies.
 
 ## When to add `docs/artifacts/`
 
@@ -165,8 +165,8 @@ See `references/large.md`.
 
 ## Anti-patterns for medium projects
 
-- Auto-importing everything in `agents/`. The on-demand list exists for a reason; if it is empty, the auto-load budget is being blown.
-- Putting a full container list in `AGENTS.md` "for convenience". Slim summary in `AGENTS.md`; full list in `agents/containers.md`.
-- Mirroring the source tree under `agents/` (e.g. `agents/src/api/auth/...`). `agents/<topic>.md` is one file per topic, not a parallel directory tree.
-- Creating `agents/<topic>.md` for things already obvious from source (e.g. `agents/file-tree.md`). If a directory listing answers it, no `agents/` file is needed.
-- Using `agents/notes.md` as a junk drawer. Each `agents/` file has a single named purpose.
+- Auto-importing everything in `.agents/`. The on-demand list exists for a reason; if it is empty, the auto-load budget is being blown.
+- Putting a full container list in `AGENTS.md` "for convenience". Slim summary in `AGENTS.md`; full list in `.agents/containers.md`.
+- Mirroring the source tree under `.agents/` (e.g. `.agents/src/api/auth/...`). `.agents/<topic>.md` is one file per topic, not a parallel directory tree.
+- Creating `.agents/<topic>.md` for things already obvious from source (e.g. `.agents/file-tree.md`). If a directory listing answers it, no `.agents/` file is needed.
+- Using `.agents/notes.md` as a junk drawer. Each `.agents/` file has a single named purpose.

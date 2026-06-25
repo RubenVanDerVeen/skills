@@ -105,7 +105,7 @@ Subdirectory names omit the date: instead use `-<N>` suffixes for iterations of 
 ### Review rules
 
 - Reviews are **committed**, not stored in chat history or memory.
-- Repo-structure audits, standards-compliance audits, and project-structure reviews go here, **not** under `agents/`.
+- Repo-structure audits, standards-compliance audits, and project-structure reviews go here, **not** under `.agents/`.
 - Reviews are not auto-loaded; read on demand when revisiting findings or comparing to a later audit.
 - When a review supersedes an earlier one (e.g. `2026-05-09-repo-structure-audit.md` followed by `2026-05-11-standards-compliance-audit.md`), do not delete the older review: both stay so the audit trail is preserved.
 
@@ -151,7 +151,7 @@ Each step's artefact is committed before the next step starts.
 
 ## Anti-patterns
 
-- Putting reviews in `agents/reviews/`. Reviews are committed project history: `docs/artifacts/reviews/`. `agents/` is for context files, not artefacts.
+- Putting reviews in `.agents/reviews/`. Reviews are committed project history: `docs/artifacts/reviews/`. `.agents/` is for context files, not artefacts.
 - Multiple specs for the same topic. Update the existing spec with an amendments section.
 - Specs without dates. Date is mandatory: historical context depends on knowing when the decision was made.
 - Specs without a topic slug. `2026-04-17-design.md` is ambiguous; `2026-04-17-nextcloud-nas-integration-design.md` is greppable.
