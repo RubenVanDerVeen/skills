@@ -34,7 +34,7 @@ Rationale: `references/standards-stack.md`.
 
 ## Core rules
 
-- **Auto-loaded budget**: `AGENTS.md` + auto-imports ≤ 5k tokens. **Minimize auto-imports to what every session actually needs** — when in doubt, on-demand table, not `@import`. Auto-imports fire every session whether the topic is relevant or not.
+- **Auto-loaded budget**: `AGENTS.md` + auto-imports ≤ 5k tokens. **Minimize auto-imports to what every session actually needs**: when in doubt, on-demand table, not `@import`. Auto-imports fire every session whether the topic is relevant or not.
 - **One authoritative source per deliverable** (ISO 10007): source in `docs/source/`, generated in `docs/deliverables/`. Never siblings.
 - **No `temp/`, no `old/`, no `archive/`**: git history is the archive.
 - **No secrets in any tracked file**: `.env`, tokens, passwords out of git. Memory included.

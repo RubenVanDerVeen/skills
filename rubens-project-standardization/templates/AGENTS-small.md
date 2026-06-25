@@ -1,6 +1,6 @@
 # <Project Name>: Agent Notes
 
-Context for AI coding agents that follow the agents.md convention (opencode, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.) working on this repo. Claude Code requires the `CLAUDE.md` shim at the repo root that imports this file — the skill `project-standardization` ships `templates/CLAUDE.md` for that. Loaded automatically each session. Start here.
+Context for AI coding agents that follow the agents.md convention (opencode, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.) working on this repo. Claude Code requires the `CLAUDE.md` shim at the repo root that imports this file; the skill `project-standardization` ships `templates/CLAUDE.md` for that. Loaded automatically each session. Start here.
 
 ## What this is
 

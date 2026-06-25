@@ -11,10 +11,10 @@ When the user asks to bootstrap a project ("set up agent context", "scaffold", "
 7. **Seed cross-session memory** (always): every major agent has a memory mechanism; consult the tool's docs for the path. At minimum, create a `MEMORY.md` index and a `user.md` if not present. See `references/memory.md`. Substitute the tool's path.
 8. **Add `CHANGELOG.md`** (default: yes. Skip for sub-projects): copy `templates/CHANGELOG.md`. Keep a Changelog 1.1.0 format. A **sub-project** is a library or dependency versioned through a parent, not shipped directly. Detection hints: no own `.git`, listed as a dependency of another repo, mentioned in the parent's CHANGELOG. When in doubt, include it; the cost is one short file.
 9. **Add `STANDARDS.md`** (default: yes, always): copy `templates/STANDARDS.md` to repo root. The **human contract**: lets contributors who don't use an agent still see which standards apply. Fill in the `yes/no` column per actual application. The skill is the agent contract; `STANDARDS.md` is the contributor-facing summary. Even solo projects benefit: you'll forget which standards apply without it.
-10. **Verify**: check the tool's context-usage indicator (opencode: `/context` or `tokens` panel). Prune auto-imports if budget blown — move anything not needed every session to the on-demand table.
+10. **Verify**: check the tool's context-usage indicator (opencode: `/context` or `tokens` panel). Prune auto-imports if budget blown: move anything not needed every session to the on-demand table.
 
 ### Git section in `AGENTS.md` (mandatory)
 
-`AGENTS.md` **must** include a Git section. Default rule: **no commit/push without explicit user instruction**. Carve-out: **during plan execution (e.g. GSD-style phase plans), commit-per-phase is expected** — the agent commits each phase as it lands, and pushes if the plan says so. State both in `AGENTS.md`, not just one.
+`AGENTS.md` **must** include a Git section. Default rule: **no commit/push without explicit user instruction**. Carve-out: **during plan execution (e.g. GSD-style phase plans), commit-per-phase is expected**: the agent commits each phase as it lands, and pushes if the plan says so. State both in `AGENTS.md`, not just one.
 
 For a **restructure** rather than fresh bootstrap: skip steps that already exist, but still create task-list items so gaps are visible.
