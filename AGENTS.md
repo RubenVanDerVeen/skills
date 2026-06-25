@@ -66,6 +66,7 @@ description: <triggering conditions only>
 | `drawio-pro/` | `drawio-pro` | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
 | `typst-pro/` | `typst-pro` | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
 | `altium-pro/` | `altium-pro` | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
+| `synctool-sync/` | `synctool-sync` | Drive the `synctool` CLI for saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
 | `rubens-project-standardization/` | `project-standardization` | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | `opencode-install.md` (top-level doc) | `opencode-install` | Bootstrap doc: install commands for superpowers, caveman, claude-mem, graphify, plus the personal skills repo path. |
 | `external-skills.md` (top-level doc) | `external-skills` | Catalog of external skills/tools (superpowers, caveman, claude-mem, graphify): what each does, when to use, install pointers. |
@@ -89,7 +90,7 @@ To modify an existing skill, edit the `SKILL.md` in place. Skill descriptions ar
 - Repo: `https://github.com/RubenVanDerVeen/skills.git`
 - No commit/push unless the user explicitly says to.
 - Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`). `chore:`, `docs:`, `feat:`, `fix:`, `refactor:` are the common types.
-- Branch model: `master` (rename to `main` when convenient; ask before rewriting history).
+- Branch model: `main`.
 - No secrets in tracked files. No `temp/`, no `old/`, no `archive/`. Git history is the archive.
 
 ## Related

@@ -1,0 +1,13 @@
+# Editor swap files
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE (uncomment as needed)
+# .vscode/
+# .idea/
