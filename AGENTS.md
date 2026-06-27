@@ -27,10 +27,13 @@ skills/
 └── rubens-project-standardization/
     ├── SKILL.md
     ├── references/
-    └── templates/
+    ├── templates/
+    └── commands/                          <- slash-command bundle (opencode / Claude Code)
 ```
 
 A skill lives in a folder. A folder without `SKILL.md` is not a skill. Top-level `.md` files are repo docs, not skills, and they should not have frontmatter. Two exceptions exist because each doubles as a discoverable skill: `opencode-install.md` (install doc) and `external-skills.md` (external skill catalog). Keep both as-is.
+
+A `commands/` subfolder is allowed inside a skill folder to bundle opencode / Claude Code slash commands alongside the skill. The `.md` files inside become slash commands only after being copied to the agent's commands directory; the subfolder is dead weight inside the skills directory. See `rubens-project-standardization/SKILL.md` for the sync pattern.
 
 ### `SKILL.md` frontmatter rules
 

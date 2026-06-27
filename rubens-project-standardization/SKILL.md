@@ -78,6 +78,29 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 | `templates/CHANGELOG.md` | Seed `CHANGELOG.md` |
 | `templates/STANDARDS.md` | Human-readable standards summary |
 
+## Commands
+
+OpenCode slash commands that ship with this skill. Source files live in `commands/` (this folder) and are inactive until copied to the agent's commands directory.
+
+| Command | Purpose |
+|---------|---------|
+| `/standardize` | Bootstrap or restructure a project. Triage the tier, then apply the full bootstrap checklist. |
+| `/standardize-migrate` | Migrate an older project layout to the current agents.md convention. |
+
+### Sync pattern
+
+Agents do not auto-discover commands from the skills directory. Two-step sync:
+
+1. Copy the whole `rubens-project-standardization/` folder to the agent's skills directory (e.g. `~/.claude/skills/`).
+2. Copy `commands/*.md` to the agent's commands directory:
+
+| Agent | Global | Per-project |
+|-------|--------|-------------|
+| OpenCode | `~/.config/opencode/commands/` | `.opencode/commands/` |
+| Claude Code | `~/.claude/commands/` | `.claude/commands/` |
+
+The `commands/` subfolder ships with the skill but is dead weight inside the skills directory. The `.md` files inside it become slash commands only after step 2.
+
 ## Anti-patterns
 
 - Do not invent fields in `AGENTS.md` outside the template.
