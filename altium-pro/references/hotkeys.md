@@ -1,9 +1,9 @@
-# Altium Designer — Hotkeys
+# Altium Designer - Hotkeys
 
 Personal list of confirmed-useful Altium shortcuts. Add to it as you learn them.
 Only list keys you've actually used or confirmed against official docs.
 
-Sources: official Altium docs — [PCB editor shortcuts](https://www.altium.com/documentation/altium-designer/shortcut-keys/pcb-editors),
+Sources: official Altium docs - [PCB editor shortcuts](https://www.altium.com/documentation/altium-designer/shortcut-keys/pcb-editors),
 [Schematic editor shortcuts](https://www.altium.com/documentation/altium-designer/shortcut-keys/schematic-editors).
 
 ## How to add
