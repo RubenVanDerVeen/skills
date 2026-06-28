@@ -96,7 +96,7 @@ Agents do not auto-discover commands from the skills directory. Two-step sync:
 
 | Agent | Global | Per-project |
 |-------|--------|-------------|
-| OpenCode | `~/.config/opencode/commands/` | `.opencode/commands/` |
+| OpenCode | `~/.config/opencode/command/` | `.opencode/command/` |
 | Claude Code | `~/.claude/commands/` | `.claude/commands/` |
 
 The `commands/` subfolder ships with the skill but is dead weight inside the skills directory. The `.md` files inside it become slash commands only after step 2.
