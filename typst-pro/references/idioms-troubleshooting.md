@@ -119,7 +119,7 @@ let resolved-columns = if columns == none {
 - Hardcoding paths for `assets/logo/nhl-logo.jpg` instead of project-root absolute (`/assets/logo/...`). Legacy projects: `/Assets/Logo/NHL_logo.jpg` — match the casing the project already uses; do **not** rename casing as a side effect of an unrelated edit.
 - Renaming Dutch folder/file names → kebab/English in a legacy project without being asked. New projects use kebab/English; old projects keep their existing names until the user explicitly requests a migration. Partial renames break compilation because paths are referenced from many files (subdocs, research papers, bib references, image calls).
 - Bumping `@local/typst-tools` version inconsistently across files in the same project — keep them in sync.
-- **Rewriting an existing `@local/typst-tools:<X.Y.Z>` import back to `0.1.2` because that's the version shown in this skill's examples.** `0.1.2` is a baseline, not a mandate. Preserve whatever version the project already pins. Only fall back to `0.1.2` for brand-new files with no sibling reference. See **Version pinning** in `SKILL.md`.
+- **Rewriting an existing `@local/typst-tools:<X.Y.Z>` import back to `0.1.8` because that's the version shown in this skill's examples.** `0.1.8` is a baseline, not a mandate. Preserve whatever version the project already pins. Only fall back to `0.1.8` for brand-new files with no sibling reference. See **Version pinning** in `SKILL.md`.
 - Using em-dash (`—`) or sentence-level hyphen (`-`) in body prose. Use `.`, `;`, or `,` instead. Hyphens in compound words and identifiers are fine.
 - Over-bolding keyword emphasis in IEEE papers — use italic for mid-sentence terms, bold only for headings and colon-terminated run-in labels (see `ieee-journals.md`).
 - Using the old `version(committee: ...)` constructor — that's `version-entry(contributors: ...)` now.
@@ -144,11 +144,11 @@ let resolved-columns = if columns == none {
 
 ### `package not found: @local/typst-tools`
 
-Pkg isn't installed in the local data dir. Source lives at `C:\Users\ruben\Projects\Tools\TypstTools\`. Copy or symlink to the Typst local packages directory. On Windows: `%APPDATA%\typst\packages\local\typst-tools\0.1.2\`.
+Pkg isn't installed in the local data dir. Source lives at `C:\Users\ruben\Projects\Tools\TypstTools\`. Copy or symlink to the Typst local packages directory. On Windows: `%APPDATA%\typst\packages\local\typst-tools\0.1.8\`.
 
 ### `package not found: @local/academic-tools`
 
-Project still imports the old name. Update imports to `@local/typst-tools:0.1.2` and apply the migration steps (see `migration.md`). Or, as a temporary measure, install the old `academic-tools` v0.1.29 alongside.
+Project still imports the old name. Update imports to `@local/typst-tools:0.1.8` and apply the migration steps (see `migration.md`). Or, as a temporary measure, install the old `academic-tools` v0.1.29 alongside.
 
 ### `unknown variable: acr` / acronyms not expanding
 
@@ -176,7 +176,7 @@ This was the default-arg lazy-capture bug. Fixed in `0.1.2` by switching the def
 
 ### Compilation fails after bumping `typst-tools`
 
-Check the changelog / git history at `C:\Users\ruben\Projects\Tools\TypstTools\`. Breaking changes between minor versions are not unusual; pin the version per file. The migration table (see `migration.md`) covers the `academic-tools:0.1.29` → `typst-tools:0.1.2` shift. If a bump broke things, **roll back to the previously-pinned version** rather than re-pinning everything to `0.1.2` — `0.1.2` is just the baseline used in this skill's examples, not necessarily the safest version for any given project.
+Check the changelog / git history at `C:\Users\ruben\Projects\Tools\TypstTools\`. Breaking changes between minor versions are not unusual; pin the version per file. The migration table (see `migration.md`) covers the `academic-tools:0.1.29` → `typst-tools` shift. If a bump broke things, **roll back to the previously-pinned version** rather than re-pinning everything to `0.1.8` — `0.1.8` is just the baseline used in this skill's examples, not necessarily the safest version for any given project.
 
 ### Acronyms appear in the List of Tables
 
@@ -225,7 +225,7 @@ text(...)[(#numbering(...))]
 ### Imports
 
 - Package: `#import "@preview/<pkg>:<version>": <names or *>`.
-- Local package: `#import "@local/typst-tools:0.1.2": *`.
+- Local package: `#import "@local/typst-tools:0.1.8": *`.
 - Path: `#import "config/config-general.typ": *` (legacy: `Config/GeneralConfig.typ`).
 - Module alias: `#import "lib/foo.typ" as foo` → call as `foo.bar(...)`.
 - File include (executes body inline): `#include "/subdocs/<name>.typ"` (legacy: `Subdocumenten/X.typ`) or `#let X = include "..."`.

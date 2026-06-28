@@ -7,7 +7,7 @@ All templates use the **show-set pattern** (`#show: <template>.with(...)`). For 
 ## `academic-frontpage` — main project document (`main.typ`)
 
 ```typst
-#import "@local/typst-tools:0.1.2": *
+#import "@local/typst-tools:0.1.8": *
 #import "config/imports.typ": *
 
 #set text(lang: "Nl")
@@ -45,7 +45,7 @@ All templates use the **show-set pattern** (`#show: <template>.with(...)`). For 
 ## `IEEE-academic-journal` — research paper (two-column body)
 
 ```typst
-#import "@local/typst-tools:0.1.2": *
+#import "@local/typst-tools:0.1.8": *
 #import "@preview/unify:0.7.1": num, qty, numrange, qtyrange
 
 #set text(lang: "nl")
@@ -97,7 +97,7 @@ All templates use the **show-set pattern** (`#show: <template>.with(...)`). For 
 ## `IEEE-academic-test-report` — test report
 
 ```typst
-#import "@local/typst-tools:0.1.2": *
+#import "@local/typst-tools:0.1.8": *
 
 #show: IEEE-academic-test-report.with(
   title: [Vision Pipeline Test Report],
@@ -138,7 +138,7 @@ All templates use the **show-set pattern** (`#show: <template>.with(...)`). For 
 ## `meetrapport` — lab measurement report
 
 ```typst
-#import "@local/typst-tools:0.1.2": *
+#import "@local/typst-tools:0.1.8": *
 
 #show: meetrapport.with(
   title: [Meetrapport — Spanningsdeler],
@@ -189,7 +189,7 @@ All templates use the **show-set pattern** (`#show: <template>.with(...)`). For 
 ## `testplan` — formal QA test plan
 
 ```typst
-#import "@local/typst-tools:0.1.2": *
+#import "@local/typst-tools:0.1.8": *
 
 #show: testplan.with(
   title: [Testplan — Robothond Firmware],

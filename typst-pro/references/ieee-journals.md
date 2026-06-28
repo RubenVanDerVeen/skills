@@ -5,7 +5,7 @@
 ## Document skeleton (order matters)
 
 ```typst
-#import "@local/typst-tools:0.1.2": *
+#import "@local/typst-tools:0.1.8": *
 #import "@preview/unify:0.7.1": num, qty, numrange, qtyrange
 
 #set text(lang: "nl", costs: (hyphenation: 500%))   // or "en"

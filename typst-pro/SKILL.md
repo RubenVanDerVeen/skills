@@ -76,12 +76,12 @@ When editing existing prose, sweep for `—` and standalone `-` between spaces a
 
 ## Version pinning — DO NOT OVERWRITE EXISTING IMPORTS (always applies)
 
-`0.1.2` is a known-safe baseline used throughout this skill's examples, **not** "the version every project must use". The lib ships small incremental releases often, so projects regularly pin newer versions (`0.1.5`, `0.1.8`, `0.2.0`, ...).
+`0.1.8` is the current known-safe baseline used throughout this skill's examples, **not** "the version every project must use". The lib ships small incremental releases often, so projects may pin older (`0.1.2`, `0.1.5`) or newer (`0.1.9`, `0.2.0`, ...) versions.
 
-1. **Never rewrite an existing `@local/typst-tools:<X.Y.Z>` import back to `0.1.2`.** If a file pins a version, keep it — that's what the user verified compiles.
-2. **Only use `0.1.2` for brand-new files** with no existing pin. Prefer to grep the project for an existing import and reuse that version.
+1. **Never rewrite an existing `@local/typst-tools:<X.Y.Z>` import back to `0.1.8`.** If a file pins a version, keep it — that's what the user verified compiles.
+2. **Only use `0.1.8` for brand-new files** with no existing pin. Prefer to grep the project for an existing import and reuse that version.
 3. **Keep versions in sync within a project.** Bump all files together only when asked.
-4. **Examples here are illustrative.** Every `0.1.2` is a placeholder for the project's actual pinned version.
+4. **Examples here are illustrative.** Every `0.1.8` is a placeholder for the project's actual pinned version.
 5. **Latest-on-disk ≠ what to use.** Newest in `C:\Users\ruben\Projects\Tools\TypstTools\typst.toml` is the dev version; what's installed at `%APPDATA%\typst\packages\local\typst-tools\<X.Y.Z>\` is importable. Don't auto-bump.
 
 Grep first if unsure:

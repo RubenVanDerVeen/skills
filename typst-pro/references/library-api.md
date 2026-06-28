@@ -1,12 +1,12 @@
 # typst-tools library API
 
-The lib imported as `#import "@local/typst-tools:<version>": *`. Examples use `0.1.2` as a known-safe baseline, but the lib is released frequently — reuse the version already pinned in the project (see **Version pinning** in `SKILL.md`). The umbrella `lib.typ` re-exports everything; granular imports from `src/...` are also supported.
+The lib imported as `#import "@local/typst-tools:<version>": *`. Examples use `0.1.8` as a known-safe baseline, but the lib is released frequently — reuse the version already pinned in the project (see **Version pinning** in `SKILL.md`). The umbrella `lib.typ` re-exports everything; granular imports from `src/...` are also supported.
 
 ## Repo layout (post-restructure)
 
 ```
 typst-tools/
-  typst.toml                  pkg = "typst-tools" v0.1.2, entrypoint = lib.typ
+  typst.toml                  pkg = "typst-tools" v0.1.8, entrypoint = lib.typ
   lib.typ                     umbrella re-exports
   README.md
   assets/                     langs.yaml, logos/nhl_logo.jpg
@@ -45,19 +45,19 @@ typst-tools/
 For finer control, import a specific module directly:
 
 ```typst
-#import "@local/typst-tools:0.1.2/src/standards/ieee/ieee-journal.typ": IEEE-academic-journal
-#import "@local/typst-tools:0.1.2/src/standards/ieee/ieee.typ": setup-ieee-headings
-#import "@local/typst-tools:0.1.2/src/components/version-history.typ": version-history
-#import "@local/typst-tools:0.1.2/src/components/role-calculations.typ": (
+#import "@local/typst-tools:0.1.8/src/standards/ieee/ieee-journal.typ": IEEE-academic-journal
+#import "@local/typst-tools:0.1.8/src/standards/ieee/ieee.typ": setup-ieee-headings
+#import "@local/typst-tools:0.1.8/src/components/version-history.typ": version-history
+#import "@local/typst-tools:0.1.8/src/components/role-calculations.typ": (
   role-calculations, add-role, add-roles, add-assignment, add-assignments,
 )
-#import "@local/typst-tools:0.1.2/src/types/requirement.typ": requirement
-#import "@local/typst-tools:0.1.2/src/types/moscow-item.typ": moscow-item
-#import "@local/typst-tools:0.1.2/src/types/moscow-category.typ": moscow-category
-#import "@local/typst-tools:0.1.2/src/renderers/moscow-renderer.typ": *
-#import "@local/typst-tools:0.1.2/src/styles/toc.typ": chapter-toc-style, chapter-toc-config
-#import "@local/typst-tools:0.1.2/src/styles/theme.typ": default-theme
-#import "@local/typst-tools:0.1.2/src/styles/colors.typ": *
+#import "@local/typst-tools:0.1.8/src/types/requirement.typ": requirement
+#import "@local/typst-tools:0.1.8/src/types/moscow-item.typ": moscow-item
+#import "@local/typst-tools:0.1.8/src/types/moscow-category.typ": moscow-category
+#import "@local/typst-tools:0.1.8/src/renderers/moscow-renderer.typ": *
+#import "@local/typst-tools:0.1.8/src/styles/toc.typ": chapter-toc-style, chapter-toc-config
+#import "@local/typst-tools:0.1.8/src/styles/theme.typ": default-theme
+#import "@local/typst-tools:0.1.8/src/styles/colors.typ": *
 ```
 
 ## What the umbrella `lib.typ` re-exports
@@ -88,7 +88,7 @@ For finer control, import a specific module directly:
 `setup-ieee-headings` is exported by the umbrella import, but the show-rule **only activates when you call it** (the module has no top-level side effects, so importing it never affects layout on its own). Activate inside your document body:
 
 ```typst
-#import "@local/typst-tools:0.1.2": *
+#import "@local/typst-tools:0.1.8": *
 #setup-ieee-headings()
 ```
 
@@ -157,7 +157,7 @@ The MoSCoW renderer reads `theme.moscow.*` for fills and `theme.table.*` for str
 Replaces Typst's flat outline with a chapter-block / dotted-leader layout. Apply as a show rule:
 
 ```typst
-#import "@local/typst-tools:0.1.2": chapter-toc-style, chapter-toc-config
+#import "@local/typst-tools:0.1.8": chapter-toc-style, chapter-toc-config
 
 #set heading(numbering: "1.1.1.1")
 

@@ -1,4 +1,4 @@
-# Migration: `academic-tools:0.1.29` → `typst-tools:0.1.2`
+# Migration: `academic-tools:0.1.29` → `typst-tools`
 
 The library was renamed from `academic-tools` → `typst-tools` during the migration to the `EmbeddedDynamics/TypstTools` repo (clean slate, version reset to `0.1.2`).
 
@@ -8,7 +8,7 @@ The library was renamed from `academic-tools` → `typst-tools` during the migra
 
 When updating an existing project that imported `@local/academic-tools`:
 
-1. **Update imports**: `@local/academic-tools:0.1.29` → `@local/typst-tools:0.1.2` everywhere (including `_Imports.typ`, `GeneralConfig.typ`, every standalone `Onderzoek_*.typ`).
+1. **Update imports**: `@local/academic-tools:0.1.29` → `@local/typst-tools:0.1.8` (current baseline; or the project's relevant version) everywhere (including `_Imports.typ`, `GeneralConfig.typ`, every standalone `Onderzoek_*.typ`).
 2. **Internal lib paths changed** (only relevant if you used granular imports):
    - `src/elements/<name>` → `src/components/<name>` (version-history, role-calculations).
    - `src/styling/base.typ` → `src/styles/base.typ`.
