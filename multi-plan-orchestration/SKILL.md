@@ -42,7 +42,7 @@ Trigger when any of these hold:
 - Single subsystem, even if large. Use the normal flow.
 - Tightly coupled modules that cannot be built or tested independently. Use one plan.
 - One module plus a few extra features. Use one plan.
-- User already gave separate independent tasks. Run the normal flow per task, no split needed.
+- User already decomposed the work into independent tasks. Run the normal flow per task, no further split needed.
 
 ## The flow
 
