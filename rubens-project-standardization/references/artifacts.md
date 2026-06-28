@@ -74,6 +74,36 @@ docs/artifacts/plans/2026-05-02-auth-oauth-migration-plan.md
 - Plans are consumed during execution (`executing-plans` or `subagent-driven-development`). Once executed, the plan stays as historical record.
 - Like specs: not auto-loaded, committed with the code, never deleted post-implementation.
 
+## Multi-plan topic subfolders
+
+When a single topic produces multiple specs and plans (via `multi-plan-orchestration` or any other split flow), group them under a `<topic>/` subfolder. Single-plan topics stay flat: the existing filename grammar is unchanged.
+
+```
+docs/artifacts/specs/
+├── 2026-05-02-auth-oauth-migration-design.md          ← single-plan topic (flat)
+└── learning-site-physics/                              ← multi-plan topic (subfolder)
+    ├── 2026-06-28-learning-site-physics-outline.md
+    ├── 2026-06-28-learning-site-physics-manifest.md
+    ├── 2026-06-28-foundation-design.md
+    ├── 2026-06-28-sp-1-vectors-module-design.md
+    └── 2026-06-28-sp-2-calculators-module-design.md
+
+docs/artifacts/plans/
+├── 2026-05-02-auth-oauth-migration-plan.md             ← single-plan topic (flat)
+└── learning-site-physics/                              ← multi-plan topic (subfolder)
+    ├── 2026-06-28-foundation-plan.md
+    ├── 2026-06-28-sp-1-vectors-module-plan.md
+    └── 2026-06-28-sp-2-calculators-module-plan.md
+```
+
+### Rules
+
+- The `<topic>/` subfolder name is a kebab-case slug, no date prefix. It groups all specs and plans for that topic across the foundation plus N sub-projects.
+- Files inside the subfolder keep the standard `YYYY-MM-DD-<kebab-topic>-<type>.md` grammar.
+- Two special files live in the specs subfolder: `<topic>-outline.md` (the decomposition outline, approved before specs are written) and `<topic>-manifest.md` (the dispatch manifest, produced after all plans exist).
+- When the `brainstorming` and `writing-plans` skills are delegated to per sub-project, pass the topic-scoped location explicitly. Both skills accept user-preferred locations as an override.
+- Migrating existing flat artifacts: if a topic already has multiple flat specs/plans that should be grouped, move them into a `<topic>/` subfolder in one commit. No content changes, just `git mv`.
+
 ## Reviews: `docs/artifacts/reviews/`
 
 A **review** is any committed audit of the project itself: repo structure audits, sprint planning reviews, standards compliance audits, code reviews that warrant persistence beyond a PR comment.

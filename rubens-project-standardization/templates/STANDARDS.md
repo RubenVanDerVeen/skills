@@ -136,6 +136,17 @@ A `.docx` of a Typst-sourced document is **not** a source. It is a deliverable.
 - `docs/artifacts/plans/YYYY-MM-DD-<topic>-plan.md`: implementation plans.
 - `docs/artifacts/reviews/YYYY-MM-DD-<topic>-review.md`: audits and reviews.
 
+When a single topic produces multiple specs and plans (split flow, parallel agents), group them under a `<topic>/` subfolder:
+
+- `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-outline.md`: decomposition outline.
+- `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-manifest.md`: dispatch manifest.
+- `docs/artifacts/specs/<topic>/YYYY-MM-DD-<foundation>-design.md`: foundation spec.
+- `docs/artifacts/specs/<topic>/YYYY-MM-DD-<sp-N>-<name>-design.md`: sub-project specs.
+- `docs/artifacts/plans/<topic>/YYYY-MM-DD-<foundation>-plan.md`: foundation plan.
+- `docs/artifacts/plans/<topic>/YYYY-MM-DD-<sp-N>-<name>-plan.md`: sub-project plans.
+
+Single-plan topics stay flat. Multi-plan topics get a subfolder. See `references/artifacts.md`.
+
 Each is append-only history. If a spec changes mid-implementation, edit in place + add an `## Amendments` section. Do not create a second spec for the same topic.
 
 ---
