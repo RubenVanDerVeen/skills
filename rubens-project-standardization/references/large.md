@@ -69,6 +69,7 @@ Slim entry point. Target ~200 lines, ~3k tokens. Must contain:
 5. **Git & workflow rules**: Conventional Commits, Keep a Changelog, branch model.
 6. **Auto-imports**: only what is needed every session (usually: censoring, services if relevant, MCP if used).
 7. **On-demand table**: every other `.agents/` file.
+8. **Adding features / modules**: catalog checklist with project-specific entries. The template ships a stub section with red flags; fill in the actual catalogs at bootstrap (typical large: discipline-boundary table, services/components table, `CHANGELOG.md`, `README.md` feature index).
 
 The skeleton mirrors the medium tier; differences are:
 

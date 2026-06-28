@@ -35,6 +35,8 @@ One file, lean. Must contain:
 4. **Build environment**: only if the build is non-standard. Most small projects can skip this.
 5. **Git rules**: at minimum: "no commit/push unless user explicitly says to". Whatever else is project-specific (commit message style, hooks, branch policy).
 
+Also include the **Adding features, modules, or components** section the template ships: the catalog checklist with project-specific entries, plus the red flags. Without this section, the agent has no rule to follow when adding a new module and the user has to remind it.
+
 ### What to leave out
 
 - Auto-generated facts: file tree, code patterns, language-natural conventions. The agent can read the source.

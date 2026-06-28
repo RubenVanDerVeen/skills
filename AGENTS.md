@@ -79,20 +79,36 @@ The `rubens-project-standardization/` directory keeps the old name for backwards
 
 ## Adding or modifying a skill
 
-To add a new skill:
+When you add a new skill to this repo, the work is incomplete unless every catalog that lists existing skills has been updated in the same commit. A skill that isn't discoverable doesn't exist for an agent.
+
+Catalogs to update (in the same commit as the new skill):
+
+- `README.md`: the `## Skills` table (one row per skill, alphabetical).
+- `AGENTS.md`: the `## Current skills` table in this file (one row per skill, alphabetical).
+- `opencode-install.md`: only if the `## Verify` section lists this skill by name. Currently it does not; skip if no name reference exists.
+
+Steps:
 
 1. `mkdir <name>`, create `<name>/SKILL.md` with frontmatter.
-2. Add a row to the "Current skills" table above.
+2. Update the catalogs above in the same commit. The folder name, frontmatter `name`, and table entries must match exactly.
 3. Verify the frontmatter passes: `name` in kebab-case, `description` starts with "Use when...", description does not summarise the workflow, under 1024 chars total.
 4. Verify the body: no em-dashes, no top-level `## Skill` heading (use `## Overview` instead), under the token budget for the skill type.
-5. Commit. Conventional Commits 1.0.0.
+5. Commit. Conventional Commits 1.0.0. Use `feat(skills):` for a new skill, `docs(skills):` if the commit only adds the catalog entries.
+
+Red flags (any one = stop and fix before commit):
+
+- The skill exists in `mkdir <name>` but is not in the `README.md` `## Skills` table.
+- The skill is in one catalog but not another (e.g. `README.md` has it, `AGENTS.md` does not).
+- The user has to remind you to update a doc. If they did, this section wasn't strong enough; tighten it.
+- The commit message says `feat:` but only adds catalog rows. Use `docs:` for catalog-only commits.
 
 To modify an existing skill, edit the `SKILL.md` in place. Skill descriptions are part of the public interface; changing them is a breaking change for any agent that loads by description-match.
 
 ## Git & workflow
 
 - Repo: `https://github.com/RubenVanDerVeen/skills.git`
-- No commit/push unless the user explicitly says to.
+- **No commit/push without explicit user instruction.** Default: every commit waits for the user.
+- **Carve-out: spec/plan-driven development and execution.** When the user has approved both a spec (in `docs/artifacts/specs/`) and a plan that references it (in `docs/artifacts/plans/`), and the agent is currently executing that plan, the agent commits on its own volition at the boundaries the plan specifies (typically per task or per phase). Specs, plans, reviews, and the code they describe ship together. Outside an approved plan, the default rule applies.
 - Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`). `chore:`, `docs:`, `feat:`, `fix:`, `refactor:` are the common types.
 - Branch model: `main`.
 - No secrets in tracked files. No `temp/`, no `old/`, no `archive/`. Git history is the archive.

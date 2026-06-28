@@ -25,6 +25,19 @@ Context for AI coding agents that follow the agents.md convention (opencode, Cod
 
 - <Rule>.
 
+## Adding features, modules, or components
+
+When you add a new feature, module, component, or skill, update every catalog or table that lists the existing set in the same commit. Fill the list below at bootstrap with the actual catalogs in this project.
+
+- `<catalog-file>`: <what it lists>
+- `<catalog-file>`: <what it lists>
+
+Red flags (any one = stop and fix before committing):
+
+- The new item is in the source tree but not in any catalog above.
+- The user had to remind you to update a doc.
+- Two catalogs disagree (one has the new entry, another does not).
+
 ## Build environment
 
 <Only if the build is non-standard. Most projects can skip this section. Otherwise: required tools, PATH gotchas, OS-specific notes.>
@@ -32,6 +45,7 @@ Context for AI coding agents that follow the agents.md convention (opencode, Cod
 ## Git & workflow
 
 - Repo: <url>
-- **No commit/push unless user explicitly says to.** Carve-out: during plan execution (e.g. GSD-style phase plans), commit-per-phase is the expected behaviour; the agent commits each phase as it lands.
+- **No commit/push without explicit user instruction.** Default: every commit waits for the user.
+- **Carve-out: spec/plan-driven development and execution.** When the user has approved both a spec (in `docs/artifacts/specs/`) and a plan that references it (in `docs/artifacts/plans/`), and the agent is currently executing that plan, the agent commits on its own volition at the boundaries the plan specifies (typically per task or per phase). Outside an approved plan, the default rule applies.
 - Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`).
 - <Any other project-specific rules: branch model, hooks, signing.>

@@ -43,7 +43,8 @@ This project follows the standards stack documented in `docs/research/<paper>.pd
 ## Git & Workflow
 
 - Repo: <url>
-- **No commit/push unless user explicitly says to.** Carve-out: during plan execution (e.g. GSD-style phase plans), commit-per-phase is the expected behaviour; the agent commits each phase as it lands.
+- **No commit/push without explicit user instruction.** Default: every commit waits for the user.
+- **Carve-out: spec/plan-driven development and execution.** When the user has approved both a spec (in `docs/artifacts/specs/`) and a plan that references it (in `docs/artifacts/plans/`), and the agent is currently executing that plan, the agent commits on its own volition at the boundaries the plan specifies (typically per task or per phase). Outside an approved plan, the default rule applies.
 - Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`).
 - Changelog: `CHANGELOG.md` grouped by sprint, Keep a Changelog 1.1.0.
 - Naming: kebab-case ASCII paths, English structural paths, ISO 8601 date prefix for time-based filenames.
@@ -79,3 +80,16 @@ Additional on-demand files (one-line purposes):
 - Add retrospective note to `docs/project-management/retrospectives/` (ISO 8601 prefix).
 - Update `CHANGELOG.md` with a `## [Sprint N]: YYYY-MM-DD` section.
 - Update component test docs under `docs/components/<component>/test/`.
+
+## Adding features, modules, or components
+
+When you add a new feature, module, component, or skill, update every catalog or table that lists the existing set in the same commit. Fill the list below at bootstrap with the actual catalogs in this project (typical large project: discipline-boundary table, services/components table, `CHANGELOG.md`, `README.md` feature index).
+
+- `<catalog-file>`: <what it lists>
+- `<catalog-file>`: <what it lists>
+
+Red flags (any one = stop and fix before committing):
+
+- The new item is in the source tree but not in any catalog above.
+- The user had to remind you to update a doc.
+- Two catalogs disagree (one has the new entry, another does not).

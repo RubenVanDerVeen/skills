@@ -45,6 +45,7 @@ Slim entry point. Target ~120 lines, ~2k tokens. Must contain:
 4. **One reference table**: services, endpoints, VMs, components, or whatever the central "what lives where" table is. Slim version only; full detail in `.agents/<topic>.md`.
 5. **Auto-imports**: the few `.agents/<file>.md` that are needed every session.
 6. **On-demand table**: every other `.agents/` file with one-line purpose.
+7. **Adding features / modules**: catalog checklist with project-specific entries. The template ships a stub section with red flags; fill in the actual catalogs at bootstrap (typical medium: `README.md`, the central reference table in `AGENTS.md`, `CHANGELOG.md`).
 
 Skeleton:
 

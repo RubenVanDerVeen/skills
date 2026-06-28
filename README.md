@@ -64,6 +64,8 @@ skills/
 
 ## Adding a skill
 
+See `AGENTS.md` for the full rule, in the section "Adding or modifying a skill" (catalogs, frontmatter checks, red flags). Short version:
+
 1. `mkdir <skill-name>`, add `<skill-name>/SKILL.md` with frontmatter (`name`, `description`).
-2. Add a row to the table above.
+2. Add a row to the table above and to the matching `## Current skills` table in `AGENTS.md`.
 3. Commit.
