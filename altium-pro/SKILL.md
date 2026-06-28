@@ -35,6 +35,10 @@ Hotkeys live separately in **references/hotkeys.md** — add keyboard shortcuts 
 | Find Similar Objects — bulk-select + bulk-edit | Flow | references/troubleshooting.md → "Find Similar Objects" |
 | Pour won't flood over same-net trace/pad | Issue | references/troubleshooting.md → "Pour won't flood over" |
 | Polygon pours -- shelve and restore (hide fills) | Flow | references/troubleshooting.md → "Polygon pours -- shelve and restore" |
+| Resize / redefine the board shape | Flow | references/troubleshooting.md → "Resize / redefine the board shape" |
+| Laser-cut solder paste stencil - Gerber X2 layer selection | Flow | references/troubleshooting.md → "Laser-cut solder paste stencil" |
+| Pick and Place (PnP) output - Tronstol E1 | Flow | references/troubleshooting.md → "Pick and Place (PnP) output" |
+| Polygon pour that fits an irregular board outline (Tools > Convert flow) | Flow | references/troubleshooting.md → "Polygon pour that fits an irregular board outline" |
 
 > Keep this table in sync with references/troubleshooting.md. One row per documented flow/issue.
 

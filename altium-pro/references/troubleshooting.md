@@ -211,3 +211,131 @@ Notes:
   no object is selected.
 
 <!-- Add new sections below this line -->
+
+## Resize / redefine the board shape
+
+Goal: change the PCB outline. Method A is the fastest for plain rectangles, Method B is the
+cleaner flow when the new shape is irregular or driven by primitives.
+
+Method A, Redefine (rectangular, fastest):
+
+1. `Design > Board Shape > Redefine Board Shape` -> click 4 new corners -> right-click to
+   commit. Or numeric: `Design > Board Options...` -> set `Board Width` / `Board Height` and
+   the origin.
+
+Method B, Create primitives then push back (irregular edits):
+
+1. `Design > Board Shape > Create Primitives From Board Shape` -> OK. Drops a track-based
+   outline of the current board on a mech layer.
+2. Edit the primitives: drag vertices/edges, add segments, or use `Place > Line` for a clean
+   closed loop. A `Place > Rectangle` filled primitive also works here.
+3. Select the new outline primitives.
+4. `Design > Board Shape > Define Board Shape from Selected Objects` -> board shape updates.
+
+Notes:
+
+- Method B works because `Create Primitives` produces the right object kind (track segments
+  that `Define from Selected Objects` accepts directly).
+- A raw `Place > Rectangle` (filled primitive) without Method B can trigger "At least 2
+  connected tracks/arcs or full circle required"; the "external edges" retry prompt usually
+  does nothing useful. Stick to Method A, or draw the rectangle via `Place > Line` as a
+  closed 4-segment loop.
+- For shrinking a rectangle by a few mm, Method A is one click. Reach for Method B when the
+  new shape is not a plain rectangle, or when you want to edit the outline vertex-by-vertex.
+
+## Laser-cut solder paste stencil - Gerber X2 layer selection
+
+Goal: export only the paste aperture layers (plus the board outline as a frame
+reference) so the laser cutter software cuts the right holes.
+
+1. `File > Fabrication Outputs > Gerber X2 Files`.
+2. In the Gerber Options dialog tick **only** these:
+   - **Board Outline** (e.g. `*_Profile.gbr`) - frame reference for the cutter software.
+   - **Paste Mask** parent, then the side(s) you actually need:
+     - `*_Paste_Top.gbr` for a top-side stencil.
+     - `*_Paste_Bot.gbr` for a bottom-side stencil.
+3. Unt everything else: Silkscreen, Solder Mask, Copper Layers, Mechanical
+   Layers, Other Layers, Drills, Drill drawing, Drill guide.
+4. Units: millimetres. Format: RS-274X (X2 default, no change needed).
+5. Click **Plot Layers**. Import `*_Paste_Top.gbr` into the cutter software
+   (JCZ EZCAD, LaserGRBL, OpenStudio, ...). The filled regions in the Gerber
+   are the apertures to cut.
+
+Notes:
+
+- Don't tick **Solder Mask** by mistake. Solder mask is the green-lacquer
+  opening, not the paste aperture. Different shape and size (stencil design
+  rules vs mask expansion).
+- The board outline is optional but convenient: most cutter software lets
+  you frame the cut path to it, so the finished stencil blank matches the
+  PCB outline.
+- For a frame stencil where the cutout follows the PCB profile, also
+  import `*_Profile.gbr` as the cut path; the Paste Gerber supplies the
+  interior apertures only.
+
+## Pick and Place (PnP) output - Tronstol E1
+
+Goal: export component centroid data as a CSV the Tronstol E1 can load.
+
+1. **Not** a Gerber output. Use `File > Assembly Outputs > Pick and Place`.
+2. In the Pick and Place Setup dialog:
+   - Units: **Millimeters** (the E1 works in mm).
+   - Format: **CSV** (the E1 firmware expects CSV, not TXT).
+3. Click OK. Altium writes one file per side: `PickPlace_Top.csv` and
+   `PickPlace_Bottom.csv` (filenames follow the project name).
+4. Open the CSV in Excel or a text editor. The E1 typically expects only
+   these columns, in this order: `Designator, X, Y, Rotation, Side`.
+   Altium's raw output also includes `Footprint, Ref X, Ref Y, Pad X,
+   Pad Y, Layer, Comment` - delete the extras if the E1 import is strict.
+5. Copy the file to the E1 controller/PC and load via its import dialog.
+
+Notes:
+
+- Don't try to extract PnP from the Gerber X2 dialog. Gerber is image
+  data, not component coordinates. The Pick and Place generator is a
+  separate menu item under Assembly Outputs.
+- Bottom-side rotation: Altium may or may not mirror the rotation per
+  layer. Run a dry cycle on one component (e.g. an SOIC on the bottom)
+  before the first production run to confirm orientation is correct.
+- Decimal separator: Altium writes `.` (dot). If the E1 PC locale is set
+  to comma-decimal, re-save the CSV with `.` as decimal, or fix the
+  locale on the import PC.
+- Fiducials: the E1 uses board fiducials for alignment. Make sure the
+  PCB fab places them; the E1 doesn't import them as part of the
+  PnP file.
+
+## Polygon pour that fits an irregular board outline (Tools > Convert flow)
+
+> Confirmed working by user. Used when the polygon pour's "Boundary Mode =
+> Use Board Outline" option is missing from Properties in their Altium
+> version.
+
+Goal: produce a polygon pour whose outline follows an irregular PCB outline
+that exists as the board shape but has no primitives on a mechanical layer
+yet (or needs the outline restated from the current board shape).
+
+1. `Design > Board Shape > Create Primitives from Board Shape`. Altium
+   drops the current board outline as track-based primitives on
+   Mechanical 1.
+2. Select those primitives.
+3. `Tools > Convert > Create Polygon from Selected Primitives`. Altium
+   creates a polygon pour on the active copper layer using the primitives
+   as the outline.
+4. Switch only the outline back to Mechanical 1. Leave the pour itself
+   on the copper layer (the polygon's copper fill stays where step 3
+   put it).
+5. `Tools > Polygon Pours > Repour All` (or `Repour Selected`) to fill
+   the new pour.
+
+Notes:
+
+- The board shape itself is unchanged by this flow. Step 1 just
+  materialises the existing outline as primitives so they can be
+  selected and converted.
+- "Outline" = the polygon's boundary geometry (on Mechanical 1);
+  "pour" = the copper fill (on the copper layer). This flow keeps
+  them on separate layers by design.
+- If `Tools > Convert > Create Polygon from Selected Primitives` is
+  missing in your Altium version, fall back to the boundary-mode option
+  in the pour Properties (see "Polygon pours" entry above) or to Method B
+  in "Resize / redefine the board shape".

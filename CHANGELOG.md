@@ -24,6 +24,7 @@ Project standardization pass.
 ### Changed
 
 - `AGENTS.md`: branch model `master` → `main`; added `synctool-sync` row to the Current skills table.
+- `typst-pro`: bumped `@local/typst-tools` baseline `0.1.2` → `0.1.8` across skill examples, imports, and install paths. Factual references (fixed-in bug notes, rename reset point, version-numbering example, `@preview` pins) kept at `0.1.2`.
 
 ### TODO (backfill)
 
