@@ -13,6 +13,7 @@ Skills live in folders as `SKILL.md`. The top level holds repo-level docs (this 
 | [`altium-pro`](./altium-pro/SKILL.md) | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
 | [`rubens-project-standardization`](./rubens-project-standardization/SKILL.md) | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | [`synctool-sync`](./synctool-sync/SKILL.md) | Drive the `synctool` CLI to run saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
+| [`multi-plan-orchestration`](./multi-plan-orchestration/SKILL.md) | Coordinator skill for too-large tasks: splits a brainstorm into foundation + N parallel sub-plans. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to `brainstorming` + `writing-plans`. Slash command: `/multi-plan`. |
 
 ## External skills
 
@@ -55,7 +56,10 @@ skills/
 ├── typst-pro/SKILL.md
 ├── altium-pro/SKILL.md
 ├── rubens-project-standardization/SKILL.md
-└── synctool-sync/SKILL.md
+├── synctool-sync/SKILL.md
+└── multi-plan-orchestration/
+    ├── SKILL.md
+    └── commands/multi-plan.md
 ```
 
 ## Adding a skill
