@@ -186,3 +186,25 @@ Populated from RED-phase baseline testing. Each row is a rationalization observe
 | C: "Still one cohesive spec. Reviews couples to catalog ... but stays cohesive with the purchase flow. No decomposition needed." | Classic cross-boundary slip. Acknowledges coupling to catalog, then rejects decomposition anyway. The new module is silently absorbed into the existing spec. | Scope-slip handling: cross-boundary = STOP and re-open the outline. Coupling to another sub-project is exactly the trigger. |
 | C: "Data model impact: Catalog needs denormalized aggregate fields (avg_rating, review_count) from day one" | Sees foundation-creep but treats it as a coding concern. The new aggregate fields belong in the foundation or a new SP, not in the catalog's spec. | Scope-slip handling: foundation-creep = re-open outline, move the new fields to the foundation or a new SP. |
 | C: "New clarifying questions to add (so ~6-8 total now)" | Expands scope by adding more questions to the same spec, instead of flagging the new module for separate handling. The original spec balloons. | When to use + Scope-slip handling: a new module mid-spec is a trigger. STOP brainstorming on the current SP, re-open the outline. |
+
+## Commands
+
+Slash command that ships with this skill. Source lives in `commands/multi-plan.md` (this folder) and is inactive until copied to the agent's commands directory.
+
+| Command | Purpose |
+|---------|---------|
+| `/multi-plan` | Start the orchestration flow. Loads the skill, checks the trigger criteria, identifies the foundation, writes the decomposition outline, stops for approval. |
+
+### Sync pattern
+
+Agents do not auto-discover commands from the skills directory. Two-step sync:
+
+1. Copy the whole `multi-plan-orchestration/` folder to the agent's skills directory (e.g. `~/.claude/skills/`).
+2. Copy `commands/multi-plan.md` to the agent's commands directory:
+
+| Agent | Global | Per-project |
+|-------|--------|-------------|
+| OpenCode | `~/.config/opencode/commands/` | `.opencode/commands/` |
+| Claude Code | `~/.claude/commands/` | `.claude/commands/` |
+
+The `commands/` subfolder ships with the skill but is dead weight inside the skills directory. The `.md` file inside it becomes a slash command only after step 2.
