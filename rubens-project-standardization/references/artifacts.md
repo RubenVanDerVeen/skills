@@ -13,9 +13,11 @@ Distinct from:
 
 ## When to create `docs/artifacts/`
 
+`docs/artifacts/` is **process metadata**, not project metadata. Specs, plans, and reviews are tied to features, not to team size or file count: a one-author utility can brainstorm a non-trivial change just as easily as a multi-team sprint produces one. The tier governs when the directory *appears*, not whether artefacts are allowed.
+
 | Tier | When |
 |------|------|
-| small | Skip until a real spec, plan, or review materialises. |
+| small | Create the first time a spec, plan, or review is being written. Until then: skip. |
 | medium | Create when the first brainstorming session or repo review happens. |
 | large | Create at bootstrap: sprints inevitably produce reviews. |
 

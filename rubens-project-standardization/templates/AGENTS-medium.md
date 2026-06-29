@@ -17,6 +17,7 @@
 - Repo: <url>
 - **No commit/push without explicit user instruction.** Default: every commit waits for the user.
 - **Carve-out: spec/plan-driven development and execution.** When the user has approved both a spec (in `docs/artifacts/specs/`) and a plan that references it (in `docs/artifacts/plans/`), and the agent is currently executing that plan, the agent commits on its own volition at the boundaries the plan specifies (typically per task or per phase). Outside an approved plan, the default rule applies.
+- **Default to a feature branch for features.** Use `feat/<scope>` (or a per-plan `plan-<name>`) for features, modules, and non-trivial changes. Small fixes (typos, single-line tweaks, dep bumps, docs-only edits) can land directly on the default branch. Plan execution follows the same default: each plan runs in its own branch, cut from the latest default branch at plan start. The user can always say otherwise.
 - Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`).
 - Changelog: Keep a Changelog 1.1.0, grouped by release / milestone.
 - <Any project-specific git rules.>

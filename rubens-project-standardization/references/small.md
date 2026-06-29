@@ -2,7 +2,9 @@
 
 Single-author utilities, libraries, tools. One language or runtime. Fewer than ~30 source files. No team, no sprints, no graded deliverables. Examples in the user's portfolio: `Tools/synctool` (Tauri+Svelte desktop app), `Tools/TypstTools` (Typst package).
 
-The goal is **the smallest amount of agent scaffolding that still makes sessions productive.** Everything goes in one `AGENTS.md` (or the tool's preferred filename; see the "Tool-specific filenames" table in the main skill). No on-demand subdirectory. No `docs/artifacts/` until the project graduates.
+The goal is **the smallest amount of agent scaffolding that still makes sessions productive.** Everything goes in one `AGENTS.md` (or the tool's preferred filename; see the "Tool-specific filenames" table in the main skill). No on-demand subdirectory.
+
+`docs/artifacts/{specs,plans,reviews}/` is **allowed** at this tier. Specs, plans, and reviews are tied to features, not project size: a one-author utility can absolutely brainstorm a non-trivial change, write a plan for it, and ship it. Add `docs/artifacts/` the first time a real spec, plan, or review materialises, the same rule that applies to every tier. The layout below shows it as an optional directory; treat it as part of small projects the moment it becomes useful.
 
 ## Directory layout
 
@@ -12,10 +14,17 @@ project-root/
 ├── README.md                  ← user-facing
 ├── CHANGELOG.md               ← only if releases are versioned
 ├── .gitignore
+│
+├── docs/                      ← optional, only if design history exists
+│   └── artifacts/             ← specs, plans, reviews (see references/artifacts.md)
+│       ├── specs/
+│       ├── plans/
+│       └── reviews/
+│
 └── <project files>            ← language-natural layout, no agent-specific dirs
 ```
 
-That is the whole structure. No `.agents/`, no `docs/artifacts/`, no `specs/`, no `plans/`. Once any of those become useful, graduate to the medium pattern.
+That is the whole structure. No `.agents/`, no on-demand subdirectory. `docs/artifacts/` is welcome from day one if a spec, plan, or review is being written; do not create it empty.
 
 > Tool alias: this reference assumes the canonical `AGENTS.md` name. For tools that read a different filename, see the "Tool-specific filenames" table in the main skill.
 
@@ -96,14 +105,16 @@ Move to the medium pattern when **any** of these become true:
 - More than one on-demand topic file would naturally exist (e.g. you find yourself wanting both `.agents/api.md` and `.agents/db.md`).
 - The `AGENTS.md` exceeds ~120 lines.
 - A todolist becomes useful: multiple pending tasks accumulate that don't fit in chat.
-- Design decisions start needing written rationale (a spec or plan emerges).
 - The project gains a second runtime, deployment target, or service.
+
+Specs, plans, and reviews do **not** trigger graduation on their own: they live in `docs/artifacts/` regardless of tier. A small project with a busy `docs/artifacts/` is still small; the trigger for graduation is agent-context complexity, not artefact count.
 
 To graduate: create `.agents/`, split `AGENTS.md` into `AGENTS.md` + one or two `.agents/<topic>.md` files, list the auto-loaded ones in the imports section. See `references/medium.md`.
 
 ## Anti-patterns for small projects
 
 - Creating `.agents/` with one empty file "to match the pattern". The pattern is "as small as possible", not "always use `.agents/`".
-- Creating `docs/artifacts/{specs,plans,reviews}/` before there is a spec, plan, or review to put in them. Empty directories are noise.
+- Refusing to create `docs/artifacts/` for a small project because "small means no artefacts". Specs and plans belong with the code at every tier; only the *absence of design history* justifies skipping them.
+- Creating `docs/artifacts/{specs,plans,reviews}/` empty. Create it the moment a spec, plan, or review is being written; do not pre-create it as scaffolding.
 - Copying a 200-line `AGENTS.md` template from a larger project. The template should match the tier.
 - Adding `.agents/todolist.md` for a project with 0–2 pending tasks. Use chat / in-tool task list for that scale.
