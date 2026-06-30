@@ -116,32 +116,41 @@ This is the one hard rule the skill enforces. Uncontrolled scope slip breaks par
 
 Final artifact, saved to `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-manifest.md`.
 
+### Branch naming
+
+Git's checkout ambiguity trips agents when one branch is a prefix of another. Avoid by using a short `topic-slug`:
+
+- Foundation: `feat/<topic-slug>` (integration branch).
+- Sub-projects: `feat/<topic-slug>/sp-N-<name>`.
+
+`<topic-slug>` = short kebab-case (≤6 chars is safe), no `/`, not a prefix of any other existing branch.
+
 ```markdown
 # <Topic> Multi-Plan Manifest
 
 ## Plans
 | ID | Name | Branch | Plan file | Spec file | Depends on | Status |
 |----|------|--------|-----------|-----------|------------|--------|
-| F  | Foundation | `feature/<topic>` | docs/.../foundation-plan.md | docs/.../foundation-design.md | - | ready |
-| SP-1 | <name> | `feature/<topic>/sp-1-<name>` | docs/.../sp1-plan.md | docs/.../sp1-design.md | F merged | ready |
-| SP-2 | <name> | `feature/<topic>/sp-2-<name>` | docs/.../sp2-plan.md | docs/.../sp2-design.md | F merged | ready |
+| F  | Foundation | `feat/<topic-slug>` | docs/.../foundation-plan.md | docs/.../foundation-design.md | - | ready |
+| SP-1 | <name> | `feat/<topic-slug>/sp-1-<name>` | docs/.../sp1-plan.md | docs/.../sp1-design.md | F merged | ready |
+| SP-2 | <name> | `feat/<topic-slug>/sp-2-<name>` | docs/.../sp2-plan.md | docs/.../sp2-design.md | F merged | ready |
 
 ## Execution order
-1. F on `feature/<topic>` - one agent. Commits land directly on the feature branch; user merges to base via PR when ready.
-2. After F merged: SP-1 on `feature/<topic>/sp-1-<name>`, SP-2 on `feature/<topic>/sp-2-<name>` in parallel - one cheaper agent each. Each SP branches off the merged `feature/<topic>`.
-3. After all SPs merged: integration verification on `feature/<topic>`.
+1. F on `feat/<topic-slug>` - one agent. Commits land directly on the feature branch; user merges to base via PR when ready.
+2. After F merged: SP-1 on `feat/<topic-slug>/sp-1-<name>`, SP-2 on `feat/<topic-slug>/sp-2-<name>` in parallel - one cheaper agent each. Each SP branches off the merged `feat/<topic-slug>`.
+3. After all SPs merged: integration verification on `feat/<topic-slug>`.
 
 ## Per-agent dispatch instructions
 For each row in the table, the dispatch prompt template the user sends to a cheaper agent:
 - Read plan at <plan file path>
-- Branch: <branch from row>; create from `feature/<topic>` (SPs) or work directly on the feature branch (foundation)
+- Branch: <branch from row>; create from `feat/<topic-slug>` (SPs) or work directly on the feature branch (foundation)
 - Use superpowers:subagent-driven-development or executing-plans on the assigned plan
-- Open a PR back to `feature/<topic>` (SPs) or to the base branch (foundation)
+- Open a PR back to `feat/<topic-slug>` (SPs) or to the base branch (foundation)
 - Report back with the PR URL and a one-line status when the PR is ready for review
 
 ## Integration checklist (after all plans done)
-- [ ] All sub-project PRs merged into `feature/<topic>`
-- [ ] Run full test suite on `feature/<topic>` (catches integration gaps)
+- [ ] All sub-project PRs merged into `feat/<topic-slug>`
+- [ ] Run full test suite on `feat/<topic-slug>` (catches integration gaps)
 - [ ] Spot-check each module against its spec
 ```
 
@@ -154,12 +163,12 @@ Manifest written to docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-manife
 N+1 plans ready (1 foundation + N sub-projects).
 
 Execution order:
-1. Foundation plan first (one agent), commits on `feature/<topic>`
+1. Foundation plan first (one agent), commits on `feat/<topic-slug>`
 2. After foundation merged to base: SP-1, SP-2, ... in parallel (one cheaper agent each), each on its own sub-branch
 
 To dispatch: copy the per-agent dispatch prompt from the manifest for each plan
 and send it to a fresh cheaper agent. Each agent uses subagent-driven-development
-or executing-plans on its assigned plan and opens a PR back to `feature/<topic>`
+or executing-plans on its assigned plan and opens a PR back to `feat/<topic-slug>`
 (SPs) or to the base branch (foundation).
 ```
 
