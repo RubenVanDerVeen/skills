@@ -81,11 +81,14 @@ docs/artifacts/plans/2026-05-02-auth-oauth-migration-plan.md
 When a single topic produces multiple specs and plans (via `multi-plan-orchestration` or any other split flow), group them under a `<topic>/` subfolder. Single-plan topics stay flat: the existing filename grammar is unchanged.
 
 ```
+docs/artifacts/multi-plans/
+└── learning-site-physics/                              ← orchestration artifacts (outline + manifest)
+    ├── 2026-06-28-learning-site-physics-outline.md
+    └── 2026-06-28-learning-site-physics-manifest.md
+
 docs/artifacts/specs/
 ├── 2026-05-02-auth-oauth-migration-design.md          ← single-plan topic (flat)
 └── learning-site-physics/                              ← multi-plan topic (subfolder)
-    ├── 2026-06-28-learning-site-physics-outline.md
-    ├── 2026-06-28-learning-site-physics-manifest.md
     ├── 2026-06-28-foundation-design.md
     ├── 2026-06-28-sp-1-vectors-module-design.md
     └── 2026-06-28-sp-2-calculators-module-design.md
@@ -102,9 +105,9 @@ docs/artifacts/plans/
 
 - The `<topic>/` subfolder name is a kebab-case slug, no date prefix. It groups all specs and plans for that topic across the foundation plus N sub-projects.
 - Files inside the subfolder keep the standard `YYYY-MM-DD-<kebab-topic>-<type>.md` grammar.
-- Two special files live in the specs subfolder: `<topic>-outline.md` (the decomposition outline, approved before specs are written) and `<topic>-manifest.md` (the dispatch manifest, produced after all plans exist).
+- Two orchestration artifacts live in `docs/artifacts/multi-plans/<topic>/`: `<topic>-outline.md` (the decomposition outline, approved before specs are written) and `<topic>-manifest.md` (the dispatch manifest, produced after all plans exist). They are not specs, so they sit beside the specs folder rather than inside it.
 - When the `brainstorming` and `writing-plans` skills are delegated to per sub-project, pass the topic-scoped location explicitly. Both skills accept user-preferred locations as an override.
-- Migrating existing flat artifacts: if a topic already has multiple flat specs/plans that should be grouped, move them into a `<topic>/` subfolder in one commit. No content changes, just `git mv`.
+- Migrating existing flat artifacts: if a topic already has multiple flat specs/plans that should be grouped, move them into a `<topic>/` subfolder in one commit. For an existing multi-plan topic where the outline/manifest currently live under `docs/artifacts/specs/<topic>/`, move just those two files into `docs/artifacts/multi-plans/<topic>/` in a separate commit. No content changes, just `git mv`.
 
 ## Reviews: `docs/artifacts/reviews/`
 
@@ -164,6 +167,45 @@ Examples:
 ❌ NextcloudNAS_design.md                            (no date, no kebab-case)
 ```
 
+## Per-framework redirect
+
+Several planning frameworks ship their own default artifact paths. None of those paths are authoritative for projects following this convention. **Redirect every spec, plan, and review to `docs/artifacts/{specs,plans,reviews}/`**, regardless of which framework produced it.
+
+### Default vs canonical
+
+| Framework skill | Default path | Canonical path |
+|---|---|---|
+| superpowers `brainstorming` | `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` | `docs/artifacts/specs/YYYY-MM-DD-<topic>-design.md` |
+| superpowers `writing-plans` | `docs/superpowers/plans/YYYY-MM-DD-<feature>.md` | `docs/artifacts/plans/YYYY-MM-DD-<topic>-plan.md` |
+| GSD `.planning/` family | `.planning/specs/`, `.planning/plans/` | `docs/artifacts/specs/`, `docs/artifacts/plans/` |
+| Any other framework | framework-native default | `docs/artifacts/...` |
+
+### Override pattern
+
+Each skill accepts a target path as a user preference. **State the canonical path before the skill writes the file**, or move the artifact straight after. Two working shapes:
+
+- **Pre-write override**: when delegating to `superpowers:brainstorming` or `superpowers:writing-plans`, name the canonical path in the delegation prompt. Both skill bodies explicitly support this: each ends its default-path line with *"User preferences for spec/plan location override this default"*. The agent that delegates is expected to honour that.
+- **Post-write redirect**: if the skill already wrote to its default path before the override was honoured, `git mv` the file into `docs/artifacts/` in the same commit. Never leave both versions. Two homes rot fast, and you will forget which one is current.
+
+GSD and other frameworks follow the same shape: name `docs/artifacts/specs/` / `docs/artifacts/plans/` in the delegation prompt, or move the file once it lands. The target is `docs/artifacts/{specs,plans,reviews}/` regardless of origin.
+
+### Concrete example (superpowers)
+
+User: "Brainstorm the foo feature."
+Agent (after loading `superpowers:brainstorming`):
+
+> "Saving the design doc to `docs/artifacts/specs/2026-06-29-foo-design.md` per the project's artifact convention."
+
+User approves and the spec lands at the canonical path. Plan writing targets `docs/artifacts/plans/2026-06-29-foo-plan.md`. Reviews (when warranted) target `docs/artifacts/reviews/2026-06-29-foo-review.md`.
+
+For multi-plan topics, apply the same redirect with the topic-scoped layout from § Multi-plan topic subfolders: `docs/artifacts/specs/<topic>/<date>-<sub>-design.md`, `docs/artifacts/multi-plans/<topic>/<topic>-outline.md`, etc.
+
+### Anti-patterns
+
+- A `docs/superpowers/` (or `.planning/`, or any framework-native) directory ever landing in the repo. If it does, it is a missed redirect. `git rm` it, no exceptions.
+- Two copies of the same spec or plan in different folders. Pick the canonical home and remove the other.
+- Framework-default paths appearing as the target inside this skill's body, the templates, or any project's `AGENTS.md`.
+
 ## Workflow
 
 1. **Brainstorm** (`brainstorming` skill) → outputs a spec in `docs/artifacts/specs/`.
@@ -173,7 +215,7 @@ Examples:
 5. **Execute** (`executing-plans` or `subagent-driven-development` skill) → consumes plan.
 6. **Review** post-implementation if the change warrants it → adds a review to `docs/artifacts/reviews/`.
 
-Each step's artefact is committed before the next step starts.
+Each step's artifact is committed before the next step starts. **Step 1, 3, 6 must respect § Per-framework redirect** when the underlying skill ships its own default path.
 
 ## Interaction with `AGENTS.md`
 

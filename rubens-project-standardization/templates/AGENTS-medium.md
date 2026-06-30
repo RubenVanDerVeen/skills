@@ -22,6 +22,10 @@
 - Changelog: Keep a Changelog 1.1.0, grouped by release / milestone.
 - <Any project-specific git rules.>
 
+## Artifacts
+
+Specs, plans, and reviews live in `docs/artifacts/{specs,plans,reviews}/` (filename: `YYYY-MM-DD-<topic>-<type>.md`). When delegating to superpowers (`brainstorming`, `writing-plans`) or GSD, name the canonical path (`docs/artifacts/specs/...` or `docs/artifacts/plans/...`) instead of the framework default (`docs/superpowers/...`, `.planning/...`); both frameworks accept the override. A `docs/superpowers/`, `.planning/`, or other framework-native directory should never land in this repo. If one does, `git rm` it.
+
 ## <Central Reference Table>
 
 <One table: services, endpoints, components, VMs, modules. Slim version only; full detail in the on-demand subdirectory.>

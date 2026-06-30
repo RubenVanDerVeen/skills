@@ -38,7 +38,7 @@ Rationale: `references/standards-stack.md`.
 - **One authoritative source per deliverable** (ISO 10007): source in `docs/source/`, generated in `docs/deliverables/`. Never siblings.
 - **No `temp/`, no `old/`, no `archive/`**: git history is the archive.
 - **No secrets in any tracked file**: `.env`, tokens, passwords out of git. Memory included.
-- **Specs and plans live in the repo**: `docs/artifacts/{specs,plans,reviews}/` committed alongside the code. **Override clause**: this wins over any per-framework default (superpowers, GSD, `.planning/`). Redirect before files land elsewhere.
+- **Specs and plans live in the repo**: `docs/artifacts/{specs,plans,reviews}/` committed alongside the code. **Override clause**: this wins over any per-framework default (superpowers, GSD, `.planning/`). See `references/artifacts.md` § Per-framework redirect for the redirect mechanics; redirect before files land elsewhere.
 - **Memory ≠ plans ≠ tasks**: memory = cross-session facts; plans = committed artefacts; tasks = per-session in-tool items.
 
 ## Token budget
@@ -111,7 +111,7 @@ The `commands/` subfolder ships with the skill but is dead weight inside the ski
 - Do not duplicate this skill into `.agents/project-standardization.md`. Reference it.
 - Do not write skill internals (bootstrap, triage, anti-patterns) into `STANDARDS.md`. That's for contributors.
 - Do not let `CLAUDE.md` carry cross-agent content. It's a shim; duplicating creates two sources of truth.
-- Do not let any planning framework (superpowers, GSD) drop artefacts outside `docs/artifacts/`. Redirect before files land elsewhere.
+- Do not let any planning framework (superpowers, GSD) drop artefacts outside `docs/artifacts/`. Redirect before files land elsewhere (see `references/artifacts.md` § Per-framework redirect).
 - Do not let new modules, components, or skills land in the source tree without updating every catalog or table that lists the existing set. The template ships an "Adding features" section with red flags; fill it in at bootstrap with the project's actual catalogs. A new item that is not in the catalogs is incomplete.
 
 Older `rubens-project-standardization` / `project-standardization.md` projects: see `references/migration.md`.
