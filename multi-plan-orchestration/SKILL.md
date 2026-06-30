@@ -67,15 +67,15 @@ digraph flow {
 1. **Pause normal brainstorming.** The skill takes over from the brainstorming flow.
 2. **Identify shared foundation.** Look for a data model, UI shell, shared utils, or theme that multiple sub-projects depend on. If none exists, all sub-projects are independent.
 3. **Propose split: foundation + N sub-projects.** Each sub-project must be independently buildable and testable after the foundation is done.
-4. **Write decomposition outline.** Save to `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-outline.md`. Get user approval before writing any specs.
+4. **Write decomposition outline.** Save to `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-outline.md`. Get user approval before writing any specs.
 5. **For the foundation:** Invoke `superpowers:brainstorming` with the foundation's scope. Pass `docs/artifacts/specs/<topic>/` as the spec location. Brainstorming runs its full flow and invokes `superpowers:writing-plans` with `docs/artifacts/plans/<topic>/` as the plan location. User reviews and approves the foundation plan.
 6. **For each sub-project (SP-1, SP-2, ...):** Same as step 5, using the sub-project's scope from the approved outline. User reviews and approves each plan.
-7. **Write manifest.** After all plans exist, produce `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-manifest.md` with the plan table, execution order, per-agent dispatch prompts, and integration checklist.
+7. **Write manifest.** After all plans exist, produce `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-manifest.md` with the plan table, execution order, per-agent dispatch prompts, and integration checklist.
 8. **STOP.** Hand off to the user for dispatch. Do not dispatch execution agents.
 
 ## Decomposition outline
 
-Short artifact, not a full spec. Saved to `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-outline.md`.
+Short artifact, not a full spec. Saved to `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-outline.md`.
 
 ```markdown
 # <Topic> Decomposition Outline
@@ -114,31 +114,34 @@ This is the one hard rule the skill enforces. Uncontrolled scope slip breaks par
 
 ## Manifest and handoff
 
-Final artifact, saved to `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-manifest.md`.
+Final artifact, saved to `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-manifest.md`.
 
 ```markdown
 # <Topic> Multi-Plan Manifest
 
 ## Plans
-| ID | Name | Plan file | Spec file | Depends on | Status |
-|----|------|-----------|-----------|------------|--------|
-| F  | Foundation | docs/.../foundation-plan.md | docs/.../foundation-design.md | - | ready |
-| SP-1 | <name> | docs/.../sp1-plan.md | docs/.../sp1-design.md | F | ready |
-| SP-2 | <name> | docs/.../sp2-plan.md | docs/.../sp2-design.md | F | ready |
+| ID | Name | Branch | Plan file | Spec file | Depends on | Status |
+|----|------|--------|-----------|-----------|------------|--------|
+| F  | Foundation | `feature/<topic>` | docs/.../foundation-plan.md | docs/.../foundation-design.md | - | ready |
+| SP-1 | <name> | `feature/<topic>/sp-1-<name>` | docs/.../sp1-plan.md | docs/.../sp1-design.md | F merged | ready |
+| SP-2 | <name> | `feature/<topic>/sp-2-<name>` | docs/.../sp2-plan.md | docs/.../sp2-design.md | F merged | ready |
 
 ## Execution order
-1. F (foundation) - one agent
-2. After F approved: SP-1, SP-2 in parallel - one cheaper agent each
+1. F on `feature/<topic>` - one agent. Commits land directly on the feature branch; user merges to base via PR when ready.
+2. After F merged: SP-1 on `feature/<topic>/sp-1-<name>`, SP-2 on `feature/<topic>/sp-2-<name>` in parallel - one cheaper agent each. Each SP branches off the merged `feature/<topic>`.
+3. After all SPs merged: integration verification on `feature/<topic>`.
 
 ## Per-agent dispatch instructions
-For each plan, the dispatch prompt template the user sends to a cheaper agent:
-- Read plan at <path>
-- Use superpowers:subagent-driven-development or executing-plans
-- Report back when done
+For each row in the table, the dispatch prompt template the user sends to a cheaper agent:
+- Read plan at <plan file path>
+- Branch: <branch from row>; create from `feature/<topic>` (SPs) or work directly on the feature branch (foundation)
+- Use superpowers:subagent-driven-development or executing-plans on the assigned plan
+- Open a PR back to `feature/<topic>` (SPs) or to the base branch (foundation)
+- Report back with the PR URL and a one-line status when the PR is ready for review
 
 ## Integration checklist (after all plans done)
-- [ ] All sub-project plans report done
-- [ ] Run full test suite (catches integration gaps)
+- [ ] All sub-project PRs merged into `feature/<topic>`
+- [ ] Run full test suite on `feature/<topic>` (catches integration gaps)
 - [ ] Spot-check each module against its spec
 ```
 
@@ -147,16 +150,17 @@ For each plan, the dispatch prompt template the user sends to a cheaper agent:
 After the manifest is written and committed, the orchestrator stops:
 
 ```
-Manifest written to docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-manifest.md.
+Manifest written to docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-manifest.md.
 N+1 plans ready (1 foundation + N sub-projects).
 
 Execution order:
-1. Foundation plan first (one agent)
-2. After foundation approved: SP-1, SP-2, ... in parallel (one cheaper agent each)
+1. Foundation plan first (one agent), commits on `feature/<topic>`
+2. After foundation merged to base: SP-1, SP-2, ... in parallel (one cheaper agent each), each on its own sub-branch
 
 To dispatch: copy the per-agent dispatch prompt from the manifest for each plan
 and send it to a fresh cheaper agent. Each agent uses subagent-driven-development
-or executing-plans on its assigned plan.
+or executing-plans on its assigned plan and opens a PR back to `feature/<topic>`
+(SPs) or to the base branch (foundation).
 ```
 
 No further action from the orchestrator. The user owns dispatch.
