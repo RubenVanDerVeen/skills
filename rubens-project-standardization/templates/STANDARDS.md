@@ -138,8 +138,8 @@ A `.docx` of a Typst-sourced document is **not** a source. It is a deliverable.
 
 When a single topic produces multiple specs and plans (split flow, parallel agents), group them under a `<topic>/` subfolder:
 
-- `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-outline.md`: decomposition outline.
-- `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-manifest.md`: dispatch manifest.
+- `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-outline.md`: decomposition outline.
+- `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-manifest.md`: dispatch manifest.
 - `docs/artifacts/specs/<topic>/YYYY-MM-DD-<foundation>-design.md`: foundation spec.
 - `docs/artifacts/specs/<topic>/YYYY-MM-DD-<sp-N>-<name>-design.md`: sub-project specs.
 - `docs/artifacts/plans/<topic>/YYYY-MM-DD-<foundation>-plan.md`: foundation plan.
