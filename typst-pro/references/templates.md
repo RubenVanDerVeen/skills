@@ -1,20 +1,33 @@
-# Template usage — minimal examples
+# Template usage, minimal examples
 
 All templates use the **show-set pattern** (`#show: <template>.with(...)`). For IEEE-journal-specific authoring guidance see `ieee-journals.md`.
 
-> **Runnable demos:** full, compilable example documents ship with the library itself at `C:\Users\ruben\Projects\Tools\TypstTools\examples\` (`academic`, IEEE `journal` / `test-report`, `meetrapport`, `testplan`, `moscow`, `version-history`, `role-calculations`, `database`, `toc-adavanced`, `types`). They are version-matched to the lib — prefer reading those for a known-good, end-to-end reference over the trimmed snippets below.
+> **Authoritative signatures** (copied from lib source `C:\Users\ruben\Projects\Tools\TypstTools\src\templates/<name>.typ`): each `.with(...)` call must use only the keys listed below. Typst silently accepts unknown kwargs, so passing `use-toc` to `academic-frontpage` (it lives on `IEEE-academic-journal`) compiles fine and produces a broken document. Always double-check against this table before authoring.
 
-## `academic-frontpage` — main project document (`main.typ`)
+| Template | File | Top-level keys (only these exist) |
+|---|---|---|
+| `academic-frontpage` | `src/templates/academic.typ` | `title`, `authors`, `degree`, `degree-goal`, `department`, `university`, `supervisor`, `tutor`, `date`, `degree-year`, `program-type`, `location`, `toc-max-level`, `use-custom-toc`, `logo`, `abstract`, `keywords`, `acknowledgments`, `acronyms`, `show-list-of-figures`, `show-list-of-tables`, `bibliography`, `reference-style`, `body` |
+| `IEEE-academic-journal` | `src/standards/ieee/ieee-journal.typ` | `title`, `authors`, `degree`, `degree-goal`, `department`, `university`, `supervisor`, `tutor`, `date`, `location`, `use-front-cover`, `use-toc`, `logo`, `extend-abstract`, `abstract`, `acronyms`, `keywords`, `two-column`, `paper-size`, `footer-config`, `references`, `reference-style`, `body` |
+| `IEEE-academic-test-report` | `src/standards/ieee/ieee-test-report.typ` | `title`, `project-name`, `version`, `authors`, `reviewers`, `approvers`, `department`, `university`, `date`, `location`, `use-front-cover`, `logo`, `show-version-history`, `version-history`, `abstract`, `footer-config`, `body` |
+| `meetrapport` | `src/templates/meetrapport.typ` | `title`, `subtitle`, `course`, `course-code`, `experiment-number`, `date`, `authors` (array of string or string), `instructor`, `university`, `logo`, `show-toc`, `show-list-of-figures`, `show-list-of-tables`, `acronyms`, `samenvatting`, `bibliography`, `body` |
+| `testplan` | `src/templates/testplan.typ` | `title`, `project-name`, `version`, `date`, `authors`, `reviewers`, `approver`, `organization`, `logo`, `version-history`, `show-toc`, `show-version-history`, `acronyms`, `executive-summary`, `heading-setup`, `paragraph-setup`, `outline-setup`, `heading-numbering`, `toc-transform`, `body` |
+
+**Common mistakes these tables prevent:**
+
+- Passing `use-toc`, `use-front-cover`, `footer-config`, `extend-abstract`, `subject`, or `version: <short>` to `academic-frontpage`. None of those exist there; the academic template always renders a TOC and a front cover, calls its own footer, and reads no `subject`.
+- Passing `authors: students` (or any array of `author()` records) directly to `meetrapport`. It wants an `array` of plain `string` names, not `author()` records; do `authors: students.map(s => s.name)`.
+- Treating `supervisor`/`tutor` as a `testplan` field. `testplan` only has `approver` (single string). For supervisor/tutor use `academic-frontpage` or `IEEE-academic-journal`.
+- Treating `meetrapport` and `testplan` as interchangeable. `meetrapport` has measurement helpers (`measurement-table`, `result-section`, `uncertainty-analysis`) that `testplan` does not.
+
+> **Runnable demos:** full, compilable example documents ship with the library itself at `C:\Users\ruben\Projects\Tools\TypstTools\examples\` (`academic`, IEEE `journal` / `test-report`, `meetrapport`, `testplan`, `moscow`, `version-history`, `role-calculations`, `database`, `toc-adavanced`, `types`). They are version-matched to the lib; prefer reading those for a known-good, end-to-end reference over the trimmed snippets below.
+
+## `academic-frontpage` - main project document (`main.typ`)
 
 ```typst
 #import "@local/typst-tools:0.1.8": *
 #import "config/imports.typ": *
 
-#set text(lang: "Nl")
-#set par(justify: true)
-#set text(costs: (hyphenation: 500%))
-#show link: underline
-#set math.equation(numbering: "(1)")
+#set text(lang: "Nl")  // the template applies setup-paragraphs / link styling itself
 
 #show: academic-frontpage.with(
   title: [Embedded Systems Project\ Robothond],
@@ -33,7 +46,7 @@ All templates use the **show-set pattern** (`#show: <template>.with(...)`). For 
   abstract: [Korte samenvatting van het project.],
   keywords: [],
   acknowledgments: [],
-  acronyms: (acronyms_db),
+  acronyms: acronyms_db,
 )
 
 = Organisatie
@@ -42,7 +55,7 @@ All templates use the **show-set pattern** (`#show: <template>.with(...)`). For 
 ...
 ```
 
-## `IEEE-academic-journal` — research paper (two-column body)
+## `IEEE-academic-journal`, research paper (two-column body)
 
 ```typst
 #import "@local/typst-tools:0.1.8": *
@@ -64,7 +77,7 @@ All templates use the **show-set pattern** (`#show: <template>.with(...)`). For 
 
   use-front-cover: true,
   use-toc: true,
-  // IEEE templates expect logo as content (not path) — call `image()` here.
+  // IEEE templates expect logo as content (not path). Call `image()` here.
   logo: image("../assets/logo/nhl-logo.jpg", width: 140pt),
 
   extend-abstract: false,
@@ -94,7 +107,7 @@ All templates use the **show-set pattern** (`#show: <template>.with(...)`). For 
 ...
 ```
 
-## `IEEE-academic-test-report` — test report
+## `IEEE-academic-test-report`, test report
 
 ```typst
 #import "@local/typst-tools:0.1.8": *
@@ -135,13 +148,13 @@ All templates use the **show-set pattern** (`#show: <template>.with(...)`). For 
 )
 ```
 
-## `meetrapport` — lab measurement report
+## `meetrapport`, lab measurement report
 
 ```typst
 #import "@local/typst-tools:0.1.8": *
 
 #show: meetrapport.with(
-  title: [Meetrapport — Spanningsdeler],
+  title: [Meetrapport, Spanningsdeler],
   subtitle: [Experiment 3],
   course: [Analoge Elektronica 1],
   course-code: [AE-1],
@@ -186,13 +199,13 @@ All templates use the **show-set pattern** (`#show: <template>.with(...)`). For 
 )
 ```
 
-## `testplan` — formal QA test plan
+## `testplan`, formal QA test plan
 
 ```typst
 #import "@local/typst-tools:0.1.8": *
 
 #show: testplan.with(
-  title: [Testplan — Robothond Firmware],
+  title: [Testplan, Robothond Firmware],
   project-name: [Embedded Systems 2025-2026],
   version: "1.2",
   date: datetime.today(),

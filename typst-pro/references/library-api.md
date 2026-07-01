@@ -1,6 +1,6 @@
 # typst-tools library API
 
-The lib imported as `#import "@local/typst-tools:<version>": *`. Examples use `0.1.8` as a known-safe baseline, but the lib is released frequently — reuse the version already pinned in the project (see **Version pinning** in `SKILL.md`). The umbrella `lib.typ` re-exports everything; granular imports from `src/...` are also supported.
+The lib imported as `#import "@local/typst-tools:<version>": *`. Examples use `0.1.8` as a known-safe baseline, but the lib is released frequently. Reuse the version already pinned in the project (see **Version pinning** in `SKILL.md`). The umbrella `lib.typ` re-exports everything; granular imports from `src/...` are also supported.
 
 ## Repo layout (post-restructure)
 
@@ -80,7 +80,7 @@ For finer control, import a specific module directly:
 | Section-DB helpers | `slice-db`, `section-render`, `section-range-render`, `pve-item` *(rows keyed on lowercase `id:`; `pve-item` = render callback for typed `moscow-item` data)* |
 | MoSCoW renderer | `make-priority-cells`, `normalize-priority`, `priority-cell`, `priority-label`, `priority-description`, `moscow-simple-config`, `moscow-config`, `moscow-column-labels`, `moscow-column-widths`, `moscow-column-alignments`, `moscow-simple-table`, `moscow-table`, `moscow-range`, `moscow-overview`, `moscow-detail-table`, `moscow-grouped`, `moscow-legend`, `flatten-moscow-items`, `moscow-slice-categories` |
 | BOM helpers | `bom-total`, `bom-cells`, `bom-table`, `bom-range`, `bom-render`, `bom-range-render` |
-| Figure helpers | `image-grid(images, caption: none, width: 100%, gutter: 1em, columns: none)` — side-by-side images in a grid; images are content (`image("path")`), not raw paths |
+| Figure helpers | `image-grid(images, caption: none, width: 100%, gutter: 1em, columns: none)`, side-by-side images in a grid. Images are content (`image("path")`), not raw paths. |
 | Format utility | `eur(n, decimal: ",", thousand: "", none-text: "-")` |
 
 ## IEEE styling is opt-in
@@ -129,10 +129,10 @@ The lib ships a small theme dict and a palette of neutral / status colors. Both 
 ```typst
 color-neutral-border    // rgb(90, 90, 90)
 color-neutral-fill      // rgb(245, 245, 245)
-color-success-soft      // rgb(210, 245, 210)   — Must have
-color-warning-soft      // rgb(255, 248, 205)   — Should have
-color-attention-soft    // rgb(255, 226, 190)   — Could have
-color-danger-soft       // rgb(255, 210, 210)   — Won't have
+color-success-soft      // rgb(210, 245, 210), Must have
+color-warning-soft      // rgb(255, 248, 205), Should have
+color-attention-soft    // rgb(255, 226, 190), Could have
+color-danger-soft       // rgb(255, 210, 210), Won't have
 color-unknown-soft      // rgb(230, 230, 230)
 ```
 

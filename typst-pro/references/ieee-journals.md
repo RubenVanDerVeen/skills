@@ -1,17 +1,17 @@
-# Writing proper IEEE journals
+﻿# Writing proper IEEE journals
 
 `IEEE-academic-journal` gives you the scaffold (cover, full-width front-matter, two-column body, footer, bib). Writing a paper that actually *reads* like a real IEEE journal is mostly about typographic discipline in the body. Match the conventions of published IEEE papers, summarized below.
 
 ## Document skeleton (order matters)
 
 ```typst
-#import "@local/typst-tools:0.1.8": *
+#import "@local/typst-tools:0.1.8": IEEE-academic-journal, fullwidth
 #import "@preview/unify:0.7.1": num, qty, numrange, qtyrange
 
-#set text(lang: "nl", costs: (hyphenation: 500%))   // or "en"
-#set par(justify: true)
-#show link: underline
-#set math.equation(numbering: "(1)")
+#set text(lang: "nl")  // body language, the template handles the rest
+// DO NOT add: #set par(justify: true), #set text(costs: (hyphenation: 500%)),
+// #set math.equation(numbering: "(1)"), or #show link: underline here.
+// The IEEE-academic-journal template inlines all of these itself.
 
 #show: IEEE-academic-journal.with(
   title: [...], authors: "...", department: [...], university: [...],
@@ -67,11 +67,11 @@ Use `qty` / `qtyrange` for every physical quantity so spacing and unit typesetti
 #qtyrange("3.0", "4.2", "V") // 3.0–4.2 V (passing 3.0 as float would print "3")
 ```
 
-Apply to mA, A, V, Hz/MHz/GHz, ms/s, m, nF, etc. Units whose `unify` spelling is uncertain (`%`, `″`, `kΩ`/`kohm`) are safer left as literal text until verified in the Web UI — a bad unit name is a hard compile error and there is no local compiler.
+Apply to mA, A, V, Hz/MHz/GHz, ms/s, m, nF, etc. Units whose `unify` spelling is uncertain (`%`, `″`, `kΩ`/`kohm`) are safer left as literal text until verified in the Web UI ; a bad unit name is a hard compile error and there is no local compiler.
 
 ## Full-width figures and tables across both columns
 
-A wide diagram or comparison table should span **both columns** while the running text flows around it — the standard IEEE "Fig. 1 at top of page" look. Use the lib's `fullwidth` helper (exported from `ieee-journal.typ`), which floats the content with `place(scope: "parent", float: true)`:
+A wide diagram or comparison table should span **both columns** while the running text flows around it ; the standard IEEE "Fig. 1 at top of page" look. Use the lib's `fullwidth` helper (exported from `ieee-journal.typ`), which floats the content with `place(scope: "parent", float: true)`:
 
 ```typst
 #fullwidth(
@@ -84,14 +84,14 @@ A wide diagram or comparison table should span **both columns** while the runnin
 ]
 ```
 
-- Signature: `fullwidth(body, placement: top)` — `placement` is `top` (default), `bottom`, or `auto`.
+- Signature: `fullwidth(body, placement: top)` ; `placement` is `top` (default), `bottom`, or `auto`.
 - Wrap a `figure(...)` as the body so the document's `Fig.`/`TABLE` numbering and caption rules apply.
-- **Do NOT** use the old pagebreak-into-single-column trick for this — that wastes a page. `fullwidth` keeps the two-column flow intact.
-- **Caveat:** a float that is taller than the page region won't place. For a near-full-page artifact (e.g. a 60-line repo tree or a huge table), don't float it — give it its own single-column page instead (`set page(columns: 1)` block, or a dedicated page), because a too-tall float gets pushed to the end or dropped.
+- **Do NOT** use the old pagebreak-into-single-column trick for this ; that wastes a page. `fullwidth` keeps the two-column flow intact.
+- **Caveat:** a float that is taller than the page region won't place. For a near-full-page artifact (e.g. a 60-line repo tree or a huge table), don't float it ; give it its own single-column page instead (`set page(columns: 1)` block, or a dedicated page), because a too-tall float gets pushed to the end or dropped.
 
 ## Column break (not page break)
 
-To push the rest of the text to the next column (right column, or first column of the next page) **without** a page break, use the built-in `#colbreak()`. Handy to balance the final two columns before the references or a summary table. `#colbreak(weak: true)` collapses if already at a column top. Don't reach for `#pagebreak()` to nudge column flow — it leaves half-empty pages.
+To push the rest of the text to the next column (right column, or first column of the next page) **without** a page break, use the built-in `#colbreak()`. Handy to balance the final two columns before the references or a summary table. `#colbreak(weak: true)` collapses if already at a column top. Don't reach for `#pagebreak()` to nudge column flow ; it leaves half-empty pages.
 
 ## Footer
 
@@ -110,15 +110,15 @@ footer-config: (
 
 ## Index Terms / keywords
 
-Real IEEE papers print an *Index Terms* block (italic) right after the abstract. The current `IEEE-academic-journal` template has **no `keywords` / `index-terms` parameter** — if the user wants one, either add it manually at the top of the body (italic line under the abstract) or extend the template in the lib. Note this gap rather than silently omitting it when a user asks for a "proper" IEEE paper.
+Real IEEE papers print an *Index Terms* block (italic) right after the abstract. The current `IEEE-academic-journal` template has **no `keywords` / `index-terms` parameter** ; if the user wants one, either add it manually at the top of the body (italic line under the abstract) or extend the template in the lib. Note this gap rather than silently omitting it when a user asks for a "proper" IEEE paper.
 
 ## Captions and tables
 
-- **Every table and image goes in a `figure(...)` with a `caption`, no exceptions.** This is the IEEE default: a bare `#table(...)` or `#image(...)` gets no `TABLE N` / `Fig. N` number, no caption styling, and can't be cross-referenced. Wrap it, give it a label (`<tbl-...>` / `<fig-...>`), and reference it from the prose (`@tbl-...`). For wide ones, nest the `figure` inside `fullwidth` (see §"Full-width figures and tables"). The only things left bare are template arguments like the cover `logo:` image — those aren't body content.
-- Table captions sit **on top** (`TABLE N`, smallcaps), figure captions **below** (`Fig. N`) — the template's `show figure` rules handle this automatically. Just provide `caption: [...]`.
+- **Every table and image goes in a `figure(...)` with a `caption`, no exceptions.** This is the IEEE default: a bare `#table(...)` or `#image(...)` gets no `TABLE N` / `Fig. N` number, no caption styling, and can't be cross-referenced. Wrap it, give it a label (`<tbl-...>` / `<fig-...>`), and reference it from the prose (`@tbl-...`). For wide ones, nest the `figure` inside `fullwidth` (see §"Full-width figures and tables"). The only things left bare are template arguments like the cover `logo:` image ; those aren't body content.
+- Table captions sit **on top** (`TABLE N`, smallcaps), figure captions **below** (`Fig. N`) ; the template's `show figure` rules handle this automatically. Just provide `caption: [...]`.
 - A plain `#table(columns: auto, ..)` collapses to one column. Give an explicit column array matching the header cell count.
-- Don't manually `\`-break text inside table cells to control wrapping — it splits words oddly. Use `#text(hyphenate: false)[...]` on the cell if you want word-boundary wrapping only.
+- Don't manually `\`-break text inside table cells to control wrapping ; it splits words oddly. Use `#text(hyphenate: false)[...]` on the cell if you want word-boundary wrapping only.
 
 ## Punctuation
 
-Body prose follows the **Body text punctuation** rule in `SKILL.md`: no em-dash / sentence-level hyphen. Note that published IEEE papers *do* use en-dash in compounds (`MMC–WTG`, `speed–fidelity`) and numeric ranges — those are fine; only clause-separator dashes are banned in the user's house style.
+Body prose follows the **Body text punctuation** rule in `SKILL.md`: no em-dash / sentence-level hyphen. Note that published IEEE papers *do* use en-dash in compounds (`MMC–WTG`, `speed–fidelity`) and numeric ranges ; those are fine; only clause-separator dashes are banned in the user's house style.

@@ -12,15 +12,15 @@ Define the database once in `config/config-general.typ` (legacy: `Config/General
 )
 ```
 
-Pass it to the template (`acronyms: (acronyms_db)`) — the template calls `init-acronyms(...)` and renders the index. In the body, use `#acr("PvE")` for the first/expanded form and `#acrpl("PvE")` for plural variants. **Do not** call `init-acronyms` manually; the template owns it.
+Pass it to the template (`acronyms: (acronyms_db)`). The template calls `init-acronyms(...)` and renders the index. In the body, use `#acr("PvE")` for the first/expanded form and `#acrpl("PvE")` for plural variants. **Do not** call `init-acronyms` manually; the template owns it.
 
-The acronyms list is **no longer** wrapped in a `figure(kind: table)` — it does not pollute the List of Tables anymore. Pass `caption: [...]` if you want a centred italic caption beneath the index; default is `none`.
+The acronyms list is **no longer** wrapped in a `figure(kind: table)`. It does not pollute the List of Tables anymore. Pass `caption: [...]` if you want a centred italic caption beneath the index; default is `none`.
 
 ## Version history
 
 The `version-entry` type replaces the old `version` constructor. Field names are all lowercase:
 
-- `contributors` (was `committee` — renamed)
+- `contributors` (was `committee`, renamed)
 - `department`
 - `description`
 - `date` (ISO-8601 string)
@@ -78,7 +78,7 @@ Always use the typed `moscow-category` + `moscow-item` from `src/types/`:
 
 ### MoSCoW: simple two-column table (PvE-style)
 
-Best fit for "Programma van Eisen" documents — one row per requirement, two columns (`Eis / Beschrijving`, `Prioriteit`):
+Best fit for "Programma van Eisen" documents: one row per requirement, two columns (`Eis / Beschrijving`, `Prioriteit`):
 
 ```typst
 #let pc = make-priority-cells()              // theme-driven defaults
@@ -151,7 +151,7 @@ Pick columns by name. Built-in presets:
   render-item: pve-item,                    // REQUIRED for typed data
 )
 
-// Raw dict data with .text field — no render-item needed
+// Raw dict data with .text field, no render-item needed
 #section-render(samenwerkingscontract_db, header-level: 2)
 
 // Custom item rendering (overrides style:):
@@ -178,7 +178,7 @@ Pick columns by name. Built-in presets:
 
 ### Palette override pattern (IDP idiom)
 
-The lib helpers no longer pull project palettes implicitly — each project binds its own dict and passes it in. Two recurring patterns:
+The lib helpers no longer pull project palettes implicitly. Each project binds its own dict and passes it in. Two recurring patterns:
 
 ```typst
 // MoSCoW: bind once in db-*.typ or imports.typ, expose pc + p1..p4 aliases.
@@ -210,11 +210,11 @@ Render callback for `section-render` / `section-range-render` when items are typ
 pve-item = (it, sec) => enum.item(it.description)
 ```
 
-Pass as `render-item: pve-item`. Required when rendering `moscow-category` data through the section-DB pipeline — without it, items render blank because `moscow-item` has no `.text` field.
+Pass as `render-item: pve-item`. Required when rendering `moscow-category` data through the section-DB pipeline; without it, items render blank because `moscow-item` has no `.text` field.
 
 ### image-grid
 
-Side-by-side images in a grid figure. Images are content — pass `image("path")` not raw strings:
+Side-by-side images in a grid figure. Images are content; pass `image("path")` not raw strings:
 
 ```typst
 // Two images side by side
