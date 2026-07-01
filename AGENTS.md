@@ -22,6 +22,8 @@ skills/
 ├── opencode-install.md                        <- bootstrap doc
 ├── external-skills.md                         <- external skill catalog
 ├── AGENTS.md                                  <- this file
+├── commands/                                  <- orphan slash commands (no parent skill)
+│   └── goal.md                                <- /goal: iterate until verifier passes
 ├── drawio-pro/SKILL.md
 ├── typst-pro/SKILL.md
 └── rubens-project-standardization/
@@ -84,6 +86,12 @@ Add a command when:
 - The user benefits from an explicit entry point to bypass auto-discovery.
 
 Do not add a command for every skill. If the frontmatter description reliably triggers loading, no command is needed. Commands are an escape hatch, not a default.
+
+#### Orphan commands
+
+Commands without a parent skill (universal workflows, cross-cutting tools) live at the top-level `commands/` directory instead of inside a skill folder. Same file format, same sync step 2. Example: `commands/goal.md` (the `/goal` build loop: run a verifier, iterate, summarise or stop and report blockers).
+
+When an orphan command grows siblings, graduate it into a dedicated skill with its own `commands/` subfolder. Don't preemptively wrap a single command in a skill folder.
 
 ### `SKILL.md` frontmatter rules
 

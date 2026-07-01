@@ -52,6 +52,8 @@ skills/
 ├── README.md                                    <- you are here
 ├── opencode-install.md                          <- install / bootstrap
 ├── external-skills.md                           <- external skill catalog
+├── commands/                                    <- orphan slash commands (no parent skill)
+│   └── goal.md                                  <- /goal: iterate until verifier passes
 ├── drawio-pro/SKILL.md
 ├── typst-pro/SKILL.md
 ├── altium-pro/SKILL.md
