@@ -24,8 +24,16 @@ After writing the `.drawio` file and **before** reporting it done, run these che
 1. **Em-dash scan.** Grep the saved file for the em-dash (U+2014) in every form: the literal character, plus the entities `&#8212;`, `&#x2014;`, and `&mdash;`. Models habitually slip one into the page title (the `Foo [U+2014] Bar` shape); all of these render the forbidden glyph. Replace every hit with a spaced hyphen ` - ` or a colon. Do not skip this even if you "know" you didn't add one.
 2. **Edge endpoints resolve.** Every `source=`/`target=` on an edge names a real cell `id`. No dangling references.
 3. **`parent="1"`** on every vertex and edge (except cells nested in a group, whose parent is the group id).
-4. **Non-aligned block-diagram data edges carry `edgeStyle=orthogonalEdgeStyle`** (no accidental diagonals).
-5. **Right family, right palette:** block = pastel; flowchart and UML = monochrome. No pastel on a UML or flowchart diagram.
+4. **Nested cell coordinates are RELATIVE to the parent group's coordinate system.** A child component with `parent="gPowerIn"` and `mxGeometry x="20" y="30"` renders 20 pixels right and 30 pixels down from the group's top-left corner - NOT 20/30 from the page origin. Writing absolute page coordinates on a nested cell puts the component way outside its group. **Quick mental check before saving:** for any cell with `parent="g..."` (i.e., parent is a group id, not `1`), its geometry `x` and `y` should be **smaller** than the parent group's `width` and `height`.
+5. **Non-aligned block-diagram data edges carry `edgeStyle=orthogonalEdgeStyle`** (no accidental diagonals).
+6. **Right family, right palette:** block = pastel; flowchart and UML = monochrome. No pastel on a UML or flowchart diagram.
+7. **XML attribute well-formedness in `value="..."`.** Every `<` and `>` inside a `value="..."` attribute must be `&lt;` / `&gt;`. Inline HTML like `<b>`, `<br>`, `<i>`, `<font>` is the rendered form - in the XML it has to be `&lt;b&gt;`, `&lt;br&gt;`, `&lt;i&gt;`, `&lt;font&gt;`. drawio parses the entities and renders bold/break/italic, so the visible output is identical. **Skipping the escape silently drops every cell starting at the first unescaped `<`**, with no error. Working PowerShell check (this is the only pattern that distinguishes inside-the-value from outside-the-value, because entity-escaped `&lt;` does NOT contain a literal `<` character):
+
+```powershell
+# Any line matching `value="..."` containing a literal `<` means a cell uses unescaped HTML.
+# Should return zero hits if every value uses &lt;...&gt; entities.
+Select-String -Path <file> -Pattern 'value="[^"]*<'
+```
 
 ## When to use
 
@@ -69,6 +77,7 @@ Every `.drawio` file starts with this exact wrapper. The `host="65bd71144e"` val
 - All coordinates and sizes snap to the **10-pixel grid** (`gridSize="10"`).
 - **Never** include XML comments inside `<mxGraphModel>` - drawio strips them silently and they can corrupt round-trip diffs.
 - Multi-line labels: use `&#xa;` inside `value="..."`. Rich formatting: HTML inline (`<br>`, `<font>`, `<span style="...">`).
+- **Inline HTML inside `value="..."` attributes must be entity-escaped.** Write `<b>` as `&lt;b&gt;`, `<br>` as `&lt;br&gt;`, `<font ...>` as `&lt;font ...&gt;`. drawio parses the entities and renders the same. An unescaped `<b>` inside `value="..."` is not valid XML - drawio silently drops the cell and every cell that follows. This is the single most common reason a freshly-written title block or rich-label cell vanishes on first export.
 - Edges always carry `<mxGeometry relative="1" as="geometry"/>` as a child element (not self-closing).
 - **No em-dashes (U+2014) anywhere in any label** (titles, title block, node text, edge labels) for any diagram family. This includes the entity-encoded forms `&#8212;`, `&#x2014;`, and `&mdash;`, which render as the same forbidden glyph. Use a spaced hyphen ` - ` or a colon `:` instead. This is the user's house style and applies even when no AGENTS.md is loaded in the working directory.
 
@@ -99,14 +108,14 @@ Key style flags:
 | Domain / role | fillColor | strokeColor | Typical use |
 |---|---|---|---|
 | Power input / charge | `#fff2cc` | `#d6b656` | USB-C, charge IC, AC mains |
-| Battery / MCU / safe | `#d5e8d4` | `#82b366` | Cell + BMS, MCU + radio, "OK" path |
+| Battery / safe | `#d5e8d4` | `#82b366` | Cell + BMS, "OK" path |
+| MCU / radio / telemetry | `#e1d5e7` | `#9673a6` | MCU + radio + battery monitor (always use this row when a Battery group is also present; the two never share a color) |
 | Regulation / display / cool | `#dae8fc` | `#6c8ebf` | Buck-boost, LCD, output |
-| Monitor / aux | `#e1d5e7` | `#9673a6` | Battery monitor, telemetry |
 | Safety / fault / rail / high-power | `#f8cecc` | `#b85450` | E-stop, alarm, power rail block, motor / high-current domain |
 | HMI / I/O / warm | `#ffe6cc` | `#d79b00` | Buttons, joysticks, sensors |
 | Legend / annotation | `#f5f5f5` | `#666666` | Legend box, footnote box |
 
-Pick by **semantic role**, not aesthetics. The same color must mean the same thing across the diagram. Red (`#f8cecc`) carries a "danger / high energy" reading: use it for the safety/e-stop path **or** for a high-power motor / high-voltage domain (never both meanings in one diagram), and spell out which in the legend.
+Pick by **semantic role**, not aesthetics. The same color must mean the same thing across the diagram. Red (`#f8cecc`) carries a "danger / high energy" reading: use it for the safety/e-stop path **or** for a high-power motor / high-voltage domain (never both meanings in one diagram), and spell out which in the legend. The bus rail (see below) is conventionally red regardless of safety meaning - always add a legend line clarifying what the red rail represents in your specific diagram.
 
 ### Component blocks
 
@@ -124,7 +133,7 @@ Standard component sizes: `120×60` (single line), `120×80` (3 lines), `160×10
 
 ### Bus rails
 
-Power / data rails span multiple groups as a single full-width rectangle, with a domain color (red for safety-critical 3.3 V supply, etc.). They are **vertices** (not edges) so they can carry a label and be a connection target.
+Power / data rails run as a single horizontal rectangle that **spans the consumer groups** (not necessarily the whole page - put it just above the row it serves, leave the supply group above free of the rail). They are **vertices** (not edges) so they can carry a label and be a connection target. Conventional color is red (`#f8cecc` / `#b85450`) regardless of whether the rail is safety-critical; add a legend line so the rail's role reads unambiguously.
 
 ```xml
 <mxCell id="rail33" value="3.3 V rail"
@@ -174,7 +183,7 @@ Edges can label themselves: add `value="3.3 V"` (and `fontStyle=1` for emphasis)
 The single biggest readability failure in block diagrams is power and data arrows piling onto the same edge of a block. Keep them on different sides:
 
 - **Power drops (dashed, from the rail above)** enter each consumer through its **top** (`entryX=0.5;entryY=0`). Run them as straight vertical orthogonal lines, one short drop per consumer. Never route one dashed line diagonally across two groups to reach a far block; give that block its own vertical drop from the nearest point on the rail.
-- **Data buses (solid, labeled, from the MCU)** enter peripherals through a **side** (`entryX=0;entryY=0.5` or `entryX=1;entryY=0.5`), never the top. This guarantees data and power never share an edge and stay visually distinct.
+- **Data buses (solid, labeled)** connect the MCU to its peripherals. For sensor data (sensors→MCU), the arrow points **into** the MCU; for actuator signals (MCU→display, MCU→radio, MCU→driver), the arrow points **into** the peripheral. The arrow direction follows the actual data flow, not a default "MCU as origin". Either direction is fine as long as the arrows on a single diagram are consistent: if your SPI bus points MCU→LoRa, it must not point LoRa→MCU on a sibling edge. Enter peripherals through a **side** (`entryX=0;entryY=0.5` or `entryX=1;entryY=0.5`), never the top. This guarantees data and power never share an edge and stay visually distinct.
 - Give every parallel bus its **own** `entryY` offset (e.g. `0.35`, `0.5`, `0.65`) so two buses into the same neighbourhood don't overlap into one thick line.
 
 ### Orthogonal routing is the block-diagram default (MANDATORY)
@@ -187,12 +196,14 @@ A pure horizontal hop (same `y`, e.g. component to its right neighbour) or pure 
 
 ### MCU placement
 
-A central MCU (peripherals on both sides) is **fine** as long as every data bus uses orthogonal routing and power drops stay vertical: power runs vertical-dashed, data runs horizontal-solid, and the two cross at clean right angles instead of merging. Two equally good layouts:
+Put the MCU at **one end** of the consumer row (or in its own row under the rail). All data buses then fan out in one direction - simplest to keep orthogonal. A central MCU with peripherals on both sides forces every data bus to cross the vertical power drops, and turns to spaghetti almost every time even with orthogonal routing. Don't do it.
 
-- **MCU at one end** of the consumer row (or its own row under the rail): all data buses fan out in one direction. Simplest to keep clean.
-- **MCU centered** with peripherals left and right: symmetric and compact, but only works if you commit to orthogonal data edges and distinct `entryY` offsets. A diagonal here is the #1 way it turns to spaghetti.
+**If the MCU group also contains a peripheral (LoRa radio, modem, etc.):** put that peripheral on the side of the MCU **away from** the rest of the diagram (i.e. on the outside of the row), not between the MCU and the external peripherals. Otherwise every data edge from external sensors to the MCU has to detour around the in-group peripheral, and labels collide with its box. Two equally good options:
 
-A peripheral that takes power but no data (passive sensor: anemometer, rain gauge, tipping bucket) gets only the dashed drop. Note this in the legend so the missing data edge reads as intentional.
+- **MCU closest to the data sources**, peripheral on the outside (MCU right end of left group, radio left end of left group, sensors group on the right). Short, clean data edges from sensors to MCU.
+- **Split the peripheral into its own group** (e.g. dedicated `RADIO` group with its own pastel container). Cleanest when the peripheral is a significant component with its own data edges in and out.
+
+A peripheral that takes power but no data (passive sensor: anemometer, rain gauge, tipping bucket) gets only the dashed drop. Note this in the legend so the missing data edge reads as intentional. A passive RF output (antenna) takes neither power nor data - no edge to it.
 
 ### Legend box
 
@@ -256,18 +267,18 @@ Exception - `tbTitle` (drawing-title row) uses `align=left;verticalAlign=middle;
 
 Exception - `tbOrg` (school/company cell) uses `align=center;verticalAlign=middle` for a centered logo-style organization name.
 
-Cell value HTML pattern: bold field label on first line via `<b>...</b>`, value on the next line via `<br>`:
+Cell value HTML pattern: bold field label on first line via `<b>...</b>`, value on the next line via `<br>`. **In the actual XML these angle brackets are entity-escaped** (`&lt;b&gt;`, `&lt;br&gt;`) - see "Universal hard rules" above. The rendered form below is what the user sees; the literal XML in `value="..."` looks like the right column:
 
-```text
-<b>Drawn by</b><br>R. van der Veen
-<b>Date</b><br>2026-04-26
-<b>Rev</b><br>A
-```
+| Rendered (what the user sees) | Literal XML (what you write) |
+|---|---|
+| `<b>Drawn by</b><br>R. van der Veen` | `&lt;b&gt;Drawn by&lt;/b&gt;&lt;br&gt;R. van der Veen` |
+| `<b>Date</b><br>2026-04-26` | `&lt;b&gt;Date&lt;/b&gt;&lt;br&gt;2026-04-26` |
+| `<b>Rev</b><br>A` | `&lt;b&gt;Rev&lt;/b&gt;&lt;br&gt;A` |
 
 For the drawing-title cell, label and value go on the same line (the row is shorter):
 
-```text
-<b>Drawing</b>&nbsp;&nbsp;Handheld Remote Controller - Block Diagram
+```xml
+value="&lt;b&gt;Drawing&lt;/b&gt;&nbsp;&nbsp;Handheld Remote Controller - Block Diagram"
 ```
 
 Optional: an outer 1.5 px border `mxCell id="tbBox"` around the whole 400×150 footprint as a single rectangle behind the cells, for a slightly thicker outer frame:
@@ -309,8 +320,8 @@ Portrait. Single column at one fixed x (e.g. `x=120` or `x=240`). Multiple indep
 |---|---|---|---|
 | Start / Stop terminator | Ellipse | `ellipse;whiteSpace=wrap;html=1;` | 120×60 |
 | Process / Action | Plain rectangle | `rounded=0;whiteSpace=wrap;html=1;` | 120×50 |
-| Decision | Rhombus | `rhombus;whiteSpace=wrap;html=1;` | 91.75×90 (or 123.5×120 for long predicates) |
-| Input / Output | Parallelogram | `shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10` | 147.5×40 |
+| Decision | Rhombus | `rhombus;whiteSpace=wrap;html=1;` | 90×90 (or 130×100 for long predicates - both snap to the 10-px grid) |
+| Input / Output | Parallelogram | `shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10` | 150×40 |
 
 **No fill colors.** Flowcharts use the drawio theme default (transparent / white), no per-domain palette. Color only when a single block needs to stand out (e.g. an error path).
 
@@ -361,6 +372,10 @@ When source or target is a free point (not a vertex), use `<mxPoint .../>` with 
 
 Body text in **Dutch** for school flowcharts (`Start (main)`, `Roep X aan`, `Bereken Y`, `Toon Z`, `Stop (return 0)`). Predicate inside rhombus uses C-like syntax (`i &lt; 5`, `base &lt; 90000`) - escape `<` and `>` in XML.
 
+### Page title and title block (optional for flowcharts)
+
+A formal block-diagram-style title block is **not required** for an informal flowchart. If the flowchart is for an archivable school or engineering sheet, add the same bottom-right title block as a block diagram (Drawn by / Date / Rev / Sheet) and a centered top page title; otherwise omit both. The legend is also flowchart-typical: keep the predicate truth table and any non-obvious abbreviations near the bottom-left.
+
 ## UML / software diagrams (use-case, component, deployment, class, sequence)
 
 These are a **third family**, distinct from block diagrams and flowcharts. The user's existing UML diagrams (`Aardbei-Plukkers/software/diagrams/`) establish the conventions. **Do NOT apply the pastel block-diagram palette here.**
@@ -400,10 +415,11 @@ Page title uses a **spaced hyphen**, never an em-dash: `value="Parking Garage Sy
 1. Decide page size (default 1400×1000 landscape).
 2. Lay out the **groups** first, on a sheet of paper or mentally - assign each its color from the palette above.
 3. Write the file: title → groups (in reading order) → components inside each group → bus rails → edges → legend.
-4. Add domain-specific edges (data flow, supply distribution).
-5. Sanity-check edge anchors: every edge with `source=` / `target=` should still resolve if you move the endpoints.
-6. Run optional `npx @drawio/postprocess <file>` if available - it tightens edge routing.
-7. Open in drawio (CLI export to PNG/PDF if requested - see generic skill for command).
+4. **Components inside groups use coordinates RELATIVE to the group's top-left corner** (e.g. an `USB-C` chip in a group at page `(120, 180)` of size `240×180` lives at group-relative `(20, 30)`, NOT absolute `(140, 210)`). Components nested in a group have `parent="g<group-id>"`. Components NOT in any group, plus edges and bus rails, have `parent="1"` and absolute coords. Forgetting this puts every nested component far outside its group on render. See hard rule #4.
+5. Add domain-specific edges (data flow, supply distribution).
+6. Sanity-check edge anchors: every edge with `source=` / `target=` should still resolve if you move the endpoints.
+7. Run optional `npx @drawio/postprocess <file>` if available - it tightens edge routing.
+8. Open in drawio (CLI export to PNG/PDF if requested - see generic skill for command).
 
 ### Creating a new flowchart
 
@@ -439,7 +455,9 @@ When exporting for the user's IDP project, the convention is to drop the export 
 
 - Using `rounded=1` on group containers (containers are sharp; only components are rounded).
 - Mixing domain colors arbitrarily (e.g. green for both safety and battery in the same diagram).
+- Writing inline HTML (`<b>`, `<br>`, `<font>`) **unescaped** in a `value="..."` attribute - the XML parser hits the first `<` and silently drops every cell from there on. Always `&lt;b&gt;`, `&lt;br&gt;`, `&lt;font ...&gt;`. See "Universal hard rules" and self-check #6.
 - Forgetting `parent="1"` on a vertex / edge - it lands in the root layer and renders oddly.
+- Writing **page-absolute** coordinates on a child cell with `parent="g..."` (a group). Nested cell geometry is relative to the parent group's top-left, so `x="140"` inside a group at `(120, 180)` puts the child at page-coordinate `(260, ...)` - way outside the group. See hard rule #4 and self-check #6.
 - Self-closing `<mxCell ... edge="1"/>` without the geometry child - drawio renders it but won't display the arrow.
 - Free-floating edges (no `source=` / `target=`) when both endpoints are vertices - anchored edges survive reflow, free edges don't.
 - Using `&` literally inside `value="..."` - must be `&amp;`.
@@ -539,11 +557,11 @@ FLOWCHART - process
   rounded=0;whiteSpace=wrap;html=1;     (default size 120×50)
 
 FLOWCHART - decision
-  rhombus;whiteSpace=wrap;html=1;       (default size 91.75×90)
+  rhombus;whiteSpace=wrap;html=1;       (default size 90×90, snaps to 10-px grid)
 
 FLOWCHART - I/O parallelogram
   shape=parallelogram;perimeter=parallelogramPerimeter;
-  whiteSpace=wrap;html=1;fixedSize=1;size=10  (default size 147.5×40)
+  whiteSpace=wrap;html=1;fixedSize=1;size=10  (default size 150×40, snaps to 10-px grid)
 
 FLOWCHART - branch edge with label
   edgeStyle=orthogonalEdgeStyle;html=1;
