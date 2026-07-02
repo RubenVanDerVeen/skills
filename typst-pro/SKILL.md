@@ -1,6 +1,6 @@
 ---
 name: typst-pro
-description: Use when working with Typst files (*.typ) or when the user mentions Typst markup, document creation, or formatting. Covers the personal `@local/typst-tools` library (academic frontpage, IEEE journal, IEEE test report, meetrapport, testplan), typed MoSCoW + BOM + section-DB + figure helpers, chapter-style TOC, color/theme tokens, Dutch academic project layout, acronym/version handling, and idiomatic Typst syntax.
+description: Use when working with Typst files (*.typ) or when the user mentions Typst markup, document creation, or formatting. Triggers on Dutch phrases like "schrijf een meetrapport / testplan / onderzoek / hoofddocument", on "typst-tools" / "academic-tools", "IEEE journal", "NHL Stenden rapport", "PvE / PvA / MoSCoW", and "BOM tabel". Use for any .typ file in the user's project directories (school, hobby, embedded).
 ---
 
 # typst-pro skill
@@ -183,9 +183,10 @@ Flat kebab-case English: entrypoint `main.typ` at root; `config/` (with `config-
 
 ### Editing an existing document
 
-1. Identify the template (grep for `#show: academic-frontpage`, `IEEE-academic-journal`, `IEEE-academic-test-report`, `meetrapport`, `testplan`).
-2. Make changes in the matching section (cover args, body, or helper config).
-3. Verify in the Typst WebUI.
+1. **Check the version pin first.** Read the existing `@local/typst-tools:<X.Y.Z>` import at the top of the file. Do **not** rewrite it to `0.1.8` or any other version; that's the version the user verified compiles. Grep the rest of the project to spot sibling files pinned to a different version, and flag the inconsistency (don't silently align them, the user decides when to bump).
+2. Identify the template (grep for `#show: academic-frontpage`, `IEEE-academic-journal`, `IEEE-academic-test-report`, `meetrapport`, `testplan`).
+3. Make changes in the matching section (cover args, body, or helper config).
+4. Verify in the Typst WebUI.
 
 ### Adding a research paper
 

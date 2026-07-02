@@ -164,10 +164,61 @@ Pick columns by name. Built-in presets:
 
 ### BOM
 
+The BOM DB is a top-level array of **sections**, each a dict with a `title:` and an `items:` array. Each item dict uses these exact field names (the lib reads them by key):
+
+| Field | Required | Type | Notes |
+|---|---|---|---|
+| `part` | yes | content `[name]` | part / component name shown in the table |
+| `pn` | no | content | part number / type code |
+| `qty` | no | int | quantity, defaults to `1` when omitted |
+| `price` | no | float | unit price in euros, missing shows as `_TBD_` |
+| `source` | no | content | supplier / vendor |
+| `notes` | no | content | free-form note |
+| `label` | no | label | Typst label for cross-references; valid on a section too |
+
 ```typst
-// Single combined table with subtotals + grand total.
+// db-bom.typ
+#let bom = (
+  (
+    title: "main.power",
+    items: (
+      (
+        part:  [DIN-rail voeding 24 VDC, 150 W],
+        pn:    "HDR-150-24",
+        qty:   1,
+        price: 89.50,
+        source: "Meanwell",
+      ),
+      (
+        part:  [Primaire schakelende voeding 24 VDC, 3.8 A],
+        pn:    "STEP-PS/1AC/24DC/3.8",
+        qty:   1,
+        price: 165.00,
+        source: "Phoenix Contact",
+      ),
+    ),
+  ),
+  (
+    title: "main.io",
+    items: (
+      (
+        part:  [E-stop drukknop, vergrendelend, paddestoel],
+        pn:    "XB2-BS542",
+        qty:   2,
+        price: 18.90,
+        source: "Schneider",
+      ),
+    ),
+  ),
+)
+```
+
+```typst
+// Consumer (pve-bom.typ or main.typ)
+
+// Sliced combined table with subtotals + grand total.
 #bom-range(
-  bom, "remote.power", "arm.servos",
+  bom, "main.power", "main.io",
   colors: bom-colors,                        // see palette pattern below
   thousand: ".",                             // NL grouping → "€ 1.234,50"
 )
@@ -175,6 +226,8 @@ Pick columns by name. Built-in presets:
 // One table per section with a heading per section.
 #bom-render(bom, header-level: 3, colors: bom-colors)
 ```
+
+Common mistakes the field name table is meant to prevent: `description` (use `part`), `part-number` (use `pn`), `quantity` (use `qty`), `unit-price` (use `price`), `supplier` (use `source`), and putting `section:` on each item instead of grouping items under a section dict that has `title:` and `items:`.
 
 ### Palette override pattern (IDP idiom)
 
