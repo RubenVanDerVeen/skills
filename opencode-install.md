@@ -1,18 +1,18 @@
 ---
 name: opencode-install
-description: Use when installing superpowers, caveman, claude-mem, graphify, vercel-labs/agent-skills, stop-slop, gsd-core, or ponytail for opencode, or when configuring opencode to load the user's personal skills from C:\Users\ruben\Projects\Tools\skills.
+description: Use when installing the environment's external tools/skills (superpowers, caveman, claude-mem, graphify, markitdown, vercel-labs/agent-skills, stop-slop, gsd-core, ponytail) or configuring opencode to load the user's personal skills from C:\Users\ruben\Projects\Tools\skills.
 ---
 
 # opencode-install
 
 ## Overview
 
-Install steps for the external skill/tool sources (superpowers, caveman, claude-mem, graphify, vercel-labs/agent-skills, stop-slop, gsd-core, ponytail) and the personal skills repo path. For what each source is and when to use it, see `external-skills.md`.
+Install steps for the external skill/tool sources (superpowers, caveman, claude-mem, graphify, markitdown, vercel-labs/agent-skills, stop-slop, gsd-core, ponytail) and the personal skills repo path. For what each source is and when to use it, see `external-skills.md`.
 
 ## When to use
 
 - Setting up opencode on a new machine or after a clean reinstall.
-- "How do I install superpowers / caveman / claude-mem / graphify / vercel-labs / stop-slop / gsd-core / ponytail?"
+- "How do I install superpowers / caveman / claude-mem / graphify / markitdown / vercel-labs / stop-slop / gsd-core / ponytail?"
 - opencode is not seeing the personal skills in `C:\Users\ruben\Projects\Tools\skills`.
 
 ## Install
@@ -101,7 +101,17 @@ Then register the opencode plugin in `~/.opencode/opencode.json` (the global one
 
 The plugin auto-activates `ponytail` at level `full` every session. Change the default via the env var `PONYTAIL_DEFAULT_MODE` (set to `lite`, `full`, `ultra`, or `off`) or via `~/.config/ponytail/config.json` (`{"defaultMode": "lite"}`). See `C:/tools/ponytail/skills/ponytail-help/SKILL.md` for the full reference.
 
-### 9. Point opencode at the personal skills repo
+### 9. MarkItDown
+
+Standalone Python CLI (not an opencode plugin) that converts PDF, Word, Excel, PowerPoint, EPUB, HTML, images, and audio to Markdown so the agent can `Read` the result instead of choking on a binary file. Install with `uv` (already on PATH from the graphify step):
+
+```
+uv tool install 'markitdown[all]'
+```
+
+Usage the agent follows: `markitdown <file> -o <file>.md`, then `Read` the `.md`. The `[all]` extra pulls every format converter; use `[pdf,docx,xlsx]` for a leaner install. See `external-skills.md` for the full format list and triggers.
+
+### 10. Point opencode at the personal skills repo
 
 Make sure opencode loads skills from this repo's root:
 
@@ -115,7 +125,7 @@ The exact configuration step depends on how opencode is set up to discover skill
 
 ## Verify
 
-After all nine steps, start a new opencode session and confirm each source is reachable:
+After all ten steps, start a new opencode session and confirm each source is reachable:
 
 - A superpowers skill (e.g. `test-driven-development`).
 - A caveman skill.
@@ -125,9 +135,10 @@ After all nine steps, start a new opencode session and confirm each source is re
 - The `stop-slop` skill: paste a paragraph of AI-flavored prose and ask for a slop review.
 - A gsd-core skill: invoke `gsd-new-project` (or `gsd-help`) and confirm the phase-loop workflow is reachable.
 - The `ponytail` skill: ask for any coding task and confirm the response uses YAGNI/stdlib-first framing (the mode is active by default).
+- `markitdown`: run `markitdown --help` and confirm it is on PATH (or convert a small `.pdf` and confirm Markdown output).
 - A personal skill from this repo (e.g. `drawio-pro`).
 
-If a personal skill is missing, re-check step 9.
+If a personal skill is missing, re-check step 10.
 
 ## Related
 

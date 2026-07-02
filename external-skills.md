@@ -8,7 +8,7 @@ For install commands, see `opencode-install.md`.
 
 ## When to use
 
-- "What is claude-mem / graphify / caveman / superpowers / vercel-* / stop-slop / gsd-core / ponytail?"
+- "What is claude-mem / graphify / caveman / superpowers / markitdown / vercel-* / stop-slop / gsd-core / ponytail?"
 - Picking which tool to reach for when several could apply.
 - Briefing a new agent session on what is available.
 
@@ -20,6 +20,7 @@ For install commands, see `opencode-install.md`.
 | caveman | Skill pack | Auxiliary skills loaded via `npx github:...`. |
 | claude-mem | Plugin | Persistent cross-session memory. Captures tool observations, compresses them, re-injects relevant context into future sessions. |
 | graphify | CLI | Builds a queryable knowledge graph (HTML viewer + JSON + Markdown report) from a folder of code, SQL, scripts, docs, PDFs, images, or video. |
+| markitdown | CLI | Converts PDF/Word/Excel/PowerPoint/EPUB/HTML/images/audio to Markdown so the agent can read binary files. Standalone tool, called via Bash, not an opencode plugin. |
 | vercel-labs/agent-skills | Skill pack | Curated React/Next.js/React Native/web-design skills maintained by Vercel Engineering. |
 | stop-slop | Single skill | Removes AI tells from prose: banned phrases, structural clichés, and sentence-level rules (no em-dashes, no Wh- starters, active voice). |
 | gsd-core | Skill pack | Meta-prompting and spec-driven development framework. Runs a five-step phase loop (Discuss, Plan, Execute, Verify, Ship) with fresh-context subagents to avoid context rot. |
@@ -58,6 +59,22 @@ Install path note: run `graphify install --platform opencode` from your home dir
 Triggers: "I need an overview of this codebase", "find the connections between these modules", "which parts touch the auth flow", "rebuild the project wiki from source".
 
 Source: https://github.com/safishamsi/graphify
+
+### markitdown
+
+Microsoft's lightweight Python CLI that converts files to Markdown for LLM consumption: PDF, Word, Excel, PowerPoint, EPUB, HTML, CSV/JSON/XML, images (EXIF + OCR), audio (transcription), and ZIP contents. Standalone tool, not an opencode plugin or skill; the agent calls it directly via Bash and then `Read`s the `.md` output.
+
+Install: `uv tool install 'markitdown[all]'` (the `[all]` extra pulls every format converter; narrower extras like `[pdf,docx,xlsx]` are available).
+
+Usage:
+
+```
+markitdown report.pdf -o report.md   # then Read report.md
+```
+
+Triggers: "read this PDF/Word/Excel deck", "summarise this PowerPoint", "convert this document to text", any time a binary office or PDF file needs to enter the agent's context.
+
+Source: https://github.com/microsoft/markitdown
 
 ### vercel-labs/agent-skills
 
@@ -120,7 +137,7 @@ Ponytail governs what gets built, not how the assistant talks (pair with `cavema
 Triggers: "make this less over-engineered", "simplify this", "I want a lazy review", "is this over-engineered?", "review for over-engineering", "audit this codebase for bloat", "what can I delete from this repo", "show ponytail debt", "what did we defer", "show ponytail impact", "ponytail help".
 
 Source: https://github.com/DietrichGebert/ponytail
-Install: see `opencode-install.md` step 9. Manual install (current setup) is `git clone https://github.com/DietrichGebert/ponytail.git C:/tools/ponytail` and add `"C:/tools/ponytail/.opencode/plugins/ponytail.mjs"` to the `plugin` array in `~/.opencode/opencode.json`.
+Install: see `opencode-install.md` step 8. Manual install (current setup) is `git clone https://github.com/DietrichGebert/ponytail.git C:/tools/ponytail` and add `"C:/tools/ponytail/.opencode/plugins/ponytail.mjs"` to the `plugin` array in `~/.opencode/opencode.json`.
 
 ## Install
 
