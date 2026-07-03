@@ -11,6 +11,7 @@ Skills live in folders as `SKILL.md`. The top level holds repo-level docs (this 
 | [`drawio-pro`](./drawio-pro/SKILL.md) | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
 | [`typst-pro`](./typst-pro/SKILL.md) | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
 | [`altium-pro`](./altium-pro/SKILL.md) | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
+| [`deep-research`](./deep-research/SKILL.md) | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then brainstorm or Typst draft. Hermes research profile. |
 | [`rubens-project-standardization`](./rubens-project-standardization/SKILL.md) | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | [`synctool-sync`](./synctool-sync/SKILL.md) | Drive the `synctool` CLI to run saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
 | [`multi-plan-orchestration`](./multi-plan-orchestration/SKILL.md) | Coordinator skill for too-large tasks: splits a brainstorm into foundation + N parallel sub-plans. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to `brainstorming` + `writing-plans`. Slash command: `/multi-plan`. |
@@ -59,6 +60,11 @@ skills/
 ├── drawio-pro/SKILL.md
 ├── typst-pro/SKILL.md
 ├── altium-pro/SKILL.md
+├── deep-research/
+│   ├── SKILL.md
+│   ├── references/
+│   ├── scripts/
+│   └── templates/
 ├── rubens-project-standardization/SKILL.md
 ├── synctool-sync/SKILL.md
 ├── multi-plan-orchestration/
