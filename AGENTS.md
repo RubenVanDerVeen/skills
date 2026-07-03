@@ -23,7 +23,8 @@ skills/
 ├── external-skills.md                         <- external skill catalog
 ├── AGENTS.md                                  <- this file
 ├── commands/                                  <- orphan slash commands (no parent skill)
-│   └── goal.md                                <- /goal: iterate until verifier passes
+│   ├── goal.md                                <- /goal: iterate until verifier passes
+│   └── iterate-skill.md                       <- /iterate-skill: refine a skill via subagent review loops
 ├── drawio-pro/SKILL.md
 ├── typst-pro/SKILL.md
 └── rubens-project-standardization/
@@ -89,7 +90,7 @@ Do not add a command for every skill. If the frontmatter description reliably tr
 
 #### Orphan commands
 
-Commands without a parent skill (universal workflows, cross-cutting tools) live at the top-level `commands/` directory instead of inside a skill folder. Same file format, same sync step 2. Example: `commands/goal.md` (the `/goal` build loop: run a verifier, iterate, summarise or stop and report blockers).
+Commands without a parent skill (universal workflows, cross-cutting tools) live at the top-level `commands/` directory instead of inside a skill folder. Same file format, same sync step 2. Examples: `commands/goal.md` (the `/goal` build loop: run a verifier, iterate, summarise or stop and report blockers); `commands/iterate-skill.md` (the `/iterate-skill` skill-refinement loop: run subagents with a skill, review the real output, edit the repo copy, repeat).
 
 When an orphan command grows siblings, graduate it into a dedicated skill with its own `commands/` subfolder. Don't preemptively wrap a single command in a skill folder.
 
