@@ -111,7 +111,7 @@ let resolved-columns = if columns == none {
 - Using `arr[0]` for array access (use `arr.at(0)`).
 - Using `[]` for arrays or `()` for content (mix-up).
 - Forgetting `#` in markup/content blocks (e.g., `text[numbering(...)]` should be `text[#numbering(...)]`).
-- Using `#` inside argument lists (`figure(#image(...))`).
+- Using `#` inside argument lists or `{ }` code blocks (`figure(#image(...))`, `let x = { #calc(...) }`). Inside code context, drop the `#`.
 - Calling things "tuples" ; Typst only has arrays.
 - Calling `init-acronyms(...)` manually ; the template handles it.
 - Forgetting `#set text(lang: "Nl")` on Dutch documents (affects hyphenation, dates, and `transl` lookups).
@@ -193,6 +193,14 @@ Check the changelog / git history at `C:\Users\ruben\Projects\Tools\TypstTools\`
 ### Acronyms appear in the List of Tables
 
 Old `make-acronyms` wrapped the index in `figure(kind: table)`. Fixed in `0.1.2`. If still seen, you're either on an older version or you've wrapped your own `print-index(...)` call in a figure.
+
+### Table of contents (outline) renders twice
+
+Two `#outline()` calls are active: usually the frontpage / template helper emits one and a second `#outline()` was added by hand in the body. Check for a duplicate `#outline()` (or `#outline(entry: ...)`) outside the template's front matter and remove it. If a custom-styled TOC is wanted, replace the template's, don't add a second one alongside it.
+
+### TOC entries split across pages; `block(keep: true)` is rejected
+
+`block` has no `keep` parameter (the error is `unexpected argument: keep`). To stop a block from breaking across pages use `block(breakable: false)[ ... ]`; the whole block moves to the next page if it doesn't fit. Keeping a TOC heading together with its sub-entries needs a custom `show outline.entry: it => block(breakable: false)[ ... ]` template that groups the entry with its children, verify the exact grouping recipe against the Typst version in use before relying on it.
 
 ## Quick syntax reference
 
