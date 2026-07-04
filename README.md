@@ -54,10 +54,14 @@ skills/
 ├── README.md                                    <- you are here
 ├── opencode-install.md                          <- install / bootstrap
 ├── external-skills.md                           <- external skill catalog
-├── commands/                                    <- orphan slash commands (no parent skill)
+├── commands/                                    <- all slash commands live here
 │   ├── goal.md                                  <- /goal: iterate until verifier passes
+│   ├── execute-plan.md                          <- /execute-plan: subagent-driven plan execution
 │   ├── iterate-skill.md                         <- /iterate-skill: refine a skill via subagent review loops
-│   └── execute-plan.md                          <- /execute-plan: subagent-driven plan execution (implementer + spec + quality review per task), ponytail, per-task commits, report
+│   ├── harvest.md                               <- /harvest: mine sessions for skill improvements
+│   ├── multi-plan.md                            <- /multi-plan: start multi-plan orchestration
+│   ├── standardize.md                           <- /standardize: bootstrap or restructure a project
+│   └── standardize-migrate.md                   <- /standardize-migrate: migrate an older layout
 ├── drawio-pro/SKILL.md
 ├── typst-pro/SKILL.md
 ├── altium-pro/SKILL.md
@@ -68,13 +72,10 @@ skills/
 │   └── templates/
 ├── rubens-project-standardization/SKILL.md
 ├── synctool-sync/SKILL.md
-├── multi-plan-orchestration/
-│   ├── SKILL.md
-│   └── commands/multi-plan.md
+├── multi-plan-orchestration/SKILL.md
 └── skill-harvest/
     ├── SKILL.md
-    ├── references/extraction.md
-    └── commands/harvest.md
+    └── references/extraction.md
 ```
 
 ## Adding a skill
@@ -82,6 +83,6 @@ skills/
 See `AGENTS.md` for the full rule, in the section "Adding or modifying a skill" (catalogs, frontmatter checks, red flags). Short version:
 
 1. `mkdir <skill-name>`, add `<skill-name>/SKILL.md` with frontmatter (`name`, `description`).
-2. (Optional) Add `<skill-name>/commands/<cmd>.md` slash commands. See AGENTS.md "Slash commands" section for format and sync.
-3. Add a row to the table above and to the matching `## Current skills` table in `AGENTS.md`. Update the Layout block if you added `commands/`.
+2. (Optional) Add a command file to the top-level `commands/` directory and a `## Commands` section to the `SKILL.md`. See AGENTS.md "Slash commands" section for format and sync.
+3. Add a row to the table above and to the matching `## Current skills` table in `AGENTS.md`. Update the Layout block if you added a command.
 4. Commit.

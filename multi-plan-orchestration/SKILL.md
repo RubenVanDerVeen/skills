@@ -202,7 +202,7 @@ Populated from RED-phase baseline testing. Each row is a rationalization observe
 
 ## Commands
 
-Slash command that ships with this skill. Source lives in `commands/multi-plan.md` (this folder) and is inactive until copied to the agent's commands directory.
+Slash command associated with this skill. Source lives in the top-level `commands/multi-plan.md` and is inactive until copied to the agent's commands directory.
 
 | Command | Purpose |
 |---------|---------|
@@ -212,7 +212,7 @@ Slash command that ships with this skill. Source lives in `commands/multi-plan.m
 
 Agents do not auto-discover commands from the skills directory. Two-step sync:
 
-1. Copy the whole `multi-plan-orchestration/` folder to the agent's skills directory (e.g. `~/.claude/skills/`).
+1. Copy the `multi-plan-orchestration/` folder to the agent's skills directory (e.g. `~/.claude/skills/`).
 2. Copy `commands/multi-plan.md` to the agent's commands directory:
 
 | Agent | Global | Per-project |
@@ -220,4 +220,4 @@ Agents do not auto-discover commands from the skills directory. Two-step sync:
 | OpenCode | `~/.config/opencode/command/` | `.opencode/command/` |
 | Claude Code | `~/.claude/commands/` | `.claude/commands/` |
 
-The `commands/` subfolder ships with the skill but is dead weight inside the skills directory. The `.md` file inside it becomes a slash command only after step 2.
+The command file is dead weight inside the skills directory until step 2.

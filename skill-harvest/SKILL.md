@@ -43,4 +43,4 @@ Mines recent Claude Code and opencode sessions for repeated corrections, recurri
 |---|---|
 | `/harvest [project]` | Run a harvest; optional project-name filter |
 
-Sync: copy `commands/harvest.md` to the agent commands directory (Claude Code `~/.claude/commands/`, OpenCode `~/.config/opencode/command/`). The subfolder is dead weight until copied.
+Sync: copy `commands/harvest.md` (top-level) to the agent commands directory (Claude Code `~/.claude/commands/`, OpenCode `~/.config/opencode/command/`). The file is dead weight inside the skills directory until copied.

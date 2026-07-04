@@ -22,25 +22,29 @@ skills/
 ├── opencode-install.md                        <- bootstrap doc
 ├── external-skills.md                         <- external skill catalog
 ├── AGENTS.md                                  <- this file
-├── commands/                                  <- orphan slash commands (no parent skill)
+├── commands/                                  <- all slash commands live here
 │   ├── goal.md                                <- /goal: iterate until verifier passes
-│   └── iterate-skill.md                       <- /iterate-skill: refine a skill via subagent review loops
+│   ├── execute-plan.md                        <- /execute-plan: subagent-driven plan execution
+│   ├── iterate-skill.md                       <- /iterate-skill: refine a skill via subagent review loops
+│   ├── harvest.md                             <- /harvest: mine sessions for skill improvements
+│   ├── multi-plan.md                          <- /multi-plan: start multi-plan orchestration
+│   ├── standardize.md                         <- /standardize: bootstrap or restructure a project
+│   └── standardize-migrate.md                 <- /standardize-migrate: migrate an older layout
 ├── drawio-pro/SKILL.md
 ├── typst-pro/SKILL.md
 └── rubens-project-standardization/
     ├── SKILL.md
     ├── references/
-    ├── templates/
-    └── commands/                          <- slash-command bundle (opencode / Claude Code)
+    └── templates/
 ```
 
 A skill lives in a folder. A folder without `SKILL.md` is not a skill. Top-level `.md` files are repo docs, not skills, and they should not have frontmatter. Two exceptions exist because each doubles as a discoverable skill: `opencode-install.md` (install doc) and `external-skills.md` (external skill catalog). Keep both as-is.
 
-A `commands/` subfolder is allowed inside a skill folder to bundle opencode / Claude Code slash commands alongside the skill. The `.md` files inside become slash commands only after being copied to the agent's commands directory; the subfolder is dead weight inside the skills directory. See the Slash commands section below for the full pattern.
+All slash commands live at the top-level `commands/` directory, never inside a skill folder. The `.md` files become slash commands only after being copied to the agent's commands directory. See the Slash commands section below for the full pattern.
 
 ### Slash commands
 
-Slash commands give a skill an explicit entry point for when the agent does not pick it up automatically from frontmatter description matching. The current canonical examples are `rubens-project-standardization/commands/` (`/standardize`, `/standardize-migrate`) and `multi-plan-orchestration/commands/` (`/multi-plan`).
+Slash commands give a skill an explicit entry point for when the agent does not pick it up automatically from frontmatter description matching. All commands live as `.md` files in the top-level `commands/` directory, never inside a skill folder. Current examples: `commands/standardize.md` (`/standardize`), `commands/multi-plan.md` (`/multi-plan`), `commands/harvest.md` (`/harvest`), `commands/goal.md` (`/goal`), `commands/execute-plan.md` (`/execute-plan`), `commands/iterate-skill.md` (`/iterate-skill`), `commands/standardize-migrate.md` (`/standardize-migrate`).
 
 #### File format
 
@@ -56,13 +60,13 @@ description: <one-line summary of what the command does>
 
 - Frontmatter has `description` only (no `name` field; the file name is the command name).
 - The body tells the agent to load the relevant skill and run specific steps. It does **not** reimplement the skill.
-- Optional `$ARGUMENTS` placeholder for commands that take parameters (e.g. tier override). See `rubens-project-standardization/commands/standardize.md` for the pattern.
+- Optional `$ARGUMENTS` placeholder for commands that take parameters (e.g. tier override). See `commands/standardize.md` for the pattern.
 
 #### Sync pattern
 
-The `commands/` subfolder ships with the skill but is inactive inside the skills directory. Two-step sync per machine:
+The `commands/` directory is inactive inside the skills directory. Two-step sync per machine:
 
-1. Copy the whole skill folder (including `commands/`) to the agent's skills directory (e.g. `~/.claude/skills/`, `~/.config/opencode/skills/`).
+1. Copy each skill folder to the agent's skills directory (e.g. `~/.claude/skills/`, `~/.config/opencode/skills/`).
 2. Copy `commands/*.md` to the agent's commands directory:
 
 | Agent | Global | Per-project |
@@ -74,11 +78,11 @@ OpenCode uses the singular `command/` directory; Claude Code uses plural `comman
 
 #### Documenting commands in the skill
 
-A skill that ships commands must add a `## Commands` section near the end of `SKILL.md`:
+A skill that has an associated command must add a `## Commands` section near the end of `SKILL.md`:
 
 - Table listing each command with its purpose.
-- Sync pattern (copy of the table above; or reference back to this section if cross-repo).
-- Reminder that the subfolder is dead weight until step 2.
+- The source path in the top-level `commands/` directory (e.g. `commands/multi-plan.md`).
+- Reminder that the file is dead weight inside the skills directory until step 2 of the sync.
 
 #### When to add a command
 
@@ -86,13 +90,7 @@ Add a command when:
 - The skill's description triggers on user signals that are easy to miss (e.g. multi-module requests get buried mid-brainstorm).
 - The user benefits from an explicit entry point to bypass auto-discovery.
 
-Do not add a command for every skill. If the frontmatter description reliably triggers loading, no command is needed. Commands are an escape hatch, not a default.
-
-#### Orphan commands
-
-Commands without a parent skill (universal workflows, cross-cutting tools) live at the top-level `commands/` directory instead of inside a skill folder. Same file format, same sync step 2. Examples: `commands/goal.md` (the `/goal` build loop: run a verifier, iterate, summarise or stop and report blockers); `commands/iterate-skill.md` (the `/iterate-skill` skill-refinement loop: run subagents with a skill, review the real output, edit the repo copy, repeat).
-
-When an orphan command grows siblings, graduate it into a dedicated skill with its own `commands/` subfolder. Don't preemptively wrap a single command in a skill folder.
+Do not add a command for every skill. If the frontmatter description reliably triggers loading, no command is needed. Commands are an escape hatch, not a default. A command without a parent skill (universal workflows, cross-cutting tools) lives in the same top-level `commands/` directory; no skill-folder wrapping is required.
 
 ### `SKILL.md` frontmatter rules
 
@@ -151,7 +149,7 @@ Catalogs to update (in the same commit as the new skill):
 Steps:
 
 1. `mkdir <name>`, create `<name>/SKILL.md` with frontmatter.
-2. (Optional) Add `<name>/commands/<cmd>.md` slash command files. See the Slash commands section below for format and sync.
+2. (Optional) Add a command file to the top-level `commands/` directory and a `## Commands` section to the `SKILL.md`. See the Slash commands section below for format and sync.
 3. Update the catalogs above in the same commit. The folder name, frontmatter `name`, and table entries must match exactly.
 4. Verify the frontmatter passes: `name` in kebab-case, `description` starts with "Use when...", description does not summarise the workflow, under 1024 chars total.
 5. Verify the body: no em-dashes, no top-level `## Skill` heading (use `## Overview` instead), under the token budget for the skill type.
@@ -161,7 +159,7 @@ Red flags (any one = stop and fix before commit):
 
 - The skill exists in `mkdir <name>` but is not in the `README.md` `## Skills` table.
 - The skill is in one catalog but not another (e.g. `README.md` has it, `AGENTS.md` does not).
-- The skill ships `commands/` files but `SKILL.md` has no `## Commands` section.
+- The skill has a command in `commands/` but `SKILL.md` has no `## Commands` section.
 - The user has to remind you to update a doc. If they did, this section wasn't strong enough; tighten it.
 - The commit message says `feat:` but only adds catalog rows. Use `docs:` for catalog-only commits.
 
