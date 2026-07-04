@@ -1,6 +1,6 @@
 # AI Workflow
 
-How Ruben works with AI coding agents: the harnesses, the skill stack, the plugins and hooks around them, and the flow a task follows from idea to commit. Snapshot date: 2026-07-03.
+How Ruben works with AI coding agents: the harnesses, the skill stack, the plugins and hooks around them, and the flow a task follows from idea to commit. Snapshot date: 2026-07-04.
 
 ## Harnesses
 
@@ -51,7 +51,7 @@ The gatekeeper layer. `using-superpowers` loads at session start and forces a sk
 - **vercel-labs/agent-skills**: `vercel-react-best-practices`, `vercel-composition-patterns`, `vercel-react-native-skills`, `vercel-react-view-transitions`, `web-design-guidelines`
 - **find-skills**: discovers and installs new skills on demand
 - **markitdown** (CLI): converts PDF/Office/EPUB/images/audio to Markdown so the agent can read them
-- **graphify** (CLI, opencode): builds a queryable knowledge graph from a codebase
+- **graphify** (CLI): builds a queryable knowledge graph per repo (`graphify-out/`). Economics: a ~1-2K-token `graphify query` replaces a 10-40K-token grep/read exploration whose residue gets re-billed on every later prompt; phrase queries with concrete filenames/symbols, since abstract questions anchor on doc headings instead of code. Harness-agnostic via a "Knowledge graph" section in each graphed repo's AGENTS.md (wired by `/standardize` step 10 at medium/large tiers). Freshness needs no LLM: `graphify update .` is pure AST (~30 s), run by a debounced post-commit hook (`templates/post-commit-graphify` in the standardization skill) and as an end step of `/execute-plan`. opencode additionally has a `/graphify` skill + one-shot bash nudge plugin; Claude Code relies on the AGENTS.md section alone.
 - **claude-mem**: cross-session memory. Currently disabled on opencode (plugin renamed to `claude-mem.js.bak`); Claude Code uses its native file-based memory instead.
 
 ## Plugins (Claude Code)
@@ -108,7 +108,7 @@ Which path a task takes depends on size.
 
 ### New repo
 
-`/standardize` bootstraps AGENTS.md + CLAUDE.md shim, `docs/artifacts/`, and the standards stack (Conventional Commits, Keep a Changelog, ISO 8601 dates, kebab-case paths) at one of three size tiers.
+`/standardize` bootstraps AGENTS.md + CLAUDE.md shim, `docs/artifacts/`, and the standards stack (Conventional Commits, Keep a Changelog, ISO 8601 dates, kebab-case paths) at one of three size tiers. At medium/large tiers it also wires the graphify knowledge graph: gitignored `graphify-out/`, initial `graphify update .` build, debounced post-commit refresh hook, and the query-before-grep section in AGENTS.md.
 
 ## House conventions
 
