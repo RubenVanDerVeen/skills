@@ -9,7 +9,8 @@ Load the `project-standardization` skill and run the full bootstrap from `refere
 3. Apply the standards stack per `references/standards-stack.md`.
 4. Scaffold `AGENTS.md` from `templates/AGENTS-<tier>.md` and `CLAUDE.md` shim from `templates/CLAUDE.md`.
 5. Scaffold `.agents/`, `docs/artifacts/`, memory, CHANGELOG, STANDARDS per tier.
-6. Verify the auto-loaded token budget.
+6. Wire the graphify knowledge graph (medium + large, only when the `graphify` CLI is on PATH): gitignore `graphify-out/`, run `graphify update .`, install `templates/post-commit-graphify` as `.git/hooks/post-commit`, keep the template's Knowledge graph section in `AGENTS.md`.
+7. Verify the auto-loaded token budget.
 
 Stop and confirm before each destructive step.
 

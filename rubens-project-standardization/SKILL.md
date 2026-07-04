@@ -55,7 +55,7 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 
 | File | When to read |
 |------|--------------|
-| `references/bootstrap.md` | The 10-step bootstrap checklist (triage → AGENTS.md → `.agents/` → artifacts → memory → CHANGELOG → STANDARDS → verify) |
+| `references/bootstrap.md` | The 11-step bootstrap checklist (triage → AGENTS.md → `.agents/` → artifacts → memory → CHANGELOG → STANDARDS → graphify → verify) |
 | `references/small.md` | Small project layout, AGENTS.md content, graduation triggers |
 | `references/medium.md` | Medium project layout, auto-import vs on-demand, Homelab example |
 | `references/large.md` | Large project layout, `docs/{source,deliverables,components,project-management}/`, sprint workflow |
@@ -77,6 +77,7 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 | `templates/todolist.md` | Seed `.agents/todolist.md` |
 | `templates/CHANGELOG.md` | Seed `CHANGELOG.md` |
 | `templates/STANDARDS.md` | Human-readable standards summary |
+| `templates/post-commit-graphify` | Debounced git hook: refresh `graphify-out/` graph after commits (AST-only, no LLM). Copy to `.git/hooks/post-commit`. |
 
 ## Commands
 

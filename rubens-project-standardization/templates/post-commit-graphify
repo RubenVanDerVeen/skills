@@ -1,0 +1,11 @@
+#!/bin/sh
+# Refresh the graphify code graph after commits (AST-only, no LLM, ~30 s).
+# Debounced: skip if the graph was rebuilt in the last 10 minutes, so commit
+# bursts (plan execution) trigger at most one rebuild.
+# Install: copy to .git/hooks/post-commit (keep the executable bit on POSIX).
+graph="graphify-out/graph.json"
+[ -f "$graph" ] || exit 0
+command -v graphify >/dev/null 2>&1 || exit 0
+if [ -n "$(find "$graph" -mmin -10 2>/dev/null)" ]; then exit 0; fi
+(graphify update . >graphify-out/.update.log 2>&1 &)
+exit 0

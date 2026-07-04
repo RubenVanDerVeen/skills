@@ -26,6 +26,16 @@
 
 Specs, plans, and reviews live in `docs/artifacts/{specs,plans,reviews}/` (filename: `YYYY-MM-DD-<topic>-<type>.md`). When delegating to superpowers (`brainstorming`, `writing-plans`) or GSD, name the canonical path (`docs/artifacts/specs/...` or `docs/artifacts/plans/...`) instead of the framework default (`docs/superpowers/...`, `.planning/...`); both frameworks accept the override. A `docs/superpowers/`, `.planning/`, or other framework-native directory should never land in this repo. If one does, `git rm` it.
 
+## Knowledge graph (graphify)
+
+<!-- Delete this whole section if bootstrap step 10 (graphify) was skipped: no CLI, or small repo. -->
+
+`graphify-out/` holds a queryable code graph (refreshed by a post-commit hook; AST-only, no LLM).
+For architecture / cross-file / "what touches X" questions, query it **before** grepping:
+`graphify query "<question>"` (~1–2K tokens, budget-capped). Name a concrete file or symbol in the
+question; abstract prose anchors on doc headings instead of code. `graphify explain "<Node>"` for
+one symbol. `GRAPH_REPORT.md` = broad overview only. Stale graph → `graphify update .` (~30 s, no LLM).
+
 ## <Central Reference Table>
 
 <One table: services, endpoints, components, VMs, modules. Slim version only; full detail in the on-demand subdirectory.>
