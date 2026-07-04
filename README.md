@@ -23,11 +23,9 @@ Beyond the personal skills in this repo, several external sources are installed 
 
 - **superpowers** - process discipline skills (TDD, debugging, brainstorming, ...)
 - **caveman** - terse, low-token output style
-- **claude-mem** - persistent cross-session memory
 - **graphify** - codebase knowledge graph builder
 - **vercel-labs/agent-skills** - React / Next.js / React Native / web-design pack
 - **stop-slop** - removes AI writing patterns from prose
-- **gsd-core** - spec-driven phase-loop framework
 
 ## Install
 

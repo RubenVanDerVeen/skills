@@ -52,7 +52,6 @@ The gatekeeper layer. `using-superpowers` loads at session start and forces a sk
 - **find-skills**: discovers and installs new skills on demand
 - **markitdown** (CLI): converts PDF/Office/EPUB/images/audio to Markdown so the agent can read them
 - **graphify** (CLI): builds a queryable knowledge graph per repo (`graphify-out/`). Economics: a ~1-2K-token `graphify query` replaces a 10-40K-token grep/read exploration whose residue gets re-billed on every later prompt; phrase queries with concrete filenames/symbols, since abstract questions anchor on doc headings instead of code. Harness-agnostic via a "Knowledge graph" section in each graphed repo's AGENTS.md (wired by `/standardize` step 10 at medium/large tiers). Freshness needs no LLM: `graphify update .` is pure AST (~30 s), run by a debounced post-commit hook (`templates/post-commit-graphify` in the standardization skill) and as an end step of `/execute-plan`. opencode additionally has a `/graphify` skill + one-shot bash nudge plugin; Claude Code relies on the AGENTS.md section alone.
-- **claude-mem**: cross-session memory. Currently disabled on opencode (plugin renamed to `claude-mem.js.bak`); Claude Code uses its native file-based memory instead.
 
 ## Plugins (Claude Code)
 

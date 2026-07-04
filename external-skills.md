@@ -8,7 +8,7 @@ For install commands, see `opencode-install.md`.
 
 ## When to use
 
-- "What is claude-mem / graphify / caveman / superpowers / markitdown / vercel-* / stop-slop / gsd-core / ponytail?"
+- "What is graphify / caveman / superpowers / markitdown / vercel-* / stop-slop / ponytail?"
 - Picking which tool to reach for when several could apply.
 - Briefing a new agent session on what is available.
 
@@ -18,12 +18,10 @@ For install commands, see `opencode-install.md`.
 |---|---|---|
 | superpowers | Skill system | Process discipline skills (TDD, debugging, brainstorming, ...) loaded by opencode, Claude Code, and friends. |
 | caveman | Skill pack | Auxiliary skills loaded via `npx github:...`. |
-| claude-mem | Plugin | Persistent cross-session memory. Captures tool observations, compresses them, re-injects relevant context into future sessions. |
 | graphify | CLI | Builds a queryable knowledge graph (HTML viewer + JSON + Markdown report) from a folder of code, SQL, scripts, docs, PDFs, images, or video. |
 | markitdown | CLI | Converts PDF/Word/Excel/PowerPoint/EPUB/HTML/images/audio to Markdown so the agent can read binary files. Standalone tool, called via Bash, not an opencode plugin. |
 | vercel-labs/agent-skills | Skill pack | Curated React/Next.js/React Native/web-design skills maintained by Vercel Engineering. |
 | stop-slop | Single skill | Removes AI tells from prose: banned phrases, structural clichés, and sentence-level rules (no em-dashes, no Wh- starters, active voice). |
-| gsd-core | Skill pack | Meta-prompting and spec-driven development framework. Runs a five-step phase loop (Discuss, Plan, Execute, Verify, Ship) with fresh-context subagents to avoid context rot. |
 | ponytail | Skill pack | Lazy-dev philosophy + six skills that force the laziest solution that works. Default mode (`full`) ships YAGNI-first output and bakes itself into every response. |
 
 ## Per-source notes
@@ -39,16 +37,6 @@ Source: https://github.com/obra/superpowers
 Cuts down output token usage and rewrites assistant prose in a terse, caveman style (short words, dropped articles, simple sentences). Useful when output is too verbose, when you want to minimise tokens on long sessions, or when you deliberately want the rough register. Installed via `npx -y github:JuliusBrussee/caveman -- --only opencode`. Complements superpowers with additional agent workflows.
 
 Source: https://github.com/JuliusBrussee/caveman
-
-### claude-mem
-
-Persistent memory across sessions. Lifecycle hooks capture tool observations, an AI compression step summarises them, and relevant context is re-injected into future sessions. Supports Claude Code, OpenCode, Codex, Gemini, Hermes, etc.
-
-Install: run `npx claude-mem install` from your home directory and select `opencode` from the interactive IDE list. See `opencode-install.md` for the full step.
-
-Triggers: "I forgot what we did last session", "the agent has no continuity between runs", "I need to search past project observations".
-
-Source: https://github.com/thedotmack/claude-mem
 
 ### graphify
 
@@ -100,25 +88,6 @@ Triggers: "make this sound less like AI", "strip the AI tells from this draft", 
 
 Source: https://github.com/hardikpandya/stop-slop
 
-### gsd-core
-
-Context-engineering and spec-driven development framework. Solves "context rot" by running all heavy research, planning, and execution work in fresh-context subagents while keeping the main session lean. Each milestone repeats a five-step phase loop:
-
-1. **Discuss** (`gsd-discuss-phase`) - capture decisions before planning.
-2. **Plan** (`gsd-plan-phase`) - research, decompose, verify the plan fits one context.
-3. **Execute** (`gsd-execute-phase`) - run plans in parallel waves, each executor starts with a clean 200k-token context.
-4. **Verify** (`gsd-verify-work`) - walk through what was built, diagnose and fix before declaring done.
-5. **Ship** (`gsd-ship`) - create the PR, archive the phase, repeat.
-
-Survives session boundaries via structured artifacts (`STATE.md`, `CONTEXT.md`). Ships ~60 `gsd-*` skills for common sub-flows (`gsd-debug`, `gsd-add-tests`, `gsd-code-review`, `gsd-map-codebase`, `gsd-health`, `gsd-settings`, etc.). Entry point: `gsd-new-project` for greenfield, `gsd-new-milestone` for ongoing work.
-
-Note on overlap: gsd-core's process discipline sits in the same slot as `superpowers`. They are largely compatible (both value TDD, planning, verification), but gsd-core is heavier and opinionated. Use gsd-core when you want the full phase loop with state files; fall back to superpowers for lighter, per-task discipline.
-
-Triggers: "drive this project from spec to PR", "plan and ship a milestone", "I want fresh-context subagents for this work", "set up a spec-driven workflow", "verify and ship what we built".
-
-Source: https://github.com/open-gsd/gsd-core
-Install: `npx @opengsd/gsd-core@latest` (interactive, picks runtime + global/local).
-
 ### ponytail
 
 Lazy-dev philosophy + six skills. The base `ponytail` skill flips the assistant into a "lazy senior dev" mode by default (level: `full`) that pushes every response toward the smallest correct solution: YAGNI first, stdlib next, native platform features next, already-installed dependencies next, one line before fifty, and only then the minimum code that works. Five sibling skills cover the recurring workflows:
@@ -137,7 +106,7 @@ Ponytail governs what gets built, not how the assistant talks (pair with `cavema
 Triggers: "make this less over-engineered", "simplify this", "I want a lazy review", "is this over-engineered?", "review for over-engineering", "audit this codebase for bloat", "what can I delete from this repo", "show ponytail debt", "what did we defer", "show ponytail impact", "ponytail help".
 
 Source: https://github.com/DietrichGebert/ponytail
-Install: see `opencode-install.md` step 8. Manual install (current setup) is `git clone https://github.com/DietrichGebert/ponytail.git C:/tools/ponytail` and add `"C:/tools/ponytail/.opencode/plugins/ponytail.mjs"` to the `plugin` array in `~/.opencode/opencode.json`.
+Install: see `opencode-install.md` step 6. Manual install (current setup) is `git clone https://github.com/DietrichGebert/ponytail.git C:/tools/ponytail` and add `"C:/tools/ponytail/.opencode/plugins/ponytail.mjs"` to the `plugin` array in `~/.opencode/opencode.json`.
 
 ## Install
 
