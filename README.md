@@ -34,16 +34,15 @@ See [`opencode-install.md`](./opencode-install.md) for the full 8-step bootstrap
 Quick version:
 
 ```
-# 1. Superpowers — fetch and follow:
+# 1. Superpowers - fetch and follow:
 https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
 
 # 2. Caveman
 npx -y github:JuliusBrussee/caveman -- --only opencode
 
-# 3. Point opencode at this folder for the personal skills
+# 3. Copy the individual skills in this repo to the agents skills/ dir
 ```
 
-On Windows, step 3 means adding `C:\Users\ruben\Projects\Tools\skills` to opencode's skills discovery path.
 
 ## Layout
 

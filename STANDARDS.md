@@ -96,17 +96,26 @@ See `CHANGELOG.md` for the current state.
 
 ```
 skills/
-├── README.md                              ← user-facing
-├── AGENTS.md                              ← skill catalog spec, auto-loaded by agents
-├── CLAUDE.md                              ← one-line shim that @imports AGENTS.md
-├── CHANGELOG.md                           ← this file's sibling
-├── STANDARDS.md                           ← this file
-├── opencode-install.md                    ← discoverable install doc (also a skill)
-├── external-skills.md                     ← discoverable external catalog (also a skill)
+├── README.md                              <- user-facing
+├── AGENTS.md                              <- skill catalog spec, auto-loaded by agents
+├── CLAUDE.md                              <- one-line shim that @imports AGENTS.md
+├── CHANGELOG.md                           <- this file's sibling
+├── STANDARDS.md                           <- this file
+├── opencode-install.md                    <- discoverable install doc (also a skill)
+├── external-skills.md                     <- discoverable external catalog (also a skill)
+├── docs/                                  <- workflow notes and artifacts
 ├── .gitignore
-├── .claude/                               ← Claude Code tool settings (project)
+├── .claude/                               <- Claude Code tool settings (project)
+├── commands/                              <- all slash commands live here
+│   ├── goal.md
+│   ├── execute-plan.md
+│   ├── iterate-skill.md
+│   ├── harvest.md
+│   ├── multi-plan.md
+│   ├── standardize.md
+│   └── standardize-migrate.md
 │
-├── drawio-pro/                            ← one skill per folder
+├── drawio-pro/                            <- one skill per folder
 │   ├── SKILL.md
 │   └── references/
 ├── typst-pro/
@@ -117,10 +126,19 @@ skills/
 │   └── references/
 ├── synctool-sync/
 │   └── SKILL.md
-└── rubens-project-standardization/
+├── deep-research/
+│   ├── SKILL.md
+│   ├── references/
+│   └── templates/
+├── rubens-project-standardization/
+│   ├── SKILL.md
+│   ├── references/
+│   └── templates/
+├── multi-plan-orchestration/
+│   └── SKILL.md
+└── skill-harvest/
     ├── SKILL.md
-    ├── references/
-    └── templates/
+    └── references/
 ```
 
 A skill lives in a folder. A folder without `SKILL.md` is not a skill. Top-level `.md` files are repo docs, not skills, with two exceptions (`opencode-install.md` and `external-skills.md` double as discoverable skills).

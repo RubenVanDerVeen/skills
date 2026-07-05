@@ -1,4 +1,4 @@
-﻿# Library-internal idioms, common mistakes, troubleshooting, syntax reference
+# Library-internal idioms, common mistakes, troubleshooting, syntax reference
 
 ## Library-internal idioms (learned during the migration)
 

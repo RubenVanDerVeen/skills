@@ -1,4 +1,4 @@
-# [web:<slug>] — <Title>
+# [web:<slug>] - <Title>
 
 **Author:** ...        **Publication:** ...        **Date:** YYYY-MM-DD
 **URL:** https://...
@@ -6,7 +6,7 @@
 
 ## TL;DR
 
-<2-3 sentences — what's the author's main point?>
+<2-3 sentences - what's the author's main point?>
 
 ## Key Claims (for our topic)
 

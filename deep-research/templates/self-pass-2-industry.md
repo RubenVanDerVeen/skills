@@ -1,4 +1,4 @@
-# Self-Pass 2 — Industry-Skeptical Lens
+# Self-Pass 2 - Industry-Skeptical Lens
 
 **Author role imagined:** <Engineering lead / product manager / CEO> at <type of company> deciding whether to build on this technology.
 **Date:** <ISO date>
@@ -36,19 +36,19 @@
 
 ## 4. What I would NOT put in front of an engineering team
 
-- **<vendor claim 1>** — <reason it is misleading or unverified>
-- **<vendor claim 2>** — <reason>
+- **<vendor claim 1>** - <reason it is misleading or unverified>
+- **<vendor claim 2>** - <reason>
 - ...
 
 ## 5. <N> open deployment questions the industry sources don't answer
 
-1. <question — e.g. failure rates per task per environment>
+1. <question - e.g. failure rates per task per environment>
 2. ...
 
 ## 6. What the synthesis should explicitly NOT claim
 
-- **"<overclaim 1>"** — <why it is wrong>
-- **"<overclaim 2>"** — <why>
+- **"<overclaim 1>"** - <why it is wrong>
+- **"<overclaim 2>"** - <why>
 - ...
 
 ## 7. Score (1-10, industry-skeptical lens)

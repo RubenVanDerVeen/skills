@@ -6,9 +6,9 @@ The user complaint "the stream is not left open" / "you closed the turn again" a
 
 **What it looks like in the conversation log.** After dispatching 3 subagents, the parent replies with one-line "still waiting on subagents 1/2/3" messages between subagent completions. Each one ends a turn. The user sees a series of short replies with no substance and concludes "the stream closed again."
 
-**Why the user reads it that way.** From Telegram / chat perspective, every reply is a turn. A reply that says "still waiting" is functionally a closed turn — there is no work in it, no tool calls, no new content. Even when framed as a "tick," it ends the user's reading window.
+**Why the user reads it that way.** From Telegram / chat perspective, every reply is a turn. A reply that says "still waiting" is functionally a closed turn - there is no work in it, no tool calls, no new content. Even when framed as a "tick," it ends the user's reading window.
 
-**Fix.** Do not send tick messages. Either (a) wait silently — don't reply at all — and let the subagent results arrive as their own new messages in the stream, or (b) cancel the parallel dispatch and do the work inline (see deep-research skill pitfall "If the user is actively waiting, don't dispatch in parallel"). Pick (a) if the user can disengage; pick (b) if they are sitting at Telegram waiting.
+**Fix.** Do not send tick messages. Either (a) wait silently - don't reply at all - and let the subagent results arrive as their own new messages in the stream, or (b) cancel the parallel dispatch and do the work inline (see deep-research skill pitfall "If the user is actively waiting, don't dispatch in parallel"). Pick (a) if the user can disengage; pick (b) if they are sitting at Telegram waiting.
 
 ## Symptom 2: Wrap-up reply after a tool-call batch
 
@@ -22,9 +22,9 @@ The user complaint "the stream is not left open" / "you closed the turn again" a
 
 **What it looks like.** Agent dispatched subagents, user said "you closed the stream," agent replies "Sorry, switching to inline now." Turn ends. User waits. Agent does tool calls next turn, replies with findings. But the apology itself was a closed turn.
 
-**Why it reads that way.** The apology is a reply with no tool calls. Same problem as Symptom 1 — a closed turn with no work in it.
+**Why it reads that way.** The apology is a reply with no tool calls. Same problem as Symptom 1 - a closed turn with no work in it.
 
-**Fix.** When the user says "you closed the stream" / "don't end the turn" / "keep it open," the correct response is to IMMEDIATELY do tool calls (more searches, dossier writes, source fetches) in the same reply. Do not write an apology paragraph — the work itself is the apology. If you must acknowledge, make the acknowledgment a single inline sentence attached to a tool call, not a standalone reply.
+**Fix.** When the user says "you closed the stream" / "don't end the turn" / "keep it open," the correct response is to IMMEDIATELY do tool calls (more searches, dossier writes, source fetches) in the same reply. Do not write an apology paragraph - the work itself is the apology. If you must acknowledge, make the acknowledgment a single inline sentence attached to a tool call, not a standalone reply.
 
 ## Operating models in practice
 
@@ -32,7 +32,7 @@ These are the three shapes a research session can take, ranked by user-engagemen
 
 1. **Background mode (user can disengage).** "Run the deep-research on topic X, ping me when it's done." Subagents dispatched in parallel. Parent waits silently with no further replies until ALL subagents return. Final reply is the dossier + handoff. Use for cron jobs, "let me know when ready," any time the user does not need to see intermediate work.
 
-2. **Inline mode (user is actively waiting).** "Research X for me." Subagents NOT dispatched. Parent runs the same end-to-end pipeline inline: intake → searches (batched in one turn) → synthesis → dossier write → handoff. All in one or two replies. The tool calls themselves keep the stream visibly alive — the user sees reads, searches, writes happen, and they can interject corrections between tool results.
+2. **Inline mode (user is actively waiting).** "Research X for me." Subagents NOT dispatched. Parent runs the same end-to-end pipeline inline: intake → searches (batched in one turn) → synthesis → dossier write → handoff. All in one or two replies. The tool calls themselves keep the stream visibly alive - the user sees reads, searches, writes happen, and they can interject corrections between tool results.
 
 3. **Skeleton-and-fill mode (user can step in mid-flight).** "Research X. I'll let you know if I want to redirect." Parent writes a dossier skeleton (TL;DR placeholder, empty sections, methodology footer) inline in the FIRST reply. Subagents dispatched in background to fill specific sections. Parent waits silently. Subagent results arrive as new messages. Parent fills the skeleton in place. Use when the topic is broad and the user might want to scope-shift before deep work.
 
@@ -40,4 +40,4 @@ Model 3 is the one the user explicitly proposed in the 2026-06-27 cheap-claude-o
 
 ## Failure modes verified
 
-- 2026-06-27 cheap-claude-orchestrator dossier — agent dispatched 3 parallel subagents, then sent 2-3 short tick messages while user waited. User pushback: "the stream is not left open" / "you closed the turn again." Fix path: switch to model 2 (inline) or model 3 (skeleton + scoped subagent fills), never model 1 with ticks.
+- 2026-06-27 cheap-claude-orchestrator dossier - agent dispatched 3 parallel subagents, then sent 2-3 short tick messages while user waited. User pushback: "the stream is not left open" / "you closed the turn again." Fix path: switch to model 2 (inline) or model 3 (skeleton + scoped subagent fills), never model 1 with ticks.

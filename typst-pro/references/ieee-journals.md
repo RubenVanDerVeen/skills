@@ -1,4 +1,4 @@
-﻿# Writing proper IEEE journals
+# Writing proper IEEE journals
 
 `IEEE-academic-journal` gives you the scaffold (cover, full-width front-matter, two-column body, footer, bib). Writing a paper that actually *reads* like a real IEEE journal is mostly about typographic discipline in the body. Match the conventions of published IEEE papers, summarized below.
 

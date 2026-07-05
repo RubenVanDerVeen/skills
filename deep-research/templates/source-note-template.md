@@ -1,4 +1,4 @@
-# [arxiv:XXXX.XXXXX] — <Title>
+# [arxiv:XXXX.XXXXX] - <Title>
 
 **Authors:** ...        **Year:** ...        **Venue:** (preprint | conference | journal)
 **URL:** https://arxiv.org/abs/XXXX.XXXXX
@@ -10,7 +10,7 @@
 
 ## Key Claims (for our topic)
 
-1. <claim> — *page/section ref*
+1. <claim> - *page/section ref*
 2. <claim>
 3. <claim>
 
@@ -24,4 +24,4 @@
 
 ## Quotes Worth Keeping
 
-> "<verbatim quote>" — §<section>
+> "<verbatim quote>" - §<section>

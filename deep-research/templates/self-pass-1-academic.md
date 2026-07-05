@@ -1,4 +1,4 @@
-# Self-Pass 1 — Strict-Academic Lens
+# Self-Pass 1 - Strict-Academic Lens
 
 **Author role imagined:** Reviewer for IJRR / JMLR / Nature Machine Intelligence evaluating a survey submission.
 **Date:** <ISO date>
@@ -20,12 +20,12 @@
 
 ## 3. Strongest claims I would defend in a paper review
 
-1. **<claim>** — supported by [arxiv:XXXX.XXXXX], [arxiv:XXXX.XXXXX]. *Confidence: high/medium/low.*
+1. **<claim>** - supported by [arxiv:XXXX.XXXXX], [arxiv:XXXX.XXXXX]. *Confidence: high/medium/low.*
 2. ...
 
 ## 4. Claims I would push back on in review
 
-- **"<claim>" in [arxiv:XXXX.XXXXX]** — <specific reason: small sample size, single seed, missing baseline, etc.>
+- **"<claim>" in [arxiv:XXXX.XXXXX]** - <specific reason: small sample size, single seed, missing baseline, etc.>
 - ...
 
 ## 5. Methodological gaps I would flag for the editor

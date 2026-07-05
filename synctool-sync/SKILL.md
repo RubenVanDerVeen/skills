@@ -11,14 +11,14 @@ Drive the `synctool` CLI to run the user's saved NAS sync jobs on their behalf. 
 
 ## Prerequisite
 
-`synctool` must be on PATH. Check with `synctool --help`. If it is missing, tell the user to install it once (do NOT attempt the build yourself unless asked — the dev machine uses MinGW and needs MSYS2 on PATH):
+`synctool` must be on PATH. Check with `synctool --help`. If it is missing, tell the user to install it once (do NOT attempt the build yourself unless asked - the dev machine uses MinGW and needs MSYS2 on PATH):
 
 ```
 # from the SyncTool repo, with MSYS2 on PATH (Windows):
 cargo install --path crates/synctool-cli
 ```
 
-## Hard rails — never violate
+## Hard rails - never violate
 
 - **Always pass `--push` or `--pull`.** A bare `run`/`dry-run` opens an interactive direction prompt that hangs a non-interactive agent. If the user did not state a direction, ask.
 - **Always `dry-run` before any live `run`.** Show the deltas and get the user's explicit approval first.
@@ -26,9 +26,9 @@ cargo install --path crates/synctool-cli
 
 ## Workflow
 
-1. `synctool list` — enumerate jobs. Columns: `ID  MODE  NAME`; `[DESTRUCTIVE]` marks mirror jobs.
+1. `synctool list` - enumerate jobs. Columns: `ID  MODE  NAME`; `[DESTRUCTIVE]` marks mirror jobs.
 2. Pick the target job + direction. If unstated, ask which side wins (push = local->remote, pull = remote->local).
-3. `synctool dry-run <id> --push|--pull` — read-only preview. Report the trailing `Summary: N add, N update, N delete` and any `SELECTION DRIFT` line.
+3. `synctool dry-run <id> --push|--pull` - read-only preview. Report the trailing `Summary: N add, N update, N delete` and any `SELECTION DRIFT` line.
 4. **copy/update only:** after the user explicitly approves the dry-run, run `synctool run <id> --push|--pull`.
 
 ### Scoping to a subpath (copy/update jobs)
@@ -40,7 +40,7 @@ synctool dry-run projects-to-nas --push --subdir Tools/skills
 synctool run     projects-to-nas --push --subdir Tools/skills
 ```
 
-`--exclude` without `--subdir` means "whole side minus these". Paths are validated against the source; a missing relpath errors out. **`--subdir`/`--exclude` are rejected on mirror jobs** — mirror runs whole-job only, so scoping is a copy/update feature.
+`--exclude` without `--subdir` means "whole side minus these". Paths are validated against the source; a missing relpath errors out. **`--subdir`/`--exclude` are rejected on mirror jobs** - mirror runs whole-job only, so scoping is a copy/update feature.
 5. **mirror:** stop. Show the dry-run deltas (especially deletions), then give the user the command to run themselves and tell them they must type the job id at the confirm prompt.
 6. Report the final `Done: N add, N update, N delete`. Logs land in `<log_dir>/<id>-<ISO-ts>.log`.
 
@@ -53,7 +53,7 @@ If the dry-run printed `SELECTION DRIFT`, the live `run` will prompt `[y/N]` on 
 
 ## Delete counts are mode-dependent
 
-A `dry-run` of a **copy** or **update** job can show `- ` lines and a non-zero delete count. Those are extra files already in the destination — copy/update **keep** them; they are **not** deleted. Only **mirror** actually deletes. Never tell the user a copy/update sync will delete files.
+A `dry-run` of a **copy** or **update** job can show `- ` lines and a non-zero delete count. Those are extra files already in the destination - copy/update **keep** them; they are **not** deleted. Only **mirror** actually deletes. Never tell the user a copy/update sync will delete files.
 
 ## Scope
 
@@ -79,7 +79,7 @@ The CLI runs **saved jobs only**, but `--subdir` can scope a run to a subpath *w
 - Auto-confirming a mirror, or piping the job id to its confirm prompt -> forbidden; a destructive mirror is the user's call.
 - Building or installing `synctool` unprompted on the MinGW machine.
 
-## Red flags — STOP
+## Red flags - STOP
 
 - About to run a `[DESTRUCTIVE]` / mirror job
 - About to run without `--push` or `--pull`

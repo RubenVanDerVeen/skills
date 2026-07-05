@@ -29,6 +29,7 @@ Four layers, from personal to generic.
 | `multi-plan-orchestration` | Splits oversized tasks into foundation + N parallel sub-plans. Command: `/multi-plan` |
 | `commands/goal.md` | Orphan `/goal` command: iterate a build loop until a verifier passes |
 | `commands/execute-plan.md` | Orphan `/execute-plan` command: subagent-driven execution of an approved plan (delegates per-task loop to `subagent-driven-development`, layers on `feat`/`fix` branch naming, docs-first commit, ponytail, behavior verification) |
+| `commands/iterate-skill.md` | Orphan `/iterate-skill` command: refine a skill by dispatching subagents, inspecting real output, editing the repo copy across N iterations |
 
 ### 2. Process discipline: superpowers (plugin, v5.1.0)
 

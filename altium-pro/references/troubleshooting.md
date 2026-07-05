@@ -1,4 +1,4 @@
-# Altium Designer — Troubleshooting & Flows
+# Altium Designer - Troubleshooting & Flows
 
 Personal log of Altium issues hit and flows that work. Human-readable. Add to it whenever
 you solve something or work out a reliable flow.
@@ -35,15 +35,15 @@ Notes: <gotchas>
 
 ---
 
-## Rooms — confine all components and move them together
+## Rooms - confine all components and move them together
 
 Goal: a room that owns every component placed inside it, so they all move with the room and
 stay confined to it.
 
-1. `Design > Rooms > Place Rectangular Room` — draw the room on the board.
+1. `Design > Rooms > Place Rectangular Room` - draw the room on the board.
 2. Double-click the room to open **Edit Room Definition**.
 3. **Where The Object Matches** → switch the dropdown to **Custom Query**.
-4. Enter the query: `WithinRoom('<RoomName>')` — e.g. `WithinRoom('BMS')`.
+4. Enter the query: `WithinRoom('<RoomName>')` - e.g. `WithinRoom('BMS')`.
 5. Tick **Components Locked** (optionally **Room Locked** too) so the group moves as one and
    doesn't get dragged apart by accident.
 6. Bottom-left: pick the layer (e.g. `Top Layer`) and keep the constraint dropdown on
@@ -52,7 +52,7 @@ stay confined to it.
 
 Notes:
 
-- The default query is `False`, which matches **nothing** — that's why a fresh room looks empty
+- The default query is `False`, which matches **nothing** - that's why a fresh room looks empty
   and components don't follow it. Always replace `False`.
 - `WithinRoom(...)` is **positional**: it matches whatever currently sits inside the room
   outline. Move a part out and it's no longer a member.
@@ -79,13 +79,13 @@ Notes:
   and "Remove Rooms" change orders, so each sync removes/overwrites manually-placed rooms.
 - **Fix:** `Project > Project Options > ECO Generation`. Find **Change Rooms** and
   **Remove Rooms** in the list, set both to **Ignore Differences**, OK.
-- **Notes:** This makes rooms purely a layout concern that the schematic sync leaves alone —
+- **Notes:** This makes rooms purely a layout concern that the schematic sync leaves alone -
   exactly what you want for manually defined rooms. Leave the other room-related ECO rows
   (e.g. Add Rooms) as-is unless you hit a related problem.
 
 ## PGND vs GND split (switching converters, e.g. TPS63020)
 
-> Design knowledge, not an Altium-tool quirk — general rule of thumb for split-ground
+> Design knowledge, not an Altium-tool quirk - general rule of thumb for split-ground
 > switchers. Always confirm pin assignment against the part datasheet.
 
 Goal: decide which nets go to **PGND** (power ground) vs **GND** (signal/analog ground) on a
@@ -116,7 +116,7 @@ Rules:
 Worked example (TPS63020 buck/boost): C8–C11 (VOUT) → PGND; C6,C7 (VIN) → PGND; R16 (FB
 bottom) → GND; C12 (VINA 100nF) → GND; pin 2 → GND, pin 15 → PGND.
 
-## Polygon pours — place, net, edit, and settings
+## Polygon pours - place, net, edit, and settings
 
 Goal: place a copper polygon pour, tie it to a net, and get clean repour behavior.
 
@@ -124,7 +124,7 @@ Place + assign:
 
 1. Top toolbar component/place selector → **Polygon Pour**. Draw a rough outline to size it.
 2. After sizing, open **Properties** → set **Net** to the net it should connect to (e.g. GND).
-3. To add vertices to an existing polygon, hold **CTRL** and drag one of its edges — this
+3. To add vertices to an existing polygon, hold **CTRL** and drag one of its edges - this
    inserts a new point you can reshape.
 
 Settings to set once:
@@ -138,12 +138,12 @@ Settings to set once:
 
 Notes:
 
-- Direct Connect floods solid copper to pads — good for ground/power planes; trades away the
+- Direct Connect floods solid copper to pads - good for ground/power planes; trades away the
   thermal-relief soldering benefit, so weigh it for hand-soldered boards.
 - Without auto-repour, edits leave the pour stale until you manually `Tools > Polygon Pours >
   Repour`.
 
-## Find Similar Objects — bulk-select + bulk-edit (e.g. resize all vias)
+## Find Similar Objects - bulk-select + bulk-edit (e.g. resize all vias)
 
 Goal: select every object of one kind (all vias, all tracks on a layer, all pads of a net…)
 and change a property on all of them at once.
@@ -153,7 +153,7 @@ and change a property on all of them at once.
    vias": set **Object Kind = Via → Same**.
 3. (Optional) tick **Select Matching** / **Open Properties** so the matches get selected and
    the panel opens. OK.
-4. The **Properties / PCB Inspector** panel now edits all selected at once — change e.g. via
+4. The **Properties / PCB Inspector** panel now edits all selected at once - change e.g. via
    **Diameter** + **Hole Size** once → applies to every selected via.
 5. Clear the filter afterwards with **`Shift+C`** (or click empty space) so the board isn't
    left masked/dimmed.
@@ -163,7 +163,7 @@ Notes:
 - Also reachable via the **PCB panel** (bottom-right `PCB` tab) for filter-based multi-select,
   or a query like `IsVia` in the filter bar.
 - If the objects are governed by a **design rule** (e.g. `Design > Rules > Routing > Routing
-  Via Style`), prefer fixing the rule — a manual resize can be overridden on the next
+  Via Style`), prefer fixing the rule - a manual resize can be overridden on the next
   interactive route/repour.
 
 ## Pour won't flood over / connect to a same-net trace or pad
@@ -179,10 +179,10 @@ Notes:
   3. Repour: `Tools > Polygon Pours > Repour Selected`. Gap closes, ratsnest clears.
 - **Notes:**
   - First confirm the pour **Net** actually matches the trace (a wrong/blank net causes the
-    same clearance gap for a different reason — fix net, repour).
+    same clearance gap for a different reason - fix net, repour).
   - Also check `Design > Rules > Plane > Polygon Connect Style` is Direct/Relief, not
     **No Connect**.
-  - After changing the pour net, Altium keeps showing the **old** shape until you repour — a
+  - After changing the pour net, Altium keeps showing the **old** shape until you repour - a
     stale pour can masquerade as "not connecting".
 
 ## Polygon pours -- shelve and restore (hide fills for clarity)

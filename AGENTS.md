@@ -10,7 +10,7 @@ The user adds, refines, and shares skills over time. Auto-loaded for any agent t
 
 - **Content:** Markdown only. No build step, no tooling, no runtime.
 - **Discovery:** `AGENTS.md` at the repo root; each `SKILL.md` uses YAML frontmatter (`name`, `description`).
-- **Distribution:** Git remote `https://github.com/RubenVanDerVeen/skills.git`, branch `master`.
+- **Distribution:** Git remote `https://github.com/RubenVanDerVeen/skills.git`, branch `main`.
 
 ## Critical conventions
 
@@ -108,7 +108,7 @@ description: <triggering conditions only>
 
 ### `SKILL.md` body rules
 
-- No em-dashes (U+2014, `—`). Use commas, colons, periods, parentheses, or hyphens. The rule applies to every file in this repo AND to chat output. Verify with `(Get-ChildItem -Recurse -Include *.md | Select-String -Pattern ([char]0x2014))` returning empty.
+- No em-dashes (U+2014, `-`). Use commas, colons, periods, parentheses, or hyphens. The rule applies to every file in this repo AND to chat output. Verify with `(Get-ChildItem -Recurse -Include *.md | Select-String -Pattern ([char]0x2014))` returning empty.
 - Token efficiency: lean skills under 200 words, frequently-loaded under 500. Move heavy reference to `references/<file>.md` and link from the body.
 - Body starts with `## Overview`. Then `## When to use` (or similar). Then the actual content.
 - One excellent example beats many mediocre ones. TypeScript or shell is fine, porting is cheap.
