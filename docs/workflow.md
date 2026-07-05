@@ -28,6 +28,7 @@ Four layers, from personal to generic.
 | `project-standardization` | Bootstraps any repo for AI agents: AGENTS.md, `docs/artifacts/`, standards stack. Commands: `/standardize`, `/standardize-migrate` |
 | `multi-plan-orchestration` | Splits oversized tasks into foundation + N parallel sub-plans. Command: `/multi-plan` |
 | `commands/goal.md` | Orphan `/goal` command: iterate a build loop until a verifier passes |
+| `commands/execute-plan.md` | Orphan `/execute-plan` command: subagent-driven execution of an approved plan (delegates per-task loop to `subagent-driven-development`, layers on `feat`/`fix` branch naming, docs-first commit, ponytail, behavior verification) |
 
 ### 2. Process discipline: superpowers (plugin, v5.1.0)
 
@@ -97,7 +98,7 @@ Which path a task takes depends on size.
 
 1. `brainstorming` produces a design doc in `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-design.md`.
 2. `writing-plans` turns it into `docs/artifacts/plans/<topic>/YYYY-MM-DD-<topic>-plan.md`.
-3. Execution via `executing-plans` or `subagent-driven-development`, often in a git worktree.
+3. `/execute-plan <plan-path>` drives execution: branches as `<type>/<plan-slug>` (`feat` for features, `fix` for bug fixes), commits the plan and spec first, then runs `subagent-driven-development` (implementer + spec review + quality review per task, then a final whole-implementation review), often in a worktree.
 4. Once spec and plan are approved, the agent commits on its own at plan-defined boundaries (the one carve-out from the no-unprompted-commit rule).
 5. Code review skills close the loop before merge.
 
