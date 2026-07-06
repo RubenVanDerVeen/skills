@@ -92,7 +92,7 @@ Slash commands associated with this skill. Source files live in the top-level `c
 
 Agents do not auto-discover commands from the skills directory. Two-step sync:
 
-1. Copy the `rubens-project-standardization/` folder to the agent's skills directory (e.g. `~/.claude/skills/`).
+1. Copy the `skills/rubens-project-standardization/` folder to the agent's skills directory (e.g. `~/.claude/skills/rubens-project-standardization/`).
 2. Copy `commands/standardize.md` and `commands/standardize-migrate.md` to the agent's commands directory:
 
 | Agent | Global | Per-project |

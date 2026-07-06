@@ -212,7 +212,7 @@ Slash command associated with this skill. Source lives in the top-level `command
 
 Agents do not auto-discover commands from the skills directory. Two-step sync:
 
-1. Copy the `multi-plan-orchestration/` folder to the agent's skills directory (e.g. `~/.claude/skills/`).
+1. Copy the `skills/multi-plan-orchestration/` folder to the agent's skills directory (e.g. `~/.claude/skills/multi-plan-orchestration/`).
 2. Copy `commands/multi-plan.md` to the agent's commands directory:
 
 | Agent | Global | Per-project |

@@ -92,11 +92,11 @@ uv tool install 'markitdown[all]'
 
 Usage the agent follows: `markitdown <file> -o <file>.md`, then `Read` the `.md`. The `[all]` extra pulls every format converter; use `[pdf,docx,xlsx]` for a leaner install. See `external-skills.md` for the full format list and triggers.
 
-### 8. Copy skills and commands into the agent's directories
+### 8. Copy skills, commands, and agents into the agent's directories
 
-The `commands/` directory inside this repo is inactive by itself; both steps below are required per machine.
+The `skills/`, `commands/`, and `agents/` directories inside this repo are inactive by themselves; all three steps below are required per machine.
 
-1. Copy each skill folder to the agent's skills directory (e.g. `~/.claude/skills/` for Claude Code, `~/.config/opencode/skills/` for opencode).
+1. Copy each folder under `skills/` to the agent's skills directory (e.g. `~/.claude/skills/` for Claude Code, `~/.config/opencode/skills/` for opencode).
 2. Copy each `commands/*.md` file to the agent's commands directory:
 
    | Agent | Global | Per-project |
@@ -105,6 +105,8 @@ The `commands/` directory inside this repo is inactive by itself; both steps bel
    | Claude Code | `~/.claude/commands/` (plural) | `.claude/commands/` |
 
    opencode uses the singular `command/` directory; Claude Code uses plural `commands/`. Do not normalise across agents.
+
+3. Copy each `agents/*.md` file (opencode agent definitions: `orchestrator`, `executor`, `reviewer`) to `~/.config/opencode/agents/` (global) or `.opencode/agents/` (per-project). opencode-only; Claude Code subagents use a different frontmatter format. Restart opencode afterwards; see `agents/README.md` for roles and tuning.
 
 ## Verify
 
@@ -118,6 +120,7 @@ After all eight steps, start a new opencode session and confirm each source is r
 - The `ponytail` skill: ask for any coding task and confirm the response uses YAGNI/stdlib-first framing (the mode is active by default).
 - `markitdown`: run `markitdown --help` and confirm it is on PATH (or convert a small `.pdf` and confirm Markdown output).
 - A personal skill from this repo (e.g. `drawio-pro`).
+- The custom agents: `opencode agent list` shows `orchestrator`, `executor`, and `reviewer`.
 
 If a personal skill is missing, re-check step 8.
 
@@ -125,4 +128,4 @@ If a personal skill is missing, re-check step 8.
 
 - `external-skills.md` in this repo: what each source is and when to reach for it.
 - Working directory: `C:\Users\ruben\Projects\Tools\skills`
-- Personal skills live in: `C:\Users\ruben\Projects\Tools\skills\<skill-name>\SKILL.md`
+- Personal skills live in: `C:\Users\ruben\Projects\Tools\skills\skills\<skill-name>\SKILL.md`

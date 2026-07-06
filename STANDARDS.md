@@ -24,7 +24,7 @@ Two layers: formal ISO/IEC/IEEE norms and industry conventions.
 | Conventional Commits 1.0.0 | **yes**    | Commit messages |
 | Keep a Changelog 1.1.0  | **yes**       | `CHANGELOG.md` format |
 
-This is a content-only skills catalog. Most formal norms are not adopted; the conventions layer is the floor.
+This is a content-only agent environment repo (skills, slash commands, agent definitions). Most formal norms are not adopted; the conventions layer is the floor.
 
 ---
 
@@ -115,33 +115,40 @@ skills/
 │   ├── standardize.md
 │   └── standardize-migrate.md
 │
-├── drawio-pro/                            <- one skill per folder
-│   ├── SKILL.md
-│   └── references/
-├── typst-pro/
-│   ├── SKILL.md
-│   └── references/
-├── altium-pro/
-│   ├── SKILL.md
-│   └── references/
-├── synctool-sync/
-│   └── SKILL.md
-├── deep-research/
-│   ├── SKILL.md
-│   ├── references/
-│   └── templates/
-├── rubens-project-standardization/
-│   ├── SKILL.md
-│   ├── references/
-│   └── templates/
-├── multi-plan-orchestration/
-│   └── SKILL.md
-└── skill-harvest/
-    ├── SKILL.md
-    └── references/
+├── agents/                                <- opencode agent definitions
+│   ├── README.md
+│   ├── orchestrator.md
+│   ├── executor.md
+│   └── reviewer.md
+│
+└── skills/                                <- one skill per folder
+    ├── drawio-pro/
+    │   ├── SKILL.md
+    │   └── references/
+    ├── typst-pro/
+    │   ├── SKILL.md
+    │   └── references/
+    ├── altium-pro/
+    │   ├── SKILL.md
+    │   └── references/
+    ├── synctool-sync/
+    │   └── SKILL.md
+    ├── deep-research/
+    │   ├── SKILL.md
+    │   ├── references/
+    │   └── templates/
+    ├── rubens-project-standardization/
+    │   ├── SKILL.md
+    │   ├── references/
+    │   └── templates/
+    ├── multi-plan-orchestration/
+    │   └── SKILL.md
+    └── skill-harvest/
+        ├── SKILL.md
+        └── references/
 ```
 
-A skill lives in a folder. A folder without `SKILL.md` is not a skill. Top-level `.md` files are repo docs, not skills, with two exceptions (`opencode-install.md` and `external-skills.md` double as discoverable skills).
+A skill lives in a folder under `skills/`. A folder without `SKILL.md` is not a skill. Top-level `.md` files are repo docs, not skills, with two exceptions (`opencode-install.md` and `external-skills.md` double as discoverable skills).
 
 ---
 
@@ -153,7 +160,7 @@ Not applicable in the strict sense: this catalog has no per-sprint exports or ge
 
 ## Specs, plans, reviews
 
-`docs/artifacts/` is not present (small-tier repo, no design history worth scaffolding). If the catalog gains non-trivial design decisions, add `docs/artifacts/{specs,plans,reviews}/` per the `project-standardization` skill.
+`docs/artifacts/{specs,plans,reviews}/` holds the design history for non-trivial skills (e.g. `multi-plan-orchestration`, `skill-harvest`), per the `project-standardization` skill.
 
 ---
 

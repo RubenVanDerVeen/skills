@@ -1,10 +1,10 @@
-# skills: personal agent skills
+# skills: personal agent environment
 
 ## What this is
 
-Personal skills catalog for AI coding agents that follow the [agents.md](https://agents.md) convention (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.). Each skill lives in its own folder as `<name>/SKILL.md`. Top-level `.md` files (`README.md`, `opencode-install.md`, `external-skills.md`) are repo docs, not skills.
+Personal agent environment monorepo for AI coding agents that follow the [agents.md](https://agents.md) convention (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.). Three kinds of content: skills (`skills/<name>/SKILL.md`), slash commands (`commands/`), and opencode agent definitions (`agents/`). Top-level `.md` files (`README.md`, `opencode-install.md`, `external-skills.md`) are repo docs, not skills.
 
-The user adds, refines, and shares skills over time. Auto-loaded for any agent that opens this repo.
+The user adds, refines, and shares skills, commands, and agents over time. Auto-loaded for any agent that opens this repo.
 
 ## Stack
 
@@ -30,15 +30,17 @@ skills/
 │   ├── multi-plan.md                          <- /multi-plan: start multi-plan orchestration
 │   ├── standardize.md                         <- /standardize: bootstrap or restructure a project
 │   └── standardize-migrate.md                 <- /standardize-migrate: migrate an older layout
-├── drawio-pro/SKILL.md
-├── typst-pro/SKILL.md
-└── rubens-project-standardization/
-    ├── SKILL.md
-    ├── references/
-    └── templates/
+├── agents/                                    <- opencode agent definitions (orchestrator, executor, reviewer)
+└── skills/                                    <- all skill folders live here
+    ├── drawio-pro/SKILL.md
+    ├── typst-pro/SKILL.md
+    └── rubens-project-standardization/
+        ├── SKILL.md
+        ├── references/
+        └── templates/
 ```
 
-A skill lives in a folder. A folder without `SKILL.md` is not a skill. Top-level `.md` files are repo docs, not skills, and they should not have frontmatter. Two exceptions exist because each doubles as a discoverable skill: `opencode-install.md` (install doc) and `external-skills.md` (external skill catalog). Keep both as-is.
+A skill lives in a folder under the top-level `skills/` directory. A folder without `SKILL.md` is not a skill. Top-level `.md` files are repo docs, not skills, and they should not have frontmatter. Two exceptions exist because each doubles as a discoverable skill: `opencode-install.md` (install doc) and `external-skills.md` (external skill catalog). Keep both as-is.
 
 All slash commands live at the top-level `commands/` directory, never inside a skill folder. The `.md` files become slash commands only after being copied to the agent's commands directory. See the Slash commands section below for the full pattern.
 
@@ -66,7 +68,7 @@ description: <one-line summary of what the command does>
 
 The `commands/` directory is inactive inside the skills directory. Two-step sync per machine:
 
-1. Copy each skill folder to the agent's skills directory (e.g. `~/.claude/skills/`, `~/.config/opencode/skills/`).
+1. Copy each folder under `skills/` to the agent's skills directory (e.g. `~/.claude/skills/`, `~/.config/opencode/skills/`).
 2. Copy `commands/*.md` to the agent's commands directory:
 
 | Agent | Global | Per-project |
@@ -91,6 +93,10 @@ Add a command when:
 - The user benefits from an explicit entry point to bypass auto-discovery.
 
 Do not add a command for every skill. If the frontmatter description reliably triggers loading, no command is needed. Commands are an escape hatch, not a default. A command without a parent skill (universal workflows, cross-cutting tools) lives in the same top-level `commands/` directory; no skill-folder wrapping is required.
+
+### Agent definitions
+
+Custom opencode agents (`orchestrator`, `executor`, `reviewer`) live in the top-level `agents/` directory. Same pattern as `commands/`: source of truth here, inactive until copied to `~/.config/opencode/agents/`. They pair with `/execute-plan` (implementer tasks go to `executor`, reviews to `reviewer`). opencode-only; do not copy to Claude Code. Format, sync, token measurements, and tuning rules: `agents/README.md`.
 
 ### `SKILL.md` frontmatter rules
 
@@ -123,18 +129,18 @@ description: <triggering conditions only>
 
 | Folder | `name` in frontmatter | What it does |
 |---|---|---|
-| `drawio-pro/` | `drawio-pro` | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
-| `typst-pro/` | `typst-pro` | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
-| `altium-pro/` | `altium-pro` | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
-| `deep-research/` | `deep-research` | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then brainstorm or Typst draft. Hermes research profile. |
-| `synctool-sync/` | `synctool-sync` | Drive the `synctool` CLI for saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
-| `rubens-project-standardization/` | `project-standardization` | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
-| `multi-plan-orchestration/` | `multi-plan-orchestration` | Splits large tasks into foundation + N parallel sub-plans during brainstorming. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to existing brainstorming + writing-plans skills. |
-| `skill-harvest/` | `skill-harvest` | Mines recent Claude Code + opencode sessions for repeated corrections and skill gaps. Report, approve, apply loop with incremental state. Slash command: `/harvest`. |
+| `skills/drawio-pro/` | `drawio-pro` | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
+| `skills/typst-pro/` | `typst-pro` | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
+| `skills/altium-pro/` | `altium-pro` | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
+| `skills/deep-research/` | `deep-research` | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then brainstorm or Typst draft. Hermes research profile. |
+| `skills/synctool-sync/` | `synctool-sync` | Drive the `synctool` CLI for saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
+| `skills/rubens-project-standardization/` | `project-standardization` | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
+| `skills/multi-plan-orchestration/` | `multi-plan-orchestration` | Splits large tasks into foundation + N parallel sub-plans during brainstorming. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to existing brainstorming + writing-plans skills. |
+| `skills/skill-harvest/` | `skill-harvest` | Mines recent Claude Code + opencode sessions for repeated corrections and skill gaps. Report, approve, apply loop with incremental state. Slash command: `/harvest`. |
 | `opencode-install.md` (top-level doc) | `opencode-install` | Bootstrap doc: install commands for superpowers, caveman, graphify, plus the personal skills repo path. |
 | `external-skills.md` (top-level doc) | `external-skills` | Catalog of external skills/tools (superpowers, caveman, graphify): what each does, when to use, install pointers. |
 
-The `rubens-project-standardization/` directory keeps the old name for backwards compatibility. The skill's identity is `project-standardization`. Renaming the folder is a future chore.
+The `skills/rubens-project-standardization/` directory keeps the old name for backwards compatibility. The skill's identity is `project-standardization`. Renaming the folder is a future chore.
 
 ## Adding or modifying a skill
 
@@ -148,7 +154,7 @@ Catalogs to update (in the same commit as the new skill):
 
 Steps:
 
-1. `mkdir <name>`, create `<name>/SKILL.md` with frontmatter.
+1. `mkdir skills/<name>`, create `skills/<name>/SKILL.md` with frontmatter.
 2. (Optional) Add a command file to the top-level `commands/` directory and a `## Commands` section to the `SKILL.md`. See the Slash commands section below for format and sync.
 3. Update the catalogs above in the same commit. The folder name, frontmatter `name`, and table entries must match exactly.
 4. Verify the frontmatter passes: `name` in kebab-case, `description` starts with "Use when...", description does not summarise the workflow, under 1024 chars total.
@@ -157,7 +163,7 @@ Steps:
 
 Red flags (any one = stop and fix before commit):
 
-- The skill exists in `mkdir <name>` but is not in the `README.md` `## Skills` table.
+- The skill exists in `skills/<name>/` but is not in the `README.md` `## Skills` table.
 - The skill is in one catalog but not another (e.g. `README.md` has it, `AGENTS.md` does not).
 - The skill has a command in `commands/` but `SKILL.md` has no `## Commands` section.
 - The user has to remind you to update a doc. If they did, this section wasn't strong enough; tighten it.

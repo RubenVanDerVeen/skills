@@ -1,21 +1,25 @@
 # skills
 
-Personal skills for AI coding agents that follow the [agents.md](https://agents.md) convention (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.).
+Personal agent environment for AI coding agents that follow the [agents.md](https://agents.md) convention (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.): skills, slash commands, and opencode agent definitions in one repo.
 
-Skills live in folders as `SKILL.md`. The top level holds repo-level docs (this README and the install guide).
+Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands/`, agent definitions under `agents/`. The top level holds repo-level docs (this README and the install guide).
 
 ## Skills
 
 | Skill | What it does |
 |---|---|
-| [`drawio-pro`](./drawio-pro/SKILL.md) | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
-| [`typst-pro`](./typst-pro/SKILL.md) | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
-| [`altium-pro`](./altium-pro/SKILL.md) | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
-| [`deep-research`](./deep-research/SKILL.md) | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then brainstorm or Typst draft. Hermes research profile. |
-| [`rubens-project-standardization`](./rubens-project-standardization/SKILL.md) | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
-| [`synctool-sync`](./synctool-sync/SKILL.md) | Drive the `synctool` CLI to run saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
-| [`multi-plan-orchestration`](./multi-plan-orchestration/SKILL.md) | Coordinator skill for too-large tasks: splits a brainstorm into foundation + N parallel sub-plans. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to `brainstorming` + `writing-plans`. Slash command: `/multi-plan`. |
-| [`skill-harvest`](./skill-harvest/SKILL.md) | Mines recent Claude Code + opencode sessions for repeated corrections and skill gaps; report, approve, apply. Slash command: `/harvest`. |
+| [`drawio-pro`](./skills/drawio-pro/SKILL.md) | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
+| [`typst-pro`](./skills/typst-pro/SKILL.md) | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
+| [`altium-pro`](./skills/altium-pro/SKILL.md) | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
+| [`deep-research`](./skills/deep-research/SKILL.md) | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then brainstorm or Typst draft. Hermes research profile. |
+| [`rubens-project-standardization`](./skills/rubens-project-standardization/SKILL.md) | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
+| [`synctool-sync`](./skills/synctool-sync/SKILL.md) | Drive the `synctool` CLI to run saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
+| [`multi-plan-orchestration`](./skills/multi-plan-orchestration/SKILL.md) | Coordinator skill for too-large tasks: splits a brainstorm into foundation + N parallel sub-plans. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to `brainstorming` + `writing-plans`. Slash command: `/multi-plan`. |
+| [`skill-harvest`](./skills/skill-harvest/SKILL.md) | Mines recent Claude Code + opencode sessions for repeated corrections and skill gaps; report, approve, apply. Slash command: `/harvest`. |
+
+## Agents
+
+Custom opencode agents for the plan/execute/review split: `orchestrator` (primary, cannot edit), `executor` (implements one task), `reviewer` (read-only review). Per-agent skill denylists cut startup context ~2-4k tokens per session. Source of truth in [`agents/`](./agents/README.md); copy to `~/.config/opencode/agents/` to activate.
 
 ## External skills
 
@@ -40,7 +44,7 @@ https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INS
 # 2. Caveman
 npx -y github:JuliusBrussee/caveman -- --only opencode
 
-# 3. Copy the individual skills in this repo to the agents skills/ dir
+# 3. Copy the skill folders under skills/ to the agent's skills dir
 ```
 
 
@@ -59,27 +63,29 @@ skills/
 │   ├── multi-plan.md                            <- /multi-plan: start multi-plan orchestration
 │   ├── standardize.md                           <- /standardize: bootstrap or restructure a project
 │   └── standardize-migrate.md                   <- /standardize-migrate: migrate an older layout
-├── drawio-pro/SKILL.md
-├── typst-pro/SKILL.md
-├── altium-pro/SKILL.md
-├── deep-research/
-│   ├── SKILL.md
-│   ├── references/
-│   ├── scripts/
-│   └── templates/
-├── rubens-project-standardization/SKILL.md
-├── synctool-sync/SKILL.md
-├── multi-plan-orchestration/SKILL.md
-└── skill-harvest/
-    ├── SKILL.md
-    └── references/extraction.md
+├── agents/                                      <- opencode agent definitions (orchestrator, executor, reviewer)
+└── skills/                                      <- all skill folders live here
+    ├── drawio-pro/SKILL.md
+    ├── typst-pro/SKILL.md
+    ├── altium-pro/SKILL.md
+    ├── deep-research/
+    │   ├── SKILL.md
+    │   ├── references/
+    │   ├── scripts/
+    │   └── templates/
+    ├── rubens-project-standardization/SKILL.md
+    ├── synctool-sync/SKILL.md
+    ├── multi-plan-orchestration/SKILL.md
+    └── skill-harvest/
+        ├── SKILL.md
+        └── references/extraction.md
 ```
 
 ## Adding a skill
 
 See `AGENTS.md` for the full rule, in the section "Adding or modifying a skill" (catalogs, frontmatter checks, red flags). Short version:
 
-1. `mkdir <skill-name>`, add `<skill-name>/SKILL.md` with frontmatter (`name`, `description`).
+1. `mkdir skills/<skill-name>`, add `skills/<skill-name>/SKILL.md` with frontmatter (`name`, `description`).
 2. (Optional) Add a command file to the top-level `commands/` directory and a `## Commands` section to the `SKILL.md`. See AGENTS.md "Slash commands" section for format and sync.
 3. Add a row to the table above and to the matching `## Current skills` table in `AGENTS.md`. Update the Layout block if you added a command.
 4. Commit.

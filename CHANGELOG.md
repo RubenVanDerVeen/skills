@@ -19,9 +19,11 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - `.gitignore`: minimal (editor swap, OS files).
 - `CLAUDE.md`: one-line shim that `@import`s `AGENTS.md` for Claude Code compatibility.
 - `deep-research/`: end-to-end research pipeline skill (Hermes research profile). Intake → parallel gather (arxiv + web + own vault) → synthesized dossier with citations → brainstorm or Typst draft. Catalogue rows added in `README.md` (Skills table + Layout block) and `AGENTS.md` (Current skills table).
+- `agents/`: opencode agent definitions (`orchestrator`, `executor`, `reviewer`) with per-agent skill denylists; inactive in the repo, copied to `~/.config/opencode/agents/` to activate. `commands/execute-plan.md` now maps implementer tasks to `executor` and reviews to `reviewer`.
 
 ### Changed
 
+- Repo re-scoped from skills catalog to agent environment monorepo: the eight skill folders moved into a top-level `skills/` directory (`git mv`, history preserved). Catalogs, layout trees, and sync instructions updated in `README.md`, `AGENTS.md`, `STANDARDS.md`, `opencode-install.md`, and the two `SKILL.md` files with self-referencing sync steps.
 - `AGENTS.md`: branch model `master` → `main`; added `synctool-sync` row to the Current skills table.
 - `typst-pro`: bumped `@local/typst-tools` baseline `0.1.2` → `0.1.8` across skill examples, imports, and install paths. Factual references (fixed-in bug notes, rename reset point, version-numbering example, `@preview` pins) kept at `0.1.2`.
 
