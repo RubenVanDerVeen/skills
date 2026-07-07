@@ -58,6 +58,7 @@ skills/
 ├── commands/                                    <- all slash commands live here
 │   ├── goal.md                                  <- /goal: iterate until verifier passes
 │   ├── execute-plan.md                          <- /execute-plan: subagent-driven plan execution
+│   ├── full-cycle.md                            <- /full-cycle: brainstorm > spec > plan, hand off execution
 │   ├── iterate-skill.md                         <- /iterate-skill: refine a skill via subagent review loops
 │   ├── harvest.md                               <- /harvest: mine sessions for skill improvements
 │   ├── multi-plan.md                            <- /multi-plan: start multi-plan orchestration

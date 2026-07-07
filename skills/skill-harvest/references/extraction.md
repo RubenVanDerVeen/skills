@@ -27,10 +27,10 @@ Write (after a run; set each source to the mtime of the NEWEST session processed
 
 Sessions: `~/.claude/projects/<encoded-project-dir>/<session-id>.jsonl`. Project dirs encode the working directory (`C--Users-ruben-projects-hobby-homelab`), so a project filter is a wildcard on the folder name.
 
-Enumerate (oldest first, capped; oldest-first drains the backlog FIFO so every session is processed once and nothing is re-processed). Observer / synthetic project dirs (`*claude-mem-observer*`, `*observer-sessions*`) are excluded by default because they are background memory-tool sessions, not user activity; an explicit project filter overrides the exclusion:
+Enumerate (oldest first, capped; oldest-first drains the backlog FIFO so every session is processed once and nothing is re-processed). Synthetic project dirs are excluded by default because they are not user activity; an explicit project filter overrides the exclusion. Current patterns: `claude-mem-observer` / `observer-sessions` (background memory-tool sessions), `ai-harness-eval` (harness eval runs with injected prompts), `minimax.agents` (encoded `.minimax\agents\*\workspace` agent sessions; the dot in the regex matches both `-` and `\`):
 
 ```powershell
-Get-ChildItem "$env:USERPROFILE\.claude\projects\*\*.jsonl" | Where-Object { $_.LastWriteTime -gt $since -and $_.DirectoryName -notmatch 'claude-mem-observer|observer-sessions' } | Sort-Object LastWriteTime | Select-Object -First 40
+Get-ChildItem "$env:USERPROFILE\.claude\projects\*\*.jsonl" | Where-Object { $_.LastWriteTime -gt $since -and $_.DirectoryName -notmatch 'claude-mem-observer|observer-sessions|ai-harness-eval|minimax.agents' } | Sort-Object LastWriteTime | Select-Object -First 40
 ```
 
 With project filter: replace the first `*` with `*<project>*` (a filter that matches an observer dir re-includes it). Record `$newestCc` = the `LastWriteTime` of the last file in the batch (the cursor to write).
@@ -56,7 +56,7 @@ Interruption markers (corrections; they arrive as user messages starting with `[
 
 Storage is SQLite: `~/.local/share/opencode/opencode.db`. Tables: `session` (id, parent_id, directory, title), `message` (session_id, time_created ms-epoch, data JSON with `role`), `part` (message_id, data JSON with `type`, `text`, `synthetic`).
 
-User messages since a ms-epoch timestamp (top-level sessions only; `parent_id IS NULL` excludes subagent dispatch prompts, `synthetic` excludes injected content):
+User messages since a ms-epoch timestamp (top-level sessions only; `parent_id IS NULL` excludes subagent dispatch prompts, `synthetic` excludes injected content, the `NOT LIKE` filters mirror the Claude Code synthetic-dir exclusions and an explicit project filter overrides them):
 
 ```sql
 SELECT s.directory, m.session_id, json_extract(p.data,'$.text')
@@ -67,6 +67,8 @@ WHERE json_extract(m.data,'$.role') = 'user'
   AND json_extract(p.data,'$.type') = 'text'
   AND json_extract(p.data,'$.synthetic') IS NOT 1
   AND s.parent_id IS NULL
+  AND s.directory NOT LIKE '%ai-harness-eval%'
+  AND s.directory NOT LIKE '%.minimax%'
   AND m.time_created > :since_ms
 ORDER BY m.time_created ASC;
 ```

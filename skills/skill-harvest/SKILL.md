@@ -15,7 +15,7 @@ Mines recent Claude Code and opencode sessions for repeated corrections, recurri
 ## Flow
 
 1. **State.** Read `~/.skill-harvest-state.json` (per-source ISO 8601 UTC timestamp of last run). Missing file: use a 30-day lookback and say so in the report.
-2. **Enumerate.** List sessions newer than the timestamp per source (commands in `references/extraction.md`), oldest first so the backlog drains FIFO and nothing is re-processed. Optional project argument filters by directory substring. Observer / synthetic dirs (`claude-mem-observer`, `observer-sessions`) are excluded by default; an explicit project filter overrides this. Cap 40 sessions per run; list the remainder in the report.
+2. **Enumerate.** List sessions newer than the timestamp per source (commands in `references/extraction.md`), oldest first so the backlog drains FIFO and nothing is re-processed. Optional project argument filters by directory substring. Observer / synthetic dirs (`claude-mem-observer`, `observer-sessions`) and eval-harness dirs (`ai-harness-eval`, `.minimax` agent workspaces) are excluded by default; an explicit project filter overrides this. Cap 40 sessions per run; list the remainder in the report.
 3. **Digest.** Run the extraction commands. Only user messages and interruption markers enter context (compaction summaries and subagent result blocks are dropped). Never read raw transcripts wholesale.
 4. **Classify.** Keep a signal only if it appears in 2+ sessions, or is one explicit rule statement ("always X", "never Y", "stop doing Z").
 

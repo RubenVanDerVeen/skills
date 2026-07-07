@@ -25,6 +25,7 @@ skills/
 ├── commands/                                  <- all slash commands live here
 │   ├── goal.md                                <- /goal: iterate until verifier passes
 │   ├── execute-plan.md                        <- /execute-plan: subagent-driven plan execution
+│   ├── full-cycle.md                          <- /full-cycle: brainstorm > spec > plan, hand off execution
 │   ├── iterate-skill.md                       <- /iterate-skill: refine a skill via subagent review loops
 │   ├── harvest.md                             <- /harvest: mine sessions for skill improvements
 │   ├── multi-plan.md                          <- /multi-plan: start multi-plan orchestration
@@ -46,7 +47,7 @@ All slash commands live at the top-level `commands/` directory, never inside a s
 
 ### Slash commands
 
-Slash commands give a skill an explicit entry point for when the agent does not pick it up automatically from frontmatter description matching. All commands live as `.md` files in the top-level `commands/` directory, never inside a skill folder. Current examples: `commands/standardize.md` (`/standardize`), `commands/multi-plan.md` (`/multi-plan`), `commands/harvest.md` (`/harvest`), `commands/goal.md` (`/goal`), `commands/execute-plan.md` (`/execute-plan`), `commands/iterate-skill.md` (`/iterate-skill`), `commands/standardize-migrate.md` (`/standardize-migrate`).
+Slash commands give a skill an explicit entry point for when the agent does not pick it up automatically from frontmatter description matching. All commands live as `.md` files in the top-level `commands/` directory, never inside a skill folder. Current examples: `commands/standardize.md` (`/standardize`), `commands/multi-plan.md` (`/multi-plan`), `commands/harvest.md` (`/harvest`), `commands/goal.md` (`/goal`), `commands/execute-plan.md` (`/execute-plan`), `commands/full-cycle.md` (`/full-cycle`), `commands/iterate-skill.md` (`/iterate-skill`), `commands/standardize-migrate.md` (`/standardize-migrate`).
 
 #### File format
 
