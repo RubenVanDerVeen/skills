@@ -26,6 +26,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - Repo re-scoped from skills catalog to agent environment monorepo: the eight skill folders moved into a top-level `skills/` directory (`git mv`, history preserved). Catalogs, layout trees, and sync instructions updated in `README.md`, `AGENTS.md`, `STANDARDS.md`, `opencode-install.md`, and the two `SKILL.md` files with self-referencing sync steps.
 - `AGENTS.md`: branch model `master` → `main`; added `synctool-sync` row to the Current skills table.
 - `typst-pro`: bumped `@local/typst-tools` baseline `0.1.2` → `0.1.8` across skill examples, imports, and install paths. Factual references (fixed-in bug notes, rename reset point, version-numbering example, `@preview` pins) kept at `0.1.2`.
+- `project-standardization`: graphify wiring is now presence-driven, not tier/CLI-gated. The `## Knowledge graph` section is kept in `AGENTS.md` on all tiers (including small) whenever `graphify-out/graph.json` exists, instead of only when the graphify CLI is found at a medium/large bootstrap. Section wording sharpened to an explicit "query graphify BEFORE grep/glob/Read" rule so agents stop reaching for grep when a graph is present (the gap that let a session grep instead of querying graphify). `references/bootstrap.md` step 10 now splits "keep the section" (presence-driven) from "build + hook" (CLI-driven).
 
 ### Fixed
 

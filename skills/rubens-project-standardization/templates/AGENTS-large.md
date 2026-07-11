@@ -57,13 +57,15 @@ Specs, plans, and reviews live in `docs/artifacts/{specs,plans,reviews}/` (filen
 
 ## Knowledge graph (graphify)
 
-<!-- Delete this whole section if bootstrap step 10 (graphify) was skipped: no CLI available. -->
+<!-- Keep this section whenever `graphify-out/graph.json` exists (any tier). Delete only when there is no graph. -->
 
 `graphify-out/` holds a queryable code graph (refreshed by a post-commit hook; AST-only, no LLM).
-For architecture / cross-file / "what touches X" questions, query it **before** grepping:
-`graphify query "<question>"` (~1–2K tokens, budget-capped). Name a concrete file or symbol in the
-question; abstract prose anchors on doc headings instead of code. `graphify explain "<Node>"` for
-one symbol. `GRAPH_REPORT.md` = broad overview only. Stale graph → `graphify update .` (~30 s, no LLM).
+**If `graphify-out/graph.json` exists, query it BEFORE grep/glob/Read** for any architecture,
+cross-file, "what touches X", or "how does X work" question: `graphify query "<question>"`
+(~1–2K tokens, budget-capped; grep output gets re-billed on every later prompt). Name a concrete
+file or symbol. `graphify explain "<Node>"` for one symbol; `GRAPH_REPORT.md` = overview only.
+Stale graph → `graphify update .` (~30 s, no LLM). If the `graphify` skill is available, load it
+for the query/path/explain flow.
 
 ## Auto-loaded on-demand files
 
