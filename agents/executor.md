@@ -2,6 +2,7 @@
 description: Implements exactly one delegated task from an approved plan. Reads the relevant files, follows TDD where applicable, edits code, runs verification, and reports what changed and what was verified. Dispatch one executor per plan task. Cannot dispatch further subagents.
 mode: subagent
 color: success
+model: minimax-coding-plan/MiniMax-M3
 tools:
   task: false
   webfetch: false
