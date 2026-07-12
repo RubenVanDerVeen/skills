@@ -17,7 +17,9 @@ Personal skills live in this repo (`C:\Users\ruben\projects\tools\skills`) and a
 
 Four layers, from personal to generic.
 
-### 1. Personal skills (this repo)
+### 1. Personal skills and commands (this repo)
+
+**Skills** (auto-load by frontmatter description match):
 
 | Skill | Covers |
 |---|---|
@@ -25,11 +27,25 @@ Four layers, from personal to generic.
 | `drawio-pro` | Personal draw.io style: pastel grouped containers, BPMN flowcharts, legend boxes |
 | `typst-pro` | Typst documents: NHL Stenden reports, IEEE templates, Dutch project layout |
 | `synctool-sync` | NAS sync jobs via the `synctool` CLI, dry-run first |
-| `project-standardization` | Bootstraps any repo for AI agents: AGENTS.md, `docs/artifacts/`, standards stack. Commands: `/standardize`, `/standardize-migrate` |
-| `multi-plan-orchestration` | Splits oversized tasks into foundation + N parallel sub-plans. Command: `/multi-plan` |
-| `commands/goal.md` | Orphan `/goal` command: iterate a build loop until a verifier passes |
-| `commands/execute-plan.md` | Orphan `/execute-plan` command: subagent-driven execution of an approved plan (delegates per-task loop to `subagent-driven-development`, layers on `feat`/`fix` branch naming, docs-first commit, ponytail, behavior verification) |
-| `commands/iterate-skill.md` | Orphan `/iterate-skill` command: refine a skill by dispatching subagents, inspecting real output, editing the repo copy across N iterations |
+| `deep-research` | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then hand off to brainstorm or Typst draft |
+| `project-standardization` | Bootstraps any repo for AI agents: AGENTS.md, `docs/artifacts/`, standards stack |
+| `multi-plan-orchestration` | Splits oversized tasks into foundation + N parallel sub-plans |
+| `skill-harvest` | Mines recent sessions for repeated corrections and skill gaps; report, approve, apply loop |
+
+**Commands** (explicit entry points in `commands/`, synced to `~/.claude/commands/` and `~/.config/opencode/command/`):
+
+| Command | Parent skill | Purpose |
+|---|---|---|
+| `/standardize` | `project-standardization` | Bootstrap or restructure a project |
+| `/standardize-migrate` | `project-standardization` | Migrate an older layout to the standard |
+| `/multi-plan` | `multi-plan-orchestration` | Start multi-plan orchestration |
+| `/goal` | orphan | Iterate a build loop until a verifier passes |
+| `/execute-plan` | orphan | Subagent-driven execution of an approved plan (delegates per-task loop to `subagent-driven-development`, layers on `feat`/`fix` branch naming, docs-first commit, ponytail, behavior verification) |
+| `/iterate-skill` | orphan | Refine a skill by dispatching subagents, inspecting real output, editing the repo copy across N iterations |
+| `/full-cycle` | orphan | Brainstorm > spec > plan, then hand off to `/execute-plan` |
+| `/harvest` | `skill-harvest` | Mine recent sessions for skill gaps |
+
+Skills cover what loads automatically; commands are the explicit escape hatch for when the description match is missed.
 
 ### 2. Process discipline: superpowers (plugin, v5.1.0)
 
