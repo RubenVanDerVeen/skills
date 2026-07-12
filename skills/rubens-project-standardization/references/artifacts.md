@@ -202,7 +202,7 @@ For multi-plan topics, apply the same redirect with the topic-scoped layout from
 
 ### Anti-patterns
 
-- A `docs/superpowers/` (or `.planning/`, or any framework-native) directory ever landing in the repo. If it does, it is a missed redirect. `git rm` it, no exceptions.
+- A `docs/superpowers/` (or `.planning/`, or any framework-native) directory ever landing in the repo. If it does, it is a missed redirect. **Move, never delete**: `git mv` its contents into `docs/artifacts/{specs,plans,reviews}/` (keep dates/topics), then remove the emptied dir. `git rm` only files that are true duplicates of something already at the canonical path.
 - Two copies of the same spec or plan in different folders. Pick the canonical home and remove the other.
 - Framework-default paths appearing as the target inside this skill's body, the templates, or any project's `AGENTS.md`.
 
