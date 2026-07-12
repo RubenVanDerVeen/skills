@@ -4,7 +4,7 @@ description: Execute an approved implementation plan via the full subagent-drive
 
 Execute the plan at `$ARGUMENTS` using the `subagent-driven-development` skill: fresh implementer subagent per task, then spec-compliance review, then code-quality review, then a final whole-implementation review. Follow the skill's process; the items below are project-specific defaults and conventions the skill does not cover.
 
-Agent mapping: if named subagents exist in this harness, dispatch each implementer task to the `executor` subagent and each spec-compliance or code-quality review to the `reviewer` subagent. Fall back to the default general-purpose subagent only when a named one is missing. Run this command itself as the `orchestrator` agent when available; it must not implement tasks directly.
+Agent mapping: if named subagents exist in this harness, dispatch each implementer task to the `executor` subagent and each spec-compliance or code-quality review to the `reviewer` subagent. Fall back to the default general-purpose subagent only when a named one is missing. Run this command itself as the `orchestrator` agent when available; it must not implement tasks directly. When the same task fails verification twice or the reviewer rejects it twice, dispatch the `oracle` subagent (read-only consult) with the full failure context and fold its recommendation into the next executor dispatch; when `oracle` is missing, decide yourself.
 
 Setup:
 1. Read the plan. If it references a spec (e.g. under `docs/artifacts/specs/`), read that too. Default to inferring; ask only if the plan path is unresolvable or the plan contradicts itself. A missing detail is not a blocker, pick the obvious choice, note it, proceed. The plan you were given is the spec; do not write a new one.
