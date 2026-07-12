@@ -8,7 +8,7 @@ For install commands, see `opencode-install.md`.
 
 ## When to use
 
-- "What is graphify / caveman / superpowers / markitdown / vercel-* / stop-slop / ponytail?"
+- "What is graphify / caveman / superpowers / markitdown / vercel-* / stop-slop / ponytail / opencode-see-image?"
 - Picking which tool to reach for when several could apply.
 - Briefing a new agent session on what is available.
 
@@ -23,6 +23,7 @@ For install commands, see `opencode-install.md`.
 | vercel-labs/agent-skills | Skill pack | Curated React/Next.js/React Native/web-design skills maintained by Vercel Engineering. |
 | stop-slop | Single skill | Removes AI tells from prose: banned phrases, structural clichés, and sentence-level rules (no em-dashes, no Wh- starters, active voice). |
 | ponytail | Skill pack | Lazy-dev philosophy + six skills that force the laziest solution that works. Default mode (`full`) ships YAGNI-first output and bakes itself into every response. |
+| opencode-see-image | opencode plugin | Lets a text-only primary model (e.g. `glm-5.2`) see images by routing them to a vision model (MiniMax-M3 via `minimax-coding-plan`) and returning a text description. |
 
 ## Per-source notes
 
@@ -42,7 +43,7 @@ Source: https://github.com/JuliusBrussee/caveman
 
 Builds a queryable knowledge graph (interactive HTML viewer + `graph.json` + `GRAPH_REPORT.md`) from a folder of code, SQL, scripts, docs, PDFs, images, or video. The CLI ships an `opencode` install target that registers a `/graphify` skill and a hook that nudges the assistant to query the graph before grepping.
 
-Install path note: run `graphify install --platform opencode` from your home directory (`~`), not from a project folder. The installer writes its plugin into `<cwd>/.opencode/`, so launching it from a project pollutes that project with runtime config. The user-level install lands in `~/.config/opencode/opencode.jsonc` alongside the `superpowers` plugin entry.
+Install path note: run `graphify install --platform opencode` from your home directory (`~`), not from a project folder. The installer writes its plugin into `<cwd>/.opencode/`, so launching it from a project pollutes that project with runtime config. The user-level install adds its plugin entry to the global opencode config under `~/.config/opencode/`; keep all plugin entries consolidated in `opencode.json` so they load reliably.
 
 Triggers: "I need an overview of this codebase", "find the connections between these modules", "which parts touch the auth flow", "rebuild the project wiki from source".
 
@@ -107,6 +108,25 @@ Triggers: "make this less over-engineered", "simplify this", "I want a lazy revi
 
 Source: https://github.com/DietrichGebert/ponytail
 Install: see `opencode-install.md` step 6. Manual install (current setup) is `git clone https://github.com/DietrichGebert/ponytail.git C:/tools/ponytail` and add `"C:/tools/ponytail/.opencode/plugins/ponytail.mjs"` to the `plugin` array in `~/.opencode/opencode.json`.
+
+### opencode-see-image
+
+Gives a text-only primary model the ability to see images and screenshots. opencode rejects image attachments before a non-vision model (e.g. `zai-coding-plan/glm-5.2`) ever sees them; this plugin intercepts that by registering a `see_image` tool that resolves the attached image, sends it to a vision model, and returns a textual description the primary model reasons about. The model calls the tool automatically when you attach an image; the optional `question` arg focuses on a detail.
+
+Wiring in this environment routes through opencode's SDK (auth handled automatically, no separate key) to the existing `minimax-coding-plan` provider:
+
+```
+SEE_IMAGE_PROVIDER = minimax-coding-plan
+SEE_IMAGE_MODEL    = MiniMax-M3
+SEE_IMAGE_API_KEY  = (unset, so SDK auth is used)
+```
+
+Resolve order when env vars are absent: explicit `SEE_IMAGE_API_KEY`, then `SEE_IMAGE_PROVIDER`, then `opencode-go` (minimax-m3), then `opencode` (mimo-v2.5-free).
+
+Triggers: "GLM-5.2 can't see this image", "what's in this screenshot", any image attached to a text-only primary model that returns "this model does not support image input".
+
+Source: https://github.com/alfaoz/opencode-see-image
+Install: see `opencode-install.md` step 8.
 
 ## Install
 

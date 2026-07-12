@@ -1,18 +1,18 @@
 ---
 name: opencode-install
-description: Use when installing the environment's external tools/skills (superpowers, caveman, graphify, markitdown, vercel-labs/agent-skills, stop-slop, ponytail) or syncing this repo's skills and commands into an agent's skills and commands directory.
+description: Use when installing the environment's external tools/skills (superpowers, caveman, graphify, markitdown, vercel-labs/agent-skills, stop-slop, ponytail, opencode-see-image) or syncing this repo's skills and commands into an agent's skills and commands directory.
 ---
 
 # opencode-install
 
 ## Overview
 
-Install steps for the external skill/tool sources (superpowers, caveman, graphify, markitdown, vercel-labs/agent-skills, stop-slop, ponytail) and the personal skills repo path. For what each source is and when to use it, see `external-skills.md`.
+Install steps for the external skill/tool sources (superpowers, caveman, graphify, markitdown, vercel-labs/agent-skills, stop-slop, ponytail, opencode-see-image) and the personal skills repo path. For what each source is and when to use it, see `external-skills.md`.
 
 ## When to use
 
 - Setting up opencode on a new machine or after a clean reinstall.
-- "How do I install superpowers / caveman / graphify / markitdown / vercel-labs / stop-slop / ponytail?"
+- "How do I install superpowers / caveman / graphify / markitdown / vercel-labs / stop-slop / ponytail / opencode-see-image?"
 - opencode is not seeing the personal skills in `C:\Users\ruben\Projects\Tools\skills`.
 
 ## Install
@@ -35,7 +35,7 @@ npx -y github:JuliusBrussee/caveman -- --only opencode
 
 Requires Python 3.10+ and `uv` (install uv with `winget install astral-sh.uv` on Windows).
 
-Run the install from your home directory, not from a project folder. `graphify install --platform opencode` writes its plugin into `<cwd>/.opencode/`, so launching it from a project pollutes that project with runtime config. The user-level install lands in `~/.config/opencode/opencode.jsonc`, alongside the `superpowers` plugin entry that is already there.
+Run the install from your home directory, not from a project folder. `graphify install --platform opencode` writes its plugin into `<cwd>/.opencode/`, so launching it from a project pollutes that project with runtime config. The user-level install adds its plugin entry to the global opencode config under `~/.config/opencode/`; keep all plugin entries consolidated in `opencode.json` so they load reliably.
 
 ```
 cd ~
@@ -92,7 +92,24 @@ uv tool install 'markitdown[all]'
 
 Usage the agent follows: `markitdown <file> -o <file>.md`, then `Read` the `.md`. The `[all]` extra pulls every format converter; use `[pdf,docx,xlsx]` for a leaner install. See `external-skills.md` for the full format list and triggers.
 
-### 8. Copy skills, commands, and agents into the agent's directories
+### 8. opencode-see-image
+
+Lets a text-only primary model (e.g. `zai-coding-plan/glm-5.2`) see images by routing them to a vision model. opencode normally rejects image attachments before a non-vision model ever runs; this plugin registers a `see_image` tool that sends the image to MiniMax-M3 and returns a text description the primary model reasons about.
+
+```
+opencode plugin opencode-see-image --global
+```
+
+Then set two persistent user env vars so the plugin reuses the existing `minimax-coding-plan` provider via opencode's SDK (auth handled automatically, no separate key):
+
+```powershell
+[Environment]::SetEnvironmentVariable('SEE_IMAGE_PROVIDER','minimax-coding-plan','User')
+[Environment]::SetEnvironmentVariable('SEE_IMAGE_MODEL','MiniMax-M3','User')
+```
+
+Restart opencode from a fresh terminal so the new env vars are inherited. The plugin defaults to `opencode-go` (minimax-m3); setting `SEE_IMAGE_PROVIDER` overrides that. For the resolve order and other models, see `external-skills.md`.
+
+### 9. Copy skills, commands, and agents into the agent's directories
 
 The `skills/`, `commands/`, and `agents/` directories inside this repo are inactive by themselves; all three steps below are required per machine.
 
@@ -110,7 +127,7 @@ The `skills/`, `commands/`, and `agents/` directories inside this repo are inact
 
 ## Verify
 
-After all eight steps, start a new opencode session and confirm each source is reachable:
+After all nine steps, start a new opencode session and confirm each source is reachable:
 
 - A superpowers skill (e.g. `test-driven-development`).
 - A caveman skill.
@@ -119,10 +136,11 @@ After all eight steps, start a new opencode session and confirm each source is r
 - The `stop-slop` skill: paste a paragraph of AI-flavored prose and ask for a slop review.
 - The `ponytail` skill: ask for any coding task and confirm the response uses YAGNI/stdlib-first framing (the mode is active by default).
 - `markitdown`: run `markitdown --help` and confirm it is on PATH (or convert a small `.pdf` and confirm Markdown output).
+- The `opencode-see-image` plugin: attach an image to a GLM-5.2 session and confirm the `see_image` tool fires instead of a "does not support image input" rejection.
 - A personal skill from this repo (e.g. `drawio-pro`).
 - The custom agents: `opencode agent list` shows `orchestrator`, `executor`, and `reviewer`.
 
-If a personal skill is missing, re-check step 8.
+If a personal skill is missing, re-check step 9.
 
 ## Related
 
