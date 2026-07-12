@@ -31,7 +31,7 @@ skills/
 │   ├── multi-plan.md                          <- /multi-plan: start multi-plan orchestration
 │   ├── standardize.md                         <- /standardize: bootstrap or restructure a project
 │   └── standardize-migrate.md                 <- /standardize-migrate: migrate an older layout
-├── agents/                                    <- opencode agent definitions (orchestrator, executor, reviewer)
+├── agents/                                    <- opencode agent definitions (planner, orchestrator, writer, executor, reviewer, oracle)
 └── skills/                                    <- all skill folders live here
     ├── drawio-pro/SKILL.md
     ├── typst-pro/SKILL.md
@@ -97,7 +97,7 @@ Do not add a command for every skill. If the frontmatter description reliably tr
 
 ### Agent definitions
 
-Custom opencode agents (`orchestrator`, `executor`, `reviewer`) live in the top-level `agents/` directory. Same pattern as `commands/`: source of truth here, inactive until copied to `~/.config/opencode/agents/`. They pair with `/execute-plan` (implementer tasks go to `executor`, reviews to `reviewer`). opencode-only; do not copy to Claude Code. Format, sync, token measurements, and tuning rules: `agents/README.md`.
+Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `oracle`) live in the top-level `agents/` directory. Same pattern as `commands/`: source of truth here, inactive until copied to `~/.config/opencode/agents/`. They pair with `/full-cycle` (runs as `planner`) and `/execute-plan` (implementer tasks go to `executor`, reviews to `reviewer`, two-strike failures to the `oracle` consult). opencode-only; do not copy to Claude Code. Format, sync, token measurements, and tuning rules: `agents/README.md`.
 
 ### `SKILL.md` frontmatter rules
 

@@ -4,13 +4,18 @@ Source of truth for the custom opencode agents. Like `commands/`, this directory
 
 ## The set
 
-| Agent | Mode | Role | Denied |
-|---|---|---|---|
-| `orchestrator` | primary | Plans, dispatches executor/reviewer per task, reviews results, commits at boundaries via bash. | edit/write/patch tools; implementation-domain skills |
-| `executor` | subagent | Implements exactly one plan task: TDD, edit, verify, report. Keeps ponytail suite and `using-git-worktrees`. | task/webfetch tools; planning skills |
-| `reviewer` | subagent | Spec-compliance and code-quality review of one task. Read-only plus bash for running tests. | edit/write/patch/task/webfetch tools; planning and review-workflow skills |
+| Agent | Mode | Model | Role | Denied |
+|---|---|---|---|---|
+| `planner` | primary | `zai-coding-plan/glm-5.2` | Brainstorm > spec > plan > `/execute-plan` handoff. Dispatches `explore` for recon. | file writes outside `docs/**` (glob deny); execution-process skills |
+| `orchestrator` | primary | `minimax-coding-plan/MiniMax-M3` | Executes approved plans: dispatches executor/reviewer per task, oracle on two-strike failures, commits at boundaries via bash. | edit/write/patch tools; implementation-domain skills |
+| `writer` | primary | unpinned (session model) | Focused doc/Typst sessions: direct edits, compile-verify, no ceremony. | plan/execution suite and code-domain skills |
+| `executor` | subagent | `minimax-coding-plan/MiniMax-M3` | Implements exactly one plan task: TDD, edit, verify, report. Keeps ponytail suite and `using-git-worktrees`. | task/webfetch tools; planning skills |
+| `reviewer` | subagent | `zai-coding-plan/glm-5.2` | Spec-compliance and code-quality review of one task. Cross-model on purpose: a different family reviewing M3 diffs does not share the executor's blind spots. | edit/write/patch/task/webfetch tools; planning and review-workflow skills |
+| `oracle` | subagent | `zai-coding-plan/glm-5.2` | Read-only consult after two failed attempts: ranked hypotheses, one recommendation. Keeps bash + webfetch. | edit/write/patch/task tools; planning and review-workflow skills |
 
-`/execute-plan` (see `commands/execute-plan.md`) dispatches by name: implementer tasks to `executor`, reviews to `reviewer`, the command itself runs as `orchestrator`. It falls back to the general subagent when a named one is missing, so the command stays portable to harnesses without these agents.
+`/full-cycle` runs as `planner`. `/execute-plan` (see `commands/execute-plan.md`) dispatches by name: implementer tasks to `executor`, reviews to `reviewer`, two-strike failures to `oracle`, the command itself runs as `orchestrator`. It falls back to the general subagent when a named one is missing, so the command stays portable to harnesses without these agents. The built-in `explore` subagent handles codebase recon for planner and orchestrator; no custom file needed.
+
+Model routing: GLM 5.2 carries planning, review, and consult (long-horizon reasoning); MiniMax M3 carries orchestration and implementation (near-par execution, faster and cheaper). Both are flat-quota coding plans, so crossmodel dispatch has no marginal token cost.
 
 ## Why: tokens and discipline
 
@@ -24,6 +29,8 @@ Measured 2026-07-05 (opencode 1.17.13, MiniMax-M3, this repo, input + cache-read
 | orchestrator | 14,846 |
 | executor via task dispatch | ~13,800 |
 | everything denied (floor) | 11,763 |
+
+Measurements predate the 2026-07-12 roster change (planner/writer/oracle, model pins); re-measure before quoting.
 
 ## Maintenance notes
 
