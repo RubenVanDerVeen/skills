@@ -47,7 +47,7 @@ Four layers, from personal to generic.
 
 Skills cover what loads automatically; commands are the explicit escape hatch for when the description match is missed.
 
-### 2. Process discipline: superpowers (plugin, v5.1.0)
+### 2. Process discipline: superpowers (plugin, v6.1.1)
 
 The gatekeeper layer. `using-superpowers` loads at session start and forces a skill check before any action. The skills used most:
 
