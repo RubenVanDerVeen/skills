@@ -21,6 +21,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - `deep-research/`: end-to-end research pipeline skill (Hermes research profile). Intake → parallel gather (arxiv + web + own vault) → synthesized dossier with citations → brainstorm or Typst draft. Catalogue rows added in `README.md` (Skills table + Layout block) and `AGENTS.md` (Current skills table).
 - `agents/`: opencode agent definitions (`orchestrator`, `executor`, `reviewer`) with per-agent skill denylists; inactive in the repo, copied to `~/.config/opencode/agents/` to activate. `commands/execute-plan.md` now maps implementer tasks to `executor` and reviews to `reviewer`.
 - `agents/planner.md`, `agents/writer.md`, `agents/oracle.md`: planner primary (GLM 5.2; brainstorm > spec > plan > handoff; file writes glob-scoped to `docs/**`), writer primary (unpinned; focused doc/Typst sessions, no ceremony), oracle subagent (GLM 5.2; read-only two-strike consult). Spec: `docs/artifacts/specs/agent-roster/2026-07-12-agent-roster-redesign-design.md`.
+- feat(agents): `inventree` opencode agent, port of the Claude Code subagent; homelab MCP registered machine-locally, `homelab*` denied in all other agents
 
 ### Changed
 
