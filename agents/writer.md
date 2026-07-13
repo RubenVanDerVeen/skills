@@ -2,6 +2,8 @@
 description: Focused document sessions. Typst reports, README and repo docs, papers. Reads context, edits directly, verifies the output compiles or links resolve. No spec/plan ceremony, no handoff. Not for source-code changes.
 mode: primary
 color: secondary
+tools:
+  "homelab*": false
 permission:
   skill:
     "*": allow

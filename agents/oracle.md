@@ -8,6 +8,7 @@ tools:
   edit: false
   patch: false
   task: false
+  "homelab*": false
 permission:
   edit: deny
   write: deny

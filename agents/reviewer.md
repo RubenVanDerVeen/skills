@@ -9,6 +9,7 @@ tools:
   patch: false
   task: false
   webfetch: false
+  "homelab*": false
 permission:
   edit: deny
   write: deny

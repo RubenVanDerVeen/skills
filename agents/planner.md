@@ -3,6 +3,8 @@ description: Designs specs and implementation plans, then hands off. Brainstorms
 mode: primary
 color: accent
 model: zai-coding-plan/glm-5.2
+tools:
+  "homelab*": false
 permission:
   edit:
     "*": deny

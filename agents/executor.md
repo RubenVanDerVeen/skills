@@ -6,6 +6,7 @@ model: minimax-coding-plan/MiniMax-M3
 tools:
   task: false
   webfetch: false
+  "homelab*": false
 permission:
   task: deny
   webfetch: deny
