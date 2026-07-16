@@ -1,7 +1,7 @@
 ---
 description: "Purpose-built agent for managing the InvenTree parts inventory. Use this agent for: importing AliExpress order CSVs, creating parts/categories/locations, updating stock, managing purchase orders, linking supplier parts, and renaming/redescribing parts to match the naming convention. This agent starts pre-loaded with the full category map, supplier IDs, and naming convention, no re-derivation needed."
 mode: primary
-color: info
+color: "#EAB308"
 model: minimax-coding-plan/MiniMax-M3
 tools:
   write: false

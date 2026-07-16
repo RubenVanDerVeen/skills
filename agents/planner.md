@@ -1,7 +1,7 @@
 ---
 description: Designs specs and implementation plans, then hands off. Brainstorms intent, writes the spec, writes the plan, stops at the /execute-plan handoff. File writes limited to docs/; source code untouchable. Dispatches the explore subagent for codebase recon.
 mode: primary
-color: accent
+color: "#22C55E"
 model: zai-coding-plan/glm-5.2
 tools:
   "homelab*": false

@@ -1,7 +1,7 @@
 ---
 description: Executes approved plans. Dispatches executor subagents per task, reviews results via the reviewer subagent, escalates two-strike failures to the oracle, manages the todo list, commits at boundaries. Cannot write, edit, or patch files; all implementation goes through subagents.
 mode: primary
-color: info
+color: "#EF4444"
 model: minimax-coding-plan/MiniMax-M3
 tools:
   write: false
