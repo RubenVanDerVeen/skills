@@ -68,9 +68,9 @@ digraph flow {
 2. **Identify shared foundation.** Look for a data model, UI shell, shared utils, or theme that multiple sub-projects depend on. If none exists, all sub-projects are independent.
 3. **Propose split: foundation + N sub-projects.** Each sub-project must be independently buildable and testable after the foundation is done.
 4. **Write decomposition outline.** Save to `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-outline.md`. Get user approval before writing any specs.
-5. **For the foundation:** Invoke `superpowers:brainstorming` with the foundation's scope. Pass `docs/artifacts/specs/<topic>/` as the spec location. Brainstorming runs its full flow and invokes `superpowers:writing-plans` with `docs/artifacts/plans/<topic>/` as the plan location. User reviews and approves the foundation plan.
-6. **For each sub-project (SP-1, SP-2, ...):** Same as step 5, using the sub-project's scope from the approved outline. User reviews and approves each plan.
-7. **Write manifest.** After all plans exist, produce `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-manifest.md` with the plan table, execution order, per-agent dispatch prompts, and integration checklist.
+5. **For the foundation:** Invoke `superpowers:brainstorming` with the foundation's scope. Pass `docs/artifacts/specs/<topic>/` as the spec location. Brainstorming runs its full flow and invokes `superpowers:writing-plans` with `docs/artifacts/plans/<topic>/` as the plan location. The foundation plan names its **frozen interfaces**: the exact signatures/types sub-projects consume, marked frozen in the plan's per-task Interfaces blocks (SPs may change internals behind them, never the signatures). This contract is what makes parallel SPs mergeable. User reviews and approves the foundation plan.
+6. **For each sub-project (SP-1, SP-2, ...):** Same as step 5, using the sub-project's scope from the approved outline. SP specs reference the foundation's frozen interfaces by name instead of redefining them. User reviews and approves each plan.
+7. **Write manifest.** After all plans exist, produce `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-manifest.md` with the plan table, execution order, per-agent dispatch prompts, integration dispatch prompt, and integration checklist.
 8. **STOP.** Hand off to the user for dispatch. Do not dispatch execution agents.
 
 ## Decomposition outline
@@ -118,12 +118,17 @@ Final artifact, saved to `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-
 
 ### Branch naming
 
-Git's checkout ambiguity trips agents when one branch is a prefix of another. Avoid by using a short `topic-slug`:
+Two git traps:
+
+- Ref file/dir conflict: `feat/x` and `feat/x/sp-1` cannot coexist (`refs/heads/feat/x` is a file; `feat/x/sp-1` needs it as a directory, giving `fatal: cannot lock ref`). Never nest SP branches under the foundation branch.
+- Checkout ambiguity when one branch is a prefix of another.
+
+Scheme:
 
 - Foundation: `feat/<topic-slug>` (integration branch).
-- Sub-projects: `feat/<topic-slug>/sp-N-<name>`.
+- Sub-projects: `feat/<topic-slug>-spN-<name>` (dashes, no `/` after the slug).
 
-`<topic-slug>` = short kebab-case (≤6 chars is safe), no `/`, not a prefix of any other existing branch.
+`<topic-slug>` = short kebab-case (≤6 chars is safe), no `/`, not already in use by an unrelated branch.
 
 ```markdown
 # <Topic> Multi-Plan Manifest
@@ -132,26 +137,37 @@ Git's checkout ambiguity trips agents when one branch is a prefix of another. Av
 | ID | Name | Branch | Plan file | Spec file | Depends on | Status |
 |----|------|--------|-----------|-----------|------------|--------|
 | F  | Foundation | `feat/<topic-slug>` | docs/.../foundation-plan.md | docs/.../foundation-design.md | - | ready |
-| SP-1 | <name> | `feat/<topic-slug>/sp-1-<name>` | docs/.../sp1-plan.md | docs/.../sp1-design.md | F merged | ready |
-| SP-2 | <name> | `feat/<topic-slug>/sp-2-<name>` | docs/.../sp2-plan.md | docs/.../sp2-design.md | F merged | ready |
+| SP-1 | <name> | `feat/<topic-slug>-sp1-<name>` | docs/.../sp1-plan.md | docs/.../sp1-design.md | F complete | blocked on F |
+| SP-2 | <name> | `feat/<topic-slug>-sp2-<name>` | docs/.../sp2-plan.md | docs/.../sp2-design.md | F complete | blocked on F |
 
 ## Execution order
-1. F on `feat/<topic-slug>` - one agent. Commits land directly on the feature branch; user merges to base via PR when ready.
-2. After F merged: SP-1 on `feat/<topic-slug>/sp-1-<name>`, SP-2 on `feat/<topic-slug>/sp-2-<name>` in parallel - one cheaper agent each. Each SP branches off the merged `feat/<topic-slug>`.
-3. After all SPs merged: integration verification on `feat/<topic-slug>`.
+1. F on `feat/<topic-slug>` - one agent. Commits land directly on the feature branch.
+2. After F is complete (all foundation tasks done, verification checklist green on `feat/<topic-slug>`): SP-1, SP-2, ... in parallel - one cheaper agent each, each branch created from `feat/<topic-slug>`. Parallel agents on one machine use separate worktrees (`git worktree add ../<topic>-spN -b <SP branch> feat/<topic-slug>`); each worktree needs its own dependency install. See superpowers:using-git-worktrees.
+3. After all SPs report complete: dispatch the integration prompt below (one agent, or by hand). List expected conflicts here: the outline's "Touches" rows show which SPs overlap on which files; give merge order and a resolution hint per overlapping file.
+4. Merge target mechanics: SPs land on `feat/<topic-slug>` (PR if the repo has a remote, local merge otherwise); `feat/<topic-slug>` lands on base the same way at the end of integration.
 
 ## Per-agent dispatch instructions
-For each row in the table, the dispatch prompt template the user sends to a cheaper agent:
-- Read plan at <plan file path>
-- Branch: <branch from row>; create from `feat/<topic-slug>` (SPs) or work directly on the feature branch (foundation)
-- Use superpowers:subagent-driven-development or executing-plans on the assigned plan
-- Open a PR back to `feat/<topic-slug>` (SPs) or to the base branch (foundation)
-- Report back with the PR URL and a one-line status when the PR is ready for review
+For each row in the table, the dispatch prompt the user sends must contain:
+- Working directory (worktree path for SPs) and branch: <branch from row>, created from `feat/<topic-slug>` (SPs) or worked on directly (foundation)
+- Dependency install step for a fresh worktree (`npm install`, `cargo fetch`, ...)
+- Read plan at <plan file path>; execute with superpowers:subagent-driven-development or executing-plans, commit after every task
+- The SP's constraint line from its spec (e.g. "no Rust changes", "do not change frozen foundation interfaces")
+- Stay on your branch: open a PR back to `feat/<topic-slug>` if the repo has a remote, but never merge yourself; integration is a separate step
+- Report back a one-line status plus any deviations (and the PR URL if the repo has a remote)
+
+## Integration dispatch prompt (after all SPs report complete)
+One agent, or by hand. The prompt must contain:
+- Work in <repo root> on `feat/<topic-slug>`
+- Merge SP branches one at a time in manifest order: `git merge --no-ff feat/<topic-slug>-spN-<name>` (or merge the SP PRs in that order). Resolve conflicts with the expected-conflicts hints above; run the test suite after each merge before starting the next
+- Run the integration checklist below; fix failures before ticking a box
+- Merge `feat/<topic-slug>` into base (PR if remote, local merge otherwise), clean up worktrees, report status
 
 ## Integration checklist (after all plans done)
-- [ ] All sub-project PRs merged into `feat/<topic-slug>`
+- [ ] All sub-project branches merged into `feat/<topic-slug>` (PRs or local merges)
 - [ ] Run full test suite on `feat/<topic-slug>` (catches integration gaps)
 - [ ] Spot-check each module against its spec
+- [ ] Merge `feat/<topic-slug>` into the base branch (PR if the repo has a remote, local merge otherwise)
+- [ ] Clean up worktrees (`git worktree remove ../<topic>-spN`)
 ```
 
 ### Terminal output (STOP)
@@ -164,12 +180,15 @@ N+1 plans ready (1 foundation + N sub-projects).
 
 Execution order:
 1. Foundation plan first (one agent), commits on `feat/<topic-slug>`
-2. After foundation merged to base: SP-1, SP-2, ... in parallel (one cheaper agent each), each on its own sub-branch
+2. After foundation complete and verified: SP-1, SP-2, ... in parallel (one cheaper agent each),
+   each on its own `feat/<topic-slug>-spN-<name>` branch (worktrees if on one machine)
+3. After all SPs report complete: dispatch the integration prompt from the manifest
+   (ordered merges + checklist + final merge to base)
 
 To dispatch: copy the per-agent dispatch prompt from the manifest for each plan
 and send it to a fresh cheaper agent. Each agent uses subagent-driven-development
-or executing-plans on its assigned plan and opens a PR back to `feat/<topic-slug>`
-(SPs) or to the base branch (foundation).
+or executing-plans on its assigned plan. Merges land back on `feat/<topic-slug>`
+(PRs if the repo has a remote, local merges otherwise).
 ```
 
 No further action from the orchestrator. The user owns dispatch.

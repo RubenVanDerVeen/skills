@@ -1,6 +1,6 @@
 # AI Workflow
 
-How Ruben works with AI coding agents: the harnesses, the skill stack, the plugins and hooks around them, and the flow a task follows from idea to commit. Snapshot date: 2026-07-04.
+How Ruben works with AI coding agents: the harnesses, the skill stack, the plugins and hooks around them, and the flow a task follows from idea to commit. Snapshot date: 2026-07-17.
 
 ## Harnesses
 
@@ -121,7 +121,12 @@ Which path a task takes depends on size.
 
 ### Large feature (multiple modules)
 
-`/multi-plan` decomposes the work into a foundation plan plus N independent sub-plans with per-agent dispatch prompts, then parallel agents execute them.
+1. `/multi-plan` (during brainstorming) writes a decomposition outline to `docs/artifacts/multi-plans/<topic>/`: one shared foundation plus N independently buildable sub-projects. User approves the outline before any spec is written.
+2. The orchestrator then runs the normal brainstorm + plan cycle per part, foundation first. The foundation plan marks its frozen interfaces in the per-task Interfaces blocks: the exact signatures SPs consume and may never change. SP specs reference those by name. Specs and plans land in the usual `docs/artifacts/specs|plans/<topic>/` locations.
+3. The manifest (`docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-manifest.md`) is the handoff artifact: plan table, execution order with expected merge conflicts, per-agent dispatch prompts, an integration dispatch prompt, and the integration checklist. The orchestrator STOPs there. It never executes, never merges.
+4. User pastes each dispatch prompt into a fresh session: foundation on `feat/<slug>`; after the foundation is complete and verified, the SPs in parallel on `feat/<slug>-spN-<name>` branches (separate worktrees when on one machine, each with its own dependency install); finally the integration prompt on `feat/<slug>`: `git merge --no-ff` per SP in manifest order, test suite between merges, checklist, then merge to base.
+5. Branch scheme uses dashes, never nesting: `feat/<slug>` and `feat/<slug>/sp-1` cannot coexist (git ref file/dir conflict). Without a GitHub remote, local merges replace PRs; the rest of the flow is identical.
+6. Integration always goes to a fresh session, never back to the planner. By integration time the planner's context is stale plan-era assumptions about code it never saw; the manifest's expected-conflict hints carry everything the merge agent needs. Same principle as the plan handoff: planning sessions never implement.
 
 ### New repo
 
