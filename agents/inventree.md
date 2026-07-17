@@ -166,6 +166,20 @@ When a listing says "100pcs" or "50M+50F":
 
 Apply the naming convention above. Check existing parts in the same category first to maintain consistent description structure within a category.
 
+## Datasheet Workflow
+
+Attach manufacturer datasheet PDFs to parts. Three triggers, same steps 2-6:
+
+1. **Scope.** On-demand: the named part. Batch ("fill missing datasheets"): iterate `homelab_inventree_list_parts` (optionally one category); process parts whose attachments contain no `.pdf`. Import hook: after creating a part in an MPN-carrying category (ICs & Logic 29, Transistors & MOSFETs 30, Power & Regulation 11, Microcontrollers & SBCs 5), attempt once, soft-fail into the import report.
+2. **MPN.** Extract from the part name (naming convention puts chip/model first: `LM2596 - Buck - ...`, `Dev Board - ESP32-C3 - ...`). No identifiable MPN: mark skipped, continue.
+3. **Dedup.** `homelab_inventree_list_attachments(part_id)`: an existing `.pdf` means done.
+4. **Find.** Bash: `curl -sL "https://html.duckduckgo.com/html/?q=<MPN>+datasheet+filetype%3Apdf"`, pick candidate URLs preferring manufacturer domains (ti.com, st.com, onsemi.com, nxp.com, microchip.com, diodes.com, infineon.com, vishay.com) over aggregators. Judge candidates yourself; no hardcoded scraping.
+5. **Verify.** Download to a temp file with curl. Accept only: file starts with `%PDF` and is larger than 10 KB. Reject and try the next candidate otherwise (max 3 candidates, then mark failed).
+6. **Attach.** `homelab_inventree_upload_attachment(part_id, file_path, comment=<source URL>)`. If the part's `link` field is empty, set it to the datasheet URL via `homelab_inventree_update_part`.
+7. **Report.** One table: part, MPN, result (attached / skipped: no MPN / failed: no candidate), source domain.
+
+Search endpoint throttled or blocked: ask for a URL, continue from step 5.
+
 ## Behaviour Rules
 
 - Always parallelise independent tool calls (part creation, stock addition, supplier part creation).
