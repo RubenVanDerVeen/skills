@@ -1,14 +1,20 @@
 ---
-description: Take a feature request through brainstorm > spec > plan in one run, then hand execution to a clean session via /execute-plan. Never implements in the same session.
+description: Take a feature request from prompt to shipped change in one run - brainstorm (optional) > spec > plan > dispatch the orchestrator to execute, then relay its report. Single-pass, no approval gates. Use `handoff` to print the /execute-plan line for a fresh session instead.
 ---
 
-Run the design pipeline for `$ARGUMENTS` and stop at the execution boundary. This command produces an approved spec and plan; implementation happens in a fresh session with clean context (a plan written here is opened in a new session, or the session is compacted first). Do not start implementing here, even if asked to "walk through the whole process": for this command the whole process ends at the handoff.
+Run the full pipeline for `$ARGUMENTS` in a single pass. Agent mapping: run this command as the `planner` agent when available; fall back to the current agent otherwise.
 
-Agent mapping: run this command as the `planner` agent when available (it pins the planning model and scopes file writes to `docs/`); fall back to the current agent otherwise.
+Keywords in `$ARGUMENTS`:
+- `no brainstorm`: skip the brainstorm phase (spec directly).
+- `handoff`: print the /execute-plan line for a fresh session instead of dispatching. Use for huge tasks where the planner's context should not carry into execution.
 
-1. **Brainstorm.** Load the `brainstorming` skill and explore intent, requirements, and design. Skip only when the request already states requirements explicitly enough to spec without guessing.
-2. **Spec.** Write the design to `docs/artifacts/specs/<topic>/YYYY-MM-DD-<slug>-design.md` (today's date). Present it for approval.
-3. **Plan.** Load the `writing-plans` skill. Write the implementation plan to `docs/artifacts/plans/<topic>/YYYY-MM-DD-<slug>-plan.md`, referencing the spec. Present it for approval.
-4. **Hand off.** After plan approval, end with a short handoff block: the spec and plan paths, plus the exact line to paste in a fresh session: `/execute-plan docs/artifacts/plans/<topic>/<file>.md`. If the user insists on staying in this session, tell them to compact first, then run that command.
+Steps:
+1. Brainstorm (unless `no brainstorm` is present, or the request is explicit enough to spec without it): load the `brainstorming` skill; explore intent, requirements, and design. Dispatch the `explore` subagent for codebase recon.
+2. Spec: write the design to `docs/artifacts/specs/<topic>/YYYY-MM-DD-<slug>-design.md` (today's date).
+3. Plan: load the `writing-plans` skill; write the plan to `docs/artifacts/plans/<topic>/YYYY-MM-DD-<slug>-plan.md`, referencing the spec.
+4. Execute (default): dispatch the `orchestrator` subagent with the spec and plan paths; it branches, runs executor/reviewer per task, escalates two-strike failures to `oracle`, commits at boundaries, and returns a final report. Relay that report. If `orchestrator` is unavailable, dispatch `general` with the same instructions; if no subagent dispatch is possible, fall back to step 5.
+5. Handoff (only when `handoff` is present, or as the fallback): print the spec and plan paths plus `/execute-plan docs/artifacts/plans/<topic>/<file>.md` for a fresh session.
 
-Gates: one approval after the spec, one after the plan. If the invocation says "at once" (or similar), collapse both gates and run brainstorm through handoff without stopping. Within a phase, never end the turn to ask whether to continue; turns end only at the two gates and the final handoff.
+No approval gates: the run goes straight through from prompt to final report. Do not end the turn between phases to ask whether to continue; end only at the final report (or the handoff block).
+
+Requires `subagent_depth >= 2` in opencode config so the orchestrator can dispatch executor/reviewer. If unset, the dispatch fails with "Subagent depth limit reached"; in that case fall back to step 5.
