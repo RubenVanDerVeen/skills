@@ -25,7 +25,7 @@ skills/
 ├── commands/                                  <- all slash commands live here
 │   ├── goal.md                                <- /goal: iterate until verifier passes
 │   ├── execute-plan.md                        <- /execute-plan: subagent-driven plan execution
-│   ├── full-cycle.md                          <- /full-cycle: brainstorm > spec > plan, hand off execution
+│   ├── full-cycle.md                          <- /full-cycle: single-pass brainstorm > spec > plan > dispatch orchestrator (or handoff)
 │   ├── iterate-skill.md                       <- /iterate-skill: refine a skill via subagent review loops
 │   ├── harvest.md                             <- /harvest: mine sessions for skill improvements
 │   ├── multi-plan.md                          <- /multi-plan: start multi-plan orchestration
@@ -97,7 +97,7 @@ Do not add a command for every skill. If the frontmatter description reliably tr
 
 ### Agent definitions
 
-Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `oracle`) and `inventree` (InvenTree inventory sessions via the homelab MCP) live in the top-level `agents/` directory. Same pattern as `commands/`: source of truth here, inactive until copied to `~/.config/opencode/agents/`. They pair with `/full-cycle` (runs as `planner`) and `/execute-plan` (implementer tasks go to `executor`, reviews to `reviewer`, two-strike failures to the `oracle` consult). opencode-only; do not copy to Claude Code. Format, sync, token measurements, and tuning rules: `agents/README.md`.
+Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `oracle`) and `inventree` (InvenTree inventory sessions via the homelab MCP) live in the top-level `agents/` directory. Same pattern as `commands/`: source of truth here, inactive until copied to `~/.config/opencode/agents/`. They pair with `/full-cycle` (runs as `planner`; single-pass dispatches the `orchestrator` to execute in the same run) and `/execute-plan` (implementer tasks go to `executor`, reviews to `reviewer`, two-strike failures to the `oracle` consult). opencode-only; do not copy to Claude Code. Format, sync, token measurements, and tuning rules: `agents/README.md`.
 
 ### `SKILL.md` frontmatter rules
 
