@@ -1,5 +1,5 @@
 ---
-description: Mine recent Claude Code + opencode sessions for repeated corrections and skill gaps, then propose and apply approved skill edits
+description: Mine recent opencode sessions for repeated corrections and skill gaps, then propose and apply approved skill edits
 ---
 
 Load the `skill-harvest` skill from the personal skills repo and follow its Flow end to end.

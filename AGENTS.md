@@ -137,7 +137,7 @@ description: <triggering conditions only>
 | `skills/synctool-sync/` | `synctool-sync` | Drive the `synctool` CLI for saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
 | `skills/rubens-project-standardization/` | `project-standardization` | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | `skills/multi-plan-orchestration/` | `multi-plan-orchestration` | Splits large tasks into foundation + N parallel sub-plans during brainstorming. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to existing brainstorming + writing-plans skills. |
-| `skills/skill-harvest/` | `skill-harvest` | Mines recent Claude Code + opencode sessions for repeated corrections and skill gaps. Report, approve, apply loop with incremental state. Slash command: `/harvest`. |
+| `skills/skill-harvest/` | `skill-harvest` | Mines recent opencode sessions for repeated corrections and skill gaps. Report, approve, apply loop with incremental state. Slash command: `/harvest`. |
 | `opencode-install.md` (top-level doc) | `opencode-install` | Bootstrap doc: install commands for superpowers, caveman, graphify, plus the personal skills repo path. |
 | `external-skills.md` (top-level doc) | `external-skills` | Catalog of external skills/tools (superpowers, caveman, graphify): what each does, when to use, install pointers. |
 

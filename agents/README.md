@@ -42,7 +42,7 @@ Measurements predate the 2026-07-12 roster change (planner/writer/oracle, model 
 - An empty body keeps opencode's default system prompt. A non-empty body replaces it entirely; only add one deliberately.
 - Validate after editing: `opencode agent list` (parses), `opencode debug agent <name>` (resolved config).
 
-The `inventree` agent requires the homelab MCP server registered machine-locally in `~/.config/opencode/opencode.json` (keys mirrored from `~/.claude.json`, never committed):
+The `inventree` agent requires the homelab MCP server registered machine-locally in `~/.config/opencode/opencode.json` (secrets entered directly, never committed):
 
     "mcp": { "homelab": { "type": "local", "command": ["<venv-python>", "<path>\\server.py"], "environment": { "INVENTREE_BASE_URL": "...", "INVENTREE_API_KEY": "<secret>" }, "enabled": true } }
 

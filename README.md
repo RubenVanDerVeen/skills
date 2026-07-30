@@ -15,7 +15,7 @@ Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands
 | [`rubens-project-standardization`](./skills/rubens-project-standardization/SKILL.md) | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | [`synctool-sync`](./skills/synctool-sync/SKILL.md) | Drive the `synctool` CLI to run saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
 | [`multi-plan-orchestration`](./skills/multi-plan-orchestration/SKILL.md) | Coordinator skill for too-large tasks: splits a brainstorm into foundation + N parallel sub-plans. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to `brainstorming` + `writing-plans`. Slash command: `/multi-plan`. |
-| [`skill-harvest`](./skills/skill-harvest/SKILL.md) | Mines recent Claude Code + opencode sessions for repeated corrections and skill gaps; report, approve, apply. Slash command: `/harvest`. |
+| [`skill-harvest`](./skills/skill-harvest/SKILL.md) | Mines recent opencode sessions for repeated corrections and skill gaps; report, approve, apply. Slash command: `/harvest`. |
 
 ## Agents
 

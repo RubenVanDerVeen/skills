@@ -1,17 +1,21 @@
 # AI Workflow
 
-How Ruben works with AI coding agents: the harnesses, the skill stack, the plugins and hooks around them, and the flow a task follows from idea to commit. Snapshot date: 2026-07-17.
+How Ruben works with AI coding agents: the harness, the skill stack, the plugins and agents around it, and the flow a task follows from idea to commit. Snapshot date: 2026-07-30.
 
-## Harnesses
+## Harness
 
-Two harnesses share one skill catalog through the [agents.md](https://agents.md) convention:
+opencode is the active harness, running two flat-quota coding-plan models in a cross-model split:
 
-| Harness | Role | Config |
-|---|---|---|
-| Claude Code | Primary daily driver | Model `claude-fable-5[1m]`, effort `xhigh`, plugins + hooks in `~/.claude/settings.json` |
-| opencode | Secondary harness, same skills | `~/.config/opencode/` + `~/.opencode/opencode.json`, install steps in `opencode-install.md` |
+| Model | Carries |
+|---|---|
+| `zai-coding-plan/glm-5.2` | Planning, review, consult: long-horizon reasoning (`planner`, `reviewer`, `oracle`) |
+| `minimax-coding-plan/MiniMax-M3` | Orchestration and implementation: near-par execution, faster and cheaper (`orchestrator`, `executor`, `inventree`) |
 
-Personal skills live in this repo (`C:\Users\ruben\projects\tools\skills`) and are synced to `~/.claude/skills/`. opencode picks them up from that same directory; the `~/.config/opencode/skills/` folder only holds `graphify` (no separate copy of the personal skills is maintained there). Slash commands do sync per harness: `~/.claude/commands/` (Claude Code) and `~/.config/opencode/command/` singular (opencode).
+Config lives in `~/.config/opencode/` and `~/.opencode/opencode.json`; install steps in `opencode-install.md`. The `opencode-see-image` plugin routes image attachments from the text-only GLM 5.2 primary to MiniMax-M3 and returns a text description.
+
+The repo follows the [agents.md](https://agents.md) convention and still works with other harnesses (Claude Code via the `CLAUDE.md` shim and the `~/.claude/` sync paths, plus Codex, Cursor, Aider, etc.), but Claude Code is no longer in daily use. The sync tables in `AGENTS.md` and `opencode-install.md` keep those paths as a documented capability.
+
+Personal skills live in this repo (`C:\Users\ruben\projects\tools\skills`) and sync to `~/.config/opencode/skills/`. Slash commands sync to `~/.config/opencode/command/` (singular). The Claude Code equivalents (`~/.claude/skills/`, `~/.claude/commands/` plural) stay documented for that harness.
 
 ## Skill stack
 
@@ -30,9 +34,9 @@ Four layers, from personal to generic.
 | `deep-research` | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then hand off to brainstorm or Typst draft |
 | `project-standardization` | Bootstraps any repo for AI agents: AGENTS.md, `docs/artifacts/`, standards stack |
 | `multi-plan-orchestration` | Splits oversized tasks into foundation + N parallel sub-plans |
-| `skill-harvest` | Mines recent sessions for repeated corrections and skill gaps; report, approve, apply loop |
+| `skill-harvest` | Mines recent opencode sessions for repeated corrections and skill gaps; report, approve, apply loop |
 
-**Commands** (explicit entry points in `commands/`, synced to `~/.claude/commands/` and `~/.config/opencode/command/`):
+**Commands** (explicit entry points in `commands/`, synced to `~/.config/opencode/command/`; Claude Code path `~/.claude/commands/`):
 
 | Command | Parent skill | Purpose |
 |---|---|---|
@@ -47,7 +51,7 @@ Four layers, from personal to generic.
 
 Skills cover what loads automatically; commands are the explicit escape hatch for when the description match is missed.
 
-### 2. Process discipline: superpowers (plugin, v6.1.1)
+### 2. Process discipline: superpowers (plugin)
 
 The gatekeeper layer. `using-superpowers` loads at session start and forces a skill check before any action. The skills used most:
 
@@ -60,45 +64,36 @@ The gatekeeper layer. `using-superpowers` loads at session start and forces a sk
 
 ### 3. Output style
 
-- **caveman** (plugin, Claude Code only): terse chat register, roughly 75% fewer output tokens. Forced to ULTRA via SessionStart and UserPromptSubmit hooks in `~/.claude/settings.json`. Also ships `/caveman-commit` and `/caveman-review`. Chat only; code, commits, and docs stay normal. Not installed on opencode.
+- **ponytail** (plugin): YAGNI-first "lazy senior dev" mode plus over-engineering review/audit skills. Auto-active at level `full` every session; governs what gets built, not how the agent talks.
+- **caveman** (plugin): terse chat register, roughly 75% fewer output tokens. Available for long sessions or when output is too verbose; code, commits, and docs stay normal. Ships `/caveman-commit` and `/caveman-review`. Pair with ponytail (ponytail builds, caveman talks).
 - **stop-slop** (skill): strips AI tells from prose (banned phrases, structural cliches, no em-dashes). Loaded whenever drafting or editing text. Reinforces the repo-wide no-em-dash rule.
-- **ponytail** (opencode only): YAGNI-first "lazy senior dev" mode plus over-engineering review/audit skills. Governs what gets built; caveman governs how the agent talks.
 
 ### 4. Domain packs and utilities
 
 - **vercel-labs/agent-skills**: `vercel-react-best-practices`, `vercel-composition-patterns`, `vercel-react-native-skills`, `vercel-react-view-transitions`, `web-design-guidelines`
 - **find-skills**: discovers and installs new skills on demand
 - **markitdown** (CLI): converts PDF/Office/EPUB/images/audio to Markdown so the agent can read them
-- **graphify** (CLI): builds a queryable knowledge graph per repo (`graphify-out/`). Economics: a ~1-2K-token `graphify query` replaces a 10-40K-token grep/read exploration whose residue gets re-billed on every later prompt; phrase queries with concrete filenames/symbols, since abstract questions anchor on doc headings instead of code. Harness-agnostic via a "Knowledge graph" section in each graphed repo's AGENTS.md (wired by `/standardize` step 10 at medium/large tiers). Freshness needs no LLM: `graphify update .` is pure AST (~30 s), run by a debounced post-commit hook (`templates/post-commit-graphify` in the standardization skill) and as an end step of `/execute-plan`. opencode additionally has a `/graphify` skill + one-shot bash nudge plugin; Claude Code relies on the AGENTS.md section alone.
+- **graphify** (CLI): builds a queryable knowledge graph per repo (`graphify-out/`). Economics: a ~1-2K-token `graphify query` replaces a 10-40K-token grep/read exploration whose residue gets re-billed on every later prompt; phrase queries with concrete filenames/symbols, since abstract questions anchor on doc headings instead of code. Harness-agnostic via a "Knowledge graph" section in each graphed repo's AGENTS.md (wired by `/standardize` step 10 at medium/large tiers). Freshness needs no LLM: `graphify update .` is pure AST (~30 s), run by a debounced post-commit hook (`templates/post-commit-graphify` in the standardization skill) and as an end step of `/execute-plan`. opencode also has a `/graphify` skill plus a nudge hook; on other harnesses the AGENTS.md section carries it.
 
-## Plugins (Claude Code)
+## Agents (opencode)
 
-| Plugin | Scope | Purpose |
-|---|---|---|
-| `superpowers@claude-plugins-official` | user | Process-discipline skills |
-| `caveman@caveman` | user | Terse output mode + commit/review commands |
-| `rust-analyzer-lsp@claude-plugins-official` | user | Rust LSP support |
-| `frontend-design`, `github`, `commit-commands` | project (homelab repo only) | Frontend design, GitHub, and commit helpers |
+Seven custom agents cover the plan/execute/review split plus inventory. Source of truth in `agents/` (copy to `~/.config/opencode/agents/` to activate); full roster, model pins, denylists, and token measurements in `agents/README.md`.
 
-## Hooks
+| Agent | Mode | Model | Role |
+|---|---|---|---|
+| `planner` | primary | `glm-5.2` | Brainstorm > spec > plan > `/execute-plan` handoff |
+| `orchestrator` | primary | `MiniMax-M3` | Executes approved plans: dispatches executor/reviewer per task, oracle on two-strike failures, commits at boundaries |
+| `writer` | primary | unpinned | Focused doc/Typst sessions: direct edits, compile-verify, no ceremony |
+| `inventree` | primary | `MiniMax-M3` | InvenTree inventory via the homelab MCP: AliExpress CSV import, parts/stock/POs, naming convention |
+| `executor` | subagent | `MiniMax-M3` | Implements one plan task: TDD, edit, verify, report |
+| `reviewer` | subagent | `glm-5.2` | Spec-compliance and code-quality review of one task (cross-model on purpose) |
+| `oracle` | subagent | `glm-5.2` | Read-only consult after two failed attempts |
 
-Claude Code only, all in `~/.claude/settings.json`. opencode has no hooks configured (plugins handle everything; `~/.config/opencode/hooks/` is empty).
+`/full-cycle` runs as `planner`. `/execute-plan` runs as `orchestrator` and dispatches implementer tasks to `executor`, reviews to `reviewer`, two-strike failures to `oracle`. It falls back to the general subagent when a named one is missing.
 
-- **Caveman**: SessionStart + UserPromptSubmit inject the ULTRA style contract.
-- **Terax notify**: terminal escape sequences signal working/attention/finished states to the Terax terminal.
+## MCP (opencode)
 
-## Subagents
-
-Claude Code only. opencode has no subagents configured (`~/.config/opencode/agents/` is empty).
-
-`code-reviewer` (personal review style), `inventree` (parts inventory, pre-loaded category map), `plane` (project management, pre-loaded workspace context), `scrum-master`.
-
-## MCP
-
-Claude Code only. None of these are registered in the opencode configs (`~/.opencode/opencode.json` and `~/.config/opencode/opencode.jsonc` list only graphify, ponytail, and superpowers).
-
-- **homelab** (stdio, Python): self-hosted services on the home server. Tools for InvenTree (inventory), Plane (project management), and Nextcloud. The `inventree` and `plane` agents wrap these tools with pre-loaded context.
-- **claude.ai connectors**: Gmail, Google Calendar, Google Drive.
+- **homelab** (stdio, Python, machine-local): self-hosted services on the home server. Tools for InvenTree (inventory), Plane (project management), and Nextcloud. The `inventree` agent wraps the InvenTree tools with a pre-loaded category map; `homelab*` schemas are denied in every other agent.
 
 ## Flow
 
@@ -106,7 +101,7 @@ Which path a task takes depends on size.
 
 ### Small task (bugfix, doc edit, one-file change)
 
-1. Ask in chat; caveman keeps the exchange short.
+1. Ask in chat; ponytail keeps the exchange short.
 2. Relevant skills auto-trigger on their frontmatter descriptions (`using-superpowers` enforces the check).
 3. Bugs go through `systematic-debugging`; features through `brainstorming`, then TDD.
 4. `verification-before-completion` before any "done" claim. Commits wait for explicit instruction, Conventional Commits format.
