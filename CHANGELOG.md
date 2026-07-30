@@ -22,6 +22,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - `agents/`: opencode agent definitions (`orchestrator`, `executor`, `reviewer`) with per-agent skill denylists; inactive in the repo, copied to `~/.config/opencode/agents/` to activate. `commands/execute-plan.md` now maps implementer tasks to `executor` and reviews to `reviewer`.
 - `agents/planner.md`, `agents/writer.md`, `agents/oracle.md`: planner primary (GLM 5.2; brainstorm > spec > plan > handoff; file writes glob-scoped to `docs/**`), writer primary (unpinned; focused doc/Typst sessions, no ceremony), oracle subagent (GLM 5.2; read-only two-strike consult). Spec: `docs/artifacts/specs/agent-roster/2026-07-12-agent-roster-redesign-design.md`.
 - feat(agents): `inventree` opencode agent, port of the Claude Code subagent; homelab MCP registered machine-locally, `homelab*` denied in all other agents
+- Single-pass `/full-cycle`: the planner dispatches the `orchestrator` subagent to execute the plan in the same run (prompt to final report, no approval gates). `no brainstorm` skips brainstorming; `handoff` keeps the old fresh-session handoff. Requires machine-local `subagent_depth: 2`. Spec: `docs/artifacts/specs/single-pass-full-cycle/2026-07-30-single-pass-full-cycle-design.md`.
 
 ### Changed
 
@@ -34,6 +35,9 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - `agents/`: models pinned in frontmatter (orchestrator + executor on `minimax-coding-plan/MiniMax-M3`; reviewer cross-model on `zai-coding-plan/glm-5.2`). Orchestrator re-scoped to execution-only (description no longer claims plan-writing) with explore recon and oracle escalation. `commands/full-cycle.md` runs as `planner`; `commands/execute-plan.md` gains the oracle escalation rule.
 - `docs/workflow.md`: rewritten opencode-primary. opencode is now the sole active harness, running `zai-coding-plan/glm-5.2` (planning, review, consult) and `minimax-coding-plan/MiniMax-M3` (orchestration, implementation) in a cross-model split. Claude Code demoted to supported-but-unused (kept via the `CLAUDE.md` shim and the `~/.claude/` sync paths in the catalog tables, not in daily use). Environment sections rebuilt opencode-centric: the seven custom agents, the homelab MCP, and ponytail/caveman/stop-slop output styles replace the old Claude-Code-only Plugins/Hooks/Subagents/MCP blocks. Snapshot 2026-07-30.
 - `skill-harvest`: now opencode-only. Dropped the Claude Code JSONL source from `SKILL.md` and `references/extraction.md` (the jq Linux digest variant went with it); the opencode SQLite source is the sole input. State file's `claude-code` key is vestigial and ignored. `/harvest` command description plus the `README.md` and `AGENTS.md` catalog rows updated.
+- `agents/orchestrator.md`: `mode: primary` to `mode: all` (now dispatchable by the planner); added explicit `task` (executor/reviewer/oracle/explore) and `todowrite` permissions so the task tool does not auto-deny them when the orchestrator runs as a subagent.
+- `agents/planner.md`: end of pipeline dispatches the orchestrator instead of handing off; single-pass, no gates; `no brainstorm` and `handoff` keywords.
+- `commands/full-cycle.md`: rewritten for single-pass; removed the `at once` gate-collapse special-case (gates are gone, so it was equivalent to the new default).
 
 ### Fixed
 
