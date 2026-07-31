@@ -1,0 +1,193 @@
+<mxfile host="65bd71144e">
+    <diagram id="multiplanflow" name="Multi-Plan-Flow">
+        <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1940" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="Multi-Plan Flow - foundation + N parallel sub-plans (rev B)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="10" width="820" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="ph1" value="PHASE 1 - ORCHESTRATOR   (/multi-plan during brainstorming; writes only docs/; never executes or merges)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="60" y="46" width="780" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_start" value="Feature request (too big for one plan)" style="ellipse;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="280" y="75" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_trig" value="Multi-plan trigger met?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="305" y="150" width="150" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="exit_term" value="Single-plan flow&#xa;(plan-flow.drawio)" style="ellipse;whiteSpace=wrap;html=1;fontSize=10" parent="1" vertex="1">
+                    <mxGeometry x="600" y="258" width="250" height="54" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_split" value="Identify shared foundation; propose split (foundation + N sub-projects)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="230" y="270" width="300" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_outline" value="Write outline&#xa;docs/artifacts/multi-plans/&lt;topic&gt;/&lt;date&gt;-&lt;topic&gt;-outline.md" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="215" y="345" width="330" height="44" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_outdec" value="Outline approved?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="305" y="410" width="150" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_found" value="Foundation: brainstorm + plan&#xa;(marks FROZEN interfaces in per-task blocks)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="220" y="530" width="320" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_fspec" value="Foundation spec + plan&#xa;docs/artifacts/specs|plans/&lt;topic&gt;/" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="215" y="605" width="330" height="44" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_fddec" value="Foundation plan approved?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="305" y="670" width="150" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_sp" value="Next sub-project: brainstorm + plan&#xa;(refs frozen interfaces by name)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="220" y="790" width="320" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_spdec" value="More sub-projects?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="305" y="865" width="150" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_manifest" value="Write manifest&#xa;&lt;date&gt;-&lt;topic&gt;-manifest.md: plan table, execution order,&#xa;per-SP + integration dispatch prompts, checklist" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="205" y="985" width="350" height="54" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_stop1" value="STOP - handoff (orchestrator never executes)" style="ellipse;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="250" y="1060" width="260" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="ph2" value="PHASE 2 - USER DISPATCHES (fresh sessions)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="60" y="1138" width="310" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_fdispatch" value="Dispatch FOUNDATION prompt&#xa;fresh agent on feat/&lt;slug&gt;; runs the foundation plan" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="210" y="1165" width="340" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_fverec" value="Foundation complete&#xa;and verified?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="305" y="1240" width="150" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_spdispatch" value="Dispatch SP-1, SP-2, ... IN PARALLEL&#xa;fresh agent each on feat/&lt;slug&gt;-spN-&lt;name&gt;&#xa;(separate worktrees; each installs its own deps)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="200" y="1360" width="360" height="56" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_spdone" value="All SPs report&#xa;complete?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="305" y="1450" width="150" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="ph3" value="PHASE 3 - INTEGRATION (fresh session)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="60" y="1568" width="310" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_idispatch" value="Dispatch INTEGRATION prompt&#xa;fresh agent on feat/&lt;slug&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="210" y="1595" width="340" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_mergecheck" value="Merge SP branches in manifest order (git merge --no-ff);&#xa;run test suite between merges; run integration checklist" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="195" y="1670" width="370" height="56" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_basemerge" value="Merge feat/&lt;slug&gt; to base&#xa;(PR if remote, else local merge)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="210" y="1760" width="340" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="n_stop2" value="Clean up worktrees; report" style="ellipse;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="250" y="1840" width="260" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend" value="Multi-plan flow: split one large feature into a shared foundation plus N independently buildable sub-projects (SPs).&#xa;&#xa;Shapes:&#xa;- ellipse = start / stop (STOP = orchestrator hands off)&#xa;- rectangle = process / action&#xa;- rhombus = decision (Yes / No labeled on each branch)&#xa;- parallelogram = artifact written to disk&#xa;&#xa;Roles:&#xa;- ORCHESTRATOR (strong agent, phase 1): writes outline, then foundation + each SP spec/plan, then the manifest. STOPs at the manifest. Never executes, never merges.&#xa;- USER (phase 2): dispatches the manifest prompts to fresh cheaper agents - foundation first, then SPs in parallel.&#xa;- INTEGRATION (phase 3): a fresh session. The planner's context is stale by merge time, so the manifest's expected-conflict hints carry everything needed.&#xa;&#xa;Models (opencode cross-model split): the phase-1 orchestrator/planner runs on glm-5.2; the foundation and SP executors dispatched in phase 2 run on MiniMax-M3 (cheaper, near-par execution); reviews are cross-model on glm-5.2.&#xa;&#xa;Key rules:&#xa;- Foundation first; its plan marks FROZEN interfaces (exact signatures). SPs reference them by name and never change them - that contract is what makes parallel SPs mergeable.&#xa;- Branches use dashes, never nesting: feat/&lt;slug&gt; and feat/&lt;slug&gt;-spN-&lt;name&gt; (feat/&lt;slug&gt;/sp-1 would collide as a git ref file vs dir).&#xa;- SPs run in separate worktrees; merge --no-ff in manifest order with the test suite between merges.&#xa;&#xa;Sources: docs/workflows/workflow.md (Large feature); skills/multi-plan-orchestration/SKILL.md; commands/multi-plan.md" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;align=left;verticalAlign=top" parent="1" vertex="1">
+                    <mxGeometry x="600" y="360" width="280" height="380" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n_start" target="n_trig" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" value="Yes" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="n_trig" target="n_split" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n_split" target="n_outline" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n_outline" target="n_outdec" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="Yes" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="n_outdec" target="n_found" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n_found" target="n_fspec" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n_fspec" target="n_fddec" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" value="Yes" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="n_fddec" target="n_sp" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n_sp" target="n_spdec" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e10" value="No" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="n_spdec" target="n_manifest" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n_manifest" target="n_stop1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" value="user dispatches" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;fontStyle=2" parent="1" source="n_stop1" target="n_fdispatch" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e13" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n_fdispatch" target="n_fverec" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e14" value="Yes" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="n_fverec" target="n_spdispatch" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e15" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n_spdispatch" target="n_spdone" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e16" value="Yes (all done)" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;fontStyle=2" parent="1" source="n_spdone" target="n_idispatch" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e17" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n_idispatch" target="n_mergecheck" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e18" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n_mergecheck" target="n_basemerge" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e19" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n_basemerge" target="n_stop2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_trig_exit" value="No" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10" parent="1" source="n_trig" target="exit_term" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="560" y="195"/>
+                            <mxPoint x="560" y="285"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="l_outdec" value="No (revise)" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;fontSize=10" parent="1" source="n_outdec" target="n_split" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="110" y="455"/>
+                            <mxPoint x="110" y="295"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="l_fddec" value="No (revise)" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;fontSize=10" parent="1" source="n_fddec" target="n_found" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="110" y="715"/>
+                            <mxPoint x="110" y="555"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="l_spdec" value="Yes (next SP)" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;fontSize=10" parent="1" source="n_spdec" target="n_sp" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="110" y="910"/>
+                            <mxPoint x="110" y="815"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="l_fverec" value="not yet (wait)" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;fontSize=10" parent="1" source="n_fverec" target="n_fdispatch" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="110" y="1285"/>
+                            <mxPoint x="110" y="1190"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="l_spdone" value="No (pending)" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;fontSize=10" parent="1" source="n_spdone" target="n_spdispatch" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="110" y="1495"/>
+                            <mxPoint x="110" y="1388"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

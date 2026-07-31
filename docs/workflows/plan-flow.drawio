@@ -1,0 +1,189 @@
+<mxfile host="65bd71144e">
+    <diagram id="planflow" name="Plan-Flow">
+        <mxGraphModel dx="1733" dy="974" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1340" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="Plan Flow - single plan: /full-cycle single-pass (planner dispatches orchestrator) with handoff escape (rev D)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="10" width="1320" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="ph1hdr" value="PHASE 1 - PLANNER   (/full-cycle, planner agent on glm-5.2; writes only docs/)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="60" y="48" width="640" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="ph2hdr" value="PHASE 2 - ORCHESTRATOR   (orchestrator agent on MiniMax-M3; standalone /execute-plan OR planner-dispatched in single-pass /full-cycle; edit/write/patch denied, all changes via subagents)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="520" y="525" width="840" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="n1" value="Feature request" style="ellipse;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="135" y="75" width="170" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="n2" value="Brainstorm&#xa;(brainstorming skill; explore subagent does codebase recon)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="95" y="150" width="250" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="n3" value="Write spec to&#xa;docs/artifacts/specs/&lt;topic&gt;/&lt;date&gt;-&lt;slug&gt;-design.md" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="85" y="220" width="270" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n4" value="Spec approved?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="150" y="275" width="140" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="n5" value="Write plan to&#xa;docs/artifacts/plans/&lt;topic&gt;/&lt;date&gt;-&lt;slug&gt;-plan.md" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="85" y="390" width="270" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n6" value="Plan approved?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="150" y="445" width="140" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="n7" value="Dispatch ORCHESTRATOR subagent&#xa;(single-pass, same run; needs subagent_depth &gt;= 2)&#xa;DEFAULT - no approval gates" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="85" y="552" width="270" height="62" as="geometry"/>
+                </mxCell>
+                <mxCell id="n7h" value="handoff keyword only:&#xa;print /execute-plan &lt;plan-path&gt;&#xa;for a FRESH session" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="85" y="645" width="270" height="58" as="geometry"/>
+                </mxCell>
+                <mxCell id="m1" value="Orchestrator setup:&#xa;read plan + spec (explore subagent recon);&#xa;branch &lt;type&gt;/&lt;plan-slug&gt;;&#xa;commit plan+spec as &#39;docs:&#39;;&#xa;build todo (1 item per task)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="810" y="550" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="m2" value="Dispatch EXECUTOR subagent (MiniMax-M3)&#xa;(1 task: TDD, ponytail, verify, Conventional Commit)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="810" y="645" width="280" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="m3" value="Dispatch REVIEWER subagent (glm-5.2, cross-model)&#xa;(spec compliance, then code quality)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="810" y="720" width="280" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="m4" value="Review PASS?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="880" y="785" width="140" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="m5" value="Failed twice?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="540" y="785" width="140" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="oracle" value="Dispatch ORACLE subagent (glm-5.2)&#xa;(read-only: ranked hypotheses + 1 recommendation)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="480" y="900" width="260" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="m6" value="Commit task; update todo" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="810" y="900" width="280" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="m7" value="More tasks?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="880" y="965" width="140" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="m8" value="graphify update .   (only if graph.json exists)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="810" y="1080" width="280" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="m9" value="Final whole-implementation review (reviewer)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="810" y="1150" width="280" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="m10" value="Report and stop&#xa;(branch, commits, diffs, verifier, skills,&#xa;ponytail deferrals, Unverified).&#xa;No merge or PR unless user asks." style="ellipse;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="790" y="1220" width="320" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n1n2" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n1" target="n2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n2n3" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n2" target="n3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n3n4" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n3" target="n4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n4n5" value="Yes" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="n4" target="n5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n5n6" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n5" target="n6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n6n7" value="Yes (default)" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="n6" target="n7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n4no" value="No (revise)" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;fontSize=10" parent="1" source="n4" target="n3" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="70" y="320"/>
+                            <mxPoint x="70" y="240"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_n6no" value="No (revise)" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;fontSize=10" parent="1" source="n6" target="n5" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="70" y="490"/>
+                            <mxPoint x="70" y="410"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_handoff" value="single-pass (same run)" style="edgeStyle=none;endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10;fontStyle=1" parent="1" source="n7" target="m1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n6n7h" value="handoff" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0;exitY=0.7;entryX=0;entryY=0.5;fontSize=10;fontStyle=2" parent="1" source="n6" target="n7h" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="55" y="508"/>
+                            <mxPoint x="55" y="674"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_n7hm1" value="fresh session" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.9;fontSize=10;fontStyle=2" parent="1" source="n7h" target="m1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="740" y="674"/>
+                            <mxPoint x="740" y="613"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_m1m2" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="m1" target="m2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_m2m3" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="m2" target="m3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_m3m4" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="m3" target="m4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_m4yes" value="Yes" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="m4" target="m6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_m4no" value="No" style="edgeStyle=none;endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;fontSize=10" parent="1" source="m4" target="m5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_m5yes" value="Yes" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="m5" target="oracle" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_m5no" value="No (retry)" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;fontSize=10" parent="1" source="m5" target="m2" edge="1">
+                    <mxGeometry x="-0.8361" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="450" y="830"/>
+                            <mxPoint x="450" y="670"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_oracle" value="fold recommendation" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;fontSize=10;exitDx=0;exitDy=0;" parent="1" source="oracle" target="m2" edge="1">
+                    <mxGeometry x="-0.6957" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="610" y="1010"/>
+                            <mxPoint x="450" y="1010"/>
+                            <mxPoint x="450" y="670"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_m6m7" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="m6" target="m7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_m7yes" value="Yes (next task)" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=1;entryY=0.5;fontSize=10" parent="1" source="m7" target="m2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1170" y="1010"/>
+                            <mxPoint x="1170" y="670"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_m7no" value="No" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="m7" target="m8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_m8m9" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="m8" target="m9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_m9m10" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="m9" target="m10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend" value="Plan flow: one plan from feature request to merge-ready branch. /full-cycle is single-pass by default - the planner brainstorms, specs, plans, then DISPATCHES the orchestrator subagent in the same run and relays its report (no approval gates). The handoff keyword opts out: the planner prints the /execute-plan line for a fresh session instead.&#xa;&#xa;Shapes:&#xa;- ellipse = start / stop&#xa;- rectangle = process / action&#xa;- rhombus = decision (Yes / No labeled on each branch)&#xa;- parallelogram = artifact written to disk&#xa;&#xa;Agents:&#xa;- PRIMARY (drives a phase): planner = phase 1 (dispatches the orchestrator at the end, single-pass); orchestrator = phase 2 (standalone /execute-plan OR planner-dispatched; never edits directly).&#xa;- SUBAGENT (dispatched, one job each): executor = implements 1 task; reviewer = spec + quality; oracle = read-only consult after 2 strikes; explore = codebase recon.&#xa;&#xa;Rules: planner writes only docs/; orchestrator edit/write/patch denied so every change flows through an executor; a two-strike failure (verify or review rejected twice) escalates to the oracle, whose recommendation is folded into the next executor dispatch; commits land at task boundaries (plan-execution carve-out); single-pass needs subagent_depth &gt;= 2 so the orchestrator can dispatch executor/reviewer - without it, fall back to the handoff; no merge or PR unless the user asks.&#xa;&#xa;Sources: docs/workflows/workflow.md; commands/full-cycle.md, execute-plan.md, goal.md; agents/{planner,orchestrator,executor,reviewer,oracle}.md" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=10;align=left;verticalAlign=top" parent="1" vertex="1">
+                    <mxGeometry x="860" y="120" width="500" height="310" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
