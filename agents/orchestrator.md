@@ -3,6 +3,7 @@ description: Executes approved plans. Dispatches executor subagents per task, re
 mode: all
 color: "#EF4444"
 model: minimax-coding-plan/MiniMax-M3
+variant: thinking
 tools:
   write: false
   edit: false

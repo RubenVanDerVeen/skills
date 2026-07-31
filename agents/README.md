@@ -7,7 +7,7 @@ Source of truth for the custom opencode agents. Like `commands/`, this directory
 | Agent | Mode | Model | Role | Denied |
 |---|---|---|---|---|
 | `planner` | primary | `zai-coding-plan/glm-5.2` | Brainstorm > spec > plan. Dispatches the `orchestrator` subagent in single-pass mode by default (commits at task boundaries), or prints the `/execute-plan` handoff block when `handoff` is requested. Dispatches `explore` for recon. | file writes outside `docs/**` (glob deny); execution-process skills |
-| `orchestrator` | all | `minimax-coding-plan/MiniMax-M3` | Executes approved plans: dispatches executor/reviewer per task, oracle on two-strike failures, commits at boundaries via bash. Session agent for standalone /execute-plan and dispatchable by the planner for single-pass /full-cycle. | edit/write/patch tools; implementation-domain skills |
+| `orchestrator` | all | `minimax-coding-plan/MiniMax-M3` (`thinking` variant) | Executes approved plans: dispatches executor/reviewer per task, oracle on two-strike failures, commits at boundaries via bash. Session agent for standalone /execute-plan and dispatchable by the planner for single-pass /full-cycle. | edit/write/patch tools; implementation-domain skills |
 | `writer` | primary | unpinned (session model) | Focused doc/Typst sessions: direct edits, compile-verify, no ceremony. | plan/execution suite and code-domain skills |
 | `inventree` | primary | `minimax-coding-plan/MiniMax-M3` | InvenTree inventory sessions: AliExpress CSV import, parts/stock/POs, naming convention, datasheet fetch/attach. Needs the machine-local `mcp.homelab` block. | file writes; task/webfetch; `homelab_plane*` schemas; planning and doc-domain skills |
 | `executor` | subagent | `minimax-coding-plan/MiniMax-M3` | Implements exactly one plan task: TDD, edit, verify, report. Keeps ponytail suite and `using-git-worktrees`. | task/webfetch tools; planning skills |
@@ -36,6 +36,7 @@ Measurements predate the 2026-07-12 roster change (planner/writer/oracle, model 
 ## Maintenance notes
 
 - Denylist over allowlist: new skills surface in every agent by default; add a deny where a skill does not belong.
+- `variant: thinking` is pinned on the orchestrator (not just inherited) so single-pass `/full-cycle` subagent dispatch matches the standalone `/execute-plan` model. Without an explicit `variant`, opencode uses the `default` variant when the orchestrator is dispatched as a subagent, even though standalone runs pick up `thinking` from the session default. Verified against session history (2026-07-31): standalone orchestrator ran `thinking`, planner-dispatched ran `default`.
 - `tools:` is deprecated in the schema but still strips tool schemas from context; keep both `tools:` and the matching `permission:` entries.
 - Permission rule order matters: opencode uses last-match-wins inside a patterned permission object, so put the broad rule (`"*"`) FIRST and narrow allows LAST. A trailing `"*": deny` matched the tool-capability probe and silently disabled the tool entirely (the orchestrator's `task:` block had `"*": deny` last and lost dispatch until reordered).
 - `color:` accepts hex (`#rrggbb`) or theme tokens (`primary|secondary|accent|success|warning|error|info`) only.
