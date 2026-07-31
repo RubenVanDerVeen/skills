@@ -6,7 +6,7 @@ Source of truth for the custom opencode agents. Like `commands/`, this directory
 
 | Agent | Mode | Model | Role | Denied |
 |---|---|---|---|---|
-| `planner` | primary | `zai-coding-plan/glm-5.2` | Brainstorm > spec > plan > `/execute-plan` handoff. Dispatches `explore` for recon. | file writes outside `docs/**` (glob deny); execution-process skills |
+| `planner` | primary | `zai-coding-plan/glm-5.2` | Brainstorm > spec > plan. Dispatches the `orchestrator` subagent in single-pass mode by default (commits at task boundaries), or prints the `/execute-plan` handoff block when `handoff` is requested. Dispatches `explore` for recon. | file writes outside `docs/**` (glob deny); execution-process skills |
 | `orchestrator` | all | `minimax-coding-plan/MiniMax-M3` | Executes approved plans: dispatches executor/reviewer per task, oracle on two-strike failures, commits at boundaries via bash. Session agent for standalone /execute-plan and dispatchable by the planner for single-pass /full-cycle. | edit/write/patch tools; implementation-domain skills |
 | `writer` | primary | unpinned (session model) | Focused doc/Typst sessions: direct edits, compile-verify, no ceremony. | plan/execution suite and code-domain skills |
 | `inventree` | primary | `minimax-coding-plan/MiniMax-M3` | InvenTree inventory sessions: AliExpress CSV import, parts/stock/POs, naming convention, datasheet fetch/attach. Needs the machine-local `mcp.homelab` block. | file writes; task/webfetch; `homelab_plane*` schemas; planning and doc-domain skills |

@@ -19,7 +19,7 @@ Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands
 
 ## Agents
 
-Custom opencode agents for the plan/execute/review split: `orchestrator` (primary, cannot edit), `executor` (implements one task), `reviewer` (read-only review), `inventree` (InvenTree inventory sessions via the homelab MCP). Per-agent skill denylists cut startup context ~2-4k tokens per session. Source of truth in [`agents/`](./agents/README.md); copy to `~/.config/opencode/agents/` to activate.
+Custom opencode agents for the plan/execute/review split: `orchestrator` (`mode: all`, denies edit/write/patch), `executor` (implements one task), `reviewer` (read-only review), `inventree` (InvenTree inventory sessions via the homelab MCP). Per-agent skill denylists cut startup context ~2-4k tokens per session. Source of truth in [`agents/`](./agents/README.md); copy to `~/.config/opencode/agents/` to activate.
 
 ## External skills
 
@@ -58,7 +58,7 @@ skills/
 ├── commands/                                    <- all slash commands live here
 │   ├── goal.md                                  <- /goal: iterate until verifier passes
 │   ├── execute-plan.md                          <- /execute-plan: subagent-driven plan execution
-│   ├── full-cycle.md                            <- /full-cycle: brainstorm > spec > plan, hand off execution
+│   ├── full-cycle.md                          <- /full-cycle: single-pass brainstorm > spec > plan > dispatch orchestrator (or handoff)
 │   ├── iterate-skill.md                         <- /iterate-skill: refine a skill via subagent review loops
 │   ├── harvest.md                               <- /harvest: mine sessions for skill improvements
 │   ├── multi-plan.md                            <- /multi-plan: start multi-plan orchestration
