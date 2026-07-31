@@ -13,11 +13,11 @@ permission:
   write: deny
   patch: deny
   task:
+    "*": deny
     "executor": allow
     "reviewer": allow
     "oracle": allow
     "explore": allow
-    "*": deny
   todowrite: allow
   skill:
     "*": allow

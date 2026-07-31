@@ -37,6 +37,7 @@ Measurements predate the 2026-07-12 roster change (planner/writer/oracle, model 
 
 - Denylist over allowlist: new skills surface in every agent by default; add a deny where a skill does not belong.
 - `tools:` is deprecated in the schema but still strips tool schemas from context; keep both `tools:` and the matching `permission:` entries.
+- Permission rule order matters: opencode uses last-match-wins inside a patterned permission object, so put the broad rule (`"*"`) FIRST and narrow allows LAST. A trailing `"*": deny` matched the tool-capability probe and silently disabled the tool entirely (the orchestrator's `task:` block had `"*": deny` last and lost dispatch until reordered).
 - `color:` accepts hex (`#rrggbb`) or theme tokens (`primary|secondary|accent|success|warning|error|info`) only.
 - Quirk: running a `mode: subagent` agent standalone (`opencode run --agent executor`) skips its skill filtering; the task-dispatch path applies it. Do not benchmark subagents standalone.
 - An empty body keeps opencode's default system prompt. A non-empty body replaces it entirely; only add one deliberately.
