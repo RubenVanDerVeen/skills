@@ -70,7 +70,7 @@ The date must come first so sort-by-filename produces chronological order.
 
 Format: `<type>(<scope>): <description>`.
 
-Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`, `build`.
+Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
 
 ```
 ✅ feat(remote-controller): add wireless pairing
@@ -81,6 +81,8 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`
 ```
 
 Scope is the **module or component**, not the discipline. `feat(remote-controller)` not `feat(electrical)`.
+
+Enforcement: a tracked `commit-msg` hook (`.githooks/commit-msg`) rejects non-conforming subjects. Activate once per clone: `git config core.hooksPath .githooks` (installed by the `project-standardization` bootstrap, step 10).
 
 ---
 

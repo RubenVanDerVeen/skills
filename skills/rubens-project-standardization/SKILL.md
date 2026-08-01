@@ -28,7 +28,7 @@ Most projects adopt the conventions layer. Formal ISO/IEC/IEEE norms are opt-in 
 - **kebab-case ASCII-only paths**: lowercase, hyphens, no spaces / underscores / PascalCase / non-ASCII. `README.md`, `AGENTS.md`, `CLAUDE.md`, `CHANGELOG.md`, `STANDARDS.md` are conventional exceptions.
 - **English structural paths**: dir / file names in English. Document *content* may be Dutch where the deliverable requires it.
 - **ISO 8601 date prefix**: `YYYY-MM-DD-` first, e.g. `2026-05-08-standup.md`.
-- **Conventional Commits 1.0.0 + Keep a Changelog 1.1.0**: `<type>(<scope>): <description>`; `CHANGELOG.md` grouped by version or sprint.
+- **Conventional Commits 1.0.0 + Keep a Changelog 1.1.0**: `<type>(<scope>): <description>`; `CHANGELOG.md` grouped by version or sprint. Commits are enforced by the `commit-msg` hook installed in bootstrap step 10.
 
 Rationale: `references/standards-stack.md`.
 
@@ -55,7 +55,7 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 
 | File | When to read |
 |------|--------------|
-| `references/bootstrap.md` | The 11-step bootstrap checklist (triage → AGENTS.md → `.agents/` → artifacts → memory → CHANGELOG → STANDARDS → graphify → verify) |
+| `references/bootstrap.md` | The 12-step bootstrap checklist (triage → AGENTS.md → `.agents/` → artifacts → memory → CHANGELOG → STANDARDS → commit hook → graphify → verify) |
 | `references/small.md` | Small project layout, AGENTS.md content, graduation triggers |
 | `references/medium.md` | Medium project layout, auto-import vs on-demand, Homelab example |
 | `references/large.md` | Large project layout, `docs/{source,deliverables,components,project-management}/`, sprint workflow |
@@ -78,6 +78,7 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 | `templates/CHANGELOG.md` | Seed `CHANGELOG.md` |
 | `templates/STANDARDS.md` | Human-readable standards summary |
 | `templates/post-commit-graphify` | Debounced git hook: refresh `graphify-out/` graph after commits (AST-only, no LLM). Copy to `.git/hooks/post-commit`. |
+| `templates/commit-msg` | Conventional Commits 1.0.0 enforcement hook (sh + grep, no deps). Copy to `.githooks/commit-msg`; see bootstrap step 10. |
 
 ## Commands
 
