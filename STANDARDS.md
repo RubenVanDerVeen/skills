@@ -70,7 +70,7 @@ The date must come first so sort-by-filename produces chronological order.
 
 Format: `<type>(<scope>): <description>`.
 
-Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`, `build`.
+Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
 
 ```
 ✅ feat(typst-pro): add IEEE journal template
@@ -81,6 +81,8 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`
 ```
 
 Scope is the **skill folder or repo area** the change touches (`typst-pro`, `drawio-pro`, `readme`, `agents`).
+
+Enforcement: a tracked `commit-msg` hook (`.githooks/commit-msg`) rejects non-conforming subjects. Activate once per clone: `git config core.hooksPath .githooks` (see `opencode-install.md` step 10).
 
 ---
 
@@ -104,7 +106,10 @@ skills/
 ├── opencode-install.md                    <- discoverable install doc (also a skill)
 ├── external-skills.md                     <- discoverable external catalog (also a skill)
 ├── docs/                                  <- workflow notes and artifacts
+├── .gitattributes                         <- forces LF on .githooks/* (shebang safety)
 ├── .gitignore
+├── .githooks/
+│   └── commit-msg                         <- Conventional Commits enforcement hook
 ├── .claude/                               <- Claude Code tool settings (project)
 ├── commands/                              <- all slash commands live here
 │   ├── goal.md

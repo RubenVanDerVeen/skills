@@ -125,6 +125,17 @@ The `skills/`, `commands/`, and `agents/` directories inside this repo are inact
 
 3. Copy each `agents/*.md` file (opencode agent definitions: `orchestrator`, `executor`, `reviewer`) to `~/.config/opencode/agents/` (global) or `.opencode/agents/` (per-project). opencode-only; Claude Code subagents use a different frontmatter format. Restart opencode afterwards; see `agents/README.md` for roles and tuning.
 
+
+### 10. Enable the commit-msg hook
+
+This repo ships a tracked `commit-msg` git hook (`.githooks/commit-msg`) that rejects non-Conventional-Commits messages, so agent-made and manual commits stay compliant. Git does not run hooks from a tracked directory until you point `core.hooksPath` at it. One-time per clone:
+
+```
+git config core.hooksPath .githooks
+```
+
+The hook is `sh` + `grep` only (no Node, no dependencies) and is tracked executable, so it works on Windows (via Git's bundled bash), macOS, and Linux. Emergency bypass: `git commit --no-verify`.
+
 ## Verify
 
 After all nine steps, start a new opencode session and confirm each source is reachable:
