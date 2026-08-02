@@ -11,3 +11,8 @@ desktop.ini
 # IDE (uncomment as needed)
 # .vscode/
 # .idea/
+
+# Local opencode config (machine-specific: permission overrides, MCP secrets)
+opencode.json
+opencode.jsonc
+.opencode/

@@ -20,7 +20,7 @@ Model routing: GLM 5.2 carries planning, review, and consult (long-horizon reaso
 
 ## Why: tokens and discipline
 
-Skill descriptions, not tool schemas, dominate opencode startup context (~5k of ~17k with 37 skills registered). Per-agent `permission: skill: { "<name>": deny }` removes denied skills from the listing the model sees. Tool-schema removal (edit/write/patch) is only ~80 tokens per tool. The edit/write deny on the orchestrator also enforces the subagent-driven-development rule "the orchestrator never implements" mechanically instead of by prose.
+Skill descriptions, not tool schemas, dominate opencode startup context (~5k of ~17k with 37 skills registered). Per-agent `permission: skill: { "<name>": deny }` removes denied skills from the listing the model sees. Tool-schema removal (edit/write/patch) is only ~80 tokens per tool. The edit/write deny on the orchestrator is a guardrail, not a forcing function: bash can still write files (`Set-Content`, redirection, `git apply`), so a pragmatic model can bypass it. Real enforcement is the body's dispatch-first mandate plus the Dispatch Log that makes any self-implementation visible in the final report. Verified the hard way 2026-08-02: MiniMax-M3 ran two full plans with zero executor dispatches and produced green reports; the bypass was caught only by a later DB audit.
 
 Measured 2026-07-05 (opencode 1.17.13, MiniMax-M3, this repo, input + cache-read):
 
