@@ -43,8 +43,13 @@
 5. **Conclusion** - the one-sentence contribution
 
 ## Methodology Notes
-
-- Streams run: A (arxiv), B (web), C (local)
-- Search terms used: ...
-- Limits / flags: <e.g. "stream B returned mostly vendor blogs - bias toward commercial perspectives">
-- Re-run command: <slug + "standard depth" would re-gather on date X>
+<Three required blocks:>
+<(1) How the research was done: which streams ran, any limits, any source quality flags.>
+<(2) Cost / latency / model line (REQUIRED since 2026-08-02):>
+  - Tokens: <per-stream in/out, total>  Wall time: <per-stream, total>
+  - Models: <subagent model(s) used per stream; parent synthesis model>
+  - For budget projections: label any extrapolation explicitly
+    (e.g. "extrapolated from per-token pricing — verify with one real session before committing").
+<(3) Verifier + planner notes (only when Phase 2.5/2.6 ran):
+  - _synthesis-brief.md (Phase 2.5): <path, 1-line summary>
+  - _citation-check.md (Phase 2.6): <path, pass/fail count, any failed claims>

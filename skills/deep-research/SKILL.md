@@ -139,6 +139,14 @@ arXiv MCP for arxiv-specific depth,
 and Semantic Scholar for citation counts, author profiles, and recommendations.
 Find 5-15 relevant sources from the last 5 years (older only if foundational).
 For each paper, capture: arxiv_id, title, authors, year, abstract, 2-3 key claims relevant to our topic, and a 1-line "why it matters" note.
+
+**Citation-graph traversal step (added 2026-08-02, deep-research-pipeline-2026 dossier):**
+For each top-3 paper, also fetch the forward citation graph (papers citing it) via
+mcp_openalex_openalex_search_entities with filters={"cites": "W..."} (OpenAlex ID for the work)
+or via mcp_arxiv_citation_graph. Surface the 2-3 most-cited follow-up papers as additional
+sources — they often cover the same claim from a different angle or refute it. Note in the
+source note's "Citation graph" section which follow-ups you added and why.
+
 Save individual paper notes to /mnt/nas/notes/research/dossiers/<DOSSIER_NAME>/sources/arxiv-<id>.md using the source note template (see references/source-note-template.md).
 Also write /mnt/nas/notes/research/dossiers/<DOSSIER_NAME>/_stream-a-summary.md with the ranked list of papers and the 3-5 strongest claims backed by them.
 Do NOT write to the main dossier - only the stream summary + source notes.
@@ -181,9 +189,83 @@ Save to /mnt/nas/notes/research/dossiers/<DOSSIER_NAME>/sources/local-<slug>.md 
 - The dossier phase gets three pre-organized summaries it can weave together
 - Easier to debug a weak stream
 
+## PHASE 2.5 - Compressed Synthesis Brief (RECOMMENDED for standard+ depth)
+
+> **Added 2026-08-02 (deep-research-pipeline-2026 dossier).** Phase 2.5 + Phase 2.6 together add ~1 extra LLM call each to the pipeline. Recommended for `depth=standard` and `depth=deep`; skip for `depth=quick` to save the round-trip. **Why:** LangChain's context-engineering lesson ([web:langchain-thinking-about-frameworks] "the hard part is ensuring the LLM has the right context at each step") — Phase 3 reads a 1-page brief instead of 3 stream summaries + 54 raw source notes, which is what the literature says is the lever for scaling DR. Anthropic's separate Citation Agent role (see Phase 2.6) is the other half of this pattern.
+
+After all three streams finish (Phase 2), the **parent session** runs a short LLM call that takes:
+
+- The three `_stream-{a,b,c}-summary.md` files
+- The top 5 source notes from each stream (read by relevance, not exhaustively)
+
+…and writes `_synthesis-brief.md` to the dossier dir with this structure:
+
+```markdown
+# Synthesis Brief — <dossier-name>
+
+## Ranked Claims (load-bearing first)
+1. **<claim>** — supported by [arxiv:xxxx] [web:slug] [local:slug]. Confidence: high/medium/low.
+   - Why it matters: <1 sentence>
+   - Counter-evidence: <if any>
+2. ...
+
+## Cross-Source Conflicts
+- <claim X>: stream A says Y, stream B says Z. The brief picks Y because <reason>.
+- ...
+
+## Gaps the streams left open
+- <what no source covered>
+- <what 2+ sources disagreed on>
+- ...
+
+## Candidate Outline
+1. <section> — hook: <claim N>
+2. <section> — strongest claims section-by-section
+3. ...
+
+## Stream Convergence Note
+- <1 line: did A/B/C converge on the headline, or diverge?>
+```
+
+The brief is the input to Phase 3 (parent reads brief, not raw streams) and the input to Phase 2.6 (Citation Agent checks brief claims against source notes).
+
+**Skip Phase 2.5 only if:** (a) `depth=quick`, (b) the streams' summaries already converge so hard that re-summarizing is redundant (rare; the brief is usually sharper than the concatenation), or (c) the parent session is short on context budget and the streams each returned <5 source notes.
+
+## PHASE 2.6 - Citation Agent Pass (RECOMMENDED for standard+ depth)
+
+> **Added 2026-08-02 (deep-research-pipeline-2026 dossier).** Anthropic's research architecture has three roles (Lead Researcher, Sub-agents, **Citation Agent** — a separate verifier that checks every claim against its source before anything reaches the user). Our pipeline currently lacks the third role; Phase 2.6 adds it. Recommended for standard+ depth when source quality matters.
+
+After Phase 2.5 (the brief exists), the parent session runs a Citation Agent pass:
+
+1. **Read** `_synthesis-brief.md` ranked claims.
+2. **For each top-3 claim:** open the cited source note(s) and verify the claim is actually supported (or noted as paraphrased / extrapolated). If unsupported, mark `FAILED` and emit a one-line correction.
+3. **For each citation in the brief:** check that the cited source file exists in `sources/` (no phantom citations).
+4. **Write** `_citation-check.md` to the dossier dir:
+
+```markdown
+# Citation Check — <dossier-name>
+
+## Summary
+- Total claims checked: N
+- Pass: N-pass
+- Fail: N-fail (corrected inline)
+- Phantom citations: 0
+
+## Per-claim verdicts
+1. **<claim>** — PASS / FAIL. Notes: <if FAIL, what the source actually says>.
+2. ...
+
+## Corrections Applied
+- <if any claims needed correction; list before/after>
+```
+
+Phase 3 then incorporates any corrections before writing the dossier. If Citation Agent finds >30% failures, treat that as a flag in the dossier's Methodology Notes — the stream-gather had a quality problem worth investigating.
+
+**Skip Phase 2.6 only if:** (a) `depth=quick`, (b) the dossier is for personal use and citation accuracy is not critical, or (c) the streams returned <10 sources total (manual spot-check is cheaper than the agent pass).
+
 ## PHASE 3 - Synthesis & Dossier
 
-After all three streams finish, **synchronously** write the master dossier. Read the three `_stream-X-summary.md` files and the individual source notes, then:
+After all three streams finish (Phase 2) and the optional Phase 2.5 brief + Phase 2.6 citation-check have run, **synchronously** write the master dossier. **Read `_synthesis-brief.md` (Phase 2.5 output) and `_citation-check.md` (Phase 2.6 output) FIRST; fall back to `_stream-{a,b,c}-summary.md` and individual source notes only if those are absent** (quick-scan depth or Phase 2.5/2.6 skipped). Then:
 
 1. Open `/mnt/nas/notes/research/dossiers/<dossier-name>/dossier.md`
 2. Structure (use this exact layout - the user can paste it into a paper or read it standalone):
@@ -216,9 +298,12 @@ After all three streams finish, **synchronously** write the master dossier. Read
 - [local:slug] Path - date - why it matters
 
 ## Multi-Pass Synthesis
-<OPTIONAL. Only if the synthesis used a multi-lens pattern - see PHASE 3.5 below.
- Embed a digest of the 2-3 self-passes inline. Cite the raw per-pass files
- (`_self-pass-{1,2,3}-*.md`) for full content.>
+<REQUIRED for standard+ depth (see PHASE 3.5 above). Embed a digest of the 2-3
+self-passes inline — what each lens found that the others missed, where they
+disagreed, and what the synthesis-judge pass promoted to a load-bearing claim.
+For quick-scan depth, mark this section as "skipped (quick-scan depth)" with a
+one-line rationale. Cite the raw per-pass files (`_self-pass-{1,2,3}-*.md`) for
+full content.>
 
 ## Suggested Paper / Writeup Outline
 1. Introduction - hook: <claim 1>
@@ -228,7 +313,16 @@ After all three streams finish, **synchronously** write the master dossier. Read
 5. Open Problems - the gaps above
 
 ## Methodology Notes
-<How the research was done: which streams ran, any limits, any source quality flags.>
+<Three required blocks:>
+<(1) How the research was done: which streams ran, any limits, any source quality flags.>
+<(2) Cost / latency / model line (REQUIRED — see "Cost line" pitfall below):>
+  - Tokens: <per-stream in/out, total>  Wall time: <per-stream, total>
+  - Models: <subagent model(s) used per stream; parent synthesis model>
+  - For budget projections: label any extrapolation explicitly
+    (e.g. "extrapolated from per-token pricing — verify with one real session before committing").
+<(3) Verifier + planner notes (only when Phase 2.5/2.6 ran — see patches below):
+  - _synthesis-brief.md (Phase 2.5): <path, 1-line summary>
+  - _citation-check.md (Phase 2.6): <path, pass/fail count, any failed claims>
 ```
 
 3. Save it. Then **always** end the response with a short user-facing summary:
@@ -238,9 +332,17 @@ After all three streams finish, **synchronously** write the master dossier. Read
 
 4. **Emit `/mnt/nas/workspace/artifacts/<session_id>/SUMMARY.md` AND `/mnt/nas/notes/research/dossiers/<dossier-name>/sources.json` + `/mnt/nas/workspace/artifacts/<session_id>/sources.json` in the SAME turn as the dossier write.** This is owned by `artifacts`; consult that skill for the schemas. The console reads these for clickable source provenance. If you skip this step here, it gets retrofitted later and the user will notice (verified 2026-06-12, car-photo-spots dossier + 2026-06-15 llm-subscription-plans-2026).
 
-## PHASE 3.5 - Multi-Lens Self-Pass Pattern (OPTIONAL)
+## PHASE 3.5 - Multi-Lens Self-Pass Pattern (DEFAULT for standard+ depth, opt-in for quick scan)
 
-For higher-stakes research, add 2-3 sequential self-passes (running in the parent session,
+> **Default changed 2026-08-02 (deep-research-pipeline-2026 dossier).** Was
+> `(OPTIONAL)`; now runs by default for `depth=standard` and `depth=deep`. For
+> `depth=quick`, skip the multi-lens pass and use the basic Phase 3 single-shot
+> synthesis. **Why:** the 2025-2026 deep-research literature (SciSage +32%
+> citation F1, Agentic AutoSurvey 8.18 vs 4.77) and our own diffusion-policies-2025
+> run both put the evaluator / reflector layer at the top of the ROI curve.
+> Promotion from OPTIONAL to default is the single highest-confidence upgrade.
+
+For `depth=standard` and `depth=deep`, add 2-3 sequential self-passes (running in the parent session,
 not as subagents) with **deliberately different lenses**. This is most useful when:
 - The topic is contentious or has strong commercial PR / vendor bias
 - The user wants an opinionated deliverable, not a neutral summary
@@ -291,6 +393,8 @@ A worked example (the 2026-06 diffusion-policies A/B run) is in `references/mult
 ├── _stream-a-summary.md
 ├── _stream-b-summary.md
 ├── _stream-c-summary.md
+├── _synthesis-brief.md             ← Phase 2.5 output (standard+ depth); brief that Phase 3 reads
+├── _citation-check.md              ← Phase 2.6 output (standard+ depth); Citation Agent verdicts
 ├── _self-pass-1-academic.md        ← raw pass 1 (lens: academic)
 ├── _self-pass-2-industry.md         ← raw pass 2 (lens: industry-skeptical)
 ├── _self-pass-3-synthesis.md        ← raw pass 3 (lens: synthesis-judge)
@@ -394,6 +498,9 @@ Create the skeleton directory on first run if missing. Use `terminal` to mkdir.
 - **Multi-lens self-pass files go in `/mnt/nas/notes/research/dossiers/<dossier-name>/_self-pass-*.md`, NOT in `/mnt/nas/workspace/artifacts/<session_id>/`** (verified 2026-06-07, diffusion-policies A/B run). The `artifacts` skill owns `/mnt/nas/workspace/artifacts/<session_id>/` and only the `SUMMARY.md` lives there. If you put self-pass files in the artifacts dir, the console and the human both lose. The dossier's "Multi-Pass Synthesis" section embeds a digest inline; the raw files are kept next to the dossier for transparency.
 - **Default write path is `/mnt/nas/notes/research/`, never `/opt/data/home/research/`** (verified 2026-06-27). See top-of-file pitfall.
 - **Cost projections from per-token pricing are extrapolations, not facts - flag them as such** (verified 2026-06-27, cheap-claude-orchestrator dossier). When a dossier estimates monthly cost for a subscription plan (e.g. "opencode Go at $10/mo gives 9,250 Kimi requests, so Scenario B = ~$9/mo"), the math combines (a) per-token list pricing from vendor docs, (b) per-request token counts the agent guessed, and (c) usage frequency the user described in vague terms ("3-5 heavy sessions/month"). All three legs are uncertain, and they multiply. If the dossier presents a point estimate ("$9/mo") and the user later reveals real usage data showing 10x more spend per session, the recommendation has to be retracted. The fix: in any cost-projection section, present a **range with explicit assumptions** ("$9-30/mo depending on session length, assuming 1-2K tokens/request and 5-15 sessions/month"), label the estimate `extrapolated - verify with one real session before committing`, and recommend the user run a single push session against the new vendor before the dossier's recommendation is acted on. Concrete trigger: any dossier section that says "saves X EUR/month" must either (a) cite a real bill, or (b) be in the extrapolated-range format. A "saves 342 EUR/yr" line with no error bar is a flag that the math has been over-claimed.
+- **Cost / latency / model line in Methodology Notes is REQUIRED (verified 2026-08-02, deep-research-pipeline-2026 dossier).** Three numbers every dossier should record: (a) tokens in/out per stream and total, (b) wall time per stream and total, (c) the model used per stream and for parent synthesis. Without these, future-you can't budget-match an A/B against an alternative pipeline (LangChain ODR, Anthropic Research, etc.) and the dossier becomes unfalsifiable. For budget projections from per-token pricing: present a *range* with explicit assumptions ("$9-30/mo depending on session length, assuming 1-2K tokens/request and 5-15 sessions/month"), label as `extrapolated - verify with one real session before committing`, and recommend the user run a single push session against the new path before the recommendation is acted on. A point estimate without error bars ("saves 342 EUR/yr") is a flag the math has been over-claimed.
+- **Production DR agent counts are 1-10, never 25+; the "many agents" press impression is marketing or runaway recursion (verified 2026-08-02, deep-research-pipeline-2026 dossier).** Documented counts: OpenAI/Gemini/Perplexity/HF smolagents are single-agent; Anthropic Research is 1 lead + 3-5 default, **10+ for "complex research problems"** (their own explicit tier) + 1 Citation Agent; LangChain ODR is supervisor + bounded N sub-agents; Manus is 3 roles. Anthropic explicitly treats spawning ~50 sub-agents as a failure mode they guard-railed against. If you ever see claims of 25+ agents in a Claude/Manus session, it's likely the runaway-recursion bug (GitHub issue anthropics/claude-code#68110: sub-agents with `Agent` tool access spawn children with no depth/count limit; useful research complete in 3-4, rest redundant, ~1.5M tokens burned). The 2026 agent-scaling literature (SIMAS, Ringelmann, Agent Scaling via Diversity) finds an inverted-U / hard-ceiling with knee at ~4-8 agents — marginal value past that comes from role specialization, evaluator/reflector presence, and structured handoff, not headcount. **Conclusion:** don't chase 25 agents. Our 3-stream parallel gather + parent one-shot synthesis already matches the proven production pattern (LangChain ODR's "isolated sub-agents in research, single-shot write" is structurally identical).
+- **Phase 2.5 / 2.6 add depth but cost ~1 extra LLM call each (verified 2026-08-02, deep-research-pipeline-2026 dossier).** Phase 2.5 = `_synthesis-brief.md` (compress 3 stream summaries + top 5 source notes per stream into ranked claims + conflicts + gaps; parent reads the brief, not raw streams — LangChain's context-engineering lesson). Phase 2.6 = Citation Agent pass (validate every claim against its source file post-gather, pre-synthesis; the third Anthropic role we don't have). Both are recommended for standard+ depth when stakes justify the ~2x synthesis-side token cost.
 
 ## Verification
 
@@ -403,5 +510,8 @@ After writing the dossier, run a quick self-check:
 - [ ] "Open Questions" is non-empty (if it's empty, you didn't look hard enough)
 - [ ] Source Index has at least N entries (N = depth threshold)
 - [ ] Suggested Outline has at least 3 sections
+- [ ] For standard+ depth: `_synthesis-brief.md` exists (Phase 2.5) and `Multi-Pass Synthesis` section in dossier embeds the 2-3 self-pass digests (Phase 3.5 default since 2026-08-02)
+- [ ] For standard+ depth: `_citation-check.md` exists (Phase 2.6); any FAIL claims were corrected in dossier before write
+- [ ] Methodology Notes contains the cost / latency / model line (per-stream tokens, wall time, model used; extrapolations explicitly labeled)
 
 If any check fails, fix the dossier before showing it to the user.
