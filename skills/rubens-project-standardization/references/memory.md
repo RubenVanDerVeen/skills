@@ -180,6 +180,7 @@ A memory that names a specific function, file, or flag is a claim about a moment
 - **Memory**: cross-session facts. Lives at the tool's default memory location (see table above).
 - **Plans**: committed implementation steps with checkpoints. Lives in `docs/artifacts/plans/`.
 - **Specs**: committed design rationale. Lives in `docs/artifacts/specs/`.
+- **Reports**: committed execution history for a completed plan (what shipped, standardization review, dispatch log). Lives in `docs/artifacts/reports/`. Not memory: memory is cross-session context, reports are a single plan's record.
 - **In-tool task list**: per-session work tracking. Lives in the harness (TodoWrite, todos, plan mode), not on disk.
 - **`AGENTS.md`** (or the tool's preferred filename; see the "Tool-specific filenames" table in the main skill): project-specific session context. Auto-loaded.
 - **`.agents/<topic>.md`**: on-demand session context. Loaded when the agent decides the topic is relevant.

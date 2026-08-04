@@ -133,7 +133,7 @@ Key observations:
 
 ## When to add `docs/artifacts/`
 
-Create `docs/artifacts/{specs,plans,reviews}/` the first time any of these become true:
+Create `docs/artifacts/{specs,plans,reviews,reports}/` the first time any of these become true:
 
 - A non-trivial feature warrants a design spec (via `brainstorming` skill).
 - An implementation plan is being written (via `writing-plans` skill).

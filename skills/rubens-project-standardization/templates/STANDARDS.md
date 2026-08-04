@@ -137,6 +137,7 @@ A `.docx` of a Typst-sourced document is **not** a source. It is a deliverable.
 - `docs/artifacts/specs/YYYY-MM-DD-<topic>-design.md`: design specs.
 - `docs/artifacts/plans/YYYY-MM-DD-<topic>-plan.md`: implementation plans.
 - `docs/artifacts/reviews/YYYY-MM-DD-<topic>-review.md`: audits and reviews.
+- `docs/artifacts/reports/YYYY-MM-DD-<topic>-report.md`: execution reports for completed plans.
 
 When a single topic produces multiple specs and plans (split flow, parallel agents), group them under a `<topic>/` subfolder:
 

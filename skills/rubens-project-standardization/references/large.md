@@ -44,7 +44,7 @@ project-root/
 │   │   ├── daily-standups/            ← YYYY-MM-DD-standup.md
 │   │   ├── retrospectives/
 │   │   └── notes/                     ← meeting minutes
-│   └── artifacts/                     ← process meta: specs, plans, reviews
+│   └── artifacts/                     ← process meta: specs, plans, reviews, and execution reports
 │       ├── specs/
 │       ├── plans/
 │       └── reviews/
@@ -86,7 +86,7 @@ The skeleton mirrors the medium tier; differences are:
 | `docs/research/` | IEEE-format research articles. One PDF per research topic. | IEEE article format |
 | `docs/components/<component>/` | Per-component documentation: manuals, test docs, diagrams. | ISO 26514 (manuals), ISO 29119-3 (test docs) |
 | `docs/project-management/` | SCRUM artefacts: standups, retros, meeting minutes. ISO 8601 prefix on filenames. | ISO 26515: agile docs process |
-| `docs/artifacts/` | Process meta: brainstorming specs, implementation plans, repo / sprint / process reviews. | Project workflow (see `references/artifacts.md`) |
+| `docs/artifacts/` | Process meta: brainstorming specs, implementation plans, repo / sprint / process reviews, and execution reports. | Project workflow (see `references/artifacts.md`) |
 | `reference/` | Provided, read-only material from the client / school. Never modified. One top-level slot, not under `docs/`. | ISO 10007: single authoritative location |
 
 ## Source vs deliverable split
@@ -159,7 +159,7 @@ project-idp/
 │   ├── research/                      ← IEEE-format papers (incl. standards research)
 │   ├── components/<component>/{manuals,test,diagrams}/
 │   ├── project-management/{daily-standups,retrospectives,notes}/
-│   └── artifacts/{specs,plans,reviews}/
+│   └── artifacts/{specs,plans,reviews,reports}/
 │
 └── reference/                         ← school-provided material, read-only
 ```
