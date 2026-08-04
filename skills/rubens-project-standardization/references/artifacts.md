@@ -1,6 +1,6 @@
-# `docs/artifacts/`: specs, plans, reviews
+# `docs/artifacts/`: specs, plans, reviews, reports
 
-The `docs/artifacts/` directory holds **process meta-documents**: the design specs, implementation plans, and reviews that describe *how* the project is built: not the project's own deliverables.
+The `docs/artifacts/` directory holds **process meta-documents**: the design specs, implementation plans, reviews, and execution reports that describe *how* the project is built: not the project's own deliverables.
 
 Distinct from:
 
@@ -144,6 +144,19 @@ Subdirectory names omit the date: instead use `-<N>` suffixes for iterations of 
 - Reviews are not auto-loaded; read on demand when revisiting findings or comparing to a later audit.
 - When a review supersedes an earlier one (e.g. `2026-05-09-repo-structure-audit.md` followed by `2026-05-11-standards-compliance-audit.md`), do not delete the older review: both stay so the audit trail is preserved.
 
+## Reports: `docs/artifacts/reports/`
+
+Execution reports close out a completed plan: what the plan set out, what shipped, the standardization review, the documentation updates, verifier output, and the dispatch log. They are the persisted artefact the orchestrator's `documenter` subagent writes at the end of `/execute-plan` and `/full-cycle` runs.
+
+```
+docs/artifacts/reports/2026-04-17-nextcloud-nas-integration-report.md
+```
+
+Reports are written by the documenter from the run's git state and the orchestrator's dispatch log; they are not authored by hand during normal development. Layout follows the repo's specs/plans layout (flat by default, topic-subfoldered for multi-plan or grouped topics).
+
+- An execution report belongs with the plan it closes out. If the plan lives under `docs/artifacts/plans/<topic>/`, the report lives under `docs/artifacts/reports/<topic>/` with the same date and slug.
+- Do not hand-write a report for work that has no plan. Reports document executed plans, not ad-hoc changes.
+
 ## Filename grammar
 
 ```
@@ -169,7 +182,7 @@ Examples:
 
 ## Per-framework redirect
 
-Several planning frameworks ship their own default artifact paths. None of those paths are authoritative for projects following this convention. **Redirect every spec, plan, and review to `docs/artifacts/{specs,plans,reviews}/`**, regardless of which framework produced it.
+Several planning frameworks ship their own default artifact paths. None of those paths are authoritative for projects following this convention. **Redirect every spec, plan, review, and report to `docs/artifacts/{specs,plans,reviews,reports}/`**, regardless of which framework produced it.
 
 ### Default vs canonical
 
@@ -178,7 +191,7 @@ Several planning frameworks ship their own default artifact paths. None of those
 | superpowers `brainstorming` | `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` | `docs/artifacts/specs/YYYY-MM-DD-<topic>-design.md` |
 | superpowers `writing-plans` | `docs/superpowers/plans/YYYY-MM-DD-<feature>.md` | `docs/artifacts/plans/YYYY-MM-DD-<topic>-plan.md` |
 | GSD `.planning/` family | `.planning/specs/`, `.planning/plans/` | `docs/artifacts/specs/`, `docs/artifacts/plans/` |
-| Any other framework | framework-native default | `docs/artifacts/...` |
+| Any other framework | framework-native default | `docs/artifacts/{specs,plans,reviews,reports}/` |
 
 ### Override pattern
 
@@ -187,7 +200,7 @@ Each skill accepts a target path as a user preference. **State the canonical pat
 - **Pre-write override**: when delegating to `superpowers:brainstorming` or `superpowers:writing-plans`, name the canonical path in the delegation prompt. Both skill bodies explicitly support this: each ends its default-path line with *"User preferences for spec/plan location override this default"*. The agent that delegates is expected to honour that.
 - **Post-write redirect**: if the skill already wrote to its default path before the override was honoured, `git mv` the file into `docs/artifacts/` in the same commit. Never leave both versions. Two homes rot fast, and you will forget which one is current.
 
-GSD and other frameworks follow the same shape: name `docs/artifacts/specs/` / `docs/artifacts/plans/` in the delegation prompt, or move the file once it lands. The target is `docs/artifacts/{specs,plans,reviews}/` regardless of origin.
+GSD and other frameworks follow the same shape: name `docs/artifacts/specs/` / `docs/artifacts/plans/` in the delegation prompt, or move the file once it lands. The target is `docs/artifacts/{specs,plans,reviews,reports}/` regardless of origin.
 
 ### Concrete example (superpowers)
 
@@ -202,7 +215,7 @@ For multi-plan topics, apply the same redirect with the topic-scoped layout from
 
 ### Anti-patterns
 
-- A `docs/superpowers/` (or `.planning/`, or any framework-native) directory ever landing in the repo. If it does, it is a missed redirect. **Move, never delete**: `git mv` its contents into `docs/artifacts/{specs,plans,reviews}/` (keep dates/topics), then remove the emptied dir. `git rm` only files that are true duplicates of something already at the canonical path.
+- A `docs/superpowers/` (or `.planning/`, or any framework-native) directory ever landing in the repo. If it does, it is a missed redirect. **Move, never delete**: `git mv` its contents into `docs/artifacts/{specs,plans,reviews,reports}/` (keep dates/topics), then remove the emptied dir. `git rm` only files that are true duplicates of something already at the canonical path.
 - Two copies of the same spec or plan in different folders. Pick the canonical home and remove the other.
 - Framework-default paths appearing as the target inside this skill's body, the templates, or any project's `AGENTS.md`.
 
@@ -214,6 +227,7 @@ For multi-plan topics, apply the same redirect with the topic-scoped layout from
 4. User reviews plan, approves.
 5. **Execute** (`executing-plans` or `subagent-driven-development` skill) → consumes plan.
 6. **Review** post-implementation if the change warrants it → adds a review to `docs/artifacts/reviews/`.
+7. **Document and report** (the documenter subagent at the end of `/execute-plan` or `/full-cycle`) -> writes an execution report to `docs/artifacts/reports/` and updates catalogs.
 
 Each step's artifact is committed before the next step starts. **Step 1, 3, 6 must respect § Per-framework redirect** when the underlying skill ships its own default path.
 
