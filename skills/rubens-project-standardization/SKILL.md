@@ -1,6 +1,6 @@
 ---
 name: project-standardization
-description: Use when bootstrapping or restructuring a project for AI coding agents (opencode, Codex, Cursor, Aider, GitHub Copilot, Hermes, plus Claude Code via a CLAUDE.md shim): creating AGENTS.md + CLAUDE.md shim, scaffolding the on-demand subdirectory at `.agents/`, choosing directory layout, setting up `docs/artifacts/` for specs/plans/reviews from any framework, seeding cross-session memory, or applying the ISO/IEC/IEEE + industry standards stack. Triggers: "set up agent context", "scaffold project", "bootstrap project", "standardize this repo", "create AGENTS.md", "create CLAUDE.md", "project layout", "init repo structure", "where should X go". Three project-size tiers (small/medium/large) with separate references so irrelevant guidance is not loaded.
+description: Use when bootstrapping or restructuring a project for AI coding agents (opencode, Codex, Cursor, Aider, GitHub Copilot, Hermes, plus Claude Code via a CLAUDE.md shim): creating AGENTS.md + CLAUDE.md shim, scaffolding the on-demand subdirectory at `.agents/`, choosing directory layout, setting up `docs/artifacts/` for specs/plans/reviews/reports from any framework, seeding cross-session memory, or applying the ISO/IEC/IEEE + industry standards stack. Triggers: "set up agent context", "scaffold project", "bootstrap project", "standardize this repo", "create AGENTS.md", "create CLAUDE.md", "project layout", "init repo structure", "where should X go". Three project-size tiers (small/medium/large) with separate references so irrelevant guidance is not loaded.
 ---
 
 # Project standardization skill
@@ -38,7 +38,7 @@ Rationale: `references/standards-stack.md`.
 - **One authoritative source per deliverable** (ISO 10007): source in `docs/source/`, generated in `docs/deliverables/`. Never siblings.
 - **No `temp/`, no `old/`, no `archive/`**: git history is the archive.
 - **No secrets in any tracked file**: `.env`, tokens, passwords out of git. Memory included.
-- **Specs and plans live in the repo**: `docs/artifacts/{specs,plans,reviews}/` committed alongside the code. **Override clause**: this wins over any per-framework default (superpowers, GSD, `.planning/`). See `references/artifacts.md` § Per-framework redirect for the redirect mechanics; redirect before files land elsewhere.
+- **Specs and plans live in the repo**: `docs/artifacts/{specs,plans,reviews,reports}/` committed alongside the code. **Override clause**: this wins over any per-framework default (superpowers, GSD, `.planning/`). See `references/artifacts.md` § Per-framework redirect for the redirect mechanics; redirect before files land elsewhere.
 - **Memory ≠ plans ≠ tasks**: memory = cross-session facts; plans = committed artefacts; tasks = per-session in-tool items.
 
 ## Token budget
