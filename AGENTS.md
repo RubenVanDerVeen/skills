@@ -30,6 +30,7 @@ skills/
 │   ├── harvest.md                             <- /harvest: mine sessions for skill improvements
 │   ├── multi-plan.md                          <- /multi-plan: start multi-plan orchestration
 │   ├── standardize.md                         <- /standardize: bootstrap or restructure a project
+│   ├── standardize-code.md                    <- /standardize-code: audit code structure via code-standardization
 │   └── standardize-migrate.md                 <- /standardize-migrate: migrate an older layout
 ├── agents/                                    <- opencode agent definitions (planner, orchestrator, writer, executor, reviewer, oracle, inventree)
 └── skills/                                    <- all skill folders live here
@@ -133,6 +134,7 @@ description: <triggering conditions only>
 | `skills/drawio-pro/` | `drawio-pro` | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
 | `skills/typst-pro/` | `typst-pro` | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
 | `skills/altium-pro/` | `altium-pro` | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
+| `skills/code-standardization/` | `code-standardization` | Source-code structure standard. Formatter/linter/hooks per language, naming, module organization, architecture/dependency boundaries. Multi-language (Python, TS/JS, C/C++, Go, Rust), flat (one standard). Sister to `project-standardization`. |
 | `skills/deep-research/` | `deep-research` | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then brainstorm or Typst draft. Hermes research profile. |
 | `skills/synctool-sync/` | `synctool-sync` | Drive the `synctool` CLI for saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
 | `skills/rubens-project-standardization/` | `project-standardization` | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
