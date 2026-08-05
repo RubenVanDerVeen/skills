@@ -46,7 +46,7 @@ Red flags (any one = stop and fix before committing):
 
 - Repo: <url>
 - **No commit/push without explicit user instruction.** Default: every commit waits for the user.
-- **Carve-out: spec/plan-driven development and execution.** When the user has approved both a spec (in `docs/artifacts/specs/`) and a plan that references it (in `docs/artifacts/plans/`), and the agent is currently executing that plan, the agent commits on its own volition at the boundaries the plan specifies (typically per task or per phase). Outside an approved plan, the default rule applies.
+- **Carve-out: spec/plan-driven development and execution.** When the user has approved both a spec and a plan that references it (both under `docs/artifacts/features/<feature>/`), and the agent is currently executing that plan, the agent commits on its own volition at the boundaries the plan specifies (typically per task or per phase). Outside an approved plan, the default rule applies.
 - **Default to a feature branch for features.** Use `feat/<scope>` (or a per-plan `plan-<name>`) for features, modules, and non-trivial changes. Small fixes (typos, single-line tweaks, dep bumps, docs-only edits) can land directly on the default branch. Plan execution follows the same default: each plan runs in its own branch, cut from the latest default branch at plan start. The user can always say otherwise.
 - Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`).
 - Commits are enforced by a tracked `commit-msg` hook (`.githooks/commit-msg`); activate per clone with `git config core.hooksPath .githooks`. Bypass: `git commit --no-verify`.
@@ -55,7 +55,7 @@ Red flags (any one = stop and fix before committing):
 
 ## Artifacts
 
-Specs, plans, reviews, and reports live in `docs/artifacts/{specs,plans,reviews,reports}/` (filename: `YYYY-MM-DD-<topic>-<type>.md`). When delegating to superpowers (`brainstorming`, `writing-plans`) or GSD, name the canonical path (`docs/artifacts/specs/...` or `docs/artifacts/plans/...`) instead of the framework default (`docs/superpowers/...`, `.planning/...`); both frameworks accept the override. A `docs/superpowers/`, `.planning/`, or other framework-native directory should never land in this repo. If one does, `git rm` it.
+Specs, plans, multi-plan outlines/manifests, and reports live under `docs/artifacts/features/<feature>/`; reviews live in `docs/artifacts/reviews/` (flat log). Filename: `YYYY-MM-DD-<topic>-<type>.md`, suffix signals type (`-design` spec, `-plan`, `-outline`, `-manifest`, `-report`, `-review`, `-audit`). When delegating to superpowers (`brainstorming`, `writing-plans`) or GSD, name the canonical path (`docs/artifacts/features/<feature>/...`) instead of the framework default (`docs/superpowers/...`, `.planning/...`); both frameworks accept the override. A `docs/superpowers/`, `.planning/`, or other framework-native directory should never land in this repo. If one does, `git rm` it.
 
 ## Knowledge graph (graphify)
 

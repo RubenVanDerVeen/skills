@@ -24,7 +24,7 @@ GitHub-flavoured markdown. One task per line. No sub-bullets, no nesting.
 - One task per line. No sub-bullets, no nested checklists.
 - Keep completed (`[x]`) items in the file. They are the record of what shipped.
 - Order: priority descending (most important first), or grouped by area with a heading.
-- Tasks are concise: one sentence. If a task needs paragraphs of context, it should be a spec in `docs/artifacts/specs/`, not a todo line.
+- Tasks are concise: one sentence. If a task needs paragraphs of context, it should be a spec in `docs/artifacts/features/<feature>/`, not a todo line.
 
 ## Interaction with the in-tool task list
 
@@ -102,7 +102,7 @@ The Plane MCP tools (`mcp__homelab__plane_*`) are available when MCP is configur
 | `.agents/todolist.md` | Persistent backlog. Survives sessions and authors. Committed. |
 | In-tool task list (TodoWrite / todos / plan mode) | Per-session work tracking. Disappears at end of session. |
 | Memory (`project_*.md`) | Cross-session facts, decisions, deadlines. NOT tasks. |
-| `docs/artifacts/plans/` | Multi-step implementation plans with checkpoints. NOT a backlog. |
+| `docs/artifacts/features/<feature>/` | Multi-step implementation plans with checkpoints. NOT a backlog. |
 
 A new feature request from the user that will take several sessions to land: `todolist.md` entry + (when starting) an in-tool task per step.
 

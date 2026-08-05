@@ -132,23 +132,31 @@ A `.docx` of a Typst-sourced document is **not** a source. It is a deliverable.
 
 ## Specs, plans, reviews
 
-`docs/artifacts/` holds process meta-documents:
+`docs/artifacts/` holds process meta-documents. Two top-level dirs: `reviews/` (flat log) and `features/<feature>/` (one folder per feature, flat contents, filename suffix signals type).
 
-- `docs/artifacts/specs/YYYY-MM-DD-<topic>-design.md`: design specs.
-- `docs/artifacts/plans/YYYY-MM-DD-<topic>-plan.md`: implementation plans.
+Per-feature artefacts (all under one folder):
+
+- `docs/artifacts/features/<feature>/YYYY-MM-DD-<topic>-design.md`: design spec.
+- `docs/artifacts/features/<feature>/YYYY-MM-DD-<topic>-plan.md`: implementation plan.
+- `docs/artifacts/features/<feature>/YYYY-MM-DD-<topic>-outline.md`: decomposition outline (multi-plan topics).
+- `docs/artifacts/features/<feature>/YYYY-MM-DD-<topic>-manifest.md`: dispatch manifest (multi-plan topics).
+- `docs/artifacts/features/<feature>/YYYY-MM-DD-<topic>-report.md`: execution report for a completed plan.
+
+Reviews (flat log, not per-feature):
+
 - `docs/artifacts/reviews/YYYY-MM-DD-<topic>-review.md`: audits and reviews.
-- `docs/artifacts/reports/YYYY-MM-DD-<topic>-report.md`: execution reports for completed plans.
+- `docs/artifacts/reviews/YYYY-MM-DD-<topic>-audit.md`: same shape, suffix variant for audits.
 
-When a single topic produces multiple specs and plans (split flow, parallel agents), group them under a `<topic>/` subfolder:
+When a single topic produces multiple specs and plans (split flow, parallel agents), every related artefact stays inside one `features/<feature>/` folder:
 
-- `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-outline.md`: decomposition outline.
-- `docs/artifacts/multi-plans/<topic>/YYYY-MM-DD-<topic>-manifest.md`: dispatch manifest.
-- `docs/artifacts/specs/<topic>/YYYY-MM-DD-<foundation>-design.md`: foundation spec.
-- `docs/artifacts/specs/<topic>/YYYY-MM-DD-<sp-N>-<name>-design.md`: sub-project specs.
-- `docs/artifacts/plans/<topic>/YYYY-MM-DD-<foundation>-plan.md`: foundation plan.
-- `docs/artifacts/plans/<topic>/YYYY-MM-DD-<sp-N>-<name>-plan.md`: sub-project plans.
+- `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-outline.md`: decomposition outline.
+- `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-manifest.md`: dispatch manifest.
+- `docs/artifacts/features/<topic>/YYYY-MM-DD-<foundation>-design.md`: foundation spec.
+- `docs/artifacts/features/<topic>/YYYY-MM-DD-<sp-N>-<name>-design.md`: sub-project spec.
+- `docs/artifacts/features/<topic>/YYYY-MM-DD-<foundation>-plan.md`: foundation plan.
+- `docs/artifacts/features/<topic>/YYYY-MM-DD-<sp-N>-<name>-plan.md`: sub-project plan.
 
-Single-plan topics stay flat. Multi-plan topics get a subfolder. See `references/artifacts.md`.
+Single-plan topics stay flat inside their feature folder. Multi-plan topics still use one feature folder; the folder is the unit of decomposition. See `references/artifacts.md`.
 
 Each is append-only history. If a spec changes mid-implementation, edit in place + add an `## Amendments` section. Do not create a second spec for the same topic.
 
