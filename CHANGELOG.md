@@ -43,6 +43,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - `agents/orchestrator.md`: `variant: thinking` pinned so single-pass `/full-cycle` subagent dispatch matches the standalone `/execute-plan` model; without it, opencode fell back to the `default` variant when the orchestrator ran as a subagent. `agents/README.md` records the pin and rationale.
 - `agents/planner.md`: end of pipeline dispatches the orchestrator instead of handing off; single-pass, no gates; `no brainstorm` and `handoff` keywords.
 - `commands/full-cycle.md`: rewritten for single-pass; removed the `at once` gate-collapse special-case (gates are gone, so it was equivalent to the new default).
+- `docs/artifacts/`: reorganized from type-bucket split (`specs/`, `plans/`, `multi-plans/`, `reports/`) to per-feature layout (`features/<feature>/`, flat contents, filename suffix signals type). `reviews/` stays flat. Specs, plans, generators, templates, references, and cross-references updated; filenames preserved exactly. The now-empty `reports/` directory remains on disk, locked by the Nextcloud sync client; remove it once the client releases its handle.
 
 ### Fixed
 
