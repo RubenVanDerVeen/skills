@@ -165,7 +165,7 @@ Not applicable in the strict sense: this catalog has no per-sprint exports or ge
 
 ## Specs, plans, reviews
 
-`docs/artifacts/{specs,plans,reviews}/` holds the design history for non-trivial skills (e.g. `multi-plan-orchestration`, `skill-harvest`), per the `project-standardization` skill.
+`docs/artifacts/{features,reviews}/` holds the design history for non-trivial skills (e.g. `multi-plan-orchestration`, `skill-harvest`), per the `project-standardization` skill.
 
 ---
 

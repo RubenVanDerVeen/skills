@@ -19,13 +19,13 @@
                 <mxCell id="n2" value="Brainstorm&#xa;(brainstorming skill; explore subagent does codebase recon)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="95" y="150" width="250" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="n3" value="Write spec to&#xa;docs/artifacts/specs/&lt;topic&gt;/&lt;date&gt;-&lt;slug&gt;-design.md" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10;fontSize=9" parent="1" vertex="1">
+                <mxCell id="n3" value="Write spec to&#xa;docs/artifacts/features/&lt;topic&gt;/&lt;date&gt;-&lt;slug&gt;-design.md" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="85" y="220" width="270" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="n4" value="Spec approved?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
                     <mxGeometry x="150" y="275" width="140" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="n5" value="Write plan to&#xa;docs/artifacts/plans/&lt;topic&gt;/&lt;date&gt;-&lt;slug&gt;-plan.md" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10;fontSize=9" parent="1" vertex="1">
+                <mxCell id="n5" value="Write plan to&#xa;docs/artifacts/features/&lt;topic&gt;/&lt;date&gt;-&lt;slug&gt;-plan.md" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="85" y="390" width="270" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="n6" value="Plan approved?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
@@ -67,7 +67,7 @@
                 <mxCell id="nStandardizer" value="Standardizer (glm-5.2)&#xa;Merged audit pass:&#xa;- repo: kebab-case, AGENTS, docs/artifacts, catalogs&#xa;- code: formatter/linter, lang rules, arch boundaries&#xa;quick-fix -&gt; executor, reviewer;&#xa;recommendation -&gt; roll forward" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;strokeWidth=2;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="810" y="1080" width="280" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="nDocumenter" value="Documenter (glm-5.2)&#xa;Writes docs/artifacts/reports/&lt;topic&gt;/&lt;date&gt;-&lt;slug&gt;-report.md&#xa;Updates catalogs; commits as docs" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;strokeWidth=2;fontSize=9" parent="1" vertex="1">
+                <mxCell id="nDocumenter" value="Documenter (glm-5.2)&#xa;Writes docs/artifacts/features/&lt;topic&gt;/&lt;date&gt;-&lt;slug&gt;-report.md&#xa;Updates catalogs; commits as docs" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;strokeWidth=2;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="810" y="1170" width="280" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="m10" value="Report and stop&#xa;(branch, commits, diffs, verifier, skills,&#xa;ponytail deferrals, Unverified).&#xa;No merge or PR unless user asks." style="ellipse;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">

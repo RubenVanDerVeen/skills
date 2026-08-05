@@ -178,7 +178,7 @@ To modify an existing skill, edit the `SKILL.md` in place. Skill descriptions ar
 
 - Repo: `https://github.com/RubenVanDerVeen/skills.git`
 - **No commit/push without explicit user instruction.** Default: every commit waits for the user.
-- **Carve-out: spec/plan-driven development and execution.** When the user has approved both a spec (in `docs/artifacts/specs/`) and a plan that references it (in `docs/artifacts/plans/`), and the agent is currently executing that plan, the agent commits on its own volition at the boundaries the plan specifies (typically per task or per phase). Specs, plans, reviews, and the code they describe ship together. Outside an approved plan, the default rule applies.
+- **Carve-out: spec/plan-driven development and execution.** When the user has approved both a spec (in `docs/artifacts/features/`) and a plan that references it (in `docs/artifacts/features/`), and the agent is currently executing that plan, the agent commits on its own volition at the boundaries the plan specifies (typically per task or per phase). Specs, plans, reviews, and the code they describe ship together. Outside an approved plan, the default rule applies.
 - Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`). Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`. Enforced by a tracked `commit-msg` hook (`.githooks/commit-msg`); activate once per clone with `git config core.hooksPath .githooks` (see `opencode-install.md` step 10). Bypass: `git commit --no-verify`.
 - Branch model: `main`.
 - No secrets in tracked files. No `temp/`, no `old/`, no `archive/`. Git history is the archive.
