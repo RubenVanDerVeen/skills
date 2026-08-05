@@ -48,7 +48,7 @@ All slash commands live at the top-level `commands/` directory, never inside a s
 
 ### Slash commands
 
-Slash commands give a skill an explicit entry point for when the agent does not pick it up automatically from frontmatter description matching. All commands live as `.md` files in the top-level `commands/` directory, never inside a skill folder. Current examples: `commands/standardize.md` (`/standardize`), `commands/multi-plan.md` (`/multi-plan`), `commands/harvest.md` (`/harvest`), `commands/goal.md` (`/goal`), `commands/execute-plan.md` (`/execute-plan`), `commands/full-cycle.md` (`/full-cycle`), `commands/iterate-skill.md` (`/iterate-skill`), `commands/standardize-migrate.md` (`/standardize-migrate`).
+Slash commands give a skill an explicit entry point for when the agent does not pick it up automatically from frontmatter description matching. All commands live as `.md` files in the top-level `commands/` directory, never inside a skill folder. Current examples: `commands/standardize.md` (`/standardize`), `commands/multi-plan.md` (`/multi-plan`), `commands/harvest.md` (`/harvest`), `commands/goal.md` (`/goal`), `commands/execute-plan.md` (`/execute-plan`), `commands/full-cycle.md` (`/full-cycle`), `commands/iterate-skill.md` (`/iterate-skill`), `commands/standardize-migrate.md` (`/standardize-migrate`), `commands/standardize-code.md` (`/standardize-code`).
 
 #### File format
 

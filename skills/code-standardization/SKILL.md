@@ -22,7 +22,7 @@ If the tool is installed: run it (`<tool> --check` or `command -v <tool> && <too
 
 ## The per-language guides
 
-Each language has a per-language reference with the same eight sections (toolchain, naming, module/file organization, architecture, documentation, testing, error handling, comments). Sub-plans SP-1..SP-5 fill them in. Until then the links below are intentional forward references.
+Each language has a per-language reference with the same eight sections (toolchain, naming, module/file organization, architecture, documentation, testing, error handling, comments). The dispatch table below links to each.
 
 | Language | Reference |
 |----------|-----------|
