@@ -4,7 +4,7 @@
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="title" value="AI Stack - Architecture (rev D)"
+                <mxCell id="title" value="AI Stack - Architecture (rev E)"
                         style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1"
                         parent="1" vertex="1">
                     <mxGeometry x="40" y="10" width="1320" height="28" as="geometry"/>
@@ -39,15 +39,16 @@
                         parent="1" vertex="1">
                     <mxGeometry x="40" y="188" width="1320" height="118" as="geometry"/>
                 </mxCell>
-                <mxCell id="s1" value="altium-pro" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10" parent="gL1" vertex="1"><mxGeometry x="20" y="28" width="150" height="38" as="geometry"/></mxCell>
-                <mxCell id="s2" value="drawio-pro" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10" parent="gL1" vertex="1"><mxGeometry x="184" y="28" width="150" height="38" as="geometry"/></mxCell>
-                <mxCell id="s3" value="typst-pro" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10" parent="gL1" vertex="1"><mxGeometry x="348" y="28" width="150" height="38" as="geometry"/></mxCell>
-                <mxCell id="s4" value="synctool-sync" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10" parent="gL1" vertex="1"><mxGeometry x="512" y="28" width="150" height="38" as="geometry"/></mxCell>
-                <mxCell id="s5" value="deep-research" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10" parent="gL1" vertex="1"><mxGeometry x="676" y="28" width="150" height="38" as="geometry"/></mxCell>
-                <mxCell id="s6" value="project-standardization" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gL1" vertex="1"><mxGeometry x="840" y="28" width="150" height="38" as="geometry"/></mxCell>
-                <mxCell id="s7" value="multi-plan-orchestration" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gL1" vertex="1"><mxGeometry x="1004" y="28" width="150" height="38" as="geometry"/></mxCell>
-                <mxCell id="s8" value="skill-harvest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10" parent="gL1" vertex="1"><mxGeometry x="1168" y="28" width="150" height="38" as="geometry"/></mxCell>
-                <mxCell id="cmds" value="Commands (explicit entry points): /standardize  /standardize-migrate  /multi-plan  /goal  /execute-plan  /full-cycle  /harvest  /iterate-skill"
+                <mxCell id="s1" value="altium-pro" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10" parent="gL1" vertex="1"><mxGeometry x="15" y="28" width="130" height="38" as="geometry"/></mxCell>
+                <mxCell id="s_cs" value="code-standardization&#xa;source-code standard (sister to project-standardization)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gL1" vertex="1"><mxGeometry x="160" y="28" width="130" height="38" as="geometry"/></mxCell>
+                <mxCell id="s2" value="drawio-pro" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10" parent="gL1" vertex="1"><mxGeometry x="305" y="28" width="130" height="38" as="geometry"/></mxCell>
+                <mxCell id="s3" value="typst-pro" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10" parent="gL1" vertex="1"><mxGeometry x="450" y="28" width="130" height="38" as="geometry"/></mxCell>
+                <mxCell id="s4" value="synctool-sync" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10" parent="gL1" vertex="1"><mxGeometry x="595" y="28" width="130" height="38" as="geometry"/></mxCell>
+                <mxCell id="s5" value="deep-research" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10" parent="gL1" vertex="1"><mxGeometry x="740" y="28" width="130" height="38" as="geometry"/></mxCell>
+                <mxCell id="s6" value="project-standardization" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gL1" vertex="1"><mxGeometry x="885" y="28" width="130" height="38" as="geometry"/></mxCell>
+                <mxCell id="s7" value="multi-plan-orchestration" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gL1" vertex="1"><mxGeometry x="1030" y="28" width="130" height="38" as="geometry"/></mxCell>
+                <mxCell id="s8" value="skill-harvest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10" parent="gL1" vertex="1"><mxGeometry x="1175" y="28" width="130" height="38" as="geometry"/></mxCell>
+                <mxCell id="cmds" value="Commands (explicit entry points): /standardize  /standardize-migrate  /standardize-code  /multi-plan  /goal  /execute-plan  /full-cycle  /harvest  /iterate-skill"
                         style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontStyle=2"
                         parent="gL1" vertex="1">
                     <mxGeometry x="20" y="74" width="1280" height="34" as="geometry"/>
@@ -86,28 +87,30 @@
                 <mxCell id="d2" value="find-skills&#xa;discovers + installs&#xa;new skills on demand" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gL4" vertex="1"><mxGeometry x="345" y="28" width="300" height="56" as="geometry"/></mxCell>
                 <mxCell id="d3" value="markitdown (CLI)&#xa;PDF / Office / EPUB / image&#xa;to Markdown for reading" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gL4" vertex="1"><mxGeometry x="670" y="28" width="300" height="56" as="geometry"/></mxCell>
                 <mxCell id="d4" value="graphify (CLI + knowledge graph)&#xa;queryable repo graph in graphify-out/;&#xa;post-commit hook keeps it fresh" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gL4" vertex="1"><mxGeometry x="995" y="28" width="300" height="56" as="geometry"/></mxCell>
-                <mxCell id="gAgents" value="OPENCODE AGENTS &amp; MCP (seven custom agents + homelab MCP; cross-model by design)"
+                <mxCell id="gAgents" value="OPENCODE AGENTS &amp; MCP (nine custom agents + homelab MCP; cross-model by design)"
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;verticalAlign=top;fontStyle=1;fontSize=12"
                         parent="1" vertex="1">
-                    <mxGeometry x="40" y="616" width="1320" height="96" as="geometry"/>
+                    <mxGeometry x="40" y="616" width="1320" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="aPlanner" value="planner (primary)&#xa;glm-5.2 - brainstorm/spec/plan, then dispatch orchestrator" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="20" y="26" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="aOrch" value="orchestrator (all)&#xa;MiniMax-M3 - runs approved plans (session or planner-dispatched)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="340" y="26" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="aWriter" value="writer (primary)&#xa;unpinned - docs/Typst sessions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="660" y="26" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="aInv" value="inventree (primary)&#xa;MiniMax-M3 - InvenTree via homelab MCP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="980" y="26" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="aExec" value="executor (subagent)&#xa;MiniMax-M3 - one task: TDD, verify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="20" y="62" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="aRev" value="reviewer (subagent)&#xa;glm-5.2 - spec + quality (cross-model)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="340" y="62" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="aOracle" value="oracle (subagent)&#xa;glm-5.2 - read-only consult, 2 strikes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="660" y="62" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="aMcp" value="homelab MCP (stdio)&#xa;InvenTree, Plane, Nextcloud (machine-local)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="980" y="62" width="300" height="32" as="geometry"/></mxCell>
+                <mxCell id="aPlanner" value="planner (primary)&#xa;glm-5.2 - brainstorm/spec/plan, then dispatch orchestrator" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="25" y="26" width="250" height="32" as="geometry"/></mxCell>
+                <mxCell id="aOrch" value="orchestrator (all)&#xa;MiniMax-M3 - runs approved plans (session or planner-dispatched)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="280" y="26" width="250" height="32" as="geometry"/></mxCell>
+                <mxCell id="aWriter" value="writer (primary)&#xa;unpinned - docs/Typst sessions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="535" y="26" width="250" height="32" as="geometry"/></mxCell>
+                <mxCell id="aInv" value="inventree (primary)&#xa;MiniMax-M3 - InvenTree via homelab MCP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="790" y="26" width="250" height="32" as="geometry"/></mxCell>
+                <mxCell id="aMcp" value="homelab MCP (stdio)&#xa;InvenTree, Plane, Nextcloud (machine-local)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="1045" y="26" width="250" height="32" as="geometry"/></mxCell>
+                <mxCell id="aExec" value="executor (subagent)&#xa;MiniMax-M3 - one task: TDD, verify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="25" y="62" width="250" height="32" as="geometry"/></mxCell>
+                <mxCell id="aRev" value="reviewer (subagent)&#xa;glm-5.2 - spec + quality (cross-model)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="280" y="62" width="250" height="32" as="geometry"/></mxCell>
+                <mxCell id="aOracle" value="oracle (subagent)&#xa;glm-5.2 - read-only consult, 2 strikes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="535" y="62" width="250" height="32" as="geometry"/></mxCell>
+                <mxCell id="aStandardizer" value="standardizer (subagent)&#xa;glm-5.2 - structure review (post-loop)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="790" y="62" width="250" height="32" as="geometry"/></mxCell>
+                <mxCell id="aDocumenter" value="documenter (subagent)&#xa;glm-5.2 - execution report + catalogs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="1045" y="62" width="250" height="32" as="geometry"/></mxCell>
                 <mxCell id="flowHdr" value="USAGE - which layer kicks in by task size"
                         style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1"
                         parent="1" vertex="1">
-                    <mxGeometry x="40" y="724" width="1320" height="18" as="geometry"/>
+                    <mxGeometry x="40" y="738" width="1320" height="18" as="geometry"/>
                 </mxCell>
-                <mxCell id="f1" value="Small task (bugfix, doc, one-file)&#xa;chat, auto-skills, debug/TDD, verify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="40" y="746" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="f2" value="Medium feature (one plan)&#xa;/full-cycle: plan, then dispatch orchestrator (or /execute-plan)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="360" y="746" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="f3" value="Large feature (multi-module)&#xa;/multi-plan: foundation + N parallel sub-plans" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="680" y="746" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="f4" value="New repo&#xa;/standardize: AGENTS.md, docs/artifacts/, graphify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="1000" y="746" width="300" height="32" as="geometry"/></mxCell>
+                <mxCell id="f1" value="Small task (bugfix, doc, one-file)&#xa;chat, auto-skills, debug/TDD, verify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="40" y="760" width="300" height="32" as="geometry"/></mxCell>
+                <mxCell id="f2" value="Medium feature (one plan)&#xa;/full-cycle: plan, then dispatch orchestrator (or /execute-plan)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="360" y="760" width="300" height="32" as="geometry"/></mxCell>
+                <mxCell id="f3" value="Large feature (multi-module)&#xa;/multi-plan: foundation + N parallel sub-plans" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="680" y="760" width="300" height="32" as="geometry"/></mxCell>
+                <mxCell id="f4" value="New repo&#xa;/standardize: AGENTS.md, docs/artifacts/, graphify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="1000" y="760" width="300" height="32" as="geometry"/></mxCell>
                 <mxCell id="e1" value="planning / review"
                         style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.25;entryY=0;fontSize=10"
                         parent="1" source="m1" target="catalog" edge="1">
@@ -124,10 +127,10 @@
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="legend"
-                        value="Legend:&#xa;- solid arrow = loads / references&#xa;- pastel groups (yellow / purple / blue / green) = the stack, layers 1-4; all feed the shared agents.md catalog&#xa;- orange group = opencode harness (sole active); cross-model split - glm-5.2 plans/reviews, MiniMax-M3 orchestrates/implements&#xa;- grey group = seven custom opencode agents + homelab MCP - the runtime that executes the stack&#xa;- white chips with no container = usage examples (how the stack is invoked by task size)&#xa;&#xa;Claude Code is supported-but-unused (CLAUDE.md shim + ~/.claude/ sync paths in the catalogs), not in daily use. The opencode-see-image plugin routes image attachments from the text-only GLM primary to MiniMax-M3.&#xa;&#xa;House rules: AGENTS.md = source of truth; CLAUDE.md = one-line shim; specs / plans / reviews in docs/artifacts/; no em-dashes; ISO 8601 dates; Conventional Commits. Snapshot 2026-07-31."
+                        value="Legend:&#xa;- solid arrow = loads / references&#xa;- pastel groups (yellow / purple / blue / green) = the stack, layers 1-4; all feed the shared agents.md catalog&#xa;- orange group = opencode harness (sole active); cross-model split - glm-5.2 plans/reviews, MiniMax-M3 orchestrates/implements&#xa;- grey group = nine custom opencode agents + homelab MCP - the runtime that executes the stack&#xa;- white chips with no container = usage examples (how the stack is invoked by task size)&#xa;&#xa;Claude Code is supported-but-unused (CLAUDE.md shim + ~/.claude/ sync paths in the catalogs), not in daily use. The opencode-see-image plugin routes image attachments from the text-only GLM primary to MiniMax-M3.&#xa;&#xa;House rules: AGENTS.md = source of truth; CLAUDE.md = one-line shim; specs / plans / reviews in docs/artifacts/; no em-dashes; ISO 8601 dates; Conventional Commits. Snapshot 2026-08-04."
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;align=left;verticalAlign=top"
                         parent="1" vertex="1">
-                    <mxGeometry x="40" y="796" width="620" height="168" as="geometry"/>
+                    <mxGeometry x="40" y="810" width="620" height="168" as="geometry"/>
                 </mxCell>
                 <mxCell id="tbBox" value=""
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.5"
@@ -159,7 +162,7 @@
                         parent="1" vertex="1">
                     <mxGeometry x="1120" y="900" width="130" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="tbRev" value="&lt;b&gt;Rev&lt;/b&gt;&lt;br&gt;D"
+                <mxCell id="tbRev" value="&lt;b&gt;Rev&lt;/b&gt;&lt;br&gt;E"
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;fontSize=9;spacingLeft=4;spacingTop=2"
                         parent="1" vertex="1">
                     <mxGeometry x="1250" y="900" width="130" height="40" as="geometry"/>
