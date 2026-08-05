@@ -131,7 +131,7 @@ Also note:
 - [ ] **Step 5: Commit baseline findings**
 
 ```bash
-git add docs/artifacts/plans/multi-plan-orchestration/2026-06-28-multi-plan-orchestration-plan.md
+git add docs/artifacts/features/multi-plan-orchestration/2026-06-28-multi-plan-orchestration-plan.md
 git commit -m "test(multi-plan-orchestration): RED baseline - 3 scenarios without skill
 
 Documented baseline rationalizations from 3 subagent scenarios:
@@ -331,7 +331,7 @@ No further action from the orchestrator. The user owns dispatch.
 The orchestrator does not re-implement brainstorming or writing-plans. For each sub-project (foundation + each SP):
 
 1. Invoke `superpowers:brainstorming` with the sub-project's scope (from the approved outline) as input. Pass the topic-scoped location: `docs/artifacts/features/<topic>/` for the spec.
-2. Brainstorming runs its normal flow and invokes `superpowers:writing-plans`. Pass `docs/artifacts/plans/<topic>/` for the plan.
+2. Brainstorming runs its normal flow and invokes `superpowers:writing-plans`. Pass `docs/artifacts/features/<topic>/` for the plan.
 3. Note the resulting plan path, add a row to the manifest, move to the next sub-project.
 
 Both skills accept user-preferred locations as an override, so passing the topic-scoped location is a one-line instruction. No changes to the delegated skills.

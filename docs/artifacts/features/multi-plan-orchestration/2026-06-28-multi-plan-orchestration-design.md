@@ -167,7 +167,7 @@ No further action from the orchestrator. The user owns dispatch.
 The orchestrator does not re-implement brainstorming or writing-plans. For each sub-project (foundation + each SP):
 
 1. Orchestrator invokes `superpowers:brainstorming` with the sub-project's scope (taken from the approved outline) as the input. Pass the topic-scoped location explicitly: `docs/artifacts/features/<topic>/` for the spec.
-2. Brainstorming runs its normal flow: clarifying questions, design, spec self-review, the user's review gate, then invokes `superpowers:writing-plans`. Pass `docs/artifacts/plans/<topic>/` for the plan.
+2. Brainstorming runs its normal flow: clarifying questions, design, spec self-review, the user's review gate, then invokes `superpowers:writing-plans`. Pass `docs/artifacts/features/<topic>/` for the plan.
 3. Writing-plans runs its normal flow: file structure, bite-sized tasks, self-review.
 4. Orchestrator notes the resulting plan path, adds a row to the manifest, and moves to the next sub-project.
 

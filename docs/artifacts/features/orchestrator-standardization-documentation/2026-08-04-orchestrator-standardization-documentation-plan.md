@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add two post-implementation phases (structure review, documentation) to the orchestrator's plan-execution loop via two new subagents (`standardizer`, `documenter`), and keep `project-standardization`'s artifact convention in sync with the per-feature `docs/artifacts/features/` layout.
+**Goal:** Add two post-implementation phases (structure review, documentation) to the orchestrator's plan-execution loop via two new subagents (`standardizer`, `documenter`), and teach `project-standardization` to scaffold `docs/artifacts/features/` alongside specs/plans/reviews (paths migrated to per-feature layout on 2026-08-05; original referenced `docs/artifacts/reports/` alongside `specs/plans/reviews`).
 
-**Architecture:** Two new read/write-scoped subagents extend the existing executor/reviewer/oracle roster. The orchestrator dispatches them in two new loop phases after the task loop. Reports live alongside the spec/plan they close inside the same feature folder.
+**Architecture:** Two new read/write-scoped subagents extend the existing executor/reviewer/oracle roster. The orchestrator dispatches them in two new loop phases after the task loop. The `reports/` artifact joins the standardization convention via a find-and-extend across the ~8 files that reference `{specs,plans,reviews}`.
 
 **Tech Stack:** opencode agent definitions (YAML frontmatter + body), Markdown. No runtime, no build step.
 
@@ -405,7 +405,7 @@ Reports are written by the documenter from the run's git state and the orchestra
 - Do not hand-write a report for work that has no plan. Reports document executed plans, not ad-hoc changes.
 ```
 
-Edit D, the per-framework redirect table and summary. Update every target-column cell and summary line that references the brace set so the final form is `{features,reviews}` (the artifacts-layout migration later consolidated this from the interim `{specs,plans,reviews,reports}` form). In particular the `Any other framework` row target cell becomes `docs/artifacts/{features,reviews}/`, and the summary line near the redirect section reads `Redirect every spec, plan, and review to docs/artifacts/{features,reviews}/`. Rows that name a single kind stay as-is.
+Edit D, the per-framework redirect table and summary. Update every target-column cell and summary line that references the brace set so `{specs,plans,reviews}` becomes `{specs,plans,reviews,reports}`. In particular the `Any other framework` row target cell becomes `docs/artifacts/{specs,plans,reviews,reports}/`, and the summary line near the redirect section that says `Redirect every spec, plan, and review to docs/artifacts/{specs,plans,reviews}/` becomes `Redirect every spec, plan, review, and report to docs/artifacts/{specs,plans,reviews,reports}/`. Rows that name a single kind (a superpowers-specs row pointing only at `docs/artifacts/specs/...`) stay as-is (paths migrated to per-feature layout on 2026-08-05; final form is `docs/artifacts/{features,reviews}/`).
 
 - [ ] **Step 2: Add report production to the default-workflow list**
 
