@@ -247,7 +247,7 @@ Replace with:
 ├── .claude/                               <- Claude Code tool settings (project)
 ```
 
-- [ ] **Step 4: `CHANGELOG.md` - add the Unreleased/Added entry.** Under `## [Unreleased]` -> `### Added`, immediately AFTER the existing single-pass `/full-cycle` bullet (the one ending "...Spec: `docs/artifacts/specs/single-pass-full-cycle/2026-07-30-single-pass-full-cycle-design.md`."), add:
+- [ ] **Step 4: `CHANGELOG.md` - add the Unreleased/Added entry.** Under `## [Unreleased]` -> `### Added`, immediately AFTER the existing single-pass `/full-cycle` bullet (the one ending "...Spec: `docs/artifacts/features/single-pass-full-cycle/2026-07-30-single-pass-full-cycle-design.md`."), add:
 
 ```
 - `commit-msg` git hook (`.githooks/commit-msg`): enforces Conventional Commits 1.0.0 on commit subjects with no dependencies (sh + grep). Tracked executable; activate per clone via `git config core.hooksPath .githooks` (documented in `opencode-install.md` step 10). A repo-root `.gitattributes` pins `.githooks/**` to LF so the shebang survives Windows checkouts. Replaces the npm `@commitlint/cli` + husky approach the repo's "no tooling" principle rules out. Spec: `docs/artifacts/features/commitlint/2026-08-01-commit-msg-hook-design.md`.
