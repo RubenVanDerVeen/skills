@@ -8,7 +8,7 @@
 
 **Tech Stack:** Markdown skill content, POSIX `sh` + `grep` hook, PowerShell (verification only). Conventional Commits 1.0.0. No Node, no build.
 
-**Spec:** `docs/artifacts/specs/standardization-commit-hook/2026-08-01-standardization-commit-hook-design.md`
+**Spec:** `docs/artifacts/features/standardization-commit-hook/2026-08-01-standardization-commit-hook-design.md`
 
 ## Global Constraints
 

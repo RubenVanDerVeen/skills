@@ -8,7 +8,7 @@
 
 **Tech Stack:** Markdown, YAML frontmatter, graphviz dot flowcharts, subagent dispatch for skill testing.
 
-**Spec:** `docs/artifacts/specs/multi-plan-orchestration/2026-06-28-multi-plan-orchestration-design.md`
+**Spec:** `docs/artifacts/features/multi-plan-orchestration/2026-06-28-multi-plan-orchestration-design.md`
 
 ---
 
@@ -21,7 +21,7 @@
 
 No test files (skill testing is via subagent dispatch, per writing-skills). No `references/`, no `commands/` (per spec: single-file skill).
 
-The `docs/artifacts/specs/multi-plan-orchestration/2026-06-28-multi-plan-orchestration-design.md` (spec) and `docs/artifacts/plans/multi-plan-orchestration/2026-06-28-multi-plan-orchestration-plan.md` (this plan) already exist.
+The `docs/artifacts/features/multi-plan-orchestration/2026-06-28-multi-plan-orchestration-design.md` (spec) and `docs/artifacts/features/multi-plan-orchestration/2026-06-28-multi-plan-orchestration-plan.md` (this plan) already exist.
 
 The project-standardization convention updates (`references/artifacts.md`, `templates/STANDARDS.md`) were already applied during brainstorming. No further changes needed unless the plan reveals gaps.
 
@@ -232,15 +232,15 @@ digraph flow {
 1. **Pause normal brainstorming.** The skill takes over from the brainstorming flow.
 2. **Identify shared foundation.** Look for a data model, UI shell, shared utils, or theme that multiple sub-projects depend on. If none exists, all sub-projects are independent (no foundation).
 3. **Propose split: foundation + N sub-projects.** Each sub-project must be independently buildable and testable after the foundation is done.
-4. **Write decomposition outline.** Save to `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-outline.md`. Get user approval before writing any specs.
-5. **For the foundation:** Invoke `superpowers:brainstorming` with the foundation's scope. Pass `docs/artifacts/specs/<topic>/` as the spec location. Brainstorming runs its full flow and invokes `superpowers:writing-plans` with `docs/artifacts/plans/<topic>/` as the plan location. User reviews and approves the foundation plan.
+4. **Write decomposition outline.** Save to `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-outline.md`. Get user approval before writing any specs.
+5. **For the foundation:** Invoke `superpowers:brainstorming` with the foundation's scope. Pass `docs/artifacts/features/<topic>/` as the spec location. Brainstorming runs its full flow and invokes `superpowers:writing-plans` with `docs/artifacts/features/<topic>/` as the plan location. User reviews and approves the foundation plan.
 6. **For each sub-project (SP-1, SP-2, ...):** Same as step 5, using the sub-project's scope from the approved outline. User reviews and approves each plan.
-7. **Write manifest.** After all plans exist, produce `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-manifest.md` with the plan table, execution order, per-agent dispatch prompts, and integration checklist.
+7. **Write manifest.** After all plans exist, produce `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-manifest.md` with the plan table, execution order, per-agent dispatch prompts, and integration checklist.
 8. **STOP.** Hand off to the user for dispatch. Do not dispatch execution agents.
 
 ## Decomposition outline
 
-Short artifact, not a full spec. Saved to `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-outline.md`. Contains:
+Short artifact, not a full spec. Saved to `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-outline.md`. Contains:
 
 ```markdown
 # <Topic> Decomposition Outline
@@ -279,7 +279,7 @@ This is the one hard rule the skill enforces. Uncontrolled scope slip breaks par
 
 ## Manifest and handoff
 
-Final artifact, saved to `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-manifest.md`. Produced after all plans exist:
+Final artifact, saved to `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-manifest.md`. Produced after all plans exist:
 
 ```markdown
 # <Topic> Multi-Plan Manifest
@@ -312,7 +312,7 @@ For each plan, the dispatch prompt template the user sends to a cheaper agent:
 After the manifest is written and committed, the orchestrator stops. Terminal output:
 
 ```
-Manifest written to docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-manifest.md.
+Manifest written to docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-manifest.md.
 N+1 plans ready (1 foundation + N sub-projects).
 
 Execution order:
@@ -330,7 +330,7 @@ No further action from the orchestrator. The user owns dispatch.
 
 The orchestrator does not re-implement brainstorming or writing-plans. For each sub-project (foundation + each SP):
 
-1. Invoke `superpowers:brainstorming` with the sub-project's scope (from the approved outline) as input. Pass the topic-scoped location: `docs/artifacts/specs/<topic>/` for the spec.
+1. Invoke `superpowers:brainstorming` with the sub-project's scope (from the approved outline) as input. Pass the topic-scoped location: `docs/artifacts/features/<topic>/` for the spec.
 2. Brainstorming runs its normal flow and invokes `superpowers:writing-plans`. Pass `docs/artifacts/plans/<topic>/` for the plan.
 3. Note the resulting plan path, add a row to the manifest, move to the next sub-project.
 
@@ -673,7 +673,7 @@ The skill name `multi-plan-orchestration` is consistent across:
 - Commit messages: `feat(multi-plan-orchestration):`, `test(multi-plan-orchestration):`, etc.
 
 The artifact paths are consistent between the spec, the SKILL.md content, and the project-standardization convention updates:
-- Specs: `docs/artifacts/specs/<topic>/`
-- Plans: `docs/artifacts/plans/<topic>/`
-- Outline: `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-outline.md`
-- Manifest: `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-manifest.md`
+- Specs: `docs/artifacts/features/<topic>/`
+- Plans: `docs/artifacts/features/<topic>/`
+- Outline: `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-outline.md`
+- Manifest: `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-manifest.md`

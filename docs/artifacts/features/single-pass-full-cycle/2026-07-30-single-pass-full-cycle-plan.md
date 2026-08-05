@@ -8,7 +8,7 @@
 
 **Tech Stack:** opencode agent config (YAML frontmatter + markdown bodies), markdown command files, opencode CLI (`opencode agent list`, `opencode debug agent`). No code, no build step.
 
-**Spec:** `docs/artifacts/specs/single-pass-full-cycle/2026-07-30-single-pass-full-cycle-design.md`
+**Spec:** `docs/artifacts/features/single-pass-full-cycle/2026-07-30-single-pass-full-cycle-design.md`
 
 ## Global Constraints
 
@@ -124,8 +124,8 @@ You are the planner: you turn a feature request into a spec and plan, then dispa
 Single-pass pipeline (default, no approval gates):
 1. Parse the prompt for keywords: `no brainstorm` skips step 2; `handoff` switches the end of the pipeline to the manual handoff in step 6.
 2. Brainstorm (unless skipped, or the request is explicit enough to spec without it): load the brainstorming skill; explore intent, requirements, and design. Dispatch the explore subagent for codebase recon instead of grepping in your own window.
-3. Spec: write the design to docs/artifacts/specs/<topic>/YYYY-MM-DD-<slug>-design.md.
-4. Plan: load the writing-plans skill; write the plan to docs/artifacts/plans/<topic>/YYYY-MM-DD-<slug>-plan.md, referencing the spec.
+3. Spec: write the design to docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-design.md.
+4. Plan: load the writing-plans skill; write the plan to docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-plan.md, referencing the spec.
 5. Dispatch: dispatch the orchestrator subagent with the spec and plan paths, instructing it to execute the plan following the /execute-plan conventions (branch first, ponytail, per-task Conventional Commits, executor/reviewer per task, oracle on two-strike failures, final report). When it returns, relay its final report to the user. If the orchestrator agent is unavailable, dispatch the general subagent with the same instructions; if no subagent dispatch is possible, fall back to step 6.
 6. Handoff (only when the `handoff` keyword is given, or as the fallback above): end with the spec and plan paths plus the exact line to paste in a fresh session: /execute-plan <plan-path>.
 
@@ -172,8 +172,8 @@ Keywords in `$ARGUMENTS`:
 
 Steps:
 1. Brainstorm (unless `no brainstorm` is present, or the request is explicit enough to spec without it): load the `brainstorming` skill; explore intent, requirements, and design. Dispatch the `explore` subagent for codebase recon.
-2. Spec: write the design to `docs/artifacts/specs/<topic>/YYYY-MM-DD-<slug>-design.md` (today's date).
-3. Plan: load the `writing-plans` skill; write the plan to `docs/artifacts/plans/<topic>/YYYY-MM-DD-<slug>-plan.md`, referencing the spec.
+2. Spec: write the design to `docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-design.md` (today's date).
+3. Plan: load the `writing-plans` skill; write the plan to `docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-plan.md`, referencing the spec.
 4. Execute (default): dispatch the `orchestrator` subagent with the spec and plan paths; it branches, runs executor/reviewer per task, escalates two-strike failures to `oracle`, commits at boundaries, and returns a final report. Relay that report. If `orchestrator` is unavailable, dispatch `general` with the same instructions; if no subagent dispatch is possible, fall back to step 5.
 5. Handoff (only when `handoff` is present, or as the fallback): print the spec and plan paths plus `/execute-plan docs/artifacts/plans/<topic>/<file>.md` for a fresh session.
 
@@ -307,7 +307,7 @@ git commit -m "docs(agents): record orchestrator mode:all and single-pass /full-
 In `CHANGELOG.md`, under `## [Unreleased]`, in the `### Added` subsection, append:
 
 ```
-- Single-pass `/full-cycle`: the planner dispatches the `orchestrator` subagent to execute the plan in the same run (prompt to final report, no approval gates). `no brainstorm` skips brainstorming; `handoff` keeps the old fresh-session handoff. Requires machine-local `subagent_depth: 2`. Spec: `docs/artifacts/specs/single-pass-full-cycle/2026-07-30-single-pass-full-cycle-design.md`.
+- Single-pass `/full-cycle`: the planner dispatches the `orchestrator` subagent to execute the plan in the same run (prompt to final report, no approval gates). `no brainstorm` skips brainstorming; `handoff` keeps the old fresh-session handoff. Requires machine-local `subagent_depth: 2`. Spec: `docs/artifacts/features/single-pass-full-cycle/2026-07-30-single-pass-full-cycle-design.md`.
 ```
 
 In the `### Changed` subsection, append:

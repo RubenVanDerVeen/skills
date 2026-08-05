@@ -2,7 +2,7 @@
 
 ## References
 
-- Spec: `docs/artifacts/specs/code-standardization/2026-08-04-sp2-typescript-javascript-design.md`
+- Spec: `docs/artifacts/features/code-standardization/2026-08-04-sp2-typescript-javascript-design.md`
 - Frozen template: `2026-08-04-foundation-design.md` § "Frozen per-language template"
 
 ## Branch

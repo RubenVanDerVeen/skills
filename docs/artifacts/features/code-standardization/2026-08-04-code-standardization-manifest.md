@@ -4,12 +4,12 @@
 
 | ID | Name | Branch | Plan file | Spec file | Depends on | Status |
 |----|------|--------|-----------|-----------|------------|--------|
-| F  | Foundation | `feat/code-std` | `docs/artifacts/plans/code-standardization/2026-08-04-foundation-plan.md` | `docs/artifacts/specs/code-standardization/2026-08-04-foundation-design.md` | - | ready |
-| SP-1 | Python | `feat/code-std` | `docs/artifacts/plans/code-standardization/2026-08-04-sp1-python-plan.md` | `docs/artifacts/specs/code-standardization/2026-08-04-sp1-python-design.md` | F complete | blocked on F |
-| SP-2 | TS/JS | `feat/code-std` | `docs/artifacts/plans/code-standardization/2026-08-04-sp2-typescript-javascript-plan.md` | `docs/artifacts/specs/code-standardization/2026-08-04-sp2-typescript-javascript-design.md` | F complete | blocked on F |
-| SP-3 | C/C++ | `feat/code-std` | `docs/artifacts/plans/code-standardization/2026-08-04-sp3-c-cpp-plan.md` | `docs/artifacts/specs/code-standardization/2026-08-04-sp3-c-cpp-design.md` | F complete | blocked on F |
-| SP-4 | Go | `feat/code-std` | `docs/artifacts/plans/code-standardization/2026-08-04-sp4-go-plan.md` | `docs/artifacts/specs/code-standardization/2026-08-04-sp4-go-design.md` | F complete | blocked on F |
-| SP-5 | Rust | `feat/code-std` | `docs/artifacts/plans/code-standardization/2026-08-04-sp5-rust-plan.md` | `docs/artifacts/specs/code-standardization/2026-08-04-sp5-rust-design.md` | F complete | blocked on F |
+| F  | Foundation | `feat/code-std` | `docs/artifacts/features/code-standardization/2026-08-04-foundation-plan.md` | `docs/artifacts/features/code-standardization/2026-08-04-foundation-design.md` | - | ready |
+| SP-1 | Python | `feat/code-std` | `docs/artifacts/features/code-standardization/2026-08-04-sp1-python-plan.md` | `docs/artifacts/features/code-standardization/2026-08-04-sp1-python-design.md` | F complete | blocked on F |
+| SP-2 | TS/JS | `feat/code-std` | `docs/artifacts/features/code-standardization/2026-08-04-sp2-typescript-javascript-plan.md` | `docs/artifacts/features/code-standardization/2026-08-04-sp2-typescript-javascript-design.md` | F complete | blocked on F |
+| SP-3 | C/C++ | `feat/code-std` | `docs/artifacts/features/code-standardization/2026-08-04-sp3-c-cpp-plan.md` | `docs/artifacts/features/code-standardization/2026-08-04-sp3-c-cpp-design.md` | F complete | blocked on F |
+| SP-4 | Go | `feat/code-std` | `docs/artifacts/features/code-standardization/2026-08-04-sp4-go-plan.md` | `docs/artifacts/features/code-standardization/2026-08-04-sp4-go-design.md` | F complete | blocked on F |
+| SP-5 | Rust | `feat/code-std` | `docs/artifacts/features/code-standardization/2026-08-04-sp5-rust-plan.md` | `docs/artifacts/features/code-standardization/2026-08-04-sp5-rust-design.md` | F complete | blocked on F |
 
 ## Frozen contract
 
@@ -39,14 +39,14 @@ Per-SP plans and per-SP Conventional Commits are preserved (the coordination val
 The orchestrator executes this manifest as a single runbook on `feat/code-std`, in order:
 
 ### Foundation (F)
-- Branch: create `feat/code-std` from `main` (NOT from the current `docs/workflow-docs-new-agents` branch). The working tree currently has unrelated uncommitted changes under `docs/workflows/` and an untracked `docs/workflow-docs-new-agents` entry from another task. **Leave those alone. Stage only files under `docs/artifacts/specs/code-standardization/`, `docs/artifacts/plans/code-standardization/`, and `docs/artifacts/multi-plans/code-standardization/`.**
+- Branch: create `feat/code-std` from `main` (NOT from the current `docs/workflow-docs-new-agents` branch). The working tree currently has unrelated uncommitted changes under `docs/workflows/` and an untracked `docs/workflow-docs-new-agents` entry from another task. **Leave those alone. Stage only files under `docs/artifacts/features/code-standardization/`.**
 - First commit: `docs(plans): add code-standardization specs, plans, and manifest` with the planning artifacts above.
-- Read `docs/artifacts/plans/code-standardization/2026-08-04-foundation-plan.md`; execute tasks F1-F7 with executor/reviewer per task; commit after every task with the Conventional Commit message each task names.
+- Read `docs/artifacts/features/code-standardization/2026-08-04-foundation-plan.md`; execute tasks F1-F7 with executor/reviewer per task; commit after every task with the Conventional Commit message each task names.
 - Gate: do not start any SP until F1-F7 are complete and F7 verification is green.
 
 ### Sub-projects (SP-1 .. SP-5)
 - Stay on `feat/code-std`. No new branches, no worktrees.
-- Dispatch one executor per SP (parallel is fine; the files are independent). Each executor reads its `docs/artifacts/plans/code-standardization/2026-08-04-spN-<lang>-plan.md` and writes exactly `skills/code-standardization/references/<lang>.md`.
+- Dispatch one executor per SP (parallel is fine; the files are independent). Each executor reads its `docs/artifacts/features/code-standardization/2026-08-04-spN-<lang>-plan.md` and writes exactly `skills/code-standardization/references/<lang>.md`.
 - Each SP consumes the frozen template from `2026-08-04-foundation-design.md` § "Frozen per-language template"; it must NOT add, remove, or reorder sections.
 - Reviewer checks each SP against its plan + the frozen template + em-dash scan.
 - Commit per SP with the message its plan names.

@@ -5,9 +5,9 @@
 Add two post-implementation phases to the orchestrator's plan-execution loop:
 
 1. **Structure review** - a new `standardizer` subagent audits the executed branch against the `project-standardization` skill. Quick fixes are applied via the existing `executor` and re-checked by `reviewer` (oracle on two-strike failures, same rule as tasks).
-2. **Documentation** - a new `documenter` subagent writes a persistent execution report to `docs/artifacts/reports/` and updates every catalog/doc touched by the work, then commits.
+2. **Documentation** - a new `documenter` subagent writes a persistent execution report to `docs/artifacts/features/` and updates every catalog/doc touched by the work, then commits.
 
-Plus: teach `project-standardization` to scaffold `docs/artifacts/reports/` alongside `specs/plans/reviews`, so the artifact convention stays consistent everywhere it is referenced.
+Plus: keep `project-standardization` consistent with the per-feature `docs/artifacts/features/` layout, so the artifact convention stays consistent everywhere it is referenced.
 
 ## Background and current state
 
@@ -36,14 +36,14 @@ Write-scope rationale: the user-chosen scope is `docs/**` plus repo-root docs. R
 Insert two phases after the current task loop (step 5, momentum) and renumber the final report:
 
 - **New step 6, Structure review.** Dispatch `standardizer` against the branch. On findings: dispatch `executor` for the items tagged `quick-fix`, then `reviewer` to re-check the fixes. Two-strike failures on a fix escalate to `oracle`, same rule as task implementation. Items tagged `recommendation` are not auto-fixed; they roll forward into the report the documenter writes.
-- **New step 7, Documentation.** Dispatch `documenter` with the run's raw material. It writes the report to `docs/artifacts/reports/`, updates every catalog/doc the work touched (README skills table, AGENTS current-skills/current-agents tables, commands sections, etc.), commits, and returns the report path plus a summary.
+- **New step 7, Documentation.** Dispatch `documenter` with the run's raw material. It writes the report to `docs/artifacts/features/`, updates every catalog/doc the work touched (README skills table, AGENTS current-skills/current-agents tables, commands sections, etc.), commits, and returns the report path plus a summary.
 - **Step 8, Final report** (was step 6). Relay: branch; commits with hashes and one-line descriptions; files changed with diff stats; verifier output; skills loaded across the run; `ponytail:` deferrals; anything Unverified; the Dispatch Log now listing each task as `dispatched: executor + reviewer` or `self-implemented`, plus the standardizer and documenter dispatches; and the path to the report the documenter wrote.
 
 Orchestrator `task:` permission block gains `standardizer: allow` and `documenter: allow` (after the broad `"*": deny`, narrow allows last, per the last-match-wins rule documented in `agents/README.md`).
 
 ### Report convention
 
-- Location: `docs/artifacts/reports/`, mirroring the layout the repo already uses for its specs and plans (flat or topic-subfoldered). In this repo that is `docs/artifacts/reports/<topic>/YYYY-MM-DD-<slug>-report.md`.
+- Location: `docs/artifacts/features/`, mirroring the layout the repo already uses for its specs and plans (flat or topic-subfoldered). In this repo that is `docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-report.md`.
 - Filename grammar: `YYYY-MM-DD-<slug>-report.md`, matching the `YYYY-MM-DD-<topic>-<type>.md` rule from `references/artifacts.md`.
 - Contents, synthesized by the documenter from the orchestrator's run material plus git state: Summary (what the plan set out, what shipped); Branch and commits (hashes + one-liners); Files changed (diff stats); Standardization review (findings, what was fixed, what remains as recommendations); Documentation updates (which catalogs/docs were updated and why); Verifier output; Skills loaded; `ponytail:` deferrals; Unverified items; Dispatch Log.
 
@@ -51,10 +51,10 @@ Orchestrator `task:` permission block gains `standardizer: allow` and `documente
 
 Wherever the scaffolded set is written as `{specs,plans,reviews}`, add `reports` so the convention is consistent:
 
-- `references/artifacts.md`: add a `## Reports` section defining `docs/artifacts/reports/YYYY-MM-DD-<topic>-report.md` as the execution-report artifact; add a reports row to the per-framework redirect table; add report production to the end of the workflow list (after review); add a reports path example.
-- `references/bootstrap.md`: step 6 scaffolds `{specs,plans,reviews,reports}` (same create-on-first-write rule, never pre-create empty).
-- `templates/STANDARDS.md`: add the `docs/artifacts/reports/YYYY-MM-DD-<topic>-report.md` line to the artifacts list.
-- `templates/AGENTS-small.md`, `AGENTS-medium.md`, `AGENTS-large.md`: `{specs,plans,reviews}` becomes `{specs,plans,reviews,reports}` in both the path-description line and the spec/plan-driven carve-out.
+- `references/artifacts.md`: add a `## Reports` section defining `docs/artifacts/features/YYYY-MM-DD-<topic>-report.md` as the execution-report artifact; add a reports row to the per-framework redirect table; add report production to the end of the workflow list (after review); add a reports path example.
+- `references/bootstrap.md`: step 6 scaffolds `{features,reviews}` (same create-on-first-write rule, never pre-create empty).
+- `templates/STANDARDS.md`: add the `docs/artifacts/features/YYYY-MM-DD-<topic>-report.md` line to the artifacts list.
+- `templates/AGENTS-small.md`, `AGENTS-medium.md`, `AGENTS-large.md`: `{specs,plans,reviews}` becomes `{features,reviews}` in both the path-description line and the spec/plan-driven carve-out.
 - `references/small.md`, `medium.md`, `large.md`: update the `{specs,plans,reviews}` mentions to include `reports`.
 - `SKILL.md` body: update the artifacts references (currently lines 41, 63, 116) to include `reports`. The frontmatter `description` is unchanged: reports do not change when the skill loads.
 - `references/memory.md`: note reports as committed execution history distinct from memory (minor, one line).

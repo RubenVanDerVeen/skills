@@ -8,7 +8,7 @@
 
 **Tech Stack:** opencode agent markdown (frontmatter + body), opencode JSON config, no code.
 
-**Spec:** `docs/artifacts/specs/opencode-inventree-agent/2026-07-12-opencode-inventree-agent-design.md`
+**Spec:** `docs/artifacts/features/opencode-inventree-agent/2026-07-12-opencode-inventree-agent-design.md`
 
 ## Global Constraints
 

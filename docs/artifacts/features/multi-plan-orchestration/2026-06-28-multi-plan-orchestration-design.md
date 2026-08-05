@@ -74,7 +74,7 @@ digraph flow {
 
 ## Decomposition outline (approval gate)
 
-Short artifact, not a full spec. Saved to `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-outline.md`. Contains exactly:
+Short artifact, not a full spec. Saved to `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-outline.md`. Contains exactly:
 
 ```markdown
 # <Topic> Decomposition Outline
@@ -113,7 +113,7 @@ This is the one hard rule the skill enforces, because uncontrolled scope slip is
 
 ## Manifest and handoff
 
-Final artifact, saved to `docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-manifest.md`. Produced after all plans exist. Contains:
+Final artifact, saved to `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-manifest.md`. Produced after all plans exist. Contains:
 
 ```markdown
 # <Topic> Multi-Plan Manifest
@@ -148,7 +148,7 @@ The manifest is the single artifact the user hands to their dispatch process. Th
 After the manifest is written and committed, the orchestrator stops. It does NOT dispatch execution agents. The skill's terminal output:
 
 ```
-Manifest written to docs/artifacts/specs/<topic>/YYYY-MM-DD-<topic>-manifest.md.
+Manifest written to docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-manifest.md.
 N+1 plans ready (1 foundation + N sub-projects).
 
 Execution order:
@@ -166,7 +166,7 @@ No further action from the orchestrator. The user owns dispatch.
 
 The orchestrator does not re-implement brainstorming or writing-plans. For each sub-project (foundation + each SP):
 
-1. Orchestrator invokes `superpowers:brainstorming` with the sub-project's scope (taken from the approved outline) as the input. Pass the topic-scoped location explicitly: `docs/artifacts/specs/<topic>/` for the spec.
+1. Orchestrator invokes `superpowers:brainstorming` with the sub-project's scope (taken from the approved outline) as the input. Pass the topic-scoped location explicitly: `docs/artifacts/features/<topic>/` for the spec.
 2. Brainstorming runs its normal flow: clarifying questions, design, spec self-review, the user's review gate, then invokes `superpowers:writing-plans`. Pass `docs/artifacts/plans/<topic>/` for the plan.
 3. Writing-plans runs its normal flow: file structure, bite-sized tasks, self-review.
 4. Orchestrator notes the resulting plan path, adds a row to the manifest, and moves to the next sub-project.
@@ -191,19 +191,19 @@ Single file. No `references/`, no `commands/`, no scripts. The skill is pure gui
 Topic-subfolder convention (see `rubens-project-standardization/references/artifacts.md`):
 
 ```
-docs/artifacts/specs/<topic>/
+docs/artifacts/features/<topic>/
   YYYY-MM-DD-<topic>-outline.md
   YYYY-MM-DD-<topic>-manifest.md
   YYYY-MM-DD-<foundation>-design.md
   YYYY-MM-DD-<sp-1>-design.md
   ...
-docs/artifacts/plans/<topic>/
+docs/artifacts/features/<topic>/
   YYYY-MM-DD-<foundation>-plan.md
   YYYY-MM-DD-<sp-1>-plan.md
   ...
 ```
 
-Single-plan topics still go flat in `docs/artifacts/specs/` and `docs/artifacts/plans/` (existing flow unchanged). Multi-plan topics get a `<topic>/` subfolder. No regression.
+Single-plan topics still go flat in `docs/artifacts/features/` (existing flow unchanged). Multi-plan topics get a `<topic>/` subfolder. No regression.
 
 ## Testing approach (per the writing-skills Iron Law)
 

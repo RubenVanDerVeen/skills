@@ -8,7 +8,7 @@
 
 **Tech Stack:** Python (FastMCP + httpx, existing server), bash/curl, opencode + Claude Code agent markdown.
 
-**Spec:** `docs/artifacts/specs/inventree-datasheet-autopilot/2026-07-12-inventree-datasheet-autopilot-design.md`
+**Spec:** `docs/artifacts/features/inventree-datasheet-autopilot/2026-07-12-inventree-datasheet-autopilot-design.md`
 
 **Depends on:** the `opencode-inventree-agent` plan being executed (agent file exists, MCP registered in opencode).
 

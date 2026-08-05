@@ -8,7 +8,7 @@
 
 **Tech Stack:** POSIX `sh`, `grep`, git hooks, PowerShell (verification only), Markdown (docs). Conventional Commits 1.0.0.
 
-**Spec:** `docs/artifacts/specs/commitlint/2026-08-01-commit-msg-hook-design.md`
+**Spec:** `docs/artifacts/features/commitlint/2026-08-01-commit-msg-hook-design.md`
 
 ## Global Constraints
 
@@ -250,7 +250,7 @@ Replace with:
 - [ ] **Step 4: `CHANGELOG.md` - add the Unreleased/Added entry.** Under `## [Unreleased]` -> `### Added`, immediately AFTER the existing single-pass `/full-cycle` bullet (the one ending "...Spec: `docs/artifacts/specs/single-pass-full-cycle/2026-07-30-single-pass-full-cycle-design.md`."), add:
 
 ```
-- `commit-msg` git hook (`.githooks/commit-msg`): enforces Conventional Commits 1.0.0 on commit subjects with no dependencies (sh + grep). Tracked executable; activate per clone via `git config core.hooksPath .githooks` (documented in `opencode-install.md` step 10). A repo-root `.gitattributes` pins `.githooks/**` to LF so the shebang survives Windows checkouts. Replaces the npm `@commitlint/cli` + husky approach the repo's "no tooling" principle rules out. Spec: `docs/artifacts/specs/commitlint/2026-08-01-commit-msg-hook-design.md`.
+- `commit-msg` git hook (`.githooks/commit-msg`): enforces Conventional Commits 1.0.0 on commit subjects with no dependencies (sh + grep). Tracked executable; activate per clone via `git config core.hooksPath .githooks` (documented in `opencode-install.md` step 10). A repo-root `.gitattributes` pins `.githooks/**` to LF so the shebang survives Windows checkouts. Replaces the npm `@commitlint/cli` + husky approach the repo's "no tooling" principle rules out. Spec: `docs/artifacts/features/commitlint/2026-08-01-commit-msg-hook-design.md`.
 ```
 
 - [ ] **Step 5: Em-dash + heading check.** Run:

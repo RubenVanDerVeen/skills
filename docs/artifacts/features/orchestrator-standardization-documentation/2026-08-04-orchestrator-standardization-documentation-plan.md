@@ -2,13 +2,13 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add two post-implementation phases (structure review, documentation) to the orchestrator's plan-execution loop via two new subagents (`standardizer`, `documenter`), and teach `project-standardization` to scaffold `docs/artifacts/reports/` alongside specs/plans/reviews.
+**Goal:** Add two post-implementation phases (structure review, documentation) to the orchestrator's plan-execution loop via two new subagents (`standardizer`, `documenter`), and keep `project-standardization`'s artifact convention in sync with the per-feature `docs/artifacts/features/` layout.
 
-**Architecture:** Two new read/write-scoped subagents extend the existing executor/reviewer/oracle roster. The orchestrator dispatches them in two new loop phases after the task loop. The `reports/` artifact joins the standardization convention via a find-and-extend across the ~8 files that reference `{specs,plans,reviews}`.
+**Architecture:** Two new read/write-scoped subagents extend the existing executor/reviewer/oracle roster. The orchestrator dispatches them in two new loop phases after the task loop. Reports live alongside the spec/plan they close inside the same feature folder.
 
 **Tech Stack:** opencode agent definitions (YAML frontmatter + body), Markdown. No runtime, no build step.
 
-**Spec:** `docs/artifacts/specs/orchestrator-standardization-documentation/2026-08-04-orchestrator-standardization-documentation-design.md`
+**Spec:** `docs/artifacts/features/orchestrator-standardization-documentation/2026-08-04-orchestrator-standardization-documentation-design.md`
 
 ## Global Constraints
 
@@ -104,13 +104,13 @@ git commit -m "feat(agents): add standardizer subagent for post-implementation s
 - Create: `agents/documenter.md`
 
 **Interfaces:**
-- Produces: a write-scoped leaf subagent the orchestrator dispatches in the new documentation phase (Task 3). Writes `docs/artifacts/reports/<topic>/YYYY-MM-DD-<slug>-report.md`, updates catalogs, commits as docs.
+- Produces: a write-scoped leaf subagent the orchestrator dispatches in the new documentation phase (Task 3). Writes `docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-report.md`, updates catalogs, commits as docs.
 
 - [ ] **Step 1: Create `agents/documenter.md` with this exact content**
 
 ```markdown
 ---
-description: Closes out a completed plan by writing its execution report and updating every catalog/doc the work touched. Write-capable leaf scoped to docs/** and root-level markdown. Dispatch after the structure-review phase. Produces docs/artifacts/reports/<topic>/YYYY-MM-DD-<slug>-report.md, updates README/AGENTS/commands catalogs, commits as docs, returns the report path.
+description: Closes out a completed plan by writing its execution report and updating every catalog/doc the work touched. Write-capable leaf scoped to docs/** and root-level markdown. Dispatch after the structure-review phase. Produces docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-report.md, updates README/AGENTS/commands catalogs, commits as docs, returns the report path.
 mode: subagent
 color: "#3B82F6"
 model: zai-coding-plan/glm-5.2
@@ -159,7 +159,7 @@ Inputs you receive from the orchestrator: the plan path and any spec it referenc
 
 Do, in order:
 1. Read the plan, the spec, the branch's commits (`git log <base>..HEAD --oneline`), and the diff stat. Read the standardizer's findings.
-2. Write the execution report to `docs/artifacts/reports/` following the layout the repo already uses for its specs and plans (flat or topic-subfoldered). Filename grammar: `YYYY-MM-DD-<slug>-report.md`. Sections: Summary; Branch and commits; Files changed (diff stats); Standardization review (findings, what was fixed, what remains); Documentation updates (catalogs/docs changed and why); Verifier output; Skills loaded; `ponytail:` deferrals; Unverified items; Dispatch Log.
+2. Write the execution report to `docs/artifacts/features/` following the layout the repo already uses for its specs and plans (flat or topic-subfoldered). Filename grammar: `YYYY-MM-DD-<slug>-report.md`. Sections: Summary; Branch and commits; Files changed (diff stats); Standardization review (findings, what was fixed, what remains); Documentation updates (catalogs/docs changed and why); Verifier output; Skills loaded; `ponytail:` deferrals; Unverified items; Dispatch Log.
 3. Update every catalog/doc the work touched: README skills table, AGENTS.md current-skills/current-agents tables, commands `## Commands` sections, `opencode-install.md` name references, `external-skills.md` rows. Follow the repo's own catalog rules verbatim (the AGENTS.md "Adding or modifying a skill" section, the agents/README.md roster rules). A skill or agent that exists but is missing from one of its catalogs is a process failure: fix it before committing.
 4. Commit the report and catalog updates as Conventional Commits 1.0.0 docs commits (e.g. `docs(reports): add execution report for <slug>` and `docs: update catalogs for <change>`). The plan-execution carve-out sanctions these commits; do not pause to ask.
 5. Return the report path and a one-paragraph summary of what shipped.
@@ -200,7 +200,7 @@ Read `agents/orchestrator.md`. Replace the current step 5 and step 6 (the `5. Mo
 ```markdown
 5. Momentum: dispatch the next task in the same turn a subagent returns. End the turn only when the plan is done, a verifier failure needs a user decision, or a blocker question cannot be defaulted.
 6. Structure review (after the task loop is complete): dispatch the `standardizer` subagent against the branch diff. On findings: dispatch `executor` for the items tagged `quick-fix` (kebab-case paths, missing AGENTS sections, changelog gaps, catalog rows), then `reviewer` to re-check each fix. Two-strike failures on a fix escalate to `oracle`, same rule as task implementation. Items tagged `recommendation` are not auto-fixed; carry them forward to step 7.
-7. Documentation: dispatch the `documenter` subagent with the run's raw material (plan and spec paths, per-task commit list, standardizer findings and what was fixed, verifier output, dispatch log). It writes the execution report to `docs/artifacts/reports/`, updates every catalog/doc the work touched, commits as docs commits, and returns the report path. You do not write the report yourself: the documenter does (you cannot; edit/write/patch are denied).
+7. Documentation: dispatch the `documenter` subagent with the run's raw material (plan and spec paths, per-task commit list, standardizer findings and what was fixed, verifier output, dispatch log). It writes the execution report to `docs/artifacts/features/`, updates every catalog/doc the work touched, commits as docs commits, and returns the report path. You do not write the report yourself: the documenter does (you cannot; edit/write/patch are denied).
 8. Finish with a report: branch; commits with hashes and one-line descriptions; files changed with diff stats; verifier output; skills loaded across the run; any `ponytail:` deferrals; anything Unverified; a Dispatch Log listing each task as "dispatched: executor + reviewer" or "self-implemented: <reason>", plus the standardizer and documenter dispatches; and the path to the report the documenter wrote. A plan completed with zero executor dispatches is a process failure - if that happened, say so explicitly at the top of the report and explain why dispatch was impossible for every task.
 ```
 
@@ -260,7 +260,7 @@ Read `commands/execute-plan.md`. The current End section has steps 4 (graphify) 
 ```markdown
 End:
 4. Structure review: dispatch the `standardizer` subagent against the branch diff. On findings, dispatch `executor` for the `quick-fix` items, then `reviewer` to re-check each. Two-strike failures escalate to `oracle`. `recommendation` items roll forward to the report.
-5. Documentation: dispatch the `documenter` subagent with the run material (plan + spec paths, per-task commits, standardizer findings, verifier output, dispatch log). It writes `docs/artifacts/reports/<topic>/YYYY-MM-DD-<slug>-report.md`, updates every catalog/doc touched (README, AGENTS, commands sections), commits as docs commits, returns the report path.
+5. Documentation: dispatch the `documenter` subagent with the run material (plan + spec paths, per-task commits, standardizer findings, verifier output, dispatch log). It writes `docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-report.md`, updates every catalog/doc touched (README, AGENTS, commands sections), commits as docs commits, returns the report path.
 6. If `graphify-out/graph.json` exists in the repo, run `graphify update .` (AST-only, no LLM, ~30 s) so the knowledge graph reflects the plan's changes. Non-blocking nicety: if the command is missing or fails, note it and move on.
 7. Stop. Do NOT invoke `finishing-a-development-branch` or offer merge/PR unless the user asks. Instead report: branch name; commits with hashes and one-line descriptions; files changed with diff stats; verifier output (test counts, build/typecheck result); skills loaded across the run (name + one line on how each shaped the work); any `ponytail:` deferrals; anything Unverified; the Dispatch Log (each task as "dispatched: executor + reviewer" or "self-implemented", plus the standardizer and documenter dispatches); and the path to the report the documenter wrote.
 ```
@@ -273,7 +273,7 @@ Read `commands/full-cycle.md`. Replace the current step 4 sentence:
 ```
 with:
 ```
-4. Execute (default): dispatch the `orchestrator` subagent with the spec and plan paths; it branches, runs executor/reviewer per task, escalates two-strike failures to `oracle`, then runs a structure review (`standardizer` plus quick-fix `executor` passes) and a documentation phase (`documenter` writes the execution report to `docs/artifacts/reports/` and updates catalogs), commits at boundaries, and returns a final report. Relay that report.
+4. Execute (default): dispatch the `orchestrator` subagent with the spec and plan paths; it branches, runs executor/reviewer per task, escalates two-strike failures to `oracle`, then runs a structure review (`standardizer` plus quick-fix `executor` passes) and a documentation phase (`documenter` writes the execution report to `docs/artifacts/features/` and updates catalogs), commits at boundaries, and returns a final report. Relay that report.
 ```
 
 - [ ] **Step 3: Verify no em-dashes in both files**
@@ -308,7 +308,7 @@ Read `agents/README.md`. After the `oracle` row (the last data row of the table)
 
 ```markdown
 | `standardizer` | subagent | `zai-coding-plan/glm-5.2` | Repo-wide standardization audit after a plan's task loop: kebab-case paths, AGENTS.md sections, docs/artifacts/ layout, changelog, catalog rows. Returns findings tagged quick-fix or recommendation. Read-only. | edit/write/patch/task/webfetch tools; planning and review-workflow skills |
-| `documenter` | subagent | `zai-coding-plan/glm-5.2` | Closes out a completed plan: writes the execution report to `docs/artifacts/reports/`, updates every catalog/doc touched (README, AGENTS, commands sections), commits as docs. Write-scoped to docs/** + root markdown. | task/webfetch tools; planning and review-workflow skills; writes outside docs/** + root markdown |
+| `documenter` | subagent | `zai-coding-plan/glm-5.2` | Closes out a completed plan: writes the execution report to `docs/artifacts/features/`, updates every catalog/doc touched (README, AGENTS, commands sections), commits as docs. Write-scoped to docs/** + root markdown. | task/webfetch tools; planning and review-workflow skills; writes outside docs/** + root markdown |
 ```
 
 - [ ] **Step 2: Update the `/execute-plan` prose paragraph in `agents/README.md`**
@@ -365,7 +365,7 @@ git commit -m "docs(agents): add standardizer and documenter to roster catalogs"
 - Modify: `skills/rubens-project-standardization/references/artifacts.md`
 
 **Interfaces:**
-- Produces: the canonical artifacts doc now defines `docs/artifacts/reports/`.
+- Produces: the canonical artifacts doc now defines reports under `docs/artifacts/features/`.
 
 - [ ] **Step 1: Read the file, then make four edits**
 
@@ -391,27 +391,27 @@ The `docs/artifacts/` directory holds **process meta-documents**: the design spe
 
 Edit C, add a new `## Reports` section. Place it immediately after the existing `## Reviews: docs/artifacts/reviews/` section (before the next `##` heading, which is the per-framework redirect section). Insert:
 ```markdown
-## Reports: `docs/artifacts/reports/`
+## Reports: `docs/artifacts/features/`
 
 Execution reports close out a completed plan: what the plan set out, what shipped, the standardization review, the documentation updates, verifier output, and the dispatch log. They are the persisted artefact the orchestrator's `documenter` subagent writes at the end of `/execute-plan` and `/full-cycle` runs.
 
 ```
-docs/artifacts/reports/2026-04-17-nextcloud-nas-integration-report.md
+docs/artifacts/features/code-standardization/2026-08-05-execution-report.md
 ```
 
 Reports are written by the documenter from the run's git state and the orchestrator's dispatch log; they are not authored by hand during normal development. Layout follows the repo's specs/plans layout (flat by default, topic-subfoldered for multi-plan or grouped topics).
 
-- An execution report belongs with the plan it closes out. If the plan lives under `docs/artifacts/plans/<topic>/`, the report lives under `docs/artifacts/reports/<topic>/` with the same date and slug.
+- An execution report belongs with the plan it closes out. If the plan lives under `docs/artifacts/features/<topic>/`, the report lives alongside it under `docs/artifacts/features/<topic>/` with the same date and slug.
 - Do not hand-write a report for work that has no plan. Reports document executed plans, not ad-hoc changes.
 ```
 
-Edit D, the per-framework redirect table and summary. Update every target-column cell and summary line that references the brace set so `{specs,plans,reviews}` becomes `{specs,plans,reviews,reports}`. In particular the `Any other framework` row target cell becomes `docs/artifacts/{specs,plans,reviews,reports}/`, and the summary line near the redirect section that says `Redirect every spec, plan, and review to docs/artifacts/{specs,plans,reviews}/` becomes `Redirect every spec, plan, review, and report to docs/artifacts/{specs,plans,reviews,reports}/`. Rows that name a single kind (a superpowers-specs row pointing only at `docs/artifacts/specs/...`) stay as-is.
+Edit D, the per-framework redirect table and summary. Update every target-column cell and summary line that references the brace set so the final form is `{features,reviews}` (the artifacts-layout migration later consolidated this from the interim `{specs,plans,reviews,reports}` form). In particular the `Any other framework` row target cell becomes `docs/artifacts/{features,reviews}/`, and the summary line near the redirect section reads `Redirect every spec, plan, and review to docs/artifacts/{features,reviews}/`. Rows that name a single kind stay as-is.
 
 - [ ] **Step 2: Add report production to the default-workflow list**
 
 In the same file, the workflow list (the numbered sequence ending with the review item) gets one more item after the review item:
 ```
-7. **Document and report** (the documenter subagent at the end of `/execute-plan` or `/full-cycle`) -> writes an execution report to `docs/artifacts/reports/` and updates catalogs.
+7. **Document and report** (the documenter subagent at the end of `/execute-plan` or `/full-cycle`) -> writes an execution report to `docs/artifacts/features/` and updates catalogs.
 ```
 
 - [ ] **Step 3: Verify no em-dashes and the section is present**
@@ -438,7 +438,7 @@ git commit -m "docs(skills): add reports artifact to project-standardization ref
 - Modify: `skills/rubens-project-standardization/templates/STANDARDS.md`
 
 **Interfaces:**
-- Produces: the scaffolded set is `{specs,plans,reviews,reports}` in both the bootstrap procedure and the STANDARDS template.
+- Produces: the scaffolded set is `{features,reviews}` in both the bootstrap procedure and the STANDARDS template.
 
 - [ ] **Step 1: Update `references/bootstrap.md` step 6**
 
@@ -448,18 +448,18 @@ create `specs/`, `plans/`, `reviews/` per `references/artifacts.md`
 ```
 with:
 ```
-create `specs/`, `plans/`, `reviews/`, `reports/` per `references/artifacts.md`
+create `features/`, `reviews/` per `references/artifacts.md`
 ```
 
 - [ ] **Step 2: Update `templates/STANDARDS.md`**
 
-Read `templates/STANDARDS.md`. In the `docs/artifacts/` list (around the specs/plans/reviews bullets), after the reviews bullet:
+Read `templates/STANDARDS.md`. In the `docs/artifacts/` list (around the features/reviews bullets), after the reviews bullet:
 ```
 - `docs/artifacts/reviews/YYYY-MM-DD-<topic>-review.md`: audits and reviews.
 ```
 add:
 ```
-- `docs/artifacts/reports/YYYY-MM-DD-<topic>-report.md`: execution reports for completed plans.
+- `docs/artifacts/features/YYYY-MM-DD-<topic>-report.md`: execution reports for completed plans.
 ```
 
 - [ ] **Step 3: Verify no em-dashes**
@@ -561,12 +561,12 @@ IMPORTANT: this frontmatter `description` change is in-scope (it names the artif
 
 Read the file. After the existing lines:
 ```
-- **Plans**: committed implementation steps with checkpoints. Lives in `docs/artifacts/plans/`.
-- **Specs**: committed design rationale. Lives in `docs/artifacts/specs/`.
+- **Plans**: committed implementation steps with checkpoints. Lives in `docs/artifacts/features/`.
+- **Specs**: committed design rationale. Lives in `docs/artifacts/features/`.
 ```
 add:
 ```
-- **Reports**: committed execution history for a completed plan (what shipped, standardization review, dispatch log). Lives in `docs/artifacts/reports/`. Not memory: memory is cross-session context, reports are a single plan's record.
+- **Reports**: committed execution history for a completed plan (what shipped, standardization review, dispatch log). Lives in `docs/artifacts/features/`. Not memory: memory is cross-session context, reports are a single plan's record.
 ```
 
 - [ ] **Step 6: Verify no em-dashes across all five files**

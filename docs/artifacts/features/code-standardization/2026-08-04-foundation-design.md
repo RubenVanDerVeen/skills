@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved 2026-08-04. Foundation sub-project of the code-standardization multi-plan (see `docs/artifacts/multi-plans/code-standardization/2026-08-04-code-standardization-outline.md`).
+Approved 2026-08-04. Foundation sub-project of the code-standardization multi-plan (see `docs/artifacts/features/code-standardization/2026-08-04-code-standardization-outline.md`).
 
 ## Problem
 

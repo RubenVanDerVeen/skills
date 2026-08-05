@@ -30,8 +30,8 @@ The manual fresh-session handoff survives as an explicit opt-in for huge tasks.
 
 1. `/full-cycle <task>` runs as `planner`. Parse `$ARGUMENTS` for the keywords `no brainstorm` and `handoff`.
 2. If brainstorm is on (default) and the request is not explicit enough, load the `brainstorming` skill and explore intent, requirements, and design. Dispatch `explore` for recon.
-3. Write the spec to `docs/artifacts/specs/<topic>/YYYY-MM-DD-<slug>-design.md`. No approval pause.
-4. Load `writing-plans`, write the plan to `docs/artifacts/plans/<topic>/YYYY-MM-DD-<slug>-plan.md`, referencing the spec. No approval pause.
+3. Write the spec to `docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-design.md`. No approval pause.
+4. Load `writing-plans`, write the plan to `docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-plan.md`, referencing the spec. No approval pause.
 5. If the `handoff` keyword is present: print the handoff block (spec + plan paths, the `/execute-plan <path>` line) and stop. Old behavior.
 6. Otherwise (default): dispatch the `orchestrator` subagent with the plan path and spec path, instructing it to execute the plan following the `/execute-plan` conventions (branch first, ponytail, per-task Conventional Commits, executor/reviewer per task, oracle on two-strike failures, final report). The orchestrator runs with a fresh context.
 7. When the orchestrator returns, relay its final report to the user (branch, commits, files changed, verifier output, deferrals, anything Unverified). End.

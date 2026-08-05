@@ -9,7 +9,7 @@ Make every project bootstrapped or restructured by the `project-standardization`
 
 ## Context (current state, 2026-08-01)
 
-- This repo's `.githooks/commit-msg` (sh + grep, no deps) was just shipped and is active via `core.hooksPath = .githooks`, with `.gitattributes` pinning `.githooks/**` to LF. Spec: `docs/artifacts/specs/commitlint/2026-08-01-commit-msg-hook-design.md`.
+- This repo's `.githooks/commit-msg` (sh + grep, no deps) was just shipped and is active via `core.hooksPath = .githooks`, with `.gitattributes` pinning `.githooks/**` to LF. Spec: `docs/artifacts/features/commitlint/2026-08-01-commit-msg-hook-design.md`.
 - The `project-standardization` skill already ships one executable hook template: `templates/post-commit-graphify` (debounced graph refresh). It is applied by `references/bootstrap.md` step 10.3: "copy `templates/post-commit-graphify` to `.git/hooks/post-commit` (keep the executable bit on POSIX)". That hook installs to `.git/hooks/` (untracked, per-clone).
 - The skill structure: `SKILL.md` (body with Templates + References tables), `references/{bootstrap,small,medium,large,standards-stack,artifacts,memory,todolist,tool-filenames,migration}.md`, `templates/{AGENTS-small,AGENTS-medium,AGENTS-large,CLAUDE,STANDARDS,CHANGELOG,todolist}.md` + `templates/post-commit-graphify`.
 - The three `AGENTS-*.md` templates each have a Git section. All three contain the line `- Commit messages: Conventional Commits 1.0.0 (\`<type>(<scope>): <description>\`).` (small: `## Git & workflow`, line 51; medium: `## Git & Workflow`, line 21; large: `## Git & Workflow`, line 49).

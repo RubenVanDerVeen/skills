@@ -2,8 +2,8 @@
 
 ## References
 
-- Spec: `docs/artifacts/specs/code-standardization/2026-08-04-foundation-design.md`
-- Outline: `docs/artifacts/multi-plans/code-standardization/2026-08-04-code-standardization-outline.md`
+- Spec: `docs/artifacts/features/code-standardization/2026-08-04-foundation-design.md`
+- Outline: `docs/artifacts/features/code-standardization/2026-08-04-code-standardization-outline.md`
 
 ## Branch
 

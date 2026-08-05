@@ -8,7 +8,7 @@
 
 **Tech Stack:** opencode 1.17.18 agent config (markdown frontmatter: `mode`, `model`, `color`, `tools`, `permission` with glob objects), Conventional Commits 1.0.0.
 
-**Spec:** `docs/artifacts/specs/agent-roster/2026-07-12-agent-roster-redesign-design.md` (read it before starting).
+**Spec:** `docs/artifacts/features/agent-roster/2026-07-12-agent-roster-redesign-design.md` (read it before starting).
 
 ## Global Constraints
 
@@ -73,7 +73,7 @@ You are the planner: you turn a feature request into an approved spec and plan, 
 
 Your pipeline:
 1. Brainstorm: load the brainstorming skill; explore intent, requirements, and design. Dispatch the explore subagent for codebase recon instead of grepping in your own window.
-2. Spec: write the approved design to docs/artifacts/specs/<topic>/YYYY-MM-DD-<slug>-design.md. Present it; gate on approval.
+2. Spec: write the approved design to docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-design.md. Present it; gate on approval.
 3. Plan: load the writing-plans skill; write the plan to docs/artifacts/plans/<topic>/YYYY-MM-DD-<slug>-plan.md, referencing the spec. Present it; gate on approval.
 4. Hand off: end with the spec and plan paths plus the exact line to paste in a fresh session: /execute-plan <plan-path>. Do not continue into implementation, even if asked to walk through the whole process; for you the process ends at the handoff.
 
@@ -459,7 +459,7 @@ Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `review
 - [ ] **Step 5: In `CHANGELOG.md`, under `## [Unreleased]` > `### Added`, append**
 
 ```markdown
-- `agents/planner.md`, `agents/writer.md`, `agents/oracle.md`: planner primary (GLM 5.2; brainstorm > spec > plan > handoff; file writes glob-scoped to `docs/**`), writer primary (unpinned; focused doc/Typst sessions, no ceremony), oracle subagent (GLM 5.2; read-only two-strike consult). Spec: `docs/artifacts/specs/agent-roster/2026-07-12-agent-roster-redesign-design.md`.
+- `agents/planner.md`, `agents/writer.md`, `agents/oracle.md`: planner primary (GLM 5.2; brainstorm > spec > plan > handoff; file writes glob-scoped to `docs/**`), writer primary (unpinned; focused doc/Typst sessions, no ceremony), oracle subagent (GLM 5.2; read-only two-strike consult). Spec: `docs/artifacts/features/agent-roster/2026-07-12-agent-roster-redesign-design.md`.
 ```
 
 - [ ] **Step 6: In `CHANGELOG.md`, under `## [Unreleased]` > `### Changed`, append**
@@ -522,7 +522,7 @@ Run: `opencode debug agent reviewer` Expected: `model: zai-coding-plan/glm-5.2`.
 
 - [ ] **Step 5: Final repo-wide em-dash sweep of every file this plan touched**
 
-Run: `grep -P '\x{2014}' agents/*.md commands/full-cycle.md commands/execute-plan.md AGENTS.md CHANGELOG.md docs/artifacts/specs/agent-roster/*.md docs/artifacts/plans/agent-roster/*.md`
+Run: `grep -P '\x{2014}' agents/*.md commands/full-cycle.md commands/execute-plan.md AGENTS.md CHANGELOG.md docs/artifacts/features/agent-roster/*.md`
 Expected: no output.
 
 - [ ] **Step 6: Report**

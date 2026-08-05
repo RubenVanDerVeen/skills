@@ -4,7 +4,7 @@
 
 **Goal:** Add the `skill-harvest` skill to this repo: an instruction-only meta-skill that mines recent Claude Code and opencode sessions for repeated corrections and skill gaps, reports findings, and applies approved edits.
 
-**Architecture:** Pure markdown skill per approved spec (`docs/artifacts/specs/skill-harvest/2026-07-02-skill-harvest-design.md`). `SKILL.md` holds the lean flow, `references/extraction.md` holds verified extraction commands (PowerShell for Claude Code JSONL, sqlite3 for the opencode DB), `commands/harvest.md` is the `/harvest` entry point. No scripts, no runtime.
+**Architecture:** Pure markdown skill per approved spec (`docs/artifacts/features/skill-harvest/2026-07-02-skill-harvest-design.md`). `SKILL.md` holds the lean flow, `references/extraction.md` holds verified extraction commands (PowerShell for Claude Code JSONL, sqlite3 for the opencode DB), `commands/harvest.md` is the `/harvest` entry point. No scripts, no runtime.
 
 **Tech Stack:** Markdown, PowerShell 5.1 (extraction commands), sqlite3 CLI (opencode DB queries).
 
@@ -22,8 +22,8 @@
 ### Task 1: Commit spec and plan artifacts
 
 **Files:**
-- Existing: `docs/artifacts/specs/skill-harvest/2026-07-02-skill-harvest-design.md`
-- Existing: `docs/artifacts/plans/skill-harvest/2026-07-02-skill-harvest-plan.md` (this file)
+- Existing: `docs/artifacts/features/skill-harvest/2026-07-02-skill-harvest-design.md`
+- Existing: `docs/artifacts/features/skill-harvest/2026-07-02-skill-harvest-plan.md` (this file)
 
 **Interfaces:**
 - Consumes: nothing.
@@ -32,7 +32,7 @@
 - [ ] **Step 1: Commit both docs**
 
 ```bash
-git add docs/artifacts/specs/skill-harvest/ docs/artifacts/plans/skill-harvest/
+git add docs/artifacts/features/skill-harvest/
 git commit -m "docs(skill-harvest): add spec and plan artifacts"
 ```
 
