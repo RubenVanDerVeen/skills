@@ -4,7 +4,7 @@ Single-author utilities, libraries, tools. One language or runtime. Fewer than ~
 
 The goal is **the smallest amount of agent scaffolding that still makes sessions productive.** Everything goes in one `AGENTS.md` (or the tool's preferred filename; see the "Tool-specific filenames" table in the main skill). No on-demand subdirectory.
 
-`docs/artifacts/{specs,plans,reviews,reports}/` is **allowed** at this tier. Specs, plans, reviews, and reports are tied to features, not project size: a one-author utility can absolutely brainstorm a non-trivial change, write a plan for it, ship it, and commit a report of what shipped. Add `docs/artifacts/` the first time a real spec, plan, review, or report materialises, the same rule that applies to every tier. The layout below shows it as an optional directory; treat it as part of small projects the moment it becomes useful.
+`docs/artifacts/` is **allowed** at this tier. Specs, plans, reviews, and reports are tied to features, not project size: a one-author utility can absolutely brainstorm a non-trivial change, write a plan for it, ship it, and commit a report of what shipped. Add `docs/artifacts/` the first time a real spec, plan, review, or report materialises, the same rule that applies to every tier. The layout below shows it as an optional directory; treat it as part of small projects the moment it becomes useful.
 
 ## Directory layout
 
@@ -16,10 +16,9 @@ project-root/
 ├── .gitignore
 │
 ├── docs/                      ← optional, only if design history exists
-│   └── artifacts/             ← specs, plans, reviews, reports (see references/artifacts.md)
-│       ├── specs/
-│       ├── plans/
-│       └── reviews/
+│   └── artifacts/             ← per-feature layout (see references/artifacts.md)
+│       ├── features/<feature>/  ← specs, plans, manifests, reports for one feature
+│       └── reviews/             ← flat review log
 │
 └── <project files>            ← language-natural layout, no agent-specific dirs
 ```
@@ -115,6 +114,6 @@ To graduate: create `.agents/`, split `AGENTS.md` into `AGENTS.md` + one or two 
 
 - Creating `.agents/` with one empty file "to match the pattern". The pattern is "as small as possible", not "always use `.agents/`".
 - Refusing to create `docs/artifacts/` for a small project because "small means no artefacts". Specs and plans belong with the code at every tier; only the *absence of design history* justifies skipping them.
-- Creating `docs/artifacts/{specs,plans,reviews,reports}/` empty. Create it the moment a spec, plan, review, or report is being written; do not pre-create it as scaffolding.
+- Creating `docs/artifacts/` empty. Create it the moment a spec, plan, review, or report is being written; do not pre-create it as scaffolding.
 - Copying a 200-line `AGENTS.md` template from a larger project. The template should match the tier.
 - Adding `.agents/todolist.md` for a project with 0–2 pending tasks. Use chat / in-tool task list for that scale.

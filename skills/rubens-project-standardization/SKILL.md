@@ -38,7 +38,7 @@ Rationale: `references/standards-stack.md`.
 - **One authoritative source per deliverable** (ISO 10007): source in `docs/source/`, generated in `docs/deliverables/`. Never siblings.
 - **No `temp/`, no `old/`, no `archive/`**: git history is the archive.
 - **No secrets in any tracked file**: `.env`, tokens, passwords out of git. Memory included.
-- **Specs and plans live in the repo**: `docs/artifacts/{specs,plans,reviews,reports}/` committed alongside the code. **Override clause**: this wins over any per-framework default (superpowers, GSD, `.planning/`). See `references/artifacts.md` § Per-framework redirect for the redirect mechanics; redirect before files land elsewhere.
+- **Specs and plans live in the repo**: `docs/artifacts/features/<feature>/` (specs, plans, manifests, reports) plus `docs/artifacts/reviews/` (flat log), committed alongside the code. **Override clause**: this wins over any per-framework default (superpowers, GSD, `.planning/`). See `references/artifacts.md` § Per-framework redirect for the redirect mechanics; redirect before files land elsewhere.
 - **Memory ≠ plans ≠ tasks**: memory = cross-session facts; plans = committed artefacts; tasks = per-session in-tool items.
 
 ## Token budget

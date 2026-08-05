@@ -159,7 +159,9 @@ project-idp/
 │   ├── research/                      ← IEEE-format papers (incl. standards research)
 │   ├── components/<component>/{manuals,test,diagrams}/
 │   ├── project-management/{daily-standups,retrospectives,notes}/
-│   └── artifacts/{specs,plans,reviews,reports}/
+│   └── artifacts/             ← per-feature layout (see references/artifacts.md)
+│       ├── features/<feature>/  ← specs, plans, manifests, reports for one feature
+│       └── reviews/             ← flat review log
 │
 └── reference/                         ← school-provided material, read-only
 ```
