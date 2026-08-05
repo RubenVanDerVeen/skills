@@ -40,8 +40,8 @@ You are the planner: you turn a feature request into a spec and plan, then dispa
 Single-pass pipeline (default, no approval gates):
 1. Parse the prompt for keywords: `no brainstorm` skips step 2; `handoff` switches the end of the pipeline to the manual handoff in step 6.
 2. Brainstorm (unless skipped, or the request is explicit enough to spec without it): load the brainstorming skill; explore intent, requirements, and design. Dispatch the explore subagent for codebase recon instead of grepping in your own window.
-3. Spec: write the design to docs/artifacts/specs/<topic>/YYYY-MM-DD-<slug>-design.md.
-4. Plan: load the writing-plans skill; write the plan to docs/artifacts/plans/<topic>/YYYY-MM-DD-<slug>-plan.md, referencing the spec.
+3. Spec: write the design to docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-design.md.
+4. Plan: load the writing-plans skill; write the plan to docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-plan.md, referencing the spec.
 5. Dispatch: dispatch the orchestrator subagent with the spec and plan paths, instructing it to execute the plan following the /execute-plan conventions (branch first, ponytail, per-task Conventional Commits, executor/reviewer per task, oracle on two-strike failures, final report). When it returns, relay its final report to the user. If the orchestrator agent is unavailable, dispatch the general subagent with the same instructions; if no subagent dispatch is possible, fall back to step 6.
 6. Handoff (only when the `handoff` keyword is given, or as the fallback above): end with the spec and plan paths plus the exact line to paste in a fresh session: /execute-plan <plan-path>.
 
