@@ -6,7 +6,7 @@ Every major AI coding agent ships with a cross-session memory mechanism. The exa
 
 | Tool | Memory location | Notes |
 |------|-----------------|-------|
-| opencode | `<project>/.opencode/memory/` (or tool-defined) | Per-project by default; check the opencode docs for the current location. |
+| opencode | No default memory dir in current installs | Use a project-local dir (e.g. `docs/memory/`) indexed from a `MEMORY.md`; or check the tool's docs if a memory feature is added later. |
 | Codex | `<project>/AGENTS.md` and per-directory `AGENTS.md` files | Memory is split across the AGENTS.md hierarchy rather than a single directory. |
 | Cursor | `<project>/.cursor/memory/` or per-rule `.cursor/rules/` | Cursor rules replace much of what memory covers; treat them as the memory layer. |
 | Aider | `<project>/.aider/memory/` or per-conversation | Conversation-scoped by default; opt into persistent files via conventions. |

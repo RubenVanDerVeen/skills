@@ -143,7 +143,7 @@ Until then, the directory is just noise. See `references/artifacts.md` for the f
 
 ## Memory
 
-Cross-session memory at the tool's default memory location (opencode: `<project>/.opencode/memory/` or tool-defined; the path differs per tool). Medium projects typically have:
+Cross-session memory at the tool's default memory location; opencode has no default dir, so use a project-local dir such as `docs/memory/`. Medium projects typically have:
 
 - `user.md`: user role.
 - `feedback_<topic>.md`: behavioural rules learned per area.

@@ -134,7 +134,7 @@ Empty subdirectories are fine if a component is in early stages, but each compon
 
 ## Memory
 
-Cross-session memory at the tool's default memory location (opencode: `<project>/.opencode/memory/` or tool-defined; the path differs per tool). Large projects typically have:
+Cross-session memory at the tool's default memory location; opencode has no default dir, so use a project-local dir such as `docs/memory/`. Large projects typically have:
 
 - `user.md`: user role.
 - `feedback_*.md`: behavioural rules.

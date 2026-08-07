@@ -88,7 +88,7 @@ Same shape: one `AGENTS.md`, no `.agents/` subdir. The valuable content is the *
 
 ## Memory
 
-Cross-session memory is provided by the active tool. The location and format depend on the tool (opencode: typically `<project>/.opencode/memory/` or a tool-defined path; the path differs per tool). See `references/memory.md` for the universal structure (the `MEMORY.md` index + `user.md` / `feedback_*.md` / `project_*.md` / `reference_*.md` files) and tool-specific paths.
+Cross-session memory is provided by the active tool. The location and format depend on the tool; opencode has no default memory dir, so use a project-local dir such as `docs/memory/`. See `references/memory.md` for the universal structure (the `MEMORY.md` index + `user.md` / `feedback_*.md` / `project_*.md` / `reference_*.md` files) and tool-specific paths.
 
 For a small project, the memory entries are usually just:
 
