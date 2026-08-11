@@ -53,6 +53,20 @@ This project follows the standards stack documented in `docs/research/<paper>.pd
 - Naming: kebab-case ASCII paths, English structural paths, ISO 8601 date prefix for time-based filenames.
 - <Branch model, hooks, signing rules.>
 
+### Versioning
+
+<!--
+For shipped-software projects (Tauri apps, CLIs, libraries, installers): uncomment the block below and fill it in. Skip for sub-projects versioned through a parent. During 0.x, `0.X+1.0` MAY break, `0.X.Y+1` is backwards-compatible only.
+-->
+
+<!--
+- **Canonical source:** <one file + field, e.g. `src-tauri/tauri.conf.json` -> `version`>
+- **Sync targets** (must mirror canonical source in every release commit): <e.g. `src-tauri/Cargo.toml`, `package.json`>
+- **Policy:** SemVer 2.0.0. Decision table + release-cut recipe: `references/versioning.md` in the `project-standardization` skill.
+- **Trigger:** plan execution appends to `[Unreleased]` in `CHANGELOG.md`. Cutting a version is deliberate, user-invoked.
+- **Last release:** <tag + date, e.g. `v0.3.0` - `2026-08-02`>
+-->
+
 ## Artifacts
 
 Specs, plans, multi-plan outlines/manifests, and reports live under `docs/artifacts/features/<feature>/`; reviews live in `docs/artifacts/reviews/` (flat log). Filename: `YYYY-MM-DD-<topic>-<type>.md`, suffix signals type (`-design` spec, `-plan`, `-outline`, `-manifest`, `-report`, `-review`, `-audit`). When delegating to superpowers (`brainstorming`, `writing-plans`) or GSD, name the canonical path (`docs/artifacts/features/<feature>/...`) instead of the framework default (`docs/superpowers/...`, `.planning/...`); both frameworks accept the override. A `docs/superpowers/`, `.planning/`, or other framework-native directory should never land in this repo. If one does, `git rm` it.
