@@ -23,6 +23,7 @@ Two layers: formal ISO/IEC/IEEE norms and industry conventions.
 | English structural paths | **yes**      | Dir names in English; content may be Dutch |
 | Conventional Commits 1.0.0 | **yes**    | Commit messages |
 | Keep a Changelog 1.1.0  | **yes**       | `CHANGELOG.md` format |
+| SemVer 2.0.0            | **yes** (when shipped) | Version numbers for releases |
 
 Mark each row `yes` / `no` per what is actually in force here. Delete rows that do not apply.
 
@@ -91,6 +92,16 @@ Enforcement: a tracked `commit-msg` hook (`.githooks/commit-msg`) rejects non-co
 `CHANGELOG.md` at repo root. Grouped by version (semver) or milestone (sprint). Sections: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`.
 
 See `CHANGELOG.md` for the current state.
+
+## Versioning: SemVer 2.0.0
+
+Applies when the project ships versioned releases (Tauri apps, CLIs, libraries, installers). Skip for sub-projects versioned through a parent.
+
+- **Canonical source + sync targets**: declared in `AGENTS.md` -> `### Versioning`. All sync targets are bumped in the same commit as the canonical source.
+- **Policy**: SemVer 2.0.0 strict. During 0.x, `0.X+1.0` MAY break; `0.X.Y+1` is backwards-compatible only. After 1.0, standard semver (major / minor / patch = break / feature / fix).
+- **Bump trigger**: `[Unreleased]` in `CHANGELOG.md` accumulates changes during development; cutting a version is a deliberate act (rename heading + bump sources + optional tag).
+
+Full bump decision table and release-cut recipe: `references/versioning.md` in the `project-standardization` skill. See `CHANGELOG.md` for the release history.
 
 ---
 
@@ -177,5 +188,6 @@ Each is append-only history. If a spec changes mid-implementation, edit in place
 - Full standards-stack rationale: `docs/research/<paper>.pdf` <or omit if no paper exists>.
 - Conventional Commits 1.0.0: <https://www.conventionalcommits.org/en/v1.0.0/>
 - Keep a Changelog 1.1.0: <https://keepachangelog.com/en/1.1.0/>
+- SemVer 2.0.0: <https://semver.org/spec/v2.0.0.html>
 - ISO 8601 date format: <https://www.iso.org/iso-8601-date-and-time-format.html>
 - `AGENTS.md` convention: <https://agents.md>
