@@ -28,7 +28,7 @@ Most projects adopt the conventions layer. Formal ISO/IEC/IEEE norms are opt-in 
 - **kebab-case ASCII-only paths**: lowercase, hyphens, no spaces / underscores / PascalCase / non-ASCII. `README.md`, `AGENTS.md`, `CLAUDE.md`, `CHANGELOG.md`, `STANDARDS.md` are conventional exceptions.
 - **English structural paths**: dir / file names in English. Document *content* may be Dutch where the deliverable requires it.
 - **ISO 8601 date prefix**: `YYYY-MM-DD-` first, e.g. `2026-05-08-standup.md`.
-- **Conventional Commits 1.0.0 + Keep a Changelog 1.1.0**: `<type>(<scope>): <description>`; `CHANGELOG.md` grouped by version or sprint. Commits are enforced by the `commit-msg` hook installed in bootstrap step 10.
+- **Conventional Commits 1.0.0 + Keep a Changelog 1.1.0 + SemVer 2.0.0** (shipped-software projects): commits, changelog, and version numbers form one coherent floor. `<type>(<scope>): <description>`; `CHANGELOG.md` grouped by version or sprint; versions follow SemVer 2.0.0 strict (during 0.x, `0.X+1.0` MAY break, `0.X.Y+1` is backwards-compatible only). Commits are enforced by the `commit-msg` hook installed in bootstrap step 10. Version policy, bump triggers, and multi-source sync: `references/versioning.md`.
 
 Rationale: `references/standards-stack.md`.
 
@@ -61,6 +61,7 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 | `references/large.md` | Large project layout, `docs/{source,deliverables,components,project-management}/`, sprint workflow |
 | `references/standards-stack.md` | Standards application, ISO/IEC/IEEE rationale, Diátaxis decision |
 | `references/artifacts.md` | `docs/artifacts/` setup, filename grammar, redirecting per-framework defaults |
+| `references/versioning.md` | When the project ships versions (Tauri apps, CLIs, libraries, installers): SemVer 2.0.0 policy, bump triggers, multi-source sync, release-cut recipe |
 | `references/memory.md` | Cross-session memory, `MEMORY.md` index, tool paths |
 | `references/todolist.md` | `.agents/todolist.md` format, Plane sync |
 | `references/tool-filenames.md` | Tool-specific filename / subdir aliases |
@@ -115,5 +116,8 @@ The command files are dead weight inside the skills directory until step 2.
 - Do not let `CLAUDE.md` carry cross-agent content. It's a shim; duplicating creates two sources of truth.
 - Do not let any planning framework (superpowers, GSD) drop artefacts outside `docs/artifacts/`. Redirect before files land elsewhere (see `references/artifacts.md` § Per-framework redirect).
 - Do not let new modules, components, or skills land in the source tree without updating every catalog or table that lists the existing set. The template ships an "Adding features" section with red flags; fill it in at bootstrap with the project's actual catalogs. A new item that is not in the catalogs is incomplete.
+
+- Do not bump a version source without also bumping every declared sync target in the same commit, and do not bump at all without a corresponding CHANGELOG entry.
+- Do not adopt a release-automation tool that redefines the SemVer policy. The policy lives in `references/versioning.md`; the tool only applies it.
 
 Older `rubens-project-standardization` / `project-standardization.md` projects: see `references/migration.md`.
