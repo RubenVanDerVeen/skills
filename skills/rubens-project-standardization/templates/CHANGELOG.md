@@ -11,7 +11,7 @@ Grouping:
 - For continuous-delivery projects: use `[YYYY-MM-DD]` headings per milestone.
 -->
 <!--
-How to cut a release (semver projects only):
+How to cut a release (shipped-software projects only: Tauri apps, CLIs, libraries, installers; skip for sub-projects versioned through a parent):
   1. Classify commits since the last tag (or since the previous version string): BREAKING / feat / fix / docs / chore.
   2. Pick the highest bump per the SemVer 2.0.0 + 0.x rule in `references/versioning.md`.
   3. Edit the canonical version source AND every sync target declared in AGENTS.md -> Versioning.
