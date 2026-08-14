@@ -174,11 +174,22 @@ Red flags (any one = stop and fix before commit):
 
 To modify an existing skill, edit the `SKILL.md` in place. Skill descriptions are part of the public interface; changing them is a breaking change for any agent that loads by description-match.
 
+## Artifacts
+
+Process meta-documents (specs, plans, multi-plan outlines/manifests, execution reports, reviews) live in `docs/artifacts/`, not next to the code:
+
+- `docs/artifacts/features/<feature>/`: one folder per feature. Holds its `YYYY-MM-DD-<topic>-design.md` (spec), `-plan.md`, `-outline.md`, `-manifest.md`, `-report.md`. Filename suffix signals type.
+- `docs/artifacts/reviews/`: flat chronological log of committed audits (`YYYY-MM-DD-<topic>-review.md`).
+
+When delegating to `brainstorming` or `writing-plans` (superpowers) or any GSD-style flow, name the canonical path (`docs/artifacts/features/<feature>/...`) instead of the framework default (`docs/superpowers/...`, `.planning/...`). A `docs/superpowers/` or `.planning/` directory should never land in this repo; if one does, `git mv` its contents into `docs/artifacts/` and remove the emptied dir. See `references/artifacts.md` in the `project-standardization` skill for the full convention.
+
 ## Git & workflow
 
 - Repo: `https://github.com/RubenVanDerVeen/skills.git`
 - **No commit/push without explicit user instruction.** Default: every commit waits for the user.
 - **Carve-out: spec/plan-driven development and execution.** When the user has approved both a spec (in `docs/artifacts/features/`) and a plan that references it (in `docs/artifacts/features/`), and the agent is currently executing that plan, the agent commits on its own volition at the boundaries the plan specifies (typically per task or per phase). Specs, plans, reviews, and the code they describe ship together. Outside an approved plan, the default rule applies.
+- **Default to a feature branch for non-trivial work.** Use `feat/<scope>` (or a per-plan `plan-<name>`) for features, new skills, and multi-step changes. Typos, single-line tweaks, and catalog-row syncs can land directly on `main`.
+- **Bundle related changes into a single commit.** One logical change = one commit; never commit per tweak. A new skill ships with its catalog rows and any command file in one commit.
 - Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`). Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`. Enforced by a tracked `commit-msg` hook (`.githooks/commit-msg`); activate once per clone with `git config core.hooksPath .githooks` (see `opencode-install.md` step 10). Bypass: `git commit --no-verify`.
 - Branch model: `main`.
 - No secrets in tracked files. No `temp/`, no `old/`, no `archive/`. Git history is the archive.
