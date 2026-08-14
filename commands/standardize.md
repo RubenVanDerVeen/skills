@@ -4,14 +4,9 @@ description: Bootstrap or restructure a project for AI coding agents: triage tie
 
 Load the `project-standardization` skill and run the full bootstrap from `references/bootstrap.md`.
 
-1. Triage the tier (small / medium / large) from README + top-level layout. State the choice with reasoning; ask if unsure.
-2. Read `references/<tier>.md` for the tier-specific layout.
-3. Apply the standards stack per `references/standards-stack.md`.
-4. Scaffold `AGENTS.md` from `templates/AGENTS-<tier>.md` and `CLAUDE.md` shim from `templates/CLAUDE.md`.
-5. Scaffold `.agents/`, `docs/artifacts/`, memory, CHANGELOG, STANDARDS per tier.
-6. Wire the graphify knowledge graph (medium + large, only when the `graphify` CLI is on PATH): gitignore `graphify-out/`, run `graphify update .`, install `templates/post-commit-graphify` as `.git/hooks/post-commit`, keep the template's Knowledge graph section in `AGENTS.md`.
-7. Verify the auto-loaded token budget.
-
-Stop and confirm before each destructive step.
+1. Triage: pick the tier (small / medium / large) from README + top-level layout, AND detect the branch. State both with reasoning; ask if unsure.
+   - Fresh (`AGENTS.md` absent): walk the 12 steps in `references/bootstrap.md` linearly. Run each step's `Verification:` predicate inline before moving on.
+   - Restructure (`AGENTS.md` present): dispatch the explore-patch-verify flow from `references/restructure-flow.md` (explore audits state, executor patches gaps, reviewer re-verifies with fresh context).
+2. Stop and confirm before each destructive step.
 
 Optional tier override: `$ARGUMENTS` (for example `small`, `medium`, `large`).
