@@ -66,6 +66,7 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 | `references/todolist.md` | `.agents/todolist.md` format, Plane sync |
 | `references/tool-filenames.md` | Tool-specific filename / subdir aliases |
 | `references/migration.md` | Migration from older `CLAUDE.md` / `claude/` / `rubens-project-standardization` |
+| `references/restructure-flow.md` | Three-subagent explore-patch-verify dispatch protocol for `/standardize` on the restructure path (existing `AGENTS.md` detected) |
 
 ## Templates
 
