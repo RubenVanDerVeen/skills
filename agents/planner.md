@@ -2,7 +2,7 @@
 description: Designs specs and implementation plans, then dispatches the orchestrator to execute the plan in the same run. Brainstorms intent (skip with `no brainstorm`), writes the spec, writes the plan, dispatches the orchestrator subagent, relays its report. Use `handoff` to instead print the /execute-plan line for a fresh session. File writes limited to docs/; source code untouchable. Dispatches the explore subagent for codebase recon.
 mode: primary
 color: "#22C55E"
-model: zai-coding-plan/glm-5.2
+model: zai-coding-plan/glm-5.3
 tools:
   "homelab*": false
 permission:

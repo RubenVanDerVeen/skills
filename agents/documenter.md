@@ -2,7 +2,7 @@
 description: Closes out a completed plan by writing its execution report and updating every catalog/doc the work touched. Write-capable leaf scoped to docs/** and root-level markdown. Dispatch after the structure-review phase. Produces docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-report.md, updates README/AGENTS/commands catalogs, commits as docs, returns the report path.
 mode: subagent
 color: "#3B82F6"
-model: zai-coding-plan/glm-5.2
+model: zai-coding-plan/glm-5.3
 tools:
   task: false
   webfetch: false

@@ -8,10 +8,10 @@ opencode is the active harness, running two flat-quota coding-plan models in a c
 
 | Model | Carries |
 |---|---|
-| `zai-coding-plan/glm-5.2` | Planning, review, consult: long-horizon reasoning (`planner`, `reviewer`, `oracle`, `standardizer`, `documenter`) |
+| `zai-coding-plan/glm-5.3` | Planning, review, consult: long-horizon reasoning (`planner`, `reviewer`, `oracle`, `standardizer`, `documenter`) |
 | `minimax-coding-plan/MiniMax-M3` | Orchestration and implementation: near-par execution, faster and cheaper (`orchestrator`, `executor`, `inventree`) |
 
-Config lives in `~/.config/opencode/` and `~/.opencode/opencode.json`; install steps in `opencode-install.md`. The `opencode-see-image` plugin routes image attachments from the text-only GLM 5.2 primary to MiniMax-M3 and returns a text description.
+Config lives in `~/.config/opencode/` and `~/.opencode/opencode.json`; install steps in `opencode-install.md`. The `opencode-see-image` plugin routes image attachments from the text-only GLM 5.3 primary to MiniMax-M3 and returns a text description.
 
 The repo follows the [agents.md](https://agents.md) convention and still works with other harnesses (Claude Code via the `CLAUDE.md` shim and the `~/.claude/` sync paths, plus Codex, Cursor, Aider, etc.), but Claude Code is no longer in daily use. The sync tables in `AGENTS.md` and `opencode-install.md` keep those paths as a documented capability.
 
@@ -83,15 +83,15 @@ Nine custom agents cover the plan/execute/review split plus inventory. Source of
 
 | Agent | Mode | Model | Role |
 |---|---|---|---|
-| `planner` | primary | `glm-5.2` | Brainstorm > spec > plan, then dispatch the orchestrator subagent in the same run (single-pass); `handoff` prints the `/execute-plan` line for a fresh session |
+| `planner` | primary | `glm-5.3` | Brainstorm > spec > plan, then dispatch the orchestrator subagent in the same run (single-pass); `handoff` prints the `/execute-plan` line for a fresh session |
 | `orchestrator` | all | `MiniMax-M3` | Executes approved plans: dispatches executor/reviewer per task, oracle on two-strike failures, commits at boundaries. Session agent for standalone `/execute-plan`, and dispatchable by the planner for single-pass `/full-cycle` |
 | `writer` | primary | unpinned | Focused doc/Typst sessions: direct edits, compile-verify, no ceremony |
 | `inventree` | primary | `MiniMax-M3` | InvenTree inventory via the homelab MCP: AliExpress CSV import, parts/stock/POs, naming convention |
 | `executor` | subagent | `MiniMax-M3` | Implements one plan task: TDD, edit, verify, report |
-| `reviewer` | subagent | `glm-5.2` | Spec-compliance and code-quality review of one task (cross-model on purpose) |
-| `oracle` | subagent | `glm-5.2` | Read-only consult after two failed attempts |
-| `standardizer` | subagent | `glm-5.2` | Repo-wide standardization audit after a plan's task loop in a merged pass: kebab-case paths, AGENTS.md sections, docs/artifacts/ layout, changelog, catalog rows (from `project-standardization`), plus formatter/linter config presence, per-language naming/module-organization rules, and architecture boundary adherence (from `code-standardization`). Returns findings tagged quick-fix or recommendation. Read-only. |
-| `documenter` | subagent | `glm-5.2` | Closes out a completed plan: writes the execution report to `docs/artifacts/features/`, updates every catalog/doc touched, commits as docs. Write-scoped to `docs/**` + root markdown. |
+| `reviewer` | subagent | `glm-5.3` | Spec-compliance and code-quality review of one task (cross-model on purpose) |
+| `oracle` | subagent | `glm-5.3` | Read-only consult after two failed attempts |
+| `standardizer` | subagent | `glm-5.3` | Repo-wide standardization audit after a plan's task loop in a merged pass: kebab-case paths, AGENTS.md sections, docs/artifacts/ layout, changelog, catalog rows (from `project-standardization`), plus formatter/linter config presence, per-language naming/module-organization rules, and architecture boundary adherence (from `code-standardization`). Returns findings tagged quick-fix or recommendation. Read-only. |
+| `documenter` | subagent | `glm-5.3` | Closes out a completed plan: writes the execution report to `docs/artifacts/features/`, updates every catalog/doc touched, commits as docs. Write-scoped to `docs/**` + root markdown. |
 
 `/full-cycle` runs as `planner` and, by default, dispatches the `orchestrator` subagent (mode `all`) to execute the plan in the same run, prompt to final report, no approval gates. This needs `subagent_depth >= 2` in opencode config so the orchestrator can in turn dispatch executor/reviewer; the `handoff` keyword skips the dispatch and prints the `/execute-plan` line for a fresh session instead. `/execute-plan` itself runs as `orchestrator` and dispatches implementer tasks to `executor`, reviews to `reviewer`, two-strike failures to `oracle`, post-implementation structure review to `standardizer`, and the documentation/report phase to `documenter`. Both paths fall back to the general subagent when a named one is missing.
 

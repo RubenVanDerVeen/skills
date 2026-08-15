@@ -23,7 +23,7 @@ For install commands, see `opencode-install.md`.
 | vercel-labs/agent-skills | Skill pack | Curated React/Next.js/React Native/web-design skills maintained by Vercel Engineering. |
 | stop-slop | Single skill | Removes AI tells from prose: banned phrases, structural clichés, and sentence-level rules (no em-dashes, no Wh- starters, active voice). |
 | ponytail | Skill pack | Lazy-dev philosophy + six skills that force the laziest solution that works. Default mode (`full`) ships YAGNI-first output and bakes itself into every response. |
-| opencode-see-image | opencode plugin | Lets a text-only primary model (e.g. `glm-5.2`) see images by routing them to a vision model (MiniMax-M3 via `minimax-coding-plan`) and returning a text description. |
+| opencode-see-image | opencode plugin | Lets a text-only primary model (e.g. `glm-5.3`) see images by routing them to a vision model (MiniMax-M3 via `minimax-coding-plan`) and returning a text description. |
 
 ## Per-source notes
 
@@ -111,7 +111,7 @@ Install: see `opencode-install.md` step 6. Manual install (current setup) is `gi
 
 ### opencode-see-image
 
-Gives a text-only primary model the ability to see images and screenshots. opencode rejects image attachments before a non-vision model (e.g. `zai-coding-plan/glm-5.2`) ever sees them; this plugin intercepts that by registering a `see_image` tool that resolves the attached image, sends it to a vision model, and returns a textual description the primary model reasons about. The model calls the tool automatically when you attach an image; the optional `question` arg focuses on a detail.
+Gives a text-only primary model the ability to see images and screenshots. opencode rejects image attachments before a non-vision model (e.g. `zai-coding-plan/glm-5.3`) ever sees them; this plugin intercepts that by registering a `see_image` tool that resolves the attached image, sends it to a vision model, and returns a textual description the primary model reasons about. The model calls the tool automatically when you attach an image; the optional `question` arg focuses on a detail.
 
 Wiring in this environment routes through opencode's SDK (auth handled automatically, no separate key) to the existing `minimax-coding-plan` provider:
 
@@ -123,7 +123,7 @@ SEE_IMAGE_API_KEY  = (unset, so SDK auth is used)
 
 Resolve order when env vars are absent: explicit `SEE_IMAGE_API_KEY`, then `SEE_IMAGE_PROVIDER`, then `opencode-go` (minimax-m3), then `opencode` (mimo-v2.5-free).
 
-Triggers: "GLM-5.2 can't see this image", "what's in this screenshot", any image attached to a text-only primary model that returns "this model does not support image input".
+Triggers: "GLM-5.3 can't see this image", "what's in this screenshot", any image attached to a text-only primary model that returns "this model does not support image input".
 
 Source: https://github.com/alfaoz/opencode-see-image
 Install: see `opencode-install.md` step 8.

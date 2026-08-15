@@ -2,7 +2,7 @@
 description: Reviews the executed branch (or whole repo when the diff is structural) against the project-standardization skill: kebab-case paths, AGENTS.md sections, docs/artifacts/ layout, changelog, catalog rows, Conventional Commit hygiene. Dispatch after a plan's task loop completes, before documentation. Returns PASS or numbered findings tagged quick-fix or recommendation. Read-only; does not edit or dispatch. Also loads `code-standardization` and audits code structure in the same pass: formatter/linter config presence, per-language naming and module-organization rules, architecture boundary adherence, version-source sync and SemVer 2.0.0 policy presence (shipped-software projects).
 mode: subagent
 color: info
-model: zai-coding-plan/glm-5.2
+model: zai-coding-plan/glm-5.3
 tools:
   write: false
   edit: false

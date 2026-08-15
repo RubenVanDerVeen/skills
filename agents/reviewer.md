@@ -2,7 +2,7 @@
 description: Reviews one completed task's changes against the plan or spec and for code quality. Read-only plus bash for running tests and verification; cannot edit files or dispatch subagents. Returns short actionable findings, not a redesign. Dispatch after each executor task for spec-compliance and code-quality review.
 mode: subagent
 color: warning
-model: zai-coding-plan/glm-5.2
+model: zai-coding-plan/glm-5.3
 tools:
   write: false
   edit: false

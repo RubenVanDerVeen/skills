@@ -94,7 +94,7 @@ Usage the agent follows: `markitdown <file> -o <file>.md`, then `Read` the `.md`
 
 ### 8. opencode-see-image
 
-Lets a text-only primary model (e.g. `zai-coding-plan/glm-5.2`) see images by routing them to a vision model. opencode normally rejects image attachments before a non-vision model ever runs; this plugin registers a `see_image` tool that sends the image to MiniMax-M3 and returns a text description the primary model reasons about.
+Lets a text-only primary model (e.g. `zai-coding-plan/glm-5.3`) see images by routing them to a vision model. opencode normally rejects image attachments before a non-vision model ever runs; this plugin registers a `see_image` tool that sends the image to MiniMax-M3 and returns a text description the primary model reasons about.
 
 ```
 opencode plugin opencode-see-image --global
@@ -147,7 +147,7 @@ After all nine steps, start a new opencode session and confirm each source is re
 - The `stop-slop` skill: paste a paragraph of AI-flavored prose and ask for a slop review.
 - The `ponytail` skill: ask for any coding task and confirm the response uses YAGNI/stdlib-first framing (the mode is active by default).
 - `markitdown`: run `markitdown --help` and confirm it is on PATH (or convert a small `.pdf` and confirm Markdown output).
-- The `opencode-see-image` plugin: attach an image to a GLM-5.2 session and confirm the `see_image` tool fires instead of a "does not support image input" rejection.
+- The `opencode-see-image` plugin: attach an image to a GLM-5.3 session and confirm the `see_image` tool fires instead of a "does not support image input" rejection.
 - A personal skill from this repo (e.g. `drawio-pro`).
 - The custom agents: `opencode agent list` shows `orchestrator`, `executor`, and `reviewer`.
 

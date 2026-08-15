@@ -7,7 +7,7 @@
                 <mxCell id="title" value="Plan Flow - single plan: /full-cycle single-pass (planner dispatches orchestrator) with handoff escape (rev E)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" parent="1" vertex="1">
                     <mxGeometry x="40" y="10" width="1320" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="ph1hdr" value="PHASE 1 - PLANNER   (/full-cycle, planner agent on glm-5.2; writes only docs/)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
+                <mxCell id="ph1hdr" value="PHASE 1 - PLANNER   (/full-cycle, planner agent on glm-5.3; writes only docs/)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
                     <mxGeometry x="60" y="48" width="640" height="18" as="geometry"/>
                 </mxCell>
                 <mxCell id="ph2hdr" value="PHASE 2 - ORCHESTRATOR   (orchestrator agent on MiniMax-M3; standalone /execute-plan OR planner-dispatched in single-pass /full-cycle; edit/write/patch denied, all changes via subagents)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
@@ -43,7 +43,7 @@
                 <mxCell id="m2" value="Dispatch EXECUTOR subagent (MiniMax-M3)&#xa;(1 task: TDD, ponytail, verify, Conventional Commit)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="810" y="645" width="280" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="m3" value="Dispatch REVIEWER subagent (glm-5.2, cross-model)&#xa;(spec compliance, then code quality)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                <mxCell id="m3" value="Dispatch REVIEWER subagent (glm-5.3, cross-model)&#xa;(spec compliance, then code quality)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="810" y="720" width="280" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="m4" value="Review PASS?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
@@ -52,7 +52,7 @@
                 <mxCell id="m5" value="Failed twice?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
                     <mxGeometry x="540" y="785" width="140" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="oracle" value="Dispatch ORACLE subagent (glm-5.2)&#xa;(read-only: ranked hypotheses + 1 recommendation)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                <mxCell id="oracle" value="Dispatch ORACLE subagent (glm-5.3)&#xa;(read-only: ranked hypotheses + 1 recommendation)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="480" y="900" width="260" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="m6" value="Commit task; update todo" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
@@ -64,10 +64,10 @@
                 <mxCell id="m8" value="graphify update .   (only if graph.json exists)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="810" y="1240" width="280" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="nStandardizer" value="Standardizer (glm-5.2)&#xa;Merged audit pass:&#xa;- repo: kebab-case, AGENTS, docs/artifacts, catalogs&#xa;- code: formatter/linter, lang rules, arch boundaries&#xa;quick-fix -&gt; executor, reviewer;&#xa;recommendation -&gt; roll forward" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;strokeWidth=2;fontSize=9" parent="1" vertex="1">
+                <mxCell id="nStandardizer" value="Standardizer (glm-5.3)&#xa;Merged audit pass:&#xa;- repo: kebab-case, AGENTS, docs/artifacts, catalogs&#xa;- code: formatter/linter, lang rules, arch boundaries&#xa;quick-fix -&gt; executor, reviewer;&#xa;recommendation -&gt; roll forward" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;strokeWidth=2;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="810" y="1080" width="280" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="nDocumenter" value="Documenter (glm-5.2)&#xa;Writes docs/artifacts/features/&lt;topic&gt;/&lt;date&gt;-&lt;slug&gt;-report.md&#xa;Updates catalogs; commits as docs" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;strokeWidth=2;fontSize=9" parent="1" vertex="1">
+                <mxCell id="nDocumenter" value="Documenter (glm-5.3)&#xa;Writes docs/artifacts/features/&lt;topic&gt;/&lt;date&gt;-&lt;slug&gt;-report.md&#xa;Updates catalogs; commits as docs" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;strokeWidth=2;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="810" y="1170" width="280" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="m10" value="Report and stop&#xa;(branch, commits, diffs, verifier, skills,&#xa;ponytail deferrals, Unverified).&#xa;No merge or PR unless user asks." style="ellipse;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">

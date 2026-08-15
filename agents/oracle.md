@@ -2,7 +2,7 @@
 description: Read-only consult for hard problems. Architecture forks, debugging after repeated failures, risky decisions. Dispatch with the full failure context after the same task fails verification or review twice. Returns ranked hypotheses and one recommendation; never edits, never dispatches.
 mode: subagent
 color: error
-model: zai-coding-plan/glm-5.2
+model: zai-coding-plan/glm-5.3
 tools:
   write: false
   edit: false
