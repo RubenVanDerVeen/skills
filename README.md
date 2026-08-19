@@ -13,6 +13,7 @@ Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands
 | [`altium-pro`](./skills/altium-pro/SKILL.md) | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
 | [`code-standardization`](./skills/code-standardization/SKILL.md) | Source-code structure standard. Formatter/linter/hooks per language, naming, module organization, architecture/dependency boundaries. Multi-language (Python, TS/JS, C/C++, Go, Rust), flat (one standard). Sister to `project-standardization`. |
 | [`deep-research`](./skills/deep-research/SKILL.md) | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then brainstorm or Typst draft. Hermes research profile. |
+| [`inventree-naming`](./skills/inventree-naming/SKILL.md) | InvenTree part naming convention. Dash-separated names, sentence case, ×/⌀ symbols, description structure with feature flags, per-category formats (fasteners, bearings, connectors, switches, dev boards, power modules, motors, displays, tools). |
 | [`rubens-project-standardization`](./skills/rubens-project-standardization/SKILL.md) | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | [`synctool-sync`](./skills/synctool-sync/SKILL.md) | Drive the `synctool` CLI to run saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
 | [`multi-plan-orchestration`](./skills/multi-plan-orchestration/SKILL.md) | Coordinator skill for too-large tasks: splits a brainstorm into foundation + N parallel sub-plans. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to `brainstorming` + `writing-plans`. Slash command: `/multi-plan`. |
@@ -76,6 +77,9 @@ skills/
     │   ├── references/
     │   ├── scripts/
     │   └── templates/
+    ├── inventree-naming/
+    │   ├── SKILL.md
+    │   └── references/formats.md
     ├── rubens-project-standardization/SKILL.md
     ├── synctool-sync/SKILL.md
     ├── multi-plan-orchestration/SKILL.md
