@@ -79,6 +79,7 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 | `templates/todolist.md` | Seed `.agents/todolist.md` |
 | `templates/CHANGELOG.md` | Seed `CHANGELOG.md` |
 | `templates/STANDARDS.md` | Human-readable standards summary |
+| `templates/README-ai-assistance.md` | AI-assistance section appended to the project README: involvement level + skills-repo and workflow links |
 | `templates/post-commit-graphify` | Debounced git hook: refresh `graphify-out/` graph after commits (AST-only, no LLM). Copy to `.git/hooks/post-commit`. |
 | `templates/commit-msg` | Conventional Commits 1.0.0 enforcement hook (sh + grep, no deps). Copy to `.githooks/commit-msg`; see bootstrap step 10. |
 
