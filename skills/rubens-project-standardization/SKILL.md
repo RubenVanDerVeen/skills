@@ -55,7 +55,7 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 
 | File | When to read |
 |------|--------------|
-| `references/bootstrap.md` | The 12-step bootstrap checklist (triage → AGENTS.md → `.agents/` → artifacts → memory → CHANGELOG → STANDARDS → commit hook → graphify → verify) |
+| `references/bootstrap.md` | The 12-step bootstrap checklist (triage → AGENTS.md → `.agents/` → artifacts → memory → CHANGELOG → STANDARDS + README AI section → commit hook → graphify → verify) |
 | `references/small.md` | Small project layout, AGENTS.md content, graduation triggers |
 | `references/medium.md` | Medium project layout, auto-import vs on-demand, Homelab example |
 | `references/large.md` | Large project layout, `docs/{source,deliverables,components,project-management}/`, sprint workflow |
