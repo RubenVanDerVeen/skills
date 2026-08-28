@@ -185,7 +185,7 @@ Each is append-only history. If a spec changes mid-implementation, edit in place
 
 ## References
 
-- Full standards-stack rationale: `docs/research/<paper>.pdf` <or omit if no paper exists>.
+- Full standards-stack rationale: research paper <https://portfolio.rvdv-lab.nl/research.html?id=project-standaardenpakket-voor-het-idp-project> (local copy at `docs/research/<paper>.pdf` when present).
 - Conventional Commits 1.0.0: <https://www.conventionalcommits.org/en/v1.0.0/>
 - Keep a Changelog 1.1.0: <https://keepachangelog.com/en/1.1.0/>
 - SemVer 2.0.0: <https://semver.org/spec/v2.0.0.html>
