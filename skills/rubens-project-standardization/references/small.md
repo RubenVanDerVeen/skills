@@ -11,7 +11,7 @@ The goal is **the smallest amount of agent scaffolding that still makes sessions
 ```
 project-root/
 ├── AGENTS.md                  ← single context file, < 60 lines
-├── README.md                  ← user-facing
+├── README.md                  ← user-facing, carries the AI assistance section
 ├── CHANGELOG.md               ← only if releases are versioned
 ├── .gitignore
 │

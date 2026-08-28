@@ -13,7 +13,7 @@ The goal is **a slim auto-loaded core plus on-demand depth**. Most facts live in
 ```
 project-root/
 ├── AGENTS.md                  ← slim entry, always loaded
-├── README.md                  ← user-facing
+├── README.md                  ← user-facing, carries the AI assistance section
 ├── CHANGELOG.md               ← grouped by release or milestone
 ├── .gitignore
 │

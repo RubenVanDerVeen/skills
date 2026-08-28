@@ -8,7 +8,7 @@ The goal is **a layered context: slim auto-load, rich on-demand `.agents/`, comm
 
 ```
 project-root/
-├── README.md                          ← user-facing, English, references standards stack
+├── README.md                          ← user-facing, English, references standards stack, carries the AI assistance section
 ├── AGENTS.md                          ← slim context entry point, auto-loaded
 ├── CHANGELOG.md                       ← Keep a Changelog, grouped by sprint
 ├── .gitignore
