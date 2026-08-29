@@ -54,7 +54,7 @@ Four patterns cover every language; pick one per repo, not all four. The agent r
 - Best for monorepos and any repo that wants hooks version-controlled without symlinks or installer steps.
 - Trade-off: not automatic on a fresh clone; document the `git config` line in `opencode-install.md` or `AGENTS.md` so new contributors find it.
 
-The standardizer checks that one hook layer is wired and that the wired layer runs the pinned tool, not a stale path.
+The code-standardizer checks that one hook layer is wired and that the wired layer runs the pinned tool, not a stale path.
 
 ## The "pin it" rule
 
@@ -70,7 +70,7 @@ CI and locals must produce byte-identical output. Floating versions are a quick-
 
 ## The "don't re-implement the tool in the agent" rule
 
-The standardizer agent does not re-lint source code in its own body. Its job is to check the tool exists, the tool is pinned, the tool is wired to a hook, and the conventions are documented. Style enforcement is the tool's job.
+The code-standardizer agent does not re-lint source code in its own body. Its job is to check the tool exists, the tool is pinned, the tool is wired to a hook, and the conventions are documented. Style enforcement is the tool's job.
 
 ### Check-mode behavior
 

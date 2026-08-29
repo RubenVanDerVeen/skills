@@ -123,7 +123,7 @@ The `skills/`, `commands/`, and `agents/` directories inside this repo are inact
 
    opencode uses the singular `command/` directory; Claude Code uses plural `commands/`. Do not normalise across agents.
 
-3. Copy each `agents/*.md` file (opencode agent definitions: `orchestrator`, `executor`, `reviewer`) to `~/.config/opencode/agents/` (global) or `.opencode/agents/` (per-project). opencode-only; Claude Code subagents use a different frontmatter format. Restart opencode afterwards; see `agents/README.md` for roles and tuning.
+3. Copy each `agents/*.md` file (opencode agent definitions: `planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `doc-standardizer`, `code-standardizer`, `documenter`, `oracle`; `inventree` is optional and only on machines that register the homelab MCP server) to `~/.config/opencode/agents/` (global) or `.opencode/agents/` (per-project). opencode-only; Claude Code subagents use a different frontmatter format. Restart opencode afterwards; see `agents/README.md` for roles and tuning.
 
 
 ### 10. Enable the commit-msg hook
@@ -149,7 +149,7 @@ After all nine steps, start a new opencode session and confirm each source is re
 - `markitdown`: run `markitdown --help` and confirm it is on PATH (or convert a small `.pdf` and confirm Markdown output).
 - The `opencode-see-image` plugin: attach an image to a GLM-5.3 session and confirm the `see_image` tool fires instead of a "does not support image input" rejection.
 - A personal skill from this repo (e.g. `drawio-pro`).
-- The custom agents: `opencode agent list` shows `orchestrator`, `executor`, and `reviewer`.
+- The custom agents: `opencode agent list` shows `planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `doc-standardizer`, `code-standardizer`, `documenter`, `oracle` (and `inventree` when the homelab MCP server is registered).
 
 If a personal skill is missing, re-check step 9.
 

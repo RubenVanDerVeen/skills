@@ -14,4 +14,4 @@ Default scope is the current branch diff (`git diff <base>...HEAD`). If `$ARGUME
 
 For each language present in scope, run the matching per-language guide and the pinned formatter/linter in check mode if installed (`command -v <tool> && <tool> --check`); if absent, emit a quick-fix finding naming the tool and the config file to add. Never re-lint in the agent body.
 
-Report `PASS` or a numbered findings list with `quick-fix:` and `recommendation:` tags, same format as the `standardizer` agent. Stay read-only.
+Report `PASS` or a numbered findings list with `quick-fix:` and `recommendation:` tags, same format as the `code-standardizer` agent. Stay read-only.

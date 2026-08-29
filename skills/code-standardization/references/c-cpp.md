@@ -52,14 +52,14 @@ cppcheck --enable=warning,style,performance,portability --inline-suppr --quiet s
 
 ### Check command
 
-CI and the standardizer agent run the same checks:
+CI and the code-standardizer agent run the same checks:
 
 ```
 clang-format --dry-run --Werror $(git ls-files '*.c' '*.cpp' '*.h' '*.hpp')
 clang-tidy --quiet -p build/compile_commands.json $(git ls-files '*.cpp' '*.hpp')
 ```
 
-For C-only projects, drop the `.cpp`/`.hpp` globs from the clang-tidy line. clang-tidy reads `compile_commands.json`; generate it once per build (`cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON` for CMake, or invoke the project's build system with the equivalent flag). Without `compile_commands.json` clang-tidy reports false positives, so presence of the file is itself a standardizer check.
+For C-only projects, drop the `.cpp`/`.hpp` globs from the clang-tidy line. clang-tidy reads `compile_commands.json`; generate it once per build (`cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON` for CMake, or invoke the project's build system with the equivalent flag). Without `compile_commands.json` clang-tidy reports false positives, so presence of the file is itself a code-standardizer check.
 
 ### Hook wiring
 
@@ -79,7 +79,7 @@ Activate with `git config core.hooksPath .githooks`. For polyglot repos the pre-
 
 clang-format handles both languages from one config. clang-tidy applies cleanly to C++ and to modern C (C99+); for older C (C89/90) some checks (modernize-*, cppcoreguidelines-*) emit false positives and should be disabled in `.clang-tidy` with `Checks: '-*,<family>-*'` overrides.
 
-Standardizer check: `command -v clang-format && clang-format --dry-run --Werror <files>` exits zero; `.clang-format` and `.clang-tidy` exist at repo root; `compile_commands.json` present when CMake is the build system; `clang-format --version` and `clang-tidy --version` match the pinned LLVM release.
+code-standardizer check: `command -v clang-format && clang-format --dry-run --Werror <files>` exits zero; `.clang-format` and `.clang-tidy` exist at repo root; `compile_commands.json` present when CMake is the build system; `clang-format --version` and `clang-tidy --version` match the pinned LLVM release.
 
 ## Naming
 
@@ -106,7 +106,7 @@ In C, avoid leading-underscore identifiers in the global namespace: the C standa
 
 Avoid `l`, `I`, `O` as identifiers; they read as digits in some fonts.
 
-Standardizer check: `grep -rEn "^(class|struct) [a-z_]+[ {]" --include="*.cpp" --include="*.hpp" .` returns empty (classes and structs are PascalCase); `grep -rEn "^(static )?[a-zA-Z_]+ [A-Z][A-Z_]+\(" --include="*.c" --include="*.cpp" .` returns empty (functions are snake_case or camelCase, not UPPER_SNAKE); the chosen methods convention is documented in `AGENTS.md`.
+code-standardizer check: `grep -rEn "^(class|struct) [a-z_]+[ {]" --include="*.cpp" --include="*.hpp" .` returns empty (classes and structs are PascalCase); `grep -rEn "^(static )?[a-zA-Z_]+ [A-Z][A-Z_]+\(" --include="*.c" --include="*.cpp" .` returns empty (functions are snake_case or camelCase, not UPPER_SNAKE); the chosen methods convention is documented in `AGENTS.md`.
 
 ## Module / file organization
 
@@ -140,7 +140,7 @@ clang-format sorts each block alphabetically and inserts blank lines between blo
 - **File length**: ~400 lines is the ceiling. Above that, the unit has more than one responsibility and should be split.
 - **Cyclomatic complexity**: clang-tidy `readability-function-cognitive-complexity` and `bugprone-branch-clone` flag overly complex functions. A cognitive-complexity threshold above 30 is the cutoff; projects with stricter taste lower it to 20.
 
-Standardizer check: `wc -l <file>` stays at or under 400 lines per file on new files; clang-format exits zero on `--dry-run --Werror`; `find . -name '*.h' -o -name '*.hpp' | wc -l` paired with a count of source files shows a header-to-source ratio close to 1; clang-tidy `readability-function-cognitive-complexity` reports zero findings on new files.
+code-standardizer check: `wc -l <file>` stays at or under 400 lines per file on new files; clang-format exits zero on `--dry-run --Werror`; `find . -name '*.h' -o -name '*.hpp' | wc -l` paired with a count of source files shows a header-to-source ratio close to 1; clang-tidy `readability-function-cognitive-complexity` reports zero findings on new files.
 
 ## Architecture
 
@@ -176,7 +176,7 @@ Forward-declare in headers, include in sources. A header that includes another h
 
 For medium-or-larger C/C++ projects, declare the actual layer names and the IWYU mapping in `.agents/architecture.md` (or a `## Architecture` section in `AGENTS.md`). The boundary spec names the layers, the allowed dependency direction, and which folder maps to which layer. IWYU's mapping file flags violations mechanically; the agent audits that the spec is current and that new files respect it.
 
-Standardizer check: `.agents/architecture.md` or `AGENTS.md` `## Architecture` section exists for medium+ projects; `command -v include-what-you-use && iwyu_tool -p build/compile_commands.json` exits zero; no upward includes in new files (`grep -rEn '#include "' --include='*.h' --include='*.hpp' new_files/` shows only forward-friendly includes).
+code-standardizer check: `.agents/architecture.md` or `AGENTS.md` `## Architecture` section exists for medium+ projects; `command -v include-what-you-use && iwyu_tool -p build/compile_commands.json` exits zero; no upward includes in new files (`grep -rEn '#include "' --include='*.h' --include='*.hpp' new_files/` shows only forward-friendly includes).
 
 ## Documentation
 
@@ -217,7 +217,7 @@ For C++ projects with richer APIs, Javadoc-style tags (`@param`, `@return`, `@th
 
 Private functions may omit Doxygen blocks; when present, keep them to one line describing intent. Macros (`#define MAX_RETRIES 3`) get a one-line comment above the definition naming the contract.
 
-Standardizer check: `command -v doxygen && doxygen Doxyfile` runs with `WARNINGS = NO`; `grep -rEn "^(int|void|static [a-z]+|[A-Z][a-zA-Z]+) [a-z_]+\(" --include="*.h" --include="*.hpp" -A 1 .` shows a `/**` block above each public function declaration in new headers.
+code-standardizer check: `command -v doxygen && doxygen Doxyfile` runs with `WARNINGS = NO`; `grep -rEn "^(int|void|static [a-z]+|[A-Z][a-zA-Z]+) [a-z_]+\(" --include="*.h" --include="*.hpp" -A 1 .` shows a `/**` block above each public function declaration in new headers.
 
 ## Testing
 
@@ -253,7 +253,7 @@ TEST(UserServiceTest, FetchUserReturnsExpectedName) {
 
 Coverage targets: every public function has at least one happy-path test and one error-path test. Internal helpers are tested through the public API unless they are independently exposed (HAL primitives, math helpers, parsers).
 
-Standardizer check: `command -v ctest && ctest --output-on-failure` exits zero; `tests/test_*.c` and `tests/*_test.cpp` mirror `src/*.c` / `src/*.cpp` paths; CMakeLists.txt registers every test via `add_test()`; `ctest -N` lists tests matching the count of public functions in `src/`.
+code-standardizer check: `command -v ctest && ctest --output-on-failure` exits zero; `tests/test_*.c` and `tests/*_test.cpp` mirror `src/*.c` / `src/*.cpp` paths; CMakeLists.txt registers every test via `add_test()`; `ctest -N` lists tests matching the count of public functions in `src/`.
 
 ## Error handling
 
@@ -293,7 +293,7 @@ Use `assert` (from `<cassert>` / `<assert.h>`) for invariants that must hold in 
 
 Application C/C++ uses `fprintf(stderr, ...)` or a third-party logger (spdlog, Quill). Embedded targets use the project-specific logger or write to a UART ring buffer via the HAL. Production code never calls `printf` for diagnostics on embedded targets (buffer overruns, blocking I/O).
 
-Standardizer check: `grep -rEn "^\s*[a-z_][a-z_0-9]*\([^)]*\)\s*;" --include="*.c" --include="*.cpp" .` returns empty for functions with non-void return types (catches discarded return values); C++ builds with `-Werror -Wall -Wextra`; no `catch (...) { }` blocks (silent swallow); `assert` appears in non-trivial functions for documented invariants.
+code-standardizer check: `grep -rEn "^\s*[a-z_][a-z_0-9]*\([^)]*\)\s*;" --include="*.c" --include="*.cpp" .` returns empty for functions with non-void return types (catches discarded return values); C++ builds with `-Werror -Wall -Wextra`; no `catch (...) { }` blocks (silent swallow); `assert` appears in non-trivial functions for documented invariants.
 
 ## Comments
 
@@ -303,8 +303,8 @@ Standardizer check: `grep -rEn "^\s*[a-z_][a-z_0-9]*\([^)]*\)\s*;" --include="*.
   - `// ponytail: linear scan, hash lookup when item count > 100`
   - `// ponytail: ISR disables interrupts globally, switch to nested-critical-section when latency budget tightens`
   - `// ponytail: fixed-size ring buffer, bump to dynamic when payload size grows`
-- **TODO format**: `TODO(ruben): ...` (owner in parentheses, colon, brief description). TODOs without an owner are anonymous debt; the standardizer flags them. Reference an issue or plan id when one exists: `TODO(ruben): retire shim, see docs/artifacts/plans/...`.
+- **TODO format**: `TODO(ruben): ...` (owner in parentheses, colon, brief description). TODOs without an owner are anonymous debt; the code-standardizer flags them. Reference an issue or plan id when one exists: `TODO(ruben): retire shim, see docs/artifacts/plans/...`.
 - **What does not need a comment**: obvious function names (`// fetch the user` above `fetch_user`); standard-library calls (`// open the file` above `fopen(path, "r")`); type aliases (`// user_id_t is the user id` above `typedef int user_id_t`).
 - **Commented-out code is forbidden**. Delete it; git remembers.
 
-Standardizer check: `grep -rEn "^\s*(//|/\*)" --include="*.c" --include="*.cpp" --include="*.h" --include="*.hpp" . | grep -vE "ponytail:|TODO\([a-zA-Z0-9_-]+\):"` returns zero findings on new files; `grep -rEn "TODO[^(]" --include="*.c" --include="*.cpp" .` (anonymous TODOs without an owner) returns empty.
+code-standardizer check: `grep -rEn "^\s*(//|/\*)" --include="*.c" --include="*.cpp" --include="*.h" --include="*.hpp" . | grep -vE "ponytail:|TODO\([a-zA-Z0-9_-]+\):"` returns zero findings on new files; `grep -rEn "TODO[^(]" --include="*.c" --include="*.cpp" .` (anonymous TODOs without an owner) returns empty.

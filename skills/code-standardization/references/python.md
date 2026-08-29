@@ -21,7 +21,7 @@ quote-style = "double"
 indent-style = "space"
 
 [tool.ruff.lint]
-# Rule families enabled; the standardizer checks the family list, not the rule ids.
+# Rule families enabled; the code-standardizer checks the family list, not the rule ids.
 select = [
     "E",   # pycodestyle errors
     "W",   # pycodestyle warnings
@@ -42,7 +42,7 @@ ignore = [
 
 ### Check command
 
-The exact command CI and the standardizer agent run:
+The exact command CI and the code-standardizer agent run:
 
 ```
 ruff format --check . && ruff check .
@@ -69,14 +69,14 @@ Polyglot repos in this monorepo use the project-local `.githooks/` pattern; add 
 
 ### What Ruff does not enforce
 
-Ruff covers formatting, style, import order, common bugs, and modernization. The standardizer, not Ruff, owns the items below; if the project skips these, Ruff will not catch it:
+Ruff covers formatting, style, import order, common bugs, and modernization. The code-standardizer, not Ruff, owns the items below; if the project skips these, Ruff will not catch it:
 
 - **Cyclomatic complexity**: enable Ruff `C901` with a threshold (~10); projects that need finer control add `xenon` or `mccabe` as a secondary check.
 - **Docstring presence and content**: Ruff `D` (pydocstyle) checks style only. Whether a public function has a docstring at all is a documentation-policy check, not a lint finding.
 - **Type-hint coverage**: Ruff does not flag untyped public APIs. `mypy --strict` or `pyright` is a separate invocation; the agent reports its presence, not its output.
 - **Architecture boundaries**: Ruff cannot express layer rules or no-cycle contracts. Use `import-linter` (see Architecture below).
 
-Standardizer check: `ruff format --check . && ruff check .` exits zero; `pyproject.toml` has `[tool.ruff]` with `select` covering `E`, `F`, `I`, `UP`; Ruff version in lockfile matches the `rev:` in `.pre-commit-config.yaml`.
+code-standardizer check: `ruff format --check . && ruff check .` exits zero; `pyproject.toml` has `[tool.ruff]` with `select` covering `E`, `F`, `I`, `UP`; Ruff version in lockfile matches the `rev:` in `.pre-commit-config.yaml`.
 
 ## Naming
 
@@ -94,7 +94,7 @@ Standardizer check: `ruff format --check . && ruff check .` exits zero; `pyproje
 
 Do not use single-letter names outside tight comprehensions or throwaway loop variables. Avoid `I`, `l`, `O` as identifiers; they read as digits in some fonts.
 
-Standardizer check: `grep -rEn "class [a-z_]+\(|def [A-Z][a-zA-Z]+\(" --include="*.py" .` returns empty for new files; private API count in `__all__` matches the public surface.
+code-standardizer check: `grep -rEn "class [a-z_]+\(|def [A-Z][a-zA-Z]+\(" --include="*.py" .` returns empty for new files; private API count in `__all__` matches the public surface.
 
 ## Module / file organization
 
@@ -122,7 +122,7 @@ Three blocks, separated by blank lines, enforced by Ruff `I`:
 - **File length**: ~400 lines is the ceiling. Above that, the module has more than one responsibility and should be split.
 - **Cyclomatic complexity**: enabled via Ruff `C901` with `max-complexity = 10`. Functions above the threshold are a quick-fix finding naming the function and the path.
 
-Standardizer check: Ruff `I` passes; file length `awk 'END{print NR}' <file>` or `wc -l` per file; Ruff `C901` reports zero findings on `ruff check .`.
+code-standardizer check: Ruff `I` passes; file length `awk 'END{print NR}' <file>` or `wc -l` per file; Ruff `C901` reports zero findings on `ruff check .`.
 
 ## Architecture
 
@@ -160,13 +160,13 @@ Run the contract check before every commit:
 lint-imports
 ```
 
-`lint-imports` exits non-zero on a forbidden import or a cycle. The standardizer runs it after Ruff; both must be clean for the audit to pass.
+`lint-imports` exits non-zero on a forbidden import or a cycle. The code-standardizer runs it after Ruff; both must be clean for the audit to pass.
 
 ### Boundary spec
 
 For medium-or-larger Python projects, declare the actual layer names and feature list in `.agents/architecture.md` (or the `## Architecture` section of `AGENTS.md`). The boundary spec is the source of truth for "what is the layer called here"; `import-linter` enforces the direction.
 
-Standardizer check: `command -v lint-imports && lint-imports` exits zero; `.importlinter` or `[tool.importlinter]` block present; `.agents/architecture.md` or `AGENTS.md` `## Architecture` section exists for medium+ projects.
+code-standardizer check: `command -v lint-imports && lint-imports` exits zero; `.importlinter` or `[tool.importlinter]` block present; `.agents/architecture.md` or `AGENTS.md` `## Architecture` section exists for medium+ projects.
 
 ## Documentation
 
@@ -190,11 +190,11 @@ def fetch_user(user_id: int, *, include_deleted: bool = False) -> User:
     """
 ```
 
-**Type hints required on every public function and method signature**. Internal helpers may omit hints when the types are obvious from context. Ruff does not flag missing type hints; that is a documentation-policy check, enforced by the standardizer via `mypy` or `pyright` presence, not by lint output.
+**Type hints required on every public function and method signature**. Internal helpers may omit hints when the types are obvious from context. Ruff does not flag missing type hints; that is a documentation-policy check, enforced by the code-standardizer via `mypy` or `pyright` presence, not by lint output.
 
 Private docstrings are allowed but optional. When present, keep them to one line describing intent; save the long form for public surfaces.
 
-Standardizer check: `grep -rEn "^def [a-z]" --include="*.py" -A 1 . | grep -E '""".*"""'` finds one-line docstring above each public def; `mypy --strict` or `pyright` is configured (presence check, not output).
+code-standardizer check: `grep -rEn "^def [a-z]" --include="*.py" -A 1 . | grep -E '""".*"""'` finds one-line docstring above each public def; `mypy --strict` or `pyright` is configured (presence check, not output).
 
 ## Testing
 
@@ -216,7 +216,7 @@ def test_fetch_user_returns_expected_name(user_id, expected):
     assert result.name == expected
 ```
 
-Standardizer check: `pytest` is in dev deps; `tests/test_*.py` files mirror `src/myproject/*.py` paths; `ruff check tests/` passes; `pytest --collect-only` resolves every collected test.
+code-standardizer check: `pytest` is in dev deps; `tests/test_*.py` files mirror `src/myproject/*.py` paths; `ruff check tests/` passes; `pytest --collect-only` resolves every collected test.
 
 ## Error handling
 
@@ -241,14 +241,14 @@ def load_config(path: str) -> Config:
         raise ConfigError(f"no config at {path}") from err
 ```
 
-Standardizer check: `grep -rEn "except:\s*$" --include="*.py" .` returns empty; `grep -rEn "except [A-Za-z]+:\s*pass$" --include="*.py" .` returns empty; `print(` is absent from `src/**` outside scripts; `logger = logging.getLogger(__name__)` appears in non-trivial modules.
+code-standardizer check: `grep -rEn "except:\s*$" --include="*.py" .` returns empty; `grep -rEn "except [A-Za-z]+:\s*pass$" --include="*.py" .` returns empty; `print(` is absent from `src/**` outside scripts; `logger = logging.getLogger(__name__)` appears in non-trivial modules.
 
 ## Comments
 
 - **Explain why, not what**. Code says what; comments say why. A comment that restates the next line is dead prose.
 - **`ponytail:` markers for deliberate shortcuts**. When the implementation takes a known-shorter path with a documented ceiling (global lock, O(n^2) scan, naive heuristic), add a one-line comment naming the shortcut and the upgrade path: `# ponytail: global lock, per-account locks when throughput matters`.
-- **TODO format**: `TODO(ruben): ...` (owner in parentheses, colon, brief description). TODOs without an owner are anonymous debt; the standardizer flags them. Reference an issue or plan id when one exists: `TODO(ruben): retire shim, see docs/artifacts/plans/...`.
+- **TODO format**: `TODO(ruben): ...` (owner in parentheses, colon, brief description). TODOs without an owner are anonymous debt; the code-standardizer flags them. Reference an issue or plan id when one exists: `TODO(ruben): retire shim, see docs/artifacts/plans/...`.
 - **What does not need a comment**: obvious type hints (no `# user_id: int` next to `user_id: int`); docstrings already cover the function (no `# fetch the user` above the docstring); standard-library calls (no `# open the file` above `open(path)`).
 - **Commented-out code is forbidden**. Delete it; git remembers.
 
-Standardizer check: `grep -rEn "^\s*#" --include="*.py" . | grep -vE "ponytail:|TODO\([a-zA-Z0-9_-]+\):"` returns zero findings on new files; `grep -rEn "TODO[^(]" --include="*.py" .` (anonymous TODOs without an owner) returns empty.
+code-standardizer check: `grep -rEn "^\s*#" --include="*.py" . | grep -vE "ponytail:|TODO\([a-zA-Z0-9_-]+\):"` returns zero findings on new files; `grep -rEn "TODO[^(]" --include="*.py" .` (anonymous TODOs without an owner) returns empty.

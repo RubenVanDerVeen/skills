@@ -1,13 +1,13 @@
 ---
 name: code-standardization
-description: Use when standardizing or auditing the *structure of source code* itself (not the repo layout): setting up a formatter/linter/hooks for a project, defining per-language naming and module-organization rules, enforcing architecture/dependency boundaries, or reviewing a branch for code-structure violations. Triggers: "standardize the code", "code conventions", "set up ruff/eslint/gofmt", "lint config", "architecture rules", "dependency boundaries", "code style for X". Covers Python, TypeScript/JavaScript, C/C++, Go, Rust. Flat (non-tiered) standard. Pairs with the `standardizer` agent for post-plan code audits.
+description: Use when standardizing or auditing the *structure of source code* itself (not the repo layout): setting up a formatter/linter/hooks for a project, defining per-language naming and module-organization rules, enforcing architecture/dependency boundaries, or reviewing a branch for code-structure violations. Triggers: "standardize the code", "code conventions", "set up ruff/eslint/gofmt", "lint config", "architecture rules", "dependency boundaries", "code style for X". Covers Python, TypeScript/JavaScript, C/C++, Go, Rust. Flat (non-tiered) standard. Pairs with the `code-standardizer` agent for post-plan code audits.
 ---
 
 ## Overview
 
 Code-structure standard for the source code itself. **Flat**: one standard, all project sizes. Multi-language: Python, TS/JS, C/C++, Go, Rust.
 
-Sister to `project-standardization`: that skill covers repo/docs/process layout (kebab-case paths, AGENTS.md, `docs/artifacts/`, Conventional Commits, ISO dates). This skill covers what lives *inside* `src/`: file naming, module organization, formatting/linting infra, architecture boundaries, language-specific style. Load **both** for a full audit. The `standardizer` agent runs them as one merged pass.
+Sister to `project-standardization`: that skill covers repo/docs/process layout (kebab-case paths, AGENTS.md, `docs/artifacts/`, Conventional Commits, ISO dates). This skill covers what lives *inside* `src/`: file naming, module organization, formatting/linting infra, architecture boundaries, language-specific style. Load **both** for a full audit. The `code-standardizer` agent runs the code-structure audit; the `doc-standardizer` agent covers repo conventions.
 
 ## The 4 agent checks
 
@@ -37,12 +37,11 @@ Each language has a per-language reference with the same eight sections (toolcha
 - `references/tooling.md`: the three-piece kit (formatter / linter / import sorter), config discovery per language, hook wiring patterns (pre-commit framework, husky + lint-staged, native git hooks, project-local `.githooks/`), the "pin it" rule, the "don't re-implement the tool in the agent" rule.
 - `references/architecture.md`: layering and canonical dependency direction, no-circular-deps enforcement per language, feature/module isolation, the boundary spec convention (`.agents/architecture.md` or AGENTS.md section), what the agent checks vs. what the tool checks.
 
-## How the standardizer uses this skill
+## How the code-standardizer uses this skill
 
-The `standardizer` agent loads **both** `project-standardization` and `code-standardization`, then runs a **merged audit pass** in the same invocation:
+The `code-standardizer` agent loads `code-standardization` and runs the code-structure audit:
 
-1. Repo-structure audit (from `project-standardization`): kebab-case paths, AGENTS.md sections, `docs/artifacts/` layout, catalog rows, Conventional Commits, ISO dates.
-2. Code-structure audit (from this skill): for each language in the diff, the 4 agent checks above. Run the pinned formatter/linter in check mode if installed; if absent, emit a quick-fix finding.
+1. Code-structure audit (from this skill): for each language in the diff, the 4 agent checks above. Run the pinned formatter/linter in check mode if installed; if absent, emit a quick-fix finding.
 
 Output is the same format: `PASS` or a numbered findings list with `quick-fix:` and `recommendation:` tags. The agent stays read-only; the orchestrator dispatches executors for fixes.
 

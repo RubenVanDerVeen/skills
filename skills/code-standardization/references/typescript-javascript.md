@@ -8,7 +8,7 @@ Two tools cover the three concerns: **Prettier** as the formatter (opinionated, 
 
 ### Pin and configure
 
-Pin Prettier and ESLint exact versions in `package.json` `devDependencies` (no `^` or `~`); pin the package manager itself with the `packageManager` field. Config lives in `.prettierrc.json` plus `eslint.config.js` (flat config, ESLint 9+, the modern default). The block below is copy-pasteable; rule selections follow the families the standardizer checks, not exhaustive rule lists.
+Pin Prettier and ESLint exact versions in `package.json` `devDependencies` (no `^` or `~`); pin the package manager itself with the `packageManager` field. Config lives in `.prettierrc.json` plus `eslint.config.js` (flat config, ESLint 9+, the modern default). The block below is copy-pasteable; rule selections follow the families the code-standardizer checks, not exhaustive rule lists.
 
 ```json
 // .prettierrc.json
@@ -45,7 +45,7 @@ export default [
 
 ### Check command
 
-The exact command CI and the standardizer agent run:
+The exact command CI and the code-standardizer agent run:
 
 ```
 prettier --check . && eslint .
@@ -85,9 +85,9 @@ Prettier covers formatting; ESLint covers correctness, complexity, and imports. 
 - **Type coverage**: `strict` in `tsconfig.json` is a TS compiler check. ESLint does not run the type checker unless `@typescript-eslint/no-unsafe-*` rules are enabled with type info.
 - **Architecture boundaries**: ESLint cannot express layer rules or no-cycle contracts across the project graph. Use `dependency-cruiser` (see Architecture below).
 
-**oxlint alternative**: `oxlint` is faster and covers many ESLint rules; pick it for very large monorepos where ESLint's runtime is the bottleneck. The standardizer accepts either, pinned in `devDependencies`. Mixing ESLint and oxlint in the same repo is not allowed.
+**oxlint alternative**: `oxlint` is faster and covers many ESLint rules; pick it for very large monorepos where ESLint's runtime is the bottleneck. The code-standardizer accepts either, pinned in `devDependencies`. Mixing ESLint and oxlint in the same repo is not allowed.
 
-Standardizer check: `prettier --check . && eslint .` exits zero; `.prettierrc*` (or `prettier` field in `package.json`) present; `eslint.config.js` (or legacy `.eslintrc.*`) present; ESLint and Prettier versions in `package.json` `devDependencies` are exact (no `^` or `~`); `packageManager` field pinned.
+code-standardizer check: `prettier --check . && eslint .` exits zero; `.prettierrc*` (or `prettier` field in `package.json`) present; `eslint.config.js` (or legacy `.eslintrc.*`) present; ESLint and Prettier versions in `package.json` `devDependencies` are exact (no `^` or `~`); `packageManager` field pinned.
 
 ## Naming
 
@@ -108,7 +108,7 @@ Standardizer check: `prettier --check . && eslint .` exits zero; `.prettierrc*` 
 
 Avoid single-letter names outside generic parameters, tight closures, or throwaway loop counters.
 
-Standardizer check: `grep -rEn "^(export )?(class|interface|type|enum) [a-z_]+ " --include="*.ts" --include="*.tsx" .` returns empty; `grep -rEn "interface I[A-Z]" --include="*.ts" .` returns empty (no `I` prefix on interfaces); React component files start with a capital letter (`grep -rEln "^(export )?(default )?function [a-z]" --include="*.tsx" .` returns empty).
+code-standardizer check: `grep -rEn "^(export )?(class|interface|type|enum) [a-z_]+ " --include="*.ts" --include="*.tsx" .` returns empty; `grep -rEn "interface I[A-Z]" --include="*.ts" .` returns empty (no `I` prefix on interfaces); React component files start with a capital letter (`grep -rEln "^(export )?(default )?function [a-z]" --include="*.tsx" .` returns empty).
 
 ## Module / file organization
 
@@ -142,7 +142,7 @@ No wildcard imports (`import * as X from "y"`) outside type re-exports; no defau
 - **File length**: ~400 lines is the ceiling. Above that, the module has more than one responsibility and should be split.
 - **Cyclomatic complexity**: ESLint `complexity` rule with `max: 10`. Functions above the threshold are a quick-fix finding naming the function and the path.
 
-Standardizer check: `eslint .` exits zero with `import/order` rule on; file length `wc -l` per file under `src/` is below the ceiling; ESLint `complexity` reports zero findings on `eslint .`; no `src/**/index.ts` barrel outside the package root or a feature's public surface.
+code-standardizer check: `eslint .` exits zero with `import/order` rule on; file length `wc -l` per file under `src/` is below the ceiling; ESLint `complexity` reports zero findings on `eslint .`; no `src/**/index.ts` barrel outside the package root or a feature's public surface.
 
 ## Architecture
 
@@ -201,13 +201,13 @@ Run the contract check before every commit:
 depcruise src --config .dependency-cruiser.cjs
 ```
 
-`depcruise` exits non-zero on a forbidden import or a cycle. The standardizer runs it after ESLint; both must be clean for the audit to pass.
+`depcruise` exits non-zero on a forbidden import or a cycle. The code-standardizer runs it after ESLint; both must be clean for the audit to pass.
 
 ### Boundary spec
 
 For medium-or-larger TS/JS projects, declare the actual layer names and feature list in `.agents/architecture.md` (or the `## Architecture` section of `AGENTS.md`). The boundary spec is the source of truth for "what is the layer called here"; `dependency-cruiser` enforces the direction. Feature names in `depcruise` rules must match the names in the boundary spec.
 
-Standardizer check: `command -v depcruise && depcruise src --config .dependency-cruiser.cjs` exits zero; `.dependency-cruiser.cjs` or `.dependency-cruiser.json` present; `.agents/architecture.md` or `AGENTS.md` `## Architecture` section exists for medium+ projects; layer labels in `depcruise` config match the labels in the boundary spec.
+code-standardizer check: `command -v depcruise && depcruise src --config .dependency-cruiser.cjs` exits zero; `.dependency-cruiser.cjs` or `.dependency-cruiser.json` present; `.agents/architecture.md` or `AGENTS.md` `## Architecture` section exists for medium+ projects; layer labels in `depcruise` config match the labels in the boundary spec.
 
 ## Documentation
 
@@ -231,7 +231,7 @@ export function fetchUser(userId: UserId, options: FetchOptions = {}): User | nu
 
 Private doc comments are allowed but optional. When present, keep them to one line describing intent; save the long form for public surfaces. `// @ts-ignore` is forbidden; use `// @ts-expect-error` with a `TODO(name): ...` line describing the issue and a link to the issue or plan id, so a future run actually fails when the underlying type error is fixed.
 
-Standardizer check: `eslint-plugin-tsdoc` (or `eslint-plugin-jsdoc`) is configured with the `tsdoc/syntax` or `jsdoc/require-jsdoc` rule enabled for exported symbols; `tsconfig.json` has `"strict": true`; `grep -rEn "// @ts-ignore" --include="*.ts" --include="*.tsx" .` returns empty on new files.
+code-standardizer check: `eslint-plugin-tsdoc` (or `eslint-plugin-jsdoc`) is configured with the `tsdoc/syntax` or `jsdoc/require-jsdoc` rule enabled for exported symbols; `tsconfig.json` has `"strict": true`; `grep -rEn "// @ts-ignore" --include="*.ts" --include="*.tsx" .` returns empty on new files.
 
 ## Testing
 
@@ -262,7 +262,7 @@ describe("fetchUser", () => {
 
 Coverage is mandatory for public behavior (every exported function has at least one happy-path test) and error paths (every `throw` has a test). Internal helpers are tested through the public API when they have no independent surface.
 
-Standardizer check: `vitest` (or `jest`) in `devDependencies`; `*.test.ts` or `*.spec.ts` files co-located with `src/**`; `eslint .` passes on tests (with `tests` overrides for `no-console` etc.); `vitest run` (or `jest`) resolves every collected test.
+code-standardizer check: `vitest` (or `jest`) in `devDependencies`; `*.test.ts` or `*.spec.ts` files co-located with `src/**`; `eslint .` passes on tests (with `tests` overrides for `no-console` etc.); `vitest run` (or `jest`) resolves every collected test.
 
 ## Error handling
 
@@ -274,14 +274,14 @@ TS/JS uses **exceptions** for exceptional flow, with a small Result-pattern exce
 - **Domain boundaries may use Result**. Functions that return `Result<T, E>` (`{ ok: true, value } | { ok: false, error }`) are allowed where callers must handle failure explicitly. Reserve for parsers, validators, and explicit "this can fail in expected ways" cases; do not sprinkle across the codebase.
 - **Logging**: structured logger (Pino, winston) for servers; `console.error` is fine for CLI scripts. Library code never logs; the caller decides what to log.
 
-Standardizer check: `grep -rEn "throw ['\"]" --include="*.ts" --include="*.tsx" .` returns empty (no string throws); `grep -rEn "catch \([^)]*\) \{\s*\}" --include="*.ts" --include="*.tsx" .` returns empty (no silent swallow); `@typescript-eslint/no-floating-promises` enabled in `eslint.config.js`.
+code-standardizer check: `grep -rEn "throw ['\"]" --include="*.ts" --include="*.tsx" .` returns empty (no string throws); `grep -rEn "catch \([^)]*\) \{\s*\}" --include="*.ts" --include="*.tsx" .` returns empty (no silent swallow); `@typescript-eslint/no-floating-promises` enabled in `eslint.config.js`.
 
 ## Comments
 
 - **Explain why, not what**. Code says what; comments say why. A comment that restates the next line is dead prose.
 - **`ponytail:` markers for deliberate shortcuts**. When the implementation takes a known-shorter path with a documented ceiling (global lock, O(n^2) scan, naive heuristic, missing strict null checks), add a one-line comment naming the shortcut and the upgrade path: `// ponytail: O(n^2) scan, switch to a Map when n > 1000`.
-- **TODO format**: `TODO(ruben): ...` (owner in parentheses, colon, brief description). TODOs without an owner are anonymous debt; the standardizer flags them. Reference an issue or plan id when one exists: `// TODO(ruben): retire shim, see docs/artifacts/plans/...`.
+- **TODO format**: `TODO(ruben): ...` (owner in parentheses, colon, brief description). TODOs without an owner are anonymous debt; the code-standardizer flags them. Reference an issue or plan id when one exists: `// TODO(ruben): retire shim, see docs/artifacts/plans/...`.
 - **What does not need a comment**: type annotations (no `// userId: string` next to `userId: string`); TSDoc already covers the function (no `// fetch the user` above the doc comment); standard-library calls (no `// open the file` above `fs.readFile(path)`).
 - **Commented-out code is forbidden**. Delete it; git remembers.
 
-Standardizer check: `grep -rEn "^\s*//" --include="*.ts" --include="*.tsx" . | grep -vE "ponytail:|TODO\([a-zA-Z0-9_-]+\):"` returns zero findings on new files; `grep -rEn "TODO[^(]" --include="*.ts" --include="*.tsx" .` (anonymous TODOs without an owner) returns empty.
+code-standardizer check: `grep -rEn "^\s*//" --include="*.ts" --include="*.tsx" . | grep -vE "ponytail:|TODO\([a-zA-Z0-9_-]+\):"` returns zero findings on new files; `grep -rEn "TODO[^(]" --include="*.ts" --include="*.tsx" .` (anonymous TODOs without an owner) returns empty.

@@ -69,9 +69,9 @@ Scoped to semver projects. Sprint-based and continuous-delivery projects cut hea
 4. **Commit**: single commit, Conventional Commits subject `chore(release): vX.Y.Z` (or `release(<scope>): ...` when a scope is meaningful). Bundle the version-source edits and the CHANGELOG edit; never split them across commits.
 5. **Tag** (optional): `git tag -a vX.Y.Z -m "..."`. Only when the project's CI triggers release builds from tags (Tauri release workflow: yes; library without a release pipeline: no).
 
-## The 3 standardizer checks
+## The 3 doc-standardizer checks
 
-For shipped-software projects, the standardizer audits three things.
+For shipped-software projects, the doc-standardizer audits three things.
 
 - **Version sources in sync**: every sync target matches the canonical source. Drift on any one is a `quick-fix` finding naming both files.
 - **CHANGELOG alignment**: every `## [X.Y.Z]` heading in `CHANGELOG.md` corresponds to a version string that appeared in the canonical source's history, and the latest heading matches the canonical source's current value. The `[Unreleased]` section may exist between releases. Out-of-order or missing headings = `quick-fix`.
