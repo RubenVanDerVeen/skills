@@ -182,6 +182,7 @@ Not applicable in the strict sense: this catalog has no per-sprint exports or ge
 
 ## References
 
+- Full standards-stack rationale: research paper <https://portfolio.rvdv-lab.nl/research.html?id=project-standaardenpakket-voor-het-idp-project> (local copy at `docs/research/<paper>.pdf` when present).
 - Conventional Commits 1.0.0: <https://www.conventionalcommits.org/en/v1.0.0/>
 - Keep a Changelog 1.1.0: <https://keepachangelog.com/en/1.1.0/>
 - ISO 8601 date format: <https://www.iso.org/iso-8601-date-and-time-format.html>

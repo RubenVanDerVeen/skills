@@ -96,3 +96,12 @@ See `AGENTS.md` for the full rule, in the section "Adding or modifying a skill" 
 2. (Optional) Add a command file to the top-level `commands/` directory and a `## Commands` section to the `SKILL.md`. See AGENTS.md "Slash commands" section for format and sync.
 3. Add a row to the table above and to the matching `## Current skills` table in `AGENTS.md`. Update the Layout block if you added a command.
 4. Commit.
+
+## AI assistance
+
+- **AI involvement:** AI-driven
+  <!-- human-written | AI-assisted | AI-driven | fully vibecoded -->
+- **Method:** AI work is organized and professionally executed via a personal
+  skill system: brainstorm > spec > plan > subagent execution > review.
+  See the [skills repo](https://github.com/RubenVanDerVeen/skills) and
+  [how the workflow is organized](https://github.com/RubenVanDerVeen/skills/blob/main/docs/workflows/workflow.md).
