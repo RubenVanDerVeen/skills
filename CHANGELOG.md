@@ -46,6 +46,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - `agents/planner.md`: end of pipeline dispatches the orchestrator instead of handing off; single-pass, no gates; `no brainstorm` and `handoff` keywords.
 - `commands/full-cycle.md`: rewritten for single-pass; removed the `at once` gate-collapse special-case (gates are gone, so it was equivalent to the new default).
 - `docs/artifacts/`: reorganized from type-bucket split (`specs/`, `plans/`, `multi-plans/`, `reports/`) to per-feature layout (`features/<feature>/`, flat contents, filename suffix signals type). `reviews/` stays flat. Specs, plans, generators, templates, references, and cross-references updated; filenames preserved exactly. The now-empty `reports/` directory remains on disk, locked by the Nextcloud sync client; remove it once the client releases its handle.
+- Split the `standardizer` agent into `doc-standardizer` (repo/docs conventions, loads `project-standardization`) and `code-standardizer` (code structure, loads `code-standardization`); plan flows now run both audits sequentially with one combined quick-fix executor pass.
 
 ### Fixed
 
