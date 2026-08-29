@@ -79,7 +79,7 @@ The gatekeeper layer. `using-superpowers` loads at session start and forces a sk
 
 ## Agents (opencode)
 
-Nine custom agents cover the plan/execute/review split plus inventory. Source of truth in `agents/` (copy to `~/.config/opencode/agents/` to activate); full roster, model pins, denylists, and token measurements in `agents/README.md`.
+Ten custom agents cover the plan/execute/review split plus inventory. Source of truth in `agents/` (copy to `~/.config/opencode/agents/` to activate); full roster, model pins, denylists, and token measurements in `agents/README.md`.
 
 | Agent | Mode | Model | Role |
 |---|---|---|---|
@@ -138,7 +138,7 @@ Visual companions to this document, in the same `docs/workflows/` folder:
 
 | File | Shows |
 |---|---|
-| `stack.drawio` | The AI stack: opencode harness (cross-model split), the four skill layers, nine custom opencode agents, and the homelab MCP |
+| `stack.drawio` | The AI stack: opencode harness (cross-model split), the four skill layers, ten custom opencode agents, and the homelab MCP |
 | `plan-flow.drawio` | Single-plan lifecycle: `/full-cycle` single-pass (planner dispatches the orchestrator in the same run) with the `handoff` escape to a fresh-session `/execute-plan`; orchestrator dispatches executor/reviewer/oracle, then runs structure review and documentation phases |
 | `multi-plan-flow.drawio` | Multi-plan orchestration: decomposition outline, foundation + N parallel sub-plans, manifest handoff, fresh-session integration |
 
