@@ -1,6 +1,6 @@
 # Standards stack
 
-The user's projects follow an explicit two-layer standards stack: formal ISO/IEC/IEEE norms plus four industry conventions. The full justification: with citations and design-decision history: lives in the research paper `Project standaarden pakket voor het IDP-project` (v1.0, Ruben van der Veen, 2026-05-11). This document is the operational summary for AI coding agents.
+The user's projects follow an explicit two-layer standards stack: formal ISO/IEC/IEEE norms plus four industry conventions. The full justification, with citations and design-decision history, lives in the research paper `Project standaarden pakket voor het IDP-project` (v1.0, Ruben van der Veen, 2026-05-11): <https://portfolio.rvdv-lab.nl/research.html?id=project-standaardenpakket-voor-het-idp-project>. This document is the operational summary for AI coding agents.
 
 **Scope reminder:** the conventions layer (kebab-case, English paths, ISO 8601 prefix, Conventional Commits, Keep a Changelog) applies to **most** projects regardless of size. The ISO/IEC/IEEE norms are opt-in per project. A simple tool typically adopts only naming + commits + changelog; a homelab adopts naming + commits + changelog + maybe ISO 10007 config thinking; a school engineering project adopts the full stack.
 

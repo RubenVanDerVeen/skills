@@ -55,7 +55,7 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 
 | File | When to read |
 |------|--------------|
-| `references/bootstrap.md` | The 12-step bootstrap checklist (triage → AGENTS.md → `.agents/` → artifacts → memory → CHANGELOG → STANDARDS → commit hook → graphify → verify) |
+| `references/bootstrap.md` | The 12-step bootstrap checklist (triage → AGENTS.md → `.agents/` → artifacts → memory → CHANGELOG → STANDARDS + README AI section → commit hook → graphify → verify) |
 | `references/small.md` | Small project layout, AGENTS.md content, graduation triggers |
 | `references/medium.md` | Medium project layout, auto-import vs on-demand, Homelab example |
 | `references/large.md` | Large project layout, `docs/{source,deliverables,components,project-management}/`, sprint workflow |
@@ -79,6 +79,7 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 | `templates/todolist.md` | Seed `.agents/todolist.md` |
 | `templates/CHANGELOG.md` | Seed `CHANGELOG.md` |
 | `templates/STANDARDS.md` | Human-readable standards summary |
+| `templates/README-ai-assistance.md` | AI-assistance section appended to the project README: involvement level + skills-repo and workflow links |
 | `templates/post-commit-graphify` | Debounced git hook: refresh `graphify-out/` graph after commits (AST-only, no LLM). Copy to `.git/hooks/post-commit`. |
 | `templates/commit-msg` | Conventional Commits 1.0.0 enforcement hook (sh + grep, no deps). Copy to `.githooks/commit-msg`; see bootstrap step 10. |
 
