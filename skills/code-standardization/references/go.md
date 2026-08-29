@@ -53,11 +53,11 @@ issues:
       linters: [errcheck, gosec]
 ```
 
-Rule families enabled, not line-by-line rule ids. The standardizer checks the family list, not the rule ids inside each family.
+Rule families enabled, not line-by-line rule ids. The code-standardizer checks the family list, not the rule ids inside each family.
 
 ### Check command
 
-The exact command CI and the standardizer agent run:
+The exact command CI and the code-standardizer agent run:
 
 ```
 goimports -l . && golangci-lint run
@@ -81,13 +81,13 @@ Polyglot repos in this monorepo already use the project-local `.githooks/` patte
 
 ### What `golangci-lint` does not enforce
 
-The standardizer, not `golangci-lint`, owns the items below; if the project skips these, no lint run will catch it:
+The code-standardizer, not `golangci-lint`, owns the items below; if the project skips these, no lint run will catch it:
 
 - **Cyclomatic complexity**: `gocritic` has a `rangeValCopy` and `hugeParam` family but no general complexity knob. Projects that need a number add `cyclop` (separate binary) and a `MAX_COMPLEXITY` constant in the config; otherwise complexity is a code-review judgement.
 - **Doc comment presence**: `revive`'s `exported` rule nudges but does not fail when a doc comment is missing. Whether a public function has one is a documentation-policy check (see Documentation below), not a lint finding.
 - **Architecture boundaries inside a module**: `golangci-lint` with `depguard` can ban imports of specific packages, but the canonical Go boundary tool is the language itself: `internal/` cannot be imported from outside the parent module (the compiler refuses it). See Architecture.
 
-Standardizer check: `goimports -l .` exits zero and `golangci-lint run` exits zero; `.golangci.yml` present with `run.timeout` and at least the `errcheck`, `govet`, `staticcheck`, `revive` linters enabled; `go.mod` declares both a `go` and a `toolchain` directive.
+code-standardizer check: `goimports -l .` exits zero and `golangci-lint run` exits zero; `.golangci.yml` present with `run.timeout` and at least the `errcheck`, `govet`, `staticcheck`, `revive` linters enabled; `go.mod` declares both a `go` and a `toolchain` directive.
 
 ## Naming
 
@@ -109,9 +109,9 @@ Go's rules are stronger than Python's; the compiler and `go vet` enforce several
 | Constructors | `New` prefix | `func NewUserService(...) *UserService` |
 | Getters | field name without `Get` prefix | `func (u *User) Name() string` |
 
-`golint` and `revive` flag underscores in package names, mixed-case package names, and inconsistent acronym capitalization. The standardizer runs them; manual override is rare.
+`golint` and `revive` flag underscores in package names, mixed-case package names, and inconsistent acronym capitalization. The code-standardizer runs them; manual override is rare.
 
-Standardizer check: `grep -rEn "^func [a-z][a-zA-Z0-9]*\(" --include="*.go" . | grep -v "_test.go"` returns no exported-looking function names with a lowercase first letter; package names match the directory name exactly (single import block per dir, all `package <dir>` agree); `revive` `var-naming` and `exported` rules pass.
+code-standardizer check: `grep -rEn "^func [a-z][a-zA-Z0-9]*\(" --include="*.go" . | grep -v "_test.go"` returns no exported-looking function names with a lowercase first letter; package names match the directory name exactly (single import block per dir, all `package <dir>` agree); `revive` `var-naming` and `exported` rules pass.
 
 ## Module / file organization
 
@@ -148,14 +148,14 @@ Three groups, separated by blank lines, enforced by `goimports`:
 
 Go ships no file-length or complexity rule. The community conventions:
 
-- **File length**: ~400 lines is the ceiling. Above that, the file has more than one type with non-trivial methods and should be split. The standardizer samples new files and flags files over the ceiling; the agent does not enforce mechanically.
+- **File length**: ~400 lines is the ceiling. Above that, the file has more than one type with non-trivial methods and should be split. The code-standardizer samples new files and flags files over the ceiling; the agent does not enforce mechanically.
 - **Cyclomatic complexity**: no first-party tool ships a default. `cyclop` is the usual add-on; the ceiling is the same ~10 as Python.
 
-Standardizer check: `goimports -l .` exits zero; no `_test.go` file in production directories; `cmd/` contains only `main` packages; package directory names match the `package` declaration in every file inside.
+code-standardizer check: `goimports -l .` exits zero; no `_test.go` file in production directories; `cmd/` contains only `main` packages; package directory names match the `package` declaration in every file inside.
 
 ## Architecture
 
-Go ships two architectural primitives no other language in this guide has: the `internal/` directory and the compiler-enforced package cycle check. Both belong to the language; the standardizer reports them, not a third-party tool.
+Go ships two architectural primitives no other language in this guide has: the `internal/` directory and the compiler-enforced package cycle check. Both belong to the language; the code-standardizer reports them, not a third-party tool.
 
 ### Layering via package boundaries
 
@@ -180,7 +180,7 @@ package b imports a
 ./b.go:5:8: cycle not allowed
 ```
 
-The standardizer does not run a separate cycle tool; the compiler enforces it on every build. The agent checks that the build passes (`go build ./...`), which transitively enforces the no-cycle rule.
+The code-standardizer does not run a separate cycle tool; the compiler enforces it on every build. The agent checks that the build passes (`go build ./...`), which transitively enforces the no-cycle rule.
 
 ### Feature isolation
 
@@ -211,7 +211,7 @@ This bans any import of a non-allowlisted module from files outside `internal/`.
 
 For medium-or-larger Go projects, declare the actual layer names and feature list in `.agents/architecture.md` (or the `## Architecture` section of `AGENTS.md`). The boundary spec is the source of truth for "what is the layer called here"; the `internal/` tree is the source of truth for "what is private to this module".
 
-Standardizer check: `go build ./...` exits zero (cycle-free); `internal/` exists at the module root and contains the bulk of the package code; `.agents/architecture.md` or `AGENTS.md` `## Architecture` section exists for medium+ projects and lists the feature packages.
+code-standardizer check: `go build ./...` exits zero (cycle-free); `internal/` exists at the module root and contains the bulk of the package code; `.agents/architecture.md` or `AGENTS.md` `## Architecture` section exists for medium+ projects and lists the feature packages.
 
 ## Documentation
 
@@ -247,7 +247,7 @@ Alternatively, the package comment lives on the `package` line of the first file
 - Test files; the test name describes the behavior.
 - Generated files; the generator owns the docs.
 
-Standardizer check: `golangci-lint run` with `revive` enabled passes (the `exported` and `package-comments` rules catch missing or malformed godoc); `go doc ./...` exits zero and produces non-empty output for every package.
+code-standardizer check: `golangci-lint run` with `revive` enabled passes (the `exported` and `package-comments` rules catch missing or malformed godoc); `go doc ./...` exits zero and produces non-empty output for every package.
 
 ## Testing
 
@@ -298,13 +298,13 @@ func TestFetchUser(t *testing.T) {
 
 Coverage tooling: `go test -cover ./...` reports per-package coverage. Coverage of public behavior is the target; internal helpers are tested through the public API when they have no independent surface.
 
-Standardizer check: `go test ./...` exits zero; `*_test.go` files co-located with their package; `go test -cover ./...` reports non-zero coverage for every non-trivial package.
+code-standardizer check: `go test ./...` exits zero; `*_test.go` files co-located with their package; `go test -cover ./...` reports non-zero coverage for every non-trivial package.
 
 ## Error handling
 
 Go uses **explicit error returns**. The rules below are what `errcheck` does not enforce on its own.
 
-- **Always check `err`**. `errcheck` (enabled in `.golangci.yml`) flags `_, _ = foo()` and unchecked return values; the standardizer reports findings. An unchecked error is a quick-fix finding.
+- **Always check `err`**. `errcheck` (enabled in `.golangci.yml`) flags `_, _ = foo()` and unchecked return values; the code-standardizer reports findings. An unchecked error is a quick-fix finding.
 - **Wrap with `%w`, not `%v` or `+`**. `%w` preserves the original error for `errors.Is`/`errors.As` unwrapping:
 
 ```go
@@ -331,14 +331,14 @@ func loadConfig(path string) (*Config, error) {
 }
 ```
 
-Standardizer check: `golangci-lint run` with `errcheck` enabled passes; `grep -rEn "panic\(" --include="*.go" . | grep -v "_test.go"` returns only entries that are documented invariants; `grep -rEn "_ *= [a-z][a-zA-Z]+\(" --include="*.go" .` returns no discarded errors in non-test files.
+code-standardizer check: `golangci-lint run` with `errcheck` enabled passes; `grep -rEn "panic\(" --include="*.go" . | grep -v "_test.go"` returns only entries that are documented invariants; `grep -rEn "_ *= [a-z][a-zA-Z]+\(" --include="*.go" .` returns no discarded errors in non-test files.
 
 ## Comments
 
 - **Explain why, not what**. Code says what; comments say why. A comment that restates the next line is dead prose.
 - **`ponytail:` markers for deliberate shortcuts**. When the implementation takes a known-shorter path with a documented ceiling (global mutex, O(n^2) scan, naive heuristic), add a one-line comment naming the shortcut and the upgrade path: `// ponytail: global mutex, per-account locks when throughput matters`.
-- **TODO format**: `TODO(ruben): ...` (owner in parentheses, colon, brief description). TODOs without an owner are anonymous debt; the standardizer flags them. Reference an issue or plan id when one exists: `TODO(ruben): retire shim, see docs/artifacts/plans/...`.
+- **TODO format**: `TODO(ruben): ...` (owner in parentheses, colon, brief description). TODOs without an owner are anonymous debt; the code-standardizer flags them. Reference an issue or plan id when one exists: `TODO(ruben): retire shim, see docs/artifacts/plans/...`.
 - **What does not need a comment**: obvious type signatures (no `// id is the user id` next to `id int64`); godoc already covers the function (no `// fetch the user` above the doc comment); standard-library calls (no `// open the file` above `os.Open(path)`).
 - **Commented-out code is forbidden**. Delete it; git remembers. `gofmt` will not reformat it, but reviewers will.
 
-Standardizer check: `grep -rEn "^\s*//" --include="*.go" . | grep -vE "ponytail:|TODO\([a-zA-Z0-9_-]+\):|^//.*\.$|^// Package"` (the loose pattern matches non-template comments; tighten per project) returns zero findings on new files beyond the expected godoc and `ponytail:` lines; `grep -rEn "TODO[^(]" --include="*.go" .` (anonymous TODOs without an owner) returns empty.
+code-standardizer check: `grep -rEn "^\s*//" --include="*.go" . | grep -vE "ponytail:|TODO\([a-zA-Z0-9_-]+\):|^//.*\.$|^// Package"` (the loose pattern matches non-template comments; tighten per project) returns zero findings on new files beyond the expected godoc and `ponytail:` lines; `grep -rEn "TODO[^(]" --include="*.go" .` (anonymous TODOs without an owner) returns empty.

@@ -39,7 +39,7 @@ unsafe_code = "forbid"
 unused_must_use = "warn"
 
 [workspace.lints.clippy]
-# Lint families enabled; the standardizer checks the family list, not the rule ids.
+# Lint families enabled; the code-standardizer checks the family list, not the rule ids.
 all = { level = "warn", priority = -1 }
 pedantic = { level = "warn", priority = -1 }
 nursery = { level = "warn", priority = -1 }
@@ -60,7 +60,7 @@ In a single-crate repo, replace `[workspace.lints.*]` with `[lints.*]` in that c
 
 ### Check command
 
-The exact command CI and the standardizer agent run, from the workspace root:
+The exact command CI and the code-standardizer agent run, from the workspace root:
 
 ```
 cargo fmt --all -- --check && cargo clippy --all-targets --all-features -- -D warnings
@@ -92,14 +92,14 @@ Make the file executable (`chmod +x`). Polyglot repos in this monorepo use the p
 
 ### What rustfmt and clippy do not enforce
 
-`rustfmt` and `clippy` cover formatting, style, common bugs, modernization, and a wide rule set. The standardizer, not the linter, owns the items below; if the project skips these, neither tool will catch it:
+`rustfmt` and `clippy` cover formatting, style, common bugs, modernization, and a wide rule set. The code-standardizer, not the linter, owns the items below; if the project skips these, neither tool will catch it:
 
-- **Cyclomatic complexity**: clippy has `cognitive_complexity` (warn-by-default via `clippy::pedantic`); projects that want a hard ceiling configure `#[cognitive_complexity = "N"]` per function or accept the warning. There is no project-wide knob; the standardizer samples instead.
+- **Cyclomatic complexity**: clippy has `cognitive_complexity` (warn-by-default via `clippy::pedantic`); projects that want a hard ceiling configure `#[cognitive_complexity = "N"]` per function or accept the warning. There is no project-wide knob; the code-standardizer samples instead.
 - **Doc-test coverage of all examples**: clippy enforces `missing_docs_in_private_items` and `missing_errors_doc` (when enabled), but does not require every public function to carry a runnable example. Whether the example exists is a documentation-policy check, not a lint finding.
 - **Architecture boundaries**: clippy cannot express layer rules or no-cycle contracts beyond visibility. Use `cargo-deny` plus workspace crates for hard boundaries (see Architecture below).
 - **Dependency-policy enforcement**: `cargo-deny` covers license and advisory; semantic-version policy (e.g. forbid `^0.x` for production crates) is a separate `cargo-deny` configuration block.
 
-Standardizer check: `cargo fmt --all -- --check && cargo clippy --all-targets --all-features -- -D warnings` exits zero; `rust-toolchain.toml` exists with a pinned `channel`; `Cargo.toml` has `[workspace.lints]` (multi-crate) or `[lints]` (single-crate) with `clippy` rules selected; `rustfmt.toml` exists at the repo root.
+code-standardizer check: `cargo fmt --all -- --check && cargo clippy --all-targets --all-features -- -D warnings` exits zero; `rust-toolchain.toml` exists with a pinned `channel`; `Cargo.toml` has `[workspace.lints]` (multi-crate) or `[lints]` (single-crate) with `clippy` rules selected; `rustfmt.toml` exists at the repo root.
 
 ## Naming
 
@@ -120,7 +120,7 @@ Standardizer check: `cargo fmt --all -- --check && cargo clippy --all-targets --
 
 Avoid single-letter names outside generic parameters and tight closures. Avoid `l`, `O`, `I` as identifiers; they read as digits in some fonts.
 
-Standardizer check: `grep -rEn "^pub (fn|struct|enum|trait) [a-z_]+\b" --include="*.rs" .` returns empty; `grep -rEn "^fn [A-Z][a-zA-Z0-9_]+\b" --include="*.rs" .` returns empty for non-test files; crate name in `Cargo.toml` matches a kebab-case folder name.
+code-standardizer check: `grep -rEn "^pub (fn|struct|enum|trait) [a-z_]+\b" --include="*.rs" .` returns empty; `grep -rEn "^fn [A-Z][a-zA-Z0-9_]+\b" --include="*.rs" .` returns empty for non-test files; crate name in `Cargo.toml` matches a kebab-case folder name.
 
 ## Module / file organization
 
@@ -153,7 +153,7 @@ Three blocks, separated by blank lines, enforced by `rustfmt` with `imports_gran
 - **Cyclomatic complexity**: no project-wide clippy knob. Sample high-complexity functions manually or enable `clippy::cognitive_complexity` and accept the warnings. Functions over the threshold are a quick-fix finding naming the function and the path.
 - **Function length**: target under ~80 lines; clippy's `too_many_arguments` and `too_many_lines` cover the extremes.
 
-Standardizer check: `rustfmt` `imports_granularity = "Crate"` is set; `wc -l` per `src/**/*.rs` file under 400 (one exception per repo for legitimate generated code); `cargo clippy --all-targets --all-features -- -D warnings` reports zero findings on import and module rules.
+code-standardizer check: `rustfmt` `imports_granularity = "Crate"` is set; `wc -l` per `src/**/*.rs` file under 400 (one exception per repo for legitimate generated code); `cargo clippy --all-targets --all-features -- -D warnings` reports zero findings on import and module rules.
 
 ## Architecture
 
@@ -207,7 +207,7 @@ crates/
 
 For medium-or-larger Rust projects, declare the actual layer names and feature list in `.agents/architecture.md` (or the `## Architecture` section of `AGENTS.md`). The boundary spec is the source of truth for "what is the layer called here"; the workspace member list and `[workspace.lints]` enforce the direction.
 
-Standardizer check: `[workspace]` exists for multi-crate repos; `cargo clippy --all-targets -- -D warnings` reports zero `mod_module_files` findings; `.agents/architecture.md` or `AGENTS.md` `## Architecture` section exists for medium+ projects; no crate under `crates/` declares a reverse-direction dependency in its `[dependencies]` table.
+code-standardizer check: `[workspace]` exists for multi-crate repos; `cargo clippy --all-targets -- -D warnings` reports zero `mod_module_files` findings; `.agents/architecture.md` or `AGENTS.md` `## Architecture` section exists for medium+ projects; no crate under `crates/` declares a reverse-direction dependency in its `[dependencies]` table.
 
 ## Documentation
 
@@ -248,7 +248,7 @@ Examples in `///` blocks are **doc tests**: `cargo test` runs them as part of th
 
 Private doc-comments are allowed but optional. When present, keep them to one line describing intent; save the long form for public surfaces.
 
-Standardizer check: `grep -rEn "^pub (fn|struct|enum|trait|fn|const|static)" --include="*.rs" -A 5 .` finds a `///` doc-comment above each public item; `cargo test --doc` exits zero; `missing_errors_doc` is enabled in `[workspace.lints.clippy]`; `missing_docs_in_private_items` is `allow` unless the project opts in.
+code-standardizer check: `grep -rEn "^pub (fn|struct|enum|trait|fn|const|static)" --include="*.rs" -A 5 .` finds a `///` doc-comment above each public item; `cargo test --doc` exits zero; `missing_errors_doc` is enabled in `[workspace.lints.clippy]`; `missing_docs_in_private_items` is `allow` unless the project opts in.
 
 ## Testing
 
@@ -281,7 +281,7 @@ mod tests {
 }
 ```
 
-Standardizer check: `cargo test --all-features` exits zero; `tests/*.rs` integration files exist for multi-module crates; `#[cfg(test)] mod tests` is present in non-trivial source files; `pretty_assertions` is in `[dev-dependencies]` when struct comparison is asserted.
+code-standardizer check: `cargo test --all-features` exits zero; `tests/*.rs` integration files exist for multi-module crates; `#[cfg(test)] mod tests` is present in non-trivial source files; `pretty_assertions` is in `[dev-dependencies]` when struct comparison is asserted.
 
 ## Error handling
 
@@ -315,15 +315,15 @@ pub fn fetch_user(user_id: u64) -> Result<User, AuthError> {
 }
 ```
 
-Standardizer check: `grep -rEn "\.unwrap\(\)|\.expect\(" --include="*.rs" . | grep -vE "/tests/|mod tests|examples/"` returns empty for production paths; `[dependencies]` includes `thiserror` for library crates and `anyhow` for binaries; `cargo clippy --all-targets -- -D warnings` reports zero `unwrap_used` or `expect_used` findings when the corresponding `restriction` lints are enabled.
+code-standardizer check: `grep -rEn "\.unwrap\(\)|\.expect\(" --include="*.rs" . | grep -vE "/tests/|mod tests|examples/"` returns empty for production paths; `[dependencies]` includes `thiserror` for library crates and `anyhow` for binaries; `cargo clippy --all-targets -- -D warnings` reports zero `unwrap_used` or `expect_used` findings when the corresponding `restriction` lints are enabled.
 
 ## Comments
 
 - **Explain why, not what**. Code says what; comments say why. A comment that restates the next line is dead prose.
 - **`ponytail:` markers for deliberate shortcuts**. When the implementation takes a known-shorter path with a documented ceiling (global lock, O(n^2) scan, naive heuristic), add a one-line comment naming the shortcut and the upgrade path: `// ponytail: global lock, per-account locks when throughput matters`.
-- **TODO format**: `TODO(ruben): retire shim, see docs/artifacts/plans/...`. Owner in parentheses, colon, brief description. TODOs without an owner are anonymous debt; the standardizer flags them. Reference an issue or plan id when one exists.
+- **TODO format**: `TODO(ruben): retire shim, see docs/artifacts/plans/...`. Owner in parentheses, colon, brief description. TODOs without an owner are anonymous debt; the code-standardizer flags them. Reference an issue or plan id when one exists.
 - **What does not need a comment**: obvious type signatures (no `// user_id: u64` next to `user_id: u64`); rustdoc already covers the function (no `// fetch the user` above the doc-comment); standard-library calls (no `// open the file` above `File::open(path)`).
 - **Commented-out code is forbidden**. Delete it; git remembers. `#[allow(dead_code)]` on commented-out logic is debt; remove the code, remove the allow.
 - **Doc-comments vs. line comments**: `///` and `//!` are rustdoc, rendered to HTML and tested as doc tests. `//` is a plain comment. Use `///` for public API, `//!` at the top of modules to describe the module, plain `//` for inline reasoning.
 
-Standardizer check: `grep -rEn "^\s*//" --include="*.rs" . | grep -vE "ponytail:|TODO\([a-zA-Z0-9_-]+\):"` returns zero findings on new files (plain comments other than `ponytail:` and `TODO(owner):` need justification); `grep -rEn "TODO[^(]" --include="*.rs" .` (anonymous TODOs without an owner) returns empty; no `// xxx` commented-out code blocks larger than one line remain in source.
+code-standardizer check: `grep -rEn "^\s*//" --include="*.rs" . | grep -vE "ponytail:|TODO\([a-zA-Z0-9_-]+\):"` returns zero findings on new files (plain comments other than `ponytail:` and `TODO(owner):` need justification); `grep -rEn "TODO[^(]" --include="*.rs" .` (anonymous TODOs without an owner) returns empty; no `// xxx` commented-out code blocks larger than one line remain in source.

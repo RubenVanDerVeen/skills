@@ -1,6 +1,6 @@
 # Architecture (cross-language)
 
-The boundary layer. Pairs with `references/tooling.md` (standardization-infra layer) and each `references/<lang>.md` (per-language detail). The standardizer agent uses this reference to decide whether boundaries are declared, documented, and held.
+The boundary layer. Pairs with `references/tooling.md` (standardization-infra layer) and each `references/<lang>.md` (per-language detail). The code-standardizer agent uses this reference to decide whether boundaries are declared, documented, and held.
 
 ## Canonical layering and dependency direction
 
@@ -22,7 +22,7 @@ The binding rule: the domain layer knows nothing about infra. Anything the domai
 
 ## No circular dependencies
 
-A cycle between two modules collapses them into one module. The arch tool per language detects cycles mechanically. The standardizer never has to infer a cycle from naming.
+A cycle between two modules collapses them into one module. The arch tool per language detects cycles mechanically. The code-standardizer never has to infer a cycle from naming.
 
 | Language | Arch tool (named) | What it enforces |
 |----------|-------------------|------------------|
@@ -42,7 +42,7 @@ A feature is a vertical slice that crosses layers (api + service + data) for one
 - One-feature-per-concern: two features that largely duplicate each other are one feature with optional behavior, not two features copying each other.
 - Cross-feature calls go through the public interface of the called feature, never through a sibling's data layer directly.
 
-The standardizer checks this by sampling imports in new code: does this file import the public module of another feature, or does it reach inside? Reaching inside is a quick-fix finding with the suggested fix ("import from `<feature>.public_api`").
+The code-standardizer checks this by sampling imports in new code: does this file import the public module of another feature, or does it reach inside? Reaching inside is a quick-fix finding with the suggested fix ("import from `<feature>.public_api`").
 
 ## Boundary spec: location and content
 
@@ -63,7 +63,7 @@ The boundary spec contains exactly four items, in this order, in plain prose plu
 
 Split of responsibility. Tools do mechanical work; agents do judgement work. Each side owns its lane.
 
-| What the arch tool checks | What the standardizer agent checks |
+| What the arch tool checks | What the code-standardizer agent checks |
 |--------------------------|------------------------------------|
 | Every direction-changing import is forbidden and reported with file + line. | The boundary spec exists at `.agents/architecture.md` (or `AGENTS.md` `## Architecture` section) and is current. |
 | Every cycle in the import graph is reported. | New files added since the last audit respect the declared layers (sample three files per changed directory; spot the bad import). |
