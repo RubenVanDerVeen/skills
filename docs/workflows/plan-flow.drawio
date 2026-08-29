@@ -62,16 +62,19 @@
                     <mxGeometry x="880" y="965" width="140" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="m8" value="graphify update .   (only if graph.json exists)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
-                    <mxGeometry x="810" y="1240" width="280" height="50" as="geometry"/>
+                    <mxGeometry x="810" y="1300" width="280" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="nStandardizer" value="Standardizer (glm-5.3)&#xa;Merged audit pass:&#xa;- repo: kebab-case, AGENTS, docs/artifacts, catalogs&#xa;- code: formatter/linter, lang rules, arch boundaries&#xa;quick-fix -&gt; executor, reviewer;&#xa;recommendation -&gt; roll forward" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;strokeWidth=2;fontSize=9" parent="1" vertex="1">
+                <mxCell id="nDocStandardizer" value="doc-standardizer (glm-5.3)&#xa;Repo audit:&#xa;- kebab-case paths&#xa;- AGENTS.md sections&#xa;- docs/artifacts&#xa;- catalogs, changelog&#xa;quick-fix -&gt; executor, reviewer;&#xa;recommendation -&gt; roll forward" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;strokeWidth=2;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="810" y="1080" width="280" height="70" as="geometry"/>
                 </mxCell>
+                <mxCell id="nCodeStandardizer" value="code-standardizer (glm-5.3)&#xa;Code audit:&#xa;- formatter/linter presence&#xa;- naming and module rules&#xa;- architecture boundaries&#xa;quick-fix -&gt; executor, reviewer;&#xa;recommendation -&gt; roll forward" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;strokeWidth=2;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="810" y="1155" width="280" height="70" as="geometry"/>
+                </mxCell>
                 <mxCell id="nDocumenter" value="Documenter (glm-5.3)&#xa;Writes docs/artifacts/features/&lt;topic&gt;/&lt;date&gt;-&lt;slug&gt;-report.md&#xa;Updates catalogs; commits as docs" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;strokeWidth=2;fontSize=9" parent="1" vertex="1">
-                    <mxGeometry x="810" y="1170" width="280" height="50" as="geometry"/>
+                    <mxGeometry x="810" y="1230" width="280" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="m10" value="Report and stop&#xa;(branch, commits, diffs, verifier, skills,&#xa;ponytail deferrals, Unverified).&#xa;No merge or PR unless user asks." style="ellipse;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
-                    <mxGeometry x="790" y="1310" width="320" height="70" as="geometry"/>
+                    <mxGeometry x="790" y="1370" width="320" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="e_n1n2" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n1" target="n2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
@@ -175,10 +178,13 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="e_m7no" value="No" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="m7" target="nStandardizer" edge="1">
+                <mxCell id="e_m7no" value="No" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="m7" target="nDocStandardizer" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="e_stdDoc" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="nStandardizer" target="nDocumenter" edge="1">
+                <mxCell id="e_stdDoc" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="nDocStandardizer" target="nCodeStandardizer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_codeDoc" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="nCodeStandardizer" target="nDocumenter" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="e_docM8" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="nDocumenter" target="m8" edge="1">
@@ -187,7 +193,7 @@
                 <mxCell id="e_m8m10" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="m8" target="m10" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="legend" value="Plan flow: one plan from feature request to merge-ready branch. /full-cycle is single-pass by default - the planner brainstorms, specs, plans, then DISPATCHES the orchestrator subagent in the same run and relays its report (no approval gates). The handoff keyword opts out: the planner prints the /execute-plan line for a fresh session instead.&#xa;&#xa;Shapes:&#xa;- ellipse = start / stop&#xa;- rectangle = process / action&#xa;- rhombus = decision (Yes / No labeled on each branch)&#xa;- parallelogram = artifact written to disk&#xa;&#xa;Agents:&#xa;- PRIMARY (drives a phase): planner = phase 1 (dispatches the orchestrator at the end, single-pass); orchestrator = phase 2 (standalone /execute-plan OR planner-dispatched; never edits directly).&#xa;- SUBAGENT (dispatched, one job each): executor = implements 1 task; reviewer = spec + quality; oracle = read-only consult after 2 strikes; standardizer = merged audit pass after the task loop (repo structure: kebab-case, AGENTS, docs/artifacts, catalogs; code structure: formatter/linter config, per-language rules, architecture boundaries); documenter = execution report + catalog updates after structure review; explore = codebase recon.&#xa;&#xa;Rules: planner writes only docs/; orchestrator edit/write/patch denied so every change flows through an executor; a two-strike failure (verify or review rejected twice) escalates to the oracle, whose recommendation is folded into the next executor dispatch; commits land at task boundaries (plan-execution carve-out); single-pass needs subagent_depth &gt;= 2 so the orchestrator can dispatch executor/reviewer - without it, fall back to the handoff; no merge or PR unless the user asks.&#xa;- standardizer loads both project-standardization and code-standardization; one audit pass covers repo + code.&#xa;&#xa;Sources: docs/workflows/workflow.md; commands/full-cycle.md, execute-plan.md, goal.md; agents/{planner,orchestrator,executor,reviewer,oracle,standardizer,documenter}.md; skills/code-standardization/SKILL.md" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=10;align=left;verticalAlign=top" parent="1" vertex="1">
+                <mxCell id="legend" value="Plan flow: one plan from feature request to merge-ready branch. /full-cycle is single-pass by default - the planner brainstorms, specs, plans, then DISPATCHES the orchestrator subagent in the same run and relays its report (no approval gates). The handoff keyword opts out: the planner prints the /execute-plan line for a fresh session instead.&#xa;&#xa;Shapes:&#xa;- ellipse = start / stop&#xa;- rectangle = process / action&#xa;- rhombus = decision (Yes / No labeled on each branch)&#xa;- parallelogram = artifact written to disk&#xa;&#xa;Agents:&#xa;- PRIMARY (drives a phase): planner = phase 1 (dispatches the orchestrator at the end, single-pass); orchestrator = phase 2 (standalone /execute-plan OR planner-dispatched; never edits directly).&#xa;- SUBAGENT (dispatched, one job each): executor = implements 1 task; reviewer = spec + quality; oracle = read-only consult after 2 strikes; doc-standardizer = repo audit pass (kebab-case paths, AGENTS.md sections, docs/artifacts/, catalogs, changelog); code-standardizer = code audit pass (formatter/linter config, per-language naming and module rules, architecture boundaries); documenter = execution report + catalog updates after structure review; explore = codebase recon.&#xa;&#xa;Rules: planner writes only docs/; orchestrator edit/write/patch denied so every change flows through an executor; a two-strike failure (verify or review rejected twice) escalates to the oracle, whose recommendation is folded into the next executor dispatch; commits land at task boundaries (plan-execution carve-out); single-pass needs subagent_depth &gt;= 2 so the orchestrator can dispatch executor/reviewer - without it, fall back to the handoff; no merge or PR unless the user asks.&#xa;- doc-standardizer loads project-standardization; code-standardizer loads code-standardization; two sequential audit passes cover repo + code.&#xa;&#xa;Sources: docs/workflows/workflow.md; commands/full-cycle.md, execute-plan.md, goal.md; agents/{planner,orchestrator,executor,reviewer,oracle,doc-standardizer,code-standardizer,documenter}.md; skills/{project-standardization,code-standardization}/SKILL.md" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=10;align=left;verticalAlign=top" parent="1" vertex="1">
                     <mxGeometry x="860" y="120" width="500" height="400" as="geometry"/>
                 </mxCell>
             </root>

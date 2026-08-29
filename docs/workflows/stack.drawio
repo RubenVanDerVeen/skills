@@ -90,7 +90,7 @@
                 <mxCell id="gAgents" value="OPENCODE AGENTS &amp; MCP (nine custom agents + homelab MCP; cross-model by design)"
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;verticalAlign=top;fontStyle=1;fontSize=12"
                         parent="1" vertex="1">
-                    <mxGeometry x="40" y="616" width="1320" height="110" as="geometry"/>
+                    <mxGeometry x="40" y="616" width="1320" height="134" as="geometry"/>
                 </mxCell>
                 <mxCell id="aPlanner" value="planner (primary)&#xa;glm-5.3 - brainstorm/spec/plan, then dispatch orchestrator" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="25" y="26" width="250" height="32" as="geometry"/></mxCell>
                 <mxCell id="aOrch" value="orchestrator (all)&#xa;MiniMax-M3 - runs approved plans (session or planner-dispatched)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="280" y="26" width="250" height="32" as="geometry"/></mxCell>
@@ -100,17 +100,18 @@
                 <mxCell id="aExec" value="executor (subagent)&#xa;MiniMax-M3 - one task: TDD, verify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="25" y="62" width="250" height="32" as="geometry"/></mxCell>
                 <mxCell id="aRev" value="reviewer (subagent)&#xa;glm-5.3 - spec + quality (cross-model)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="280" y="62" width="250" height="32" as="geometry"/></mxCell>
                 <mxCell id="aOracle" value="oracle (subagent)&#xa;glm-5.3 - read-only consult, 2 strikes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="535" y="62" width="250" height="32" as="geometry"/></mxCell>
-                <mxCell id="aStandardizer" value="standardizer (subagent)&#xa;glm-5.3 - structure review (post-loop)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="790" y="62" width="250" height="32" as="geometry"/></mxCell>
+                <mxCell id="aDocStandardizer" value="doc-standardizer (subagent)&#xa;glm-5.3 - repo structure review (post-loop)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="790" y="62" width="250" height="32" as="geometry"/></mxCell>
+                <mxCell id="aCodeStandardizer" value="code-standardizer (subagent)&#xa;glm-5.3 - code structure review (post-loop)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="790" y="98" width="250" height="32" as="geometry"/></mxCell>
                 <mxCell id="aDocumenter" value="documenter (subagent)&#xa;glm-5.3 - execution report + catalogs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="gAgents" vertex="1"><mxGeometry x="1045" y="62" width="250" height="32" as="geometry"/></mxCell>
                 <mxCell id="flowHdr" value="USAGE - which layer kicks in by task size"
                         style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1"
                         parent="1" vertex="1">
-                    <mxGeometry x="40" y="738" width="1320" height="18" as="geometry"/>
+                    <mxGeometry x="40" y="750" width="1320" height="18" as="geometry"/>
                 </mxCell>
-                <mxCell id="f1" value="Small task (bugfix, doc, one-file)&#xa;chat, auto-skills, debug/TDD, verify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="40" y="760" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="f2" value="Medium feature (one plan)&#xa;/full-cycle: plan, then dispatch orchestrator (or /execute-plan)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="360" y="760" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="f3" value="Large feature (multi-module)&#xa;/multi-plan: foundation + N parallel sub-plans" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="680" y="760" width="300" height="32" as="geometry"/></mxCell>
-                <mxCell id="f4" value="New repo&#xa;/standardize: AGENTS.md, docs/artifacts/, graphify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="1000" y="760" width="300" height="32" as="geometry"/></mxCell>
+                <mxCell id="f1" value="Small task (bugfix, doc, one-file)&#xa;chat, auto-skills, debug/TDD, verify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="40" y="772" width="300" height="32" as="geometry"/></mxCell>
+                <mxCell id="f2" value="Medium feature (one plan)&#xa;/full-cycle: plan, then dispatch orchestrator (or /execute-plan)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="360" y="772" width="300" height="32" as="geometry"/></mxCell>
+                <mxCell id="f3" value="Large feature (multi-module)&#xa;/multi-plan: foundation + N parallel sub-plans" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="680" y="772" width="300" height="32" as="geometry"/></mxCell>
+                <mxCell id="f4" value="New repo&#xa;/standardize: AGENTS.md, docs/artifacts/, graphify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=9" parent="1" vertex="1"><mxGeometry x="1000" y="772" width="300" height="32" as="geometry"/></mxCell>
                 <mxCell id="e1" value="planning / review"
                         style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.25;entryY=0;fontSize=10"
                         parent="1" source="m1" target="catalog" edge="1">
@@ -130,57 +131,57 @@
                         value="Legend:&#xa;- solid arrow = loads / references&#xa;- pastel groups (yellow / purple / blue / green) = the stack, layers 1-4; all feed the shared agents.md catalog&#xa;- orange group = opencode harness (sole active); cross-model split - glm-5.3 plans/reviews, MiniMax-M3 orchestrates/implements&#xa;- grey group = nine custom opencode agents + homelab MCP - the runtime that executes the stack&#xa;- white chips with no container = usage examples (how the stack is invoked by task size)&#xa;&#xa;Claude Code is supported-but-unused (CLAUDE.md shim + ~/.claude/ sync paths in the catalogs), not in daily use. The opencode-see-image plugin routes image attachments from the text-only GLM primary to MiniMax-M3.&#xa;&#xa;House rules: AGENTS.md = source of truth; CLAUDE.md = one-line shim; specs / plans / reviews in docs/artifacts/; no em-dashes; ISO 8601 dates; Conventional Commits. Snapshot 2026-08-04."
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;align=left;verticalAlign=top"
                         parent="1" vertex="1">
-                    <mxGeometry x="40" y="810" width="620" height="168" as="geometry"/>
+                    <mxGeometry x="40" y="822" width="620" height="168" as="geometry"/>
                 </mxCell>
                 <mxCell id="tbBox" value=""
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.5"
                         parent="1" vertex="1">
-                    <mxGeometry x="980" y="830" width="400" height="150" as="geometry"/>
+                    <mxGeometry x="980" y="842" width="400" height="150" as="geometry"/>
                 </mxCell>
                 <mxCell id="tbProj" value="&lt;b&gt;Project&lt;/b&gt;&lt;br&gt;Personal AI stack"
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;fontSize=9;spacingLeft=4;spacingTop=2"
                         parent="1" vertex="1">
-                    <mxGeometry x="980" y="830" width="300" height="40" as="geometry"/>
+                    <mxGeometry x="980" y="842" width="300" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="tbOrg" value="&lt;b&gt;Skills repo&lt;/b&gt;&lt;br&gt;tools/skills"
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=center;verticalAlign=middle;fontSize=9"
                         parent="1" vertex="1">
-                    <mxGeometry x="1280" y="830" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="1280" y="842" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="tbTitle" value="&lt;b&gt;Drawing&lt;/b&gt;&amp;nbsp;&amp;nbsp;AI Stack - Architecture (layered)"
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=middle;fontSize=10;spacingLeft=4"
                         parent="1" vertex="1">
-                    <mxGeometry x="980" y="870" width="400" height="30" as="geometry"/>
+                    <mxGeometry x="980" y="882" width="400" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="tbDrawn" value="&lt;b&gt;Drawn by&lt;/b&gt;&lt;br&gt;R. van der Veen"
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;fontSize=9;spacingLeft=4;spacingTop=2"
                         parent="1" vertex="1">
-                    <mxGeometry x="980" y="900" width="140" height="40" as="geometry"/>
+                    <mxGeometry x="980" y="912" width="140" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="tbDate" value="&lt;b&gt;Date&lt;/b&gt;&lt;br&gt;2026-07-31"
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;fontSize=9;spacingLeft=4;spacingTop=2"
                         parent="1" vertex="1">
-                    <mxGeometry x="1120" y="900" width="130" height="40" as="geometry"/>
+                    <mxGeometry x="1120" y="912" width="130" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="tbRev" value="&lt;b&gt;Rev&lt;/b&gt;&lt;br&gt;E"
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;fontSize=9;spacingLeft=4;spacingTop=2"
                         parent="1" vertex="1">
-                    <mxGeometry x="1250" y="900" width="130" height="40" as="geometry"/>
+                    <mxGeometry x="1250" y="912" width="130" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="tbSrc" value="&lt;b&gt;Source&lt;/b&gt;&lt;br&gt;docs/workflows/workflow.md"
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;fontSize=9;spacingLeft=4;spacingTop=2"
                         parent="1" vertex="1">
-                    <mxGeometry x="980" y="940" width="140" height="40" as="geometry"/>
+                    <mxGeometry x="980" y="952" width="140" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="tbScale" value="&lt;b&gt;Scale&lt;/b&gt;&lt;br&gt;NTS"
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;fontSize=9;spacingLeft=4;spacingTop=2"
                         parent="1" vertex="1">
-                    <mxGeometry x="1120" y="940" width="130" height="40" as="geometry"/>
+                    <mxGeometry x="1120" y="952" width="130" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="tbSheet" value="&lt;b&gt;Sheet&lt;/b&gt;&lt;br&gt;1 / 1"
                         style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;fontSize=9;spacingLeft=4;spacingTop=2"
                         parent="1" vertex="1">
-                    <mxGeometry x="1250" y="940" width="130" height="40" as="geometry"/>
+                    <mxGeometry x="1250" y="952" width="130" height="40" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

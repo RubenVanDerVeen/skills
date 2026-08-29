@@ -8,7 +8,7 @@ opencode is the active harness, running two flat-quota coding-plan models in a c
 
 | Model | Carries |
 |---|---|
-| `zai-coding-plan/glm-5.3` | Planning, review, consult: long-horizon reasoning (`planner`, `reviewer`, `oracle`, `standardizer`, `documenter`) |
+| `zai-coding-plan/glm-5.3` | Planning, review, consult: long-horizon reasoning (`planner`, `reviewer`, `oracle`, `doc-standardizer`, `code-standardizer`, `documenter`) |
 | `minimax-coding-plan/MiniMax-M3` | Orchestration and implementation: near-par execution, faster and cheaper (`orchestrator`, `executor`, `inventree`) |
 
 Config lives in `~/.config/opencode/` and `~/.opencode/opencode.json`; install steps in `opencode-install.md`. The `opencode-see-image` plugin routes image attachments from the text-only GLM 5.3 primary to MiniMax-M3 and returns a text description.
@@ -32,7 +32,7 @@ Four layers, from personal to generic.
 | `typst-pro` | Typst documents: NHL Stenden reports, IEEE templates, Dutch project layout |
 | `synctool-sync` | NAS sync jobs via the `synctool` CLI, dry-run first |
 | `deep-research` | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then hand off to brainstorm or Typst draft |
-| `code-standardization` | Source-code structure standard: formatter/linter/hooks, per-language naming, module organization, architecture boundaries. Sister to `project-standardization` (which covers repo/docs layout). Covers Python, TS/JS, C/C++, Go, Rust. Flat. Pairs with `standardizer` agent. |
+| `code-standardization` | Source-code structure standard: formatter/linter/hooks, per-language naming, module organization, architecture boundaries. Sister to `project-standardization` (which covers repo/docs layout). Covers Python, TS/JS, C/C++, Go, Rust. Flat. Pairs with `code-standardizer` agent. |
 | `project-standardization` | Bootstraps any repo for AI agents: AGENTS.md, `docs/artifacts/`, standards stack |
 | `multi-plan-orchestration` | Splits oversized tasks into foundation + N parallel sub-plans |
 | `skill-harvest` | Mines recent opencode sessions for repeated corrections and skill gaps; report, approve, apply loop |
@@ -90,10 +90,11 @@ Nine custom agents cover the plan/execute/review split plus inventory. Source of
 | `executor` | subagent | `MiniMax-M3` | Implements one plan task: TDD, edit, verify, report |
 | `reviewer` | subagent | `glm-5.3` | Spec-compliance and code-quality review of one task (cross-model on purpose) |
 | `oracle` | subagent | `glm-5.3` | Read-only consult after two failed attempts |
-| `standardizer` | subagent | `glm-5.3` | Repo-wide standardization audit after a plan's task loop in a merged pass: kebab-case paths, AGENTS.md sections, docs/artifacts/ layout, changelog, catalog rows (from `project-standardization`), plus formatter/linter config presence, per-language naming/module-organization rules, and architecture boundary adherence (from `code-standardization`). Returns findings tagged quick-fix or recommendation. Read-only. |
+| `doc-standardizer` | subagent | `glm-5.3` | Repo/docs standardization audit after a plan's task loop: kebab-case paths, AGENTS.md sections, docs/artifacts/ layout, changelog, catalog rows, commit hygiene, versioning sync. Loads `project-standardization`. Returns findings tagged quick-fix or recommendation. Read-only. |
+| `code-standardizer` | subagent | `glm-5.3` | Code-structure audit after the doc-standardizer pass: formatter/linter config presence, per-language naming and module organization, architecture boundaries. Loads `code-standardization`. Returns findings tagged quick-fix or recommendation. Read-only. |
 | `documenter` | subagent | `glm-5.3` | Closes out a completed plan: writes the execution report to `docs/artifacts/features/`, updates every catalog/doc touched, commits as docs. Write-scoped to `docs/**` + root markdown. |
 
-`/full-cycle` runs as `planner` and, by default, dispatches the `orchestrator` subagent (mode `all`) to execute the plan in the same run, prompt to final report, no approval gates. This needs `subagent_depth >= 2` in opencode config so the orchestrator can in turn dispatch executor/reviewer; the `handoff` keyword skips the dispatch and prints the `/execute-plan` line for a fresh session instead. `/execute-plan` itself runs as `orchestrator` and dispatches implementer tasks to `executor`, reviews to `reviewer`, two-strike failures to `oracle`, post-implementation structure review to `standardizer`, and the documentation/report phase to `documenter`. Both paths fall back to the general subagent when a named one is missing.
+`/full-cycle` runs as `planner` and, by default, dispatches the `orchestrator` subagent (mode `all`) to execute the plan in the same run, prompt to final report, no approval gates. This needs `subagent_depth >= 2` in opencode config so the orchestrator can in turn dispatch executor/reviewer; the `handoff` keyword skips the dispatch and prints the `/execute-plan` line for a fresh session instead. `/execute-plan` itself runs as `orchestrator` and dispatches implementer tasks to `executor`, reviews to `reviewer`, two-strike failures to `oracle`, post-implementation structure review to `doc-standardizer` then `code-standardizer`, and the documentation/report phase to `documenter`. Both paths fall back to the general subagent when a named one is missing.
 
 ## MCP (opencode)
 
@@ -113,7 +114,7 @@ Which path a task takes depends on size.
 ### Medium feature (one plan)
 
 1. `/full-cycle <request>` runs the whole pipeline in one pass as the `planner`: `brainstorming` produces a design doc in `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-design.md`, then `writing-plans` turns it into `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-plan.md`, with no approval gates between phases. `no brainstorm` skips straight to the spec when the request is explicit enough.
-2. At the end of the pipeline the planner dispatches the `orchestrator` subagent (mode `all`) in the same run, instead of stopping at a handoff. The orchestrator branches as `<type>/<plan-slug>` (`feat` for features, `fix` for bug fixes), commits the plan and spec first, then runs its 8-step loop: `executor` per task, `reviewer` after each, `oracle` on two-strike failures, `standardizer` structure review (repo structure: kebab-case, AGENTS, docs/artifacts, catalogs; code structure: formatter/linter, per-language rules, architecture boundaries) with quick-fix `executor` passes, then `documenter` writes the execution report and updates catalogs. It commits at task boundaries, often works in a worktree, and returns the final report for the planner to relay.
+2. At the end of the pipeline the planner dispatches the `orchestrator` subagent (mode `all`) in the same run, instead of stopping at a handoff. The orchestrator branches as `<type>/<plan-slug>` (`feat` for features, `fix` for bug fixes), commits the plan and spec first, then runs its 8-step loop: `executor` per task, `reviewer` after each, `oracle` on two-strike failures, `doc-standardizer` then `code-standardizer` structure review (repo structure first, then code structure) with quick-fix `executor` passes, then `documenter` writes the execution report and updates catalogs. It commits at task boundaries, often works in a worktree, and returns the final report for the planner to relay.
 3. The `handoff` keyword opts out of single-pass: the planner prints the spec and plan paths plus `/execute-plan <plan-path>` for a fresh session. `/execute-plan` runs the same execution loop as `orchestrator` (standalone), and is also the path on harnesses without `subagent_depth >= 2` (the planner's dispatch needs it so the orchestrator can in turn dispatch executor/reviewer).
 4. Once spec and plan are approved, the agent commits on its own at plan-defined boundaries (the one carve-out from the no-unprompted-commit rule).
 5. Code review skills close the loop before merge.
