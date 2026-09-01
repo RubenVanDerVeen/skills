@@ -28,7 +28,7 @@ Most projects adopt the conventions layer. Formal ISO/IEC/IEEE norms are opt-in 
 - **kebab-case ASCII-only paths**: lowercase, hyphens, no spaces / underscores / PascalCase / non-ASCII. `README.md`, `AGENTS.md`, `CLAUDE.md`, `CHANGELOG.md`, `STANDARDS.md` are conventional exceptions.
 - **English structural paths**: dir / file names in English. Document *content* may be Dutch where the deliverable requires it.
 - **ISO 8601 date prefix**: `YYYY-MM-DD-` first, e.g. `2026-05-08-standup.md`.
-- **Conventional Commits 1.0.0 + Keep a Changelog 1.1.0 + SemVer 2.0.0** (shipped-software projects): commits, changelog, and version numbers form one coherent floor. `<type>(<scope>): <description>`; `CHANGELOG.md` grouped by version or sprint; versions follow SemVer 2.0.0 strict (during 0.x, `0.X+1.0` MAY break, `0.X.Y+1` is backwards-compatible only). Commits are enforced by the `commit-msg` hook installed in bootstrap step 10. Version policy, bump triggers, and multi-source sync: `references/versioning.md`.
+- **Conventional Commits 1.0.0 + Keep a Changelog 1.1.0 + SemVer 2.0.0** (shipped-software projects): commits, changelog, and version numbers form one coherent floor. `<type>(<scope>): <description>`; `CHANGELOG.md` grouped by version or sprint; versions follow SemVer 2.0.0 strict (during 0.x, `0.X+1.0` MAY break, `0.X.Y+1` is backwards-compatible only). Commits and doc structure are enforced by the `commit-msg` and `pre-commit` hooks installed in bootstrap step 10. Version policy, bump triggers, and multi-source sync: `references/versioning.md`.
 
 Rationale: `references/standards-stack.md`.
 
@@ -82,6 +82,7 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 | `templates/README-ai-assistance.md` | AI-assistance section appended to the project README: involvement level + skills-repo and workflow links |
 | `templates/post-commit-graphify` | Debounced git hook: refresh `graphify-out/` graph after commits (AST-only, no LLM). Copy to `.git/hooks/post-commit`. |
 | `templates/commit-msg` | Conventional Commits 1.0.0 enforcement hook (sh + grep, no deps). Copy to `.githooks/commit-msg`; see bootstrap step 10. |
+| `templates/pre-commit` | Doc-standards enforcement hook (em-dash ban, SKILL.md frontmatter, catalog sync, forbidden paths; sh + grep, no deps). Copy to `.githooks/pre-commit`; see bootstrap step 10. |
 
 ## Commands
 
