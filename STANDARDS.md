@@ -109,6 +109,7 @@ skills/
 ├── .gitattributes                         <- forces LF on .githooks/* (shebang safety)
 ├── .gitignore
 ├── .githooks/
+│   ├── pre-commit                         <- doc-standards enforcement hook
 │   └── commit-msg                         <- Conventional Commits enforcement hook
 ├── .claude/                               <- Claude Code tool settings (project)
 ├── commands/                              <- all slash commands live here
