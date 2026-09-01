@@ -3,7 +3,7 @@ name: project-standardization
 description: Use when bootstrapping or restructuring a project for AI coding agents (opencode, Codex, Cursor, Aider, GitHub Copilot, Hermes, plus Claude Code via a CLAUDE.md shim): creating AGENTS.md + CLAUDE.md shim, scaffolding the on-demand subdirectory at `.agents/`, choosing directory layout, setting up `docs/artifacts/` for specs/plans/reviews/reports from any framework, seeding cross-session memory, or applying the ISO/IEC/IEEE + industry standards stack. Triggers: "set up agent context", "scaffold project", "bootstrap project", "standardize this repo", "create AGENTS.md", "create CLAUDE.md", "project layout", "init repo structure", "where should X go". Three project-size tiers (small/medium/large) with separate references so irrelevant guidance is not loaded.
 ---
 
-# Project standardization skill
+## Overview
 
 The user runs projects of different sizes: single-script utilities, multi-component homelab infra, full team school projects. Each tier needs a different amount of agent scaffolding. **Loading large-project guidance into a small repo is the failure mode this skill exists to prevent.**
 
