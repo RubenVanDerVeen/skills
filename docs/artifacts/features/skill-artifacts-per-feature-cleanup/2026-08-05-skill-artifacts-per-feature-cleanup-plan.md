@@ -24,7 +24,7 @@ Branch: `docs/skill-artifacts-cleanup` cut from latest default branch.
 
 Make exactly these 6 edits. Each `oldString` is unique within its file.
 
-### Edit 1.1 — `SKILL.md` core rule (line 41)
+### Edit 1.1: `SKILL.md` core rule (line 41)
 
 File: `skills/rubens-project-standardization/SKILL.md`
 
@@ -37,7 +37,7 @@ with:
 - **Specs and plans live in the repo**: `docs/artifacts/features/<feature>/` (specs, plans, manifests, reports) plus `docs/artifacts/reviews/` (flat log), committed alongside the code. **Override clause**: this wins over any per-framework default (superpowers, GSD, `.planning/`). See `references/artifacts.md` § Per-framework redirect for the redirect mechanics; redirect before files land elsewhere.
 ```
 
-### Edit 1.2 — `references/bootstrap.md` step 6 (line 10)
+### Edit 1.2: `references/bootstrap.md` step 6 (line 10)
 
 This is the most consequential: the bootstrap checklist currently tells the agent to scaffold four subdirs that must not exist.
 
@@ -52,7 +52,7 @@ with:
 6. **Scaffold `docs/artifacts/`** (small when design history exists; medium when design history exists; large always): create `features/` and `reviews/` per `references/artifacts.md` (per-feature layout: one folder per feature under `features/<feature>/`, flat review log under `reviews/`). At small and medium tiers, only create it the moment the first artefact is being written; never pre-create empty.
 ```
 
-### Edit 1.3 — `references/small.md` intro brace set (line 7)
+### Edit 1.3: `references/small.md` intro brace set (line 7)
 
 File: `skills/rubens-project-standardization/references/small.md`
 
@@ -65,7 +65,7 @@ with:
 `docs/artifacts/` is **allowed** at this tier. Specs, plans, reviews, and reports are tied to features, not project size: a one-author utility can absolutely brainstorm a non-trivial change, write a plan for it, ship it, and commit a report of what shipped. Add `docs/artifacts/` the first time a real spec, plan, review, or report materialises, the same rule that applies to every tier. The layout below shows it as an optional directory; treat it as part of small projects the moment it becomes useful.
 ```
 
-### Edit 1.4 — `references/small.md` directory tree (lines 18-22)
+### Edit 1.4: `references/small.md` directory tree (lines 18-22)
 
 File: `skills/rubens-project-standardization/references/small.md`
 
@@ -85,7 +85,7 @@ with:
 │       └── reviews/             ← flat review log
 ```
 
-### Edit 1.5 — `references/small.md` anti-pattern (line 118)
+### Edit 1.5: `references/small.md` anti-pattern (line 118)
 
 File: `skills/rubens-project-standardization/references/small.md`
 
@@ -98,7 +98,7 @@ with:
 - Creating `docs/artifacts/` empty. Create it the moment a spec, plan, review, or report is being written; do not pre-create it as scaffolding.
 ```
 
-### Edit 1.6 — `references/medium.md` "When to add" (line 136)
+### Edit 1.6: `references/medium.md` "When to add" (line 136)
 
 File: `skills/rubens-project-standardization/references/medium.md`
 
