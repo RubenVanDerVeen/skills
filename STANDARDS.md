@@ -82,7 +82,7 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`
 
 Scope is the **skill folder or repo area** the change touches (`typst-pro`, `drawio-pro`, `readme`, `agents`).
 
-Enforcement: a tracked `commit-msg` hook (`.githooks/commit-msg`) rejects non-conforming subjects. Activate once per clone: `git config core.hooksPath .githooks` (see `opencode-install.md` step 10).
+Enforcement: tracked git hooks in `.githooks/` (commit-msg for Conventional Commits; pre-commit for markdown and skill-structure rules). Activate once per clone: `git config core.hooksPath .githooks` (see `opencode-install.md` step 10).
 
 ---
 

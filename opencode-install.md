@@ -126,9 +126,9 @@ The `skills/`, `commands/`, and `agents/` directories inside this repo are inact
 3. Copy each `agents/*.md` file (opencode agent definitions: `planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `doc-standardizer`, `code-standardizer`, `documenter`, `oracle`; `inventree` is optional and only on machines that register the homelab MCP server) to `~/.config/opencode/agents/` (global) or `.opencode/agents/` (per-project). opencode-only; Claude Code subagents use a different frontmatter format. Restart opencode afterwards; see `agents/README.md` for roles and tuning.
 
 
-### 10. Enable the commit-msg hook
+### 10. Enable the git hooks
 
-This repo ships a tracked `commit-msg` git hook (`.githooks/commit-msg`) that rejects non-Conventional-Commits messages, so agent-made and manual commits stay compliant. Git does not run hooks from a tracked directory until you point `core.hooksPath` at it. One-time per clone:
+This repo ships tracked git hooks (`.githooks/`) that reject non-Conventional-Commits messages, em-dashes in markdown, malformed SKILL.md frontmatter, new skills missing from the catalogs, and forbidden paths, so agent-made and manual commits stay compliant. Git does not run hooks from a tracked directory until you point `core.hooksPath` at it. One-time per clone:
 
 ```
 git config core.hooksPath .githooks
