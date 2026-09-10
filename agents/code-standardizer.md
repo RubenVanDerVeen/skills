@@ -2,7 +2,8 @@
 description: Reviews the executed branch diff (or a whole repo when the diff is structural) against the code-standardization skill: formatter/linter config presence, per-language naming and module-organization rules, architecture boundary adherence. Dispatch after a plan's task loop completes, after the doc-standardizer pass. Returns PASS or numbered findings tagged quick-fix or recommendation. Read-only; does not edit or dispatch.
 mode: subagent
 color: info
-model: zai-coding-plan/glm-5.3
+model: zai-coding-plan/glm-5.3-flash
+variant: high
 tools:
   write: false
   edit: false

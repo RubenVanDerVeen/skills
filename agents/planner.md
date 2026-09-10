@@ -3,6 +3,7 @@ description: Designs specs and implementation plans, then dispatches the orchest
 mode: primary
 color: "#22C55E"
 model: zai-coding-plan/glm-5.3
+variant: high
 tools:
   "homelab*": false
 permission:

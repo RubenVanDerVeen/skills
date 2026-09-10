@@ -3,6 +3,7 @@ description: "Purpose-built agent for managing the InvenTree parts inventory. Us
 mode: primary
 color: "#EAB308"
 model: minimax-coding-plan/MiniMax-M3
+variant: thinking
 tools:
   write: false
   edit: false

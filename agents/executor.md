@@ -3,6 +3,7 @@ description: Implements exactly one delegated task from an approved plan. Reads 
 mode: subagent
 color: success
 model: minimax-coding-plan/MiniMax-M3
+variant: thinking
 tools:
   task: false
   webfetch: false

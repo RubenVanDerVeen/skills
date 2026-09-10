@@ -3,6 +3,7 @@ description: Closes out a completed plan by writing its execution report and upd
 mode: subagent
 color: "#3B82F6"
 model: zai-coding-plan/glm-5.3
+variant: high
 tools:
   task: false
   webfetch: false

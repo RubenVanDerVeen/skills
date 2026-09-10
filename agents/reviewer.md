@@ -3,6 +3,7 @@ description: Reviews one completed task's changes against the plan or spec and f
 mode: subagent
 color: warning
 model: zai-coding-plan/glm-5.3
+variant: high
 tools:
   write: false
   edit: false

@@ -3,6 +3,7 @@ description: Read-only consult for hard problems. Architecture forks, debugging 
 mode: subagent
 color: error
 model: zai-coding-plan/glm-5.3
+variant: high
 tools:
   write: false
   edit: false
