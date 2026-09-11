@@ -12,7 +12,9 @@ desktop.ini
 # .vscode/
 # .idea/
 
-# Local opencode config (machine-specific: permission overrides, MCP secrets)
-opencode.json
+# Local opencode config (machine-specific: permission overrides, MCP secrets).
+# Root opencode.json IS tracked: it ships the sandbox-wide defaults (notably
+# subagent_depth) to every clone via the nas-repos-fetch bundle rsync.
 opencode.jsonc
 .opencode/
+!opencode.json
