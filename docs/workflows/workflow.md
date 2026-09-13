@@ -157,3 +157,4 @@ All three follow the `drawio-pro` style; their `tbSrc` / `Sources` fields point 
 - `AGENTS.md`: repo conventions and skill-authoring rules
 - `external-skills.md`: full catalog of external sources with triggers
 - `opencode-install.md`: install order for the opencode side
+- [sbx-flow.md](sbx-flow.md): the sbx runner, Plane issue to sandboxed opencode run to agent-authored PR (the shell around this workflow).
