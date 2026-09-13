@@ -141,8 +141,9 @@ Visual companions to this document, in the same `docs/workflows/` folder:
 | `stack.drawio` | The AI stack: opencode harness (cross-model split), the four skill layers, ten custom opencode agents, and the homelab MCP |
 | `plan-flow.drawio` | Single-plan lifecycle: `/full-cycle` single-pass (planner dispatches the orchestrator in the same run) with the `handoff` escape to a fresh-session `/execute-plan`; orchestrator dispatches executor/reviewer/oracle, then runs structure review and documentation phases |
 | `multi-plan-flow.drawio` | Multi-plan orchestration: decomposition outline, foundation + N parallel sub-plans, manifest handoff, fresh-session integration |
+| `sbx-flow.drawio` | The sbx runner pipeline: Plane issue to sandboxed opencode run to agent-authored PR, with the dispatch split |
 
-All three follow the `drawio-pro` style; their `tbSrc` / `Sources` fields point back to this document.
+All four follow the `drawio-pro` style; their `tbSrc` / `Sources` fields point back to this document.
 
 ## House conventions
 

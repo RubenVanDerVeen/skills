@@ -106,7 +106,7 @@ Secrets are env-var *names* in `daemon/config.json`, resolved at runtime. Keys t
 | `console_base` + project `workspace_id` | unset | Space-linked dispatch through the console BFF. |
 | `merge_on_complete` | `false` | Human-only merging when false; ff-merge to `integration_branch` only when explicitly true. |
 | `sandbox_memory` | `6g` | `sbx create -m` cap (empty string disables). |
-| `stall_timeout`, `task_timeout` | `600` s, `3600` s | Idle-watchdog and wall-clock caps. |
+| `stall_timeout`, `task_timeout` | `600` s, `600` s (live config ships `3600` for task_timeout) | Idle-watchdog and wall-clock caps. |
 | `sandbox_retention_days` | `7` | Reap terminal bridge sandboxes older than this (`0` disables). |
 | `opencode_version` | `1.18.29` | Pinned npm install during provisioning. |
 | `serve_host`, `serve_port`, `bridge_token` | `172.21.0.1:4096`, `BRIDGE_TOKEN` | Serve bridge (used by make-sandbox). |
