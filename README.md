@@ -105,3 +105,4 @@ See `AGENTS.md` for the full rule, in the section "Adding or modifying a skill" 
   skill system: brainstorm > spec > plan > subagent execution > review.
   See the [skills repo](https://github.com/RubenVanDerVeen/skills) and
   [how the workflow is organized](https://github.com/RubenVanDerVeen/skills/blob/main/docs/workflows/workflow.md).
+  See [sbx-flow.md](https://github.com/RubenVanDerVeen/skills/blob/main/docs/workflows/sbx-flow.md) for the Plane-to-PR runner flow.

@@ -1,0 +1,132 @@
+<mxfile host="65bd71144e">
+    <diagram id="sbxflow" name="Sbx-Flow">
+        <mxGraphModel dx="1027" dy="577" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1600" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="sbx workflow: Plane to PR" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="10" width="1320" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="n1" value="Plane issue assigned to agent" style="ellipse;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="620" y="60" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="n2" value="Poll Plane (30 s)&#xa;ready state group only" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="560" y="140" width="280" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="n3" value="Claim: PATCH to In Progress&#xa;(best-effort)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="560" y="220" width="280" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="n4" value="Provision: shallow clone --depth 1&#xa;copy .opencode bundle; write .base-sha" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="560" y="300" width="280" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="n5" value="Dispatch split&#xa;(type label + config)" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
+                    <mxGeometry x="630" y="390" width="140" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="nL1" value="research / docs -&gt; profile gateway&#xa;gateway session on matching profile;&#xa;no sandbox; answers land as issue comments" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="70" y="540" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="nC1" value="code -&gt; direct sandbox&#xa;sbx create oc-&lt;id8&gt; (-m 6g); egress allow-list,&#xa;auth.json, pinned opencode install" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="560" y="540" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="nR1" value="space-linked -&gt; console BFF&#xa;session in Workspace Space (workspace_id);&#xa;BFF failure falls back to gateway" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="1070" y="540" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="nC2" value="opencode run (CLI, permission: allow)&#xa;prompt = .task-prompt.md (PR_DESCRIPTION.md contract);&#xa;held sbx exec + 45 s heartbeat; EXIT:$RC marker" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="560" y="650" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n6" value="Watchdog: poll EXIT: every 15 s&#xa;idle &gt; stall_timeout (600 s) -&gt; one --continue retry in place&#xa;second stall or task_timeout -&gt; fail" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="560" y="770" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n7" value="Collect branch + last 5 commits + diff --stat vs .base-sha;&#xa;amend PR_DESCRIPTION.md out of the push;&#xa;git push -u origin HEAD" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="560" y="890" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="n8" value="gh pr create --title &lt;first line&gt; --body-file PR_DESCRIPTION.md&#xa;(agent-authored; merge human-only)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="550" y="1000" width="300" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="n9" value="Report to Plane: comment + PATCH&#xa;In Review (PR: &lt;url&gt;) / Blocked (FAILED: &lt;reason&gt;)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="560" y="1100" width="280" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="n10" value="Stop, not rm&#xa;(retention sweep reaps after 7 d)" style="ellipse;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="610" y="1200" width="180" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="failnote" value="failure -&gt; Blocked, human re-queues&#xa;(move issue back to ready group;&#xa;next poll re-queues it)" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;strokeWidth=2;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="1070" y="1100" width="260" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend" value="sbx flow: the OpenCode Runner daemon (hermes-console) turns Plane issues assigned to the agent user into sandboxed opencode runs and reports back to the board: clone, run, push a branch, agent-authored PR, stop the sandbox for review. The AI workflow inside opencode run is workflow.md / plan-flow.drawio; this diagram is only the Plane-to-PR shell.&#xa;&#xa;Shapes:&#xa;- ellipse = start / stop&#xa;- rectangle = process / action&#xa;- rhombus = dispatch split (one of three labeled paths)&#xa;- parallelogram = GitHub action (PR opened)&#xa;&#xa;Rules: the watchdog and stall retry are direct-sandbox machinery (stall_timeout 600 s code default, one in-place --continue retry; task_timeout wall-clock cap, 600 s code default, live config ships 3600 s); merging is human-only via the GitHub PR queue (merge_on_complete false); failure means a comment plus Blocked, and a human re-queues by moving the issue back to the ready group; sandboxes are stopped, not removed - the retention sweep reaps them after 7 days.&#xa;&#xa;Sources: docs/workflows/sbx-flow.md; docs/workflows/workflow.md (inner AI workflow)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;align=left;verticalAlign=top" parent="1" vertex="1">
+                    <mxGeometry x="70" y="1300" width="440" height="260" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n1" target="n2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n2" target="n3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n3" target="n4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n4" target="n5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="code (default)" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="n5" target="nC1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" value="research / docs" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;fontSize=10" parent="1" source="n5" target="nL1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="400" y="435"/>
+                            <mxPoint x="400" y="580"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e7" value="space-linked" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10" parent="1" source="n5" target="nR1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1000" y="435"/>
+                            <mxPoint x="1000" y="580"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e8" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="nC1" target="nC2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5" parent="1" source="nL1" target="n6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="200" y="810"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0.5" parent="1" source="nR1" target="n6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1200" y="810"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e11" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="nC2" target="n6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n6" target="n7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e13" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n7" target="n8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e14" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n8" target="n9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e15" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n9" target="n10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e16" value="failure" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;dashed=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=10" parent="1" source="n9" target="failnote" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="950" y="1130"/>
+                            <mxPoint x="950" y="1145"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
