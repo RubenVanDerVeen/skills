@@ -31,6 +31,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - Standardization git hooks: new `pre-commit` hook enforcing markdown em-dash ban, SKILL.md frontmatter rules, catalog sync for new skills, and forbidden paths. Activate with `git config core.hooksPath .githooks`. Spec: docs/artifacts/features/standardization-githooks/2026-09-01-standardization-githooks-design.md.
 - sbx-flow.md workflow doc plus companion `sbx-flow.drawio` diagram: the OpenCode Runner pipeline from Plane issue to sandboxed opencode run to agent-authored PR (board contract, dispatch split, watchdog/self-heal, bridge, failure paths, infra).
 - `external-skills.md`, `README.md`: catalog Alibaba's `ocr` CLI (open-code-review), a hybrid deterministic pipeline + LLM agent for diff or full-file code review with line-level comments and OpenAI-compatible endpoints. Spike report at `docs/artifacts/reviews/2026-09-16-open-code-review-spike.md` (verdict: go-with-caveats for this markdown-only repo).
+- `skills/pr-description/`: standardized description for agent-created PRs (Conventional Commits title + Problem / What changed and why / Verification / Docs). Wired into `agents/documenter.md` step 3 and the orchestrator's step-8 dispatch. Spec: `docs/artifacts/features/pr-description/2026-09-16-pr-description-design.md`.
 
 ### Changed
 
