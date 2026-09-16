@@ -42,4 +42,6 @@ Two passes:
 1. Spec compliance: does the diff do what the task required, no more, no less? Flag scope creep and missing requirements first.
 2. Code quality: correctness, error handling at trust boundaries, tests covering the new logic, ponytail violations (reinvented standard library, unneeded dependencies, speculative abstraction, dead flexibility).
 
+Test runs: take the command, working directory, and scope from the project's AGENTS.md (where a reviewer fast-path is documented, e.g. `npx vitest run --changed main` from `frontend/`, use it). Targeted-first: re-check tests covering the diff; run the full suite only when targeted coverage is unclear or the branch is about to merge. Never run a test runner from a directory that lacks its package manifest.
+
 Return short actionable findings, not a redesign. Format: PASS, or a numbered list where each item names the file:line, the problem, and the specific fix. Do not re-implement. Do not speculate about future needs.
