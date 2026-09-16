@@ -50,6 +50,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - `commands/full-cycle.md`: rewritten for single-pass; removed the `at once` gate-collapse special-case (gates are gone, so it was equivalent to the new default).
 - `docs/artifacts/`: reorganized from type-bucket split (`specs/`, `plans/`, `multi-plans/`, `reports/`) to per-feature layout (`features/<feature>/`, flat contents, filename suffix signals type). `reviews/` stays flat. Specs, plans, generators, templates, references, and cross-references updated; filenames preserved exactly. The now-empty `reports/` directory remains on disk, locked by the Nextcloud sync client; remove it once the client releases its handle.
 - Split the `standardizer` agent into `doc-standardizer` (repo/docs conventions, loads `project-standardization`) and `code-standardizer` (code structure, loads `code-standardization`); plan flows now run both audits sequentially with one combined quick-fix executor pass.
+- `agents/executor.md`, `agents/reviewer.md`, `commands/execute-plan.md`: test runs follow the project's AGENTS.md (command, cwd, scope), targeted-first for executors and reviewers; never invoke a test runner from a directory lacking its package manifest. Spec: `docs/artifacts/features/vitest-cwd-discipline/2026-09-16-vitest-cwd-discipline-design.md`.
 
 ### Fixed
 
