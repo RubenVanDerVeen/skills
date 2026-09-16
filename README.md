@@ -18,6 +18,7 @@ Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands
 | [`synctool-sync`](./skills/synctool-sync/SKILL.md) | Drive the `synctool` CLI to run saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
 | [`multi-plan-orchestration`](./skills/multi-plan-orchestration/SKILL.md) | Coordinator skill for too-large tasks: splits a brainstorm into foundation + N parallel sub-plans. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to `brainstorming` + `writing-plans`. Slash command: `/multi-plan`. |
 | [`skill-harvest`](./skills/skill-harvest/SKILL.md) | Mines recent opencode sessions for repeated corrections and skill gaps; report, approve, apply. Slash command: `/harvest`. |
+| [`pr-description`](./skills/pr-description/SKILL.md) | Standardized description for agent-created PRs. Conventional Commits title line plus Problem, What changed and why, Verification, Docs sections. |
 
 ## Agents
 
@@ -84,9 +85,10 @@ skills/
     ├── rubens-project-standardization/SKILL.md
     ├── synctool-sync/SKILL.md
     ├── multi-plan-orchestration/SKILL.md
-    └── skill-harvest/
-        ├── SKILL.md
-        └── references/extraction.md
+    ├── skill-harvest/
+    │   ├── SKILL.md
+    │   └── references/extraction.md
+    └── pr-description/SKILL.md
 ```
 
 ## Adding a skill
