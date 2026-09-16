@@ -32,6 +32,7 @@ Beyond the personal skills in this repo, several external sources are installed 
 - **graphify** - codebase knowledge graph builder
 - **vercel-labs/agent-skills** - React / Next.js / React Native / web-design pack
 - **stop-slop** - removes AI writing patterns from prose
+- **open-code-review** - Alibaba's AI code-review CLI (deterministic pipeline + LLM agent)
 
 ## Install
 

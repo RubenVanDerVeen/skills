@@ -11,6 +11,7 @@ For install commands, see `opencode-install.md`.
 - "What is graphify / caveman / superpowers / markitdown / vercel-* / stop-slop / ponytail / opencode-see-image?"
 - Picking which tool to reach for when several could apply.
 - Briefing a new agent session on what is available.
+- You want a cheap deterministic first pass over a diff or unfamiliar directory before reviewing it by hand (the `ocr` CLI).
 
 ## Sources
 
@@ -24,6 +25,7 @@ For install commands, see `opencode-install.md`.
 | stop-slop | Single skill | Removes AI tells from prose: banned phrases, structural clichés, and sentence-level rules (no em-dashes, no Wh- starters, active voice). |
 | ponytail | Skill pack | Lazy-dev philosophy + six skills that force the laziest solution that works. Default mode (`full`) ships YAGNI-first output and bakes itself into every response. |
 | opencode-see-image | opencode plugin | Lets a text-only primary model (e.g. `glm-5.3`) see images by routing them to a vision model (MiniMax-M3 via `minimax-coding-plan`) and returning a text description. |
+| open-code-review | CLI | Alibaba's AI code-review CLI: hybrid deterministic pipeline + LLM agent, diff or full-file review, line-level comments, OpenAI-compatible endpoints. |
 
 ## Per-source notes
 
@@ -127,6 +129,15 @@ Triggers: "GLM-5.3 can't see this image", "what's in this screenshot", any image
 
 Source: https://github.com/alfaoz/opencode-see-image
 Install: see `opencode-install.md` step 8.
+
+### open-code-review
+
+Alibaba's `ocr` CLI: an AI code-review tool built as a hybrid of deterministic engineering (file selection, file bundling, template-based rule matching) and an LLM agent for dynamic context gathering. Two modes matter here: `ocr review` for diffs (workspace, branch range, or single commit) and `ocr scan` for whole files, no git history needed. Comments come back with line-level positioning and JSON output, which makes the results consumable by an agent.
+
+It also has a delegation mode (`ocr delegate preview|rule`) that runs only the deterministic layer and hands the actual review to the host coding agent, no separate API key required, plus an official native OpenCode plugin. Spike running 2026-09-16, report lands in `docs/artifacts/reviews/2026-09-16-open-code-review-spike.md`.
+
+Install: `npm install -g @alibaba-group/open-code-review` (Git >= 2.41 required)
+Source: https://github.com/alibaba/open-code-review
 
 ## Install
 
