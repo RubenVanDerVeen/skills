@@ -34,7 +34,7 @@ For shipped-software projects (Tauri apps, CLIs, libraries, installers): uncomme
 - **Canonical source:** <one file + field, e.g. `src-tauri/tauri.conf.json` -> `version`>
 - **Sync targets** (must mirror canonical source in every release commit): <e.g. `src-tauri/Cargo.toml`, `package.json`>
 - **Policy:** SemVer 2.0.0. Decision table + release-cut recipe: `references/versioning.md` in the `project-standardization` skill.
-- **Trigger:** plan execution appends to `[Unreleased]` in `CHANGELOG.md`. Cutting a version is deliberate, user-invoked.
+- **Trigger:** plan execution appends to `[Unreleased]` in `CHANGELOG.md`. At plan close-out the documenter ship-bumps the version when the branch carries feat/fix commits and this section declares a canonical source. Tagging a release stays deliberate, user-invoked.
 - **Last release:** <tag + date, e.g. `v0.3.0` - `2026-08-02`>
 -->
 

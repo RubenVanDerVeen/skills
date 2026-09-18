@@ -32,12 +32,13 @@ Read commits since the last tag (or, with no tags, since the canonical source's 
 
 ## Trigger rule
 
-Two phases, by design.
+Three touchpoints, by design.
 
 - **During plan execution**: every feature or fix task appends the user-visible change to the `[Unreleased]` section of `CHANGELOG.md` in Keep a Changelog format. This is the only thing plan execution touches in CHANGELOG.
-- **Release-cut** (deliberate, user-invoked): the orchestrator classifies commits per the decision rule, recommends the next version to the user, and on confirmation dispatches an executor that (a) edits the canonical source, (b) edits every sync target, (c) renames `[Unreleased]` to `## [X.Y.Z] - YYYY-MM-DD`, (d) adds the link ref line at the bottom, (e) commits, (f) optionally tags `vX.Y.Z` when the project's CI triggers release builds from tags.
+- **Ship bump (plan close-out, default)**: when a shipped branch contains bump-worthy commits per the decision rule (any `feat`, `fix:`, `perf:`, or breaking signal since the last version) and the project declares a canonical version source, the documenter bumps the version at close-out: edit the canonical source, edit every sync target, rename `[Unreleased]` to `## [X.Y.Z] - YYYY-MM-DD`, add the link ref, all in a single `chore(release): vX.Y.Z` commit. Docs-only ships leave `[Unreleased]` open and commit nothing. Projects without a declared version source skip the bump; the execution report says so in one line.
+- **Release-cut** (deliberate, user-invoked): unchanged. Use it when the user explicitly asks to cut a release, wants a different version than the classification produces, or needs the `vX.Y.Z` tag for CI. The orchestrator classifies commits, recommends the next version, and on confirmation dispatches an executor that (a) edits the canonical source, (b) edits every sync target, (c) renames `[Unreleased]` to `## [X.Y.Z] - YYYY-MM-DD`, (d) adds the link ref line at the bottom, (e) commits, (f) optionally tags `vX.Y.Z` when the project's CI triggers release builds from tags.
 
-There is no automatic continuous bumping. Cutting a version is an act, not a side-effect.
+The ship bump finalizes the version; it never tags. Cutting a tag is an act, not a side-effect.
 
 ## Source-of-truth declaration
 
