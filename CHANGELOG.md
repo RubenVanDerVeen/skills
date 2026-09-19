@@ -14,6 +14,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 
 ### Added
 
+- Custom `explore` subagent pinned to `zai-coding-plan/glm-5.3-flash` (`high` variant): read-only codebase recon plus web lookup; shadows the opencode built-in of the same name.
 - `STANDARDS.md`: human-readable standards summary at repo root.
 - `CHANGELOG.md`: this file.
 - `.gitignore`: minimal (editor swap, OS files).
