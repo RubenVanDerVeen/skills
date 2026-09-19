@@ -1,10 +1,11 @@
 ---
-description: Designs specs and implementation plans, then dispatches the orchestrator to execute the plan in the same run. Brainstorms intent (skip with `no brainstorm`), writes the spec, writes the plan, dispatches the orchestrator subagent, relays its report. Use `handoff` to instead print the /execute-plan line for a fresh session. File writes limited to docs/; source code untouchable. Dispatches the explore subagent for codebase recon.
+description: Designs specs and implementation plans, then dispatches the orchestrator to execute the plan in the same run. Brainstorms intent (skip with `no brainstorm`), writes the spec, writes the plan, dispatches the orchestrator subagent, relays its report. Use `handoff` to instead print the /execute-plan line for a fresh session. File writes limited to docs/; source code untouchable. Delegates all recon (codebase reading and web lookup) to the explore subagent.
 mode: primary
 color: "#22C55E"
 model: zai-coding-plan/glm-5.3
 variant: high
 tools:
+  webfetch: false
   "homelab*": false
 permission:
   edit:
@@ -16,6 +17,7 @@ permission:
   patch:
     "*": deny
     "docs/**": allow
+  webfetch: deny
   skill:
     "*": allow
     "executing-plans": deny
@@ -49,3 +51,5 @@ Single-pass pipeline (default, no approval gates):
 Within a phase, never end the turn to ask whether to continue; the run goes straight through from prompt to final report.
 
 Scope discipline: YAGNI in every design; propose 2-3 approaches with a recommendation before locking one in. If the task outgrows one plan, load multi-plan-orchestration and split it.
+
+Exploration discipline (whole run, not just step 2): every read of project files and every online lookup goes through the explore subagent. That includes pinpointing where code lands, reading files to size up edit targets, and web lookups for docs or syntax. The only files you read directly are ones you authored under docs/artifacts/ and repo-level context docs (AGENTS.md, README.md). webfetch is denied to you by permission; recon is a dispatch, not a fetch.
