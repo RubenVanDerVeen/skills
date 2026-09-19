@@ -9,7 +9,7 @@ Keywords in `$ARGUMENTS`:
 - `handoff`: print the /execute-plan line for a fresh session instead of dispatching. Use for huge tasks where the planner's context should not carry into execution.
 
 Steps:
-1. Brainstorm (unless `no brainstorm` is present, or the request is explicit enough to spec without it): load the `brainstorming` skill; explore intent, requirements, and design. Dispatch the `explore` subagent for codebase recon.
+1. Brainstorm (unless `no brainstorm` is present, or the request is explicit enough to spec without it): load the `brainstorming` skill; explore intent, requirements, and design. Dispatch the `explore` subagent for codebase recon and web lookups.
 2. Spec: write the design to `docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-design.md` (today's date).
 3. Plan: load the `writing-plans` skill; write the plan to `docs/artifacts/features/<topic>/YYYY-MM-DD-<slug>-plan.md`, referencing the spec.
 4. Execute (default): dispatch the `orchestrator` subagent with the spec and plan paths; it branches, runs executor/reviewer per task, escalates two-strike failures to `oracle`, then runs a structure review (`doc-standardizer` then `code-standardizer`, plus quick-fix `executor` passes) and a documentation phase (`documenter` writes the execution report to `docs/artifacts/features/` and updates catalogs), commits at boundaries, and returns a final report. Relay that report. If `orchestrator` is unavailable, dispatch `general` with the same instructions; if no subagent dispatch is possible, fall back to step 5.

@@ -36,6 +36,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 
 ### Changed
 
+- `planner` agent delegates all exploration to the `explore` subagent: body rule covering the whole run plus `webfetch` denied in frontmatter.
 - Repo re-scoped from skills catalog to agent environment monorepo: the eight skill folders moved into a top-level `skills/` directory (`git mv`, history preserved). Catalogs, layout trees, and sync instructions updated in `README.md`, `AGENTS.md`, `STANDARDS.md`, `opencode-install.md`, and the two `SKILL.md` files with self-referencing sync steps.
 - `AGENTS.md`: branch model `master` → `main`; added `synctool-sync` row to the Current skills table.
 - `typst-pro`: bumped `@local/typst-tools` baseline `0.1.2` → `0.1.8` across skill examples, imports, and install paths. Factual references (fixed-in bug notes, rename reset point, version-numbering example, `@preview` pins) kept at `0.1.2`.
