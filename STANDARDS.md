@@ -22,6 +22,7 @@ Two layers: formal ISO/IEC/IEEE norms and industry conventions.
 | Kebab-case ASCII paths  | **yes**       | All directory and filenames |
 | English structural paths | **yes**     | Dir names in English; content may be Dutch where applicable |
 | Conventional Commits 1.0.0 | **yes**    | Commit messages |
+| Conventional Branch 1.1.0 | **yes**    | Git branch names |
 | Keep a Changelog 1.1.0  | **yes**       | `CHANGELOG.md` format |
 
 This is a content-only agent environment repo (skills, slash commands, agent definitions). Most formal norms are not adopted; the conventions layer is the floor.
@@ -83,6 +84,37 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`
 Scope is the **skill folder or repo area** the change touches (`typst-pro`, `drawio-pro`, `readme`, `agents`).
 
 Enforcement: tracked git hooks in `.githooks/` (commit-msg for Conventional Commits; pre-commit for markdown and skill-structure rules). Activate once per clone: `git config core.hooksPath .githooks` (see `opencode-install.md` step 10).
+
+---
+
+## Branches: Conventional Branch 1.1.0
+
+Format: `<type>/<description>`. Specification: <https://conventionalbranch.org/>.
+
+- Lowercase letters, digits, hyphens. Dots only for release versions (`release/v1.2.0`). No underscores, no spaces, no consecutive, leading, or trailing separators.
+- Trunk branches (`main`) carry no prefix.
+- Prefixes `docs/`, `refactor/`, `test/`, `ci/` are a project extension mirroring the matching Conventional Commit type (the spec allows custom types when documented). Multi-plan runs append a sub-plan segment instead of nesting: `feat/<slug>-spN-<name>` (git cannot hold `feat/<slug>` and `feat/<slug>/sp-1` at once: ref file/dir conflict).
+
+| Prefix | Use |
+|--------|-----|
+| `feature/` or `feat/`  | New features |
+| `bugfix/` or `fix/`    | Bug fixes |
+| `hotfix/`              | Urgent fixes |
+| `release/`             | Release preparation |
+| `chore/`               | Non-code tasks (deps, tooling) |
+| `docs/`, `refactor/`, `test/`, `ci/` | Project extension: mirrors the Conventional Commit type |
+| `ai/`, `claude/`, `codex/`, `copilot/`, `cursor/` | AI agent source prefixes (spec v1.1.0; allowed, not required here) |
+
+```
+✅ feat/conventional-branch
+✅ fix/header-bug
+✅ feat/skills-md-sp2-catalogs
+❌ Feature/Add-Login    (uppercase)
+❌ plan-my-plan         (no type prefix)
+❌ fix/header_bug       (underscore)
+```
+
+Agents apply this by default: the orchestrator branches as `<type>/<plan-slug>` when executing a plan (see `agents/orchestrator.md` and `commands/execute-plan.md`).
 
 ---
 
@@ -185,6 +217,7 @@ Not applicable in the strict sense: this catalog has no per-sprint exports or ge
 
 - Full standards-stack rationale: research paper <https://portfolio.rvdv-lab.nl/research.html?id=project-standaardenpakket-voor-het-idp-project> (local copy at `docs/research/<paper>.pdf` when present).
 - Conventional Commits 1.0.0: <https://www.conventionalcommits.org/en/v1.0.0/>
+- Conventional Branch 1.1.0: <https://conventionalbranch.org/>
 - Keep a Changelog 1.1.0: <https://keepachangelog.com/en/1.1.0/>
 - ISO 8601 date format: <https://www.iso.org/iso-8601-date-and-time-format.html>
 - `AGENTS.md` convention: <https://agents.md>
