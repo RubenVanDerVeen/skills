@@ -364,8 +364,8 @@ Run each; all must pass:
 # 2. Conventional Branch named in all 7 living docs
 Select-String -Path STANDARDS.md,"skills\rubens-project-standardization\templates\STANDARDS.md",AGENTS.md,"agents\orchestrator.md","commands\execute-plan.md","skills\rubens-project-standardization\references\standards-stack.md",CHANGELOG.md -Pattern "Conventional Branch"
 
-# 3. Legacy plan-<name> only in append-only history (hits allowed ONLY under docs\artifacts\)
-Select-String -Path (Get-ChildItem -Recurse -Include *.md -Exclude REPORT,test) -Pattern "plan-<name>" | Where-Object { $_.Path -notmatch "docs.artifacts" }
+# 3. Legacy plan-<name> only in append-only history (hits allowed under docs\artifacts\ and the CHANGELOG history note)
+Select-String -Path (Get-ChildItem -Recurse -Include *.md -Exclude REPORT,test) -Pattern "plan-<name>" | Where-Object { $_.Path -notmatch "docs.artifacts|CHANGELOG" }
 
 # 4. Branch name is spec-compliant
 git branch --show-current   # expect: docs/conventional-branch
