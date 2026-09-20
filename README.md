@@ -23,7 +23,7 @@ Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands
 
 ## Agents
 
-Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `doc-standardizer`, `code-standardizer`, `documenter`, `explore`, `oracle`, and `inventree` for InvenTree inventory sessions via the homelab MCP; see [`agents/README.md`](./agents/README.md) for the full roster) live in the top-level `agents/` directory. Per-agent skill denylists cut startup context ~2-4k tokens per session. Source of truth in `agents/`; copy each `agents/*.md` to `~/.config/opencode/agents/` to activate.
+Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `lazy-dev` (lean-plan gate), `doc-standardizer`, `code-standardizer`, `documenter`, `explore`, `oracle`, and `inventree` for InvenTree inventory sessions via the homelab MCP; see [`agents/README.md`](./agents/README.md) for the full roster) live in the top-level `agents/` directory. Per-agent skill denylists cut startup context ~2-4k tokens per session. Source of truth in `agents/`; copy each `agents/*.md` to `~/.config/opencode/agents/` to activate.
 
 ## External skills
 

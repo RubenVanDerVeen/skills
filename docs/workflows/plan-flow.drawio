@@ -31,11 +31,17 @@
                 <mxCell id="n6" value="Plan approved?" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
                     <mxGeometry x="150" y="445" width="140" height="90" as="geometry"/>
                 </mxCell>
+                <mxCell id="nLazyDev" value="lazy-dev: lean-plan gate&#xa;(PASS or findings, max 2 rounds)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                    <mxGeometry x="85" y="540" width="270" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_nLazyDevn7" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="nLazyDev" target="n7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="n7" value="Dispatch ORCHESTRATOR subagent&#xa;(single-pass, same run; needs subagent_depth &gt;= 2)&#xa;DEFAULT - no approval gates" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
-                    <mxGeometry x="85" y="552" width="270" height="62" as="geometry"/>
+                    <mxGeometry x="85" y="602" width="270" height="62" as="geometry"/>
                 </mxCell>
                 <mxCell id="n7h" value="handoff keyword only:&#xa;print /execute-plan &lt;plan-path&gt;&#xa;for a FRESH session" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
-                    <mxGeometry x="85" y="645" width="270" height="58" as="geometry"/>
+                    <mxGeometry x="85" y="695" width="270" height="58" as="geometry"/>
                 </mxCell>
                 <mxCell id="m1" value="Orchestrator setup:&#xa;read plan + spec (explore subagent recon);&#xa;branch &lt;type&gt;/&lt;plan-slug&gt;;&#xa;commit plan+spec as &#39;docs:&#39;;&#xa;build todo (1 item per task)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="810" y="550" width="280" height="70" as="geometry"/>
@@ -91,7 +97,7 @@
                 <mxCell id="e_n5n6" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" parent="1" source="n5" target="n6" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="e_n6n7" value="Yes (default)" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="n6" target="n7" edge="1">
+                <mxCell id="e_n6n7" value="Yes (default)" style="edgeStyle=none;endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10" parent="1" source="n6" target="nLazyDev" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="e_n4no" value="No (revise)" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;fontSize=10" parent="1" source="n4" target="n3" edge="1">
@@ -124,7 +130,7 @@
                 <mxCell id="e_n7hm1" value="fresh session" style="edgeStyle=orthogonalEdgeStyle;endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.9;fontSize=10;fontStyle=2" parent="1" source="n7h" target="m1" edge="1">
                     <mxGeometry x="0.1473" y="3" relative="1" as="geometry">
                         <Array as="points">
-                            <mxPoint x="410" y="674"/>
+                            <mxPoint x="410" y="724"/>
                             <mxPoint x="410" y="613"/>
                         </Array>
                         <mxPoint as="offset"/>
