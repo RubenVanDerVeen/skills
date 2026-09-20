@@ -18,4 +18,4 @@ Steps:
 
 No approval gates: the run goes straight through from prompt to final report. Do not end the turn between phases to ask whether to continue; end only at the final report (or the handoff block).
 
-Requires `subagent_depth >= 2` in opencode config so the orchestrator can dispatch executor/reviewer. If unset, the dispatch fails with "Subagent depth limit reached"; in that case fall back to step 5.
+Requires `subagent_depth >= 2` in opencode config so the orchestrator can dispatch executor/reviewer. If unset, the dispatch fails with "Subagent depth limit reached"; in that case fall back to step 6.
