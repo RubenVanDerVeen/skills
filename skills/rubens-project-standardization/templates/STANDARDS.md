@@ -22,6 +22,7 @@ Two layers: formal ISO/IEC/IEEE norms and industry conventions.
 | Kebab-case ASCII paths  | **yes**       | All directory and filenames |
 | English structural paths | **yes**      | Dir names in English; content may be Dutch |
 | Conventional Commits 1.0.0 | **yes**    | Commit messages |
+| Conventional Branch 1.1.0 | **yes**    | Git branch names |
 | Keep a Changelog 1.1.0  | **yes**       | `CHANGELOG.md` format |
 | SemVer 2.0.0            | **yes** (when shipped) | Version numbers for releases |
 
@@ -84,6 +85,23 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`
 Scope is the **module or component**, not the discipline. `feat(remote-controller)` not `feat(electrical)`.
 
 Enforcement: a tracked `commit-msg` hook (`.githooks/commit-msg`) rejects non-conforming subjects. Activate once per clone: `git config core.hooksPath .githooks` (installed by the `project-standardization` bootstrap, step 10).
+
+---
+
+## Branches: Conventional Branch 1.1.0
+
+Format: `<type>/<description>`. Specification: <https://conventionalbranch.org/>.
+
+- Lowercase letters, digits, hyphens. Dots only for release versions (`release/v1.2.0`). No underscores, no spaces, no consecutive, leading, or trailing separators.
+- Trunk branches (`main`, `master`, `develop`) carry no prefix.
+- Spec prefixes: `feature/` (`feat/`), `bugfix/` (`fix/`), `hotfix/`, `release/`, `chore/`. Extra types mirroring Conventional Commits (`docs/`, `refactor/`, `test/`, `ci/`) are a sanctioned team extension: document any custom type here so tooling and teammates know it.
+
+```
+✅ feat/add-login-page
+✅ fix/header-bug
+❌ Feature/Add-Login    (uppercase)
+❌ my-branch            (no type prefix)
+```
 
 ---
 
@@ -187,6 +205,7 @@ Each is append-only history. If a spec changes mid-implementation, edit in place
 
 - Full standards-stack rationale: research paper <https://portfolio.rvdv-lab.nl/research.html?id=project-standaardenpakket-voor-het-idp-project> (local copy at `docs/research/<paper>.pdf` when present).
 - Conventional Commits 1.0.0: <https://www.conventionalcommits.org/en/v1.0.0/>
+- Conventional Branch 1.1.0: <https://conventionalbranch.org/>
 - Keep a Changelog 1.1.0: <https://keepachangelog.com/en/1.1.0/>
 - SemVer 2.0.0: <https://semver.org/spec/v2.0.0.html>
 - ISO 8601 date format: <https://www.iso.org/iso-8601-date-and-time-format.html>
