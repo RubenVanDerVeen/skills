@@ -33,6 +33,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - sbx-flow.md workflow doc plus companion `sbx-flow.drawio` diagram: the OpenCode Runner pipeline from Plane issue to sandboxed opencode run to agent-authored PR (board contract, dispatch split, watchdog/self-heal, bridge, failure paths, infra).
 - `external-skills.md`, `README.md`: catalog Alibaba's `ocr` CLI (open-code-review), a hybrid deterministic pipeline + LLM agent for diff or full-file code review with line-level comments and OpenAI-compatible endpoints. Spike report at `docs/artifacts/reviews/2026-09-16-open-code-review-spike.md` (verdict: go-with-caveats for this markdown-only repo).
 - `skills/pr-description/`: standardized description for agent-created PRs (Conventional Commits title + Problem / What changed and why / Verification / Docs). Wired into `agents/documenter.md` step 3 and the orchestrator's step-8 dispatch. Spec: `docs/artifacts/features/pr-description/2026-09-16-pr-description-design.md`.
+- Conventional Branch 1.1.0 adopted as the named branch-naming standard: Stack row + section in `STANDARDS.md` (root and `project-standardization` template), floor entry in `references/standards-stack.md`, branch bullet in `AGENTS.md` and the three `templates/AGENTS-*.md`, default-application line in `agents/orchestrator.md`, pointer in `commands/execute-plan.md`. Legacy `plan-<name>` branch scheme removed (no type prefix, invalid per spec). Spec: `docs/artifacts/features/conventional-branch/2026-09-20-conventional-branch-design.md`.
 
 ### Changed
 

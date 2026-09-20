@@ -2,7 +2,7 @@
 
 The user's projects follow an explicit two-layer standards stack: formal ISO/IEC/IEEE norms plus four industry conventions. The full justification, with citations and design-decision history, lives in the research paper `Project standaarden pakket voor het IDP-project` (v1.0, Ruben van der Veen, 2026-05-11): <https://portfolio.rvdv-lab.nl/research.html?id=project-standaardenpakket-voor-het-idp-project>. This document is the operational summary for AI coding agents.
 
-**Scope reminder:** the conventions layer (kebab-case, English paths, ISO 8601 prefix, Conventional Commits, Keep a Changelog) applies to **most** projects regardless of size. The ISO/IEC/IEEE norms are opt-in per project. A simple tool typically adopts only naming + commits + changelog; a homelab adopts naming + commits + changelog + maybe ISO 10007 config thinking; a school engineering project adopts the full stack.
+**Scope reminder:** the conventions layer (kebab-case, English paths, ISO 8601 prefix, Conventional Commits, Conventional Branch, Keep a Changelog) applies to **most** projects regardless of size. The ISO/IEC/IEEE norms are opt-in per project. A simple tool typically adopts only naming + commits + changelog; a homelab adopts naming + commits + changelog + maybe ISO 10007 config thinking; a school engineering project adopts the full stack.
 
 ## Layer 1: Formal ISO/IEC/IEEE norms
 
@@ -135,6 +135,19 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`
 
 **Why:** machine-parseable history, automation-friendly (release notes, version bumps), traceable changes per configuration item (ties into ISO 10007).
 
+### Conventional Branch 1.1.0
+
+Branch names: `<type>/<description>`. Spec prefixes: `feature/` (`feat/`), `bugfix/` (`fix/`), `hotfix/`, `release/`, `chore/`. Extra types mirroring Conventional Commits (`docs/`, `refactor/`, `test/`, `ci/`) are a sanctioned team extension: document them in the project's `STANDARDS.md`. Lowercase, digits, hyphens; no underscores, spaces, or consecutive/leading/trailing separators. Trunk branches (`main`, `master`, `develop`) carry no prefix. Specification: <https://conventionalbranch.org/>.
+
+```
+✅ feat/add-login-page
+✅ fix/header-bug
+❌ Feature/Add-Login
+❌ my-branch
+```
+
+**Why:** the branch name alone states purpose and type, CI can route on branch type, and it pairs with Conventional Commits the same way that spec pairs with Keep a Changelog.
+
 ### Keep a Changelog 1.1.0
 
 Human-readable `CHANGELOG.md` at repo root. Grouped by version (semver) or milestone (sprint). Sections per change type: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`.
@@ -169,7 +182,7 @@ Diátaxis concepts are still used **inside individual documents** (separating co
 
 ## How to apply this stack to a new project
 
-1. **Always apply:** kebab-case ASCII paths, English structural paths, ISO 8601 date prefix, Conventional Commits, Keep a Changelog. These are the floor: small to large, every project.
+1. **Always apply:** kebab-case ASCII paths, English structural paths, ISO 8601 date prefix, Conventional Commits, Conventional Branch, Keep a Changelog. These are the floor: small to large, every project.
 2. **Apply when relevant:** ISO 10007 (configuration management thinking) for any project with multiple artefact types that must stay in sync. Typically medium and large.
 3. **Apply for team / formal projects:** ISO 26515 (agile docs), ISO 26514 (user docs), ISO 29119-3 (test docs), ISO 15289 (lifecycle info items). Large tier defaults; medium tier when graduating.
 4. **Apply when shipping research:** IEEE article format. Usually large tier only.
