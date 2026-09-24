@@ -1,18 +1,18 @@
 ---
 name: opencode-install
-description: Use when installing the environment's external tools/skills (superpowers, caveman, graphify, markitdown, vercel-labs/agent-skills, stop-slop, ponytail, opencode-see-image) or syncing this repo's skills and commands into an agent's skills and commands directory.
+description: Use when installing the environment's external tools/skills (caveman, graphify, markitdown, vercel-labs/agent-skills, stop-slop, ponytail, opencode-see-image) or syncing this repo's skills and commands into an agent's skills and commands directory.
 ---
 
 # opencode-install
 
 ## Overview
 
-Install steps for the external skill/tool sources (superpowers, caveman, graphify, markitdown, vercel-labs/agent-skills, stop-slop, ponytail, opencode-see-image) and the personal skills repo path. For what each source is and when to use it, see `external-skills.md`.
+Install steps for the external skill/tool sources (caveman, graphify, markitdown, vercel-labs/agent-skills, stop-slop, ponytail, opencode-see-image) and the personal skills repo path. For what each source is and when to use it, see `external-skills.md`.
 
 ## When to use
 
 - Setting up opencode on a new machine or after a clean reinstall.
-- "How do I install superpowers / caveman / graphify / markitdown / vercel-labs / stop-slop / ponytail / opencode-see-image?"
+- "How do I install caveman / graphify / markitdown / vercel-labs / stop-slop / ponytail / opencode-see-image?"
 - opencode is not seeing the personal skills in `C:\Users\ruben\Projects\Tools\skills`.
 
 ## Install

@@ -139,16 +139,16 @@ description: <triggering conditions only>
 | `skills/deep-research/` | `deep-research` | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then brainstorm or Typst draft. Hermes research profile. |
 | `skills/inventree-naming/` | `inventree-naming` | InvenTree part naming convention: dash-separated names, description structure, per-category formats. Source of truth for the convention; the inventree agents embed a condensed copy. |
 | `skills/synctool-sync/` | `synctool-sync` | Drive the `synctool` CLI for saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
-| `skills/systematic-debugging/` | `systematic-debugging` | Hypothesis-first debugging: cheapest test first, follow evidence, fix the root cause. |
 | `skills/multi-plan-orchestration/` | `multi-plan-orchestration` | Splits large tasks into foundation + N parallel sub-plans during brainstorming. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to existing brainstorming + writing-plans skills. |
+| `skills/systematic-debugging/` | `systematic-debugging` | Hypothesis-first debugging: cheapest test first, follow evidence, fix the root cause. |
 | `skills/note-syntax/` | `note-syntax` | Full note-writing syntax for the Hermes Console vault (06_notes): YAML frontmatter, wikilinks, `{N%}` image sizing, file embeds, `columns`/`plot`/`mermaid` fences, KaTeX math, PDF export parity. Cheatsheets per topic. |
 | `skills/pr-description/` | `pr-description` | Standardized description for agent-created PRs. Conventional Commits title line plus Problem, What changed and why, Verification, Choices, Docs sections. |
 | `skills/rubens-project-standardization/` | `project-standardization` | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | `skills/skill-harvest/` | `skill-harvest` | Mines recent opencode sessions for repeated corrections and skill gaps. Report, approve, apply loop with incremental state. Slash command: `/harvest`. |
+| `skills/using-git-worktrees/` | `using-git-worktrees` | Isolated worktree or plain branch before executing implementation plans. |
 | `skills/writing-plans/` | `writing-plans` | Turns an approved spec into bite-sized tasks with exact paths, steps, and verification commands. |
 | `skills/writing-skills/` | `writing-skills` | Meta-skill for authoring and editing skills: frontmatter, body structure, verify before deployment. |
-| `skills/using-git-worktrees/` | `using-git-worktrees` | Isolated worktree or plain branch before executing implementation plans. |
-| `opencode-install.md` (top-level doc) | `opencode-install` | Bootstrap doc: install commands for superpowers, caveman, graphify, plus the personal skills repo path. |
+| `opencode-install.md` (top-level doc) | `opencode-install` | Bootstrap doc: install commands for caveman, graphify, plus the personal skills repo path. |
 | `external-skills.md` (top-level doc) | `external-skills` | Catalog of external skills/tools (superpowers, caveman, graphify): what each does, when to use, install pointers. |
 
 The `skills/rubens-project-standardization/` directory keeps the old name for backwards compatibility. The skill's identity is `project-standardization`. Renaming the folder is a future chore.
