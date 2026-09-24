@@ -53,9 +53,9 @@ Four layers, from personal to generic.
 
 Skills cover what loads automatically; commands are the explicit escape hatch for when the description match is missed.
 
-### 2. Process discipline: superpowers (plugin)
+### 2. Process discipline (vendored skills)
 
-The gatekeeper layer. `using-superpowers` loads at session start and forces a skill check before any action. The skills used most:
+Skill discipline is enforced by this repo's commands and agents; process skills load from the repo's own `skills/` directory. The skills used most:
 
 - `brainstorming` before any creative work (features, components, new skills)
 - `writing-plans` and `executing-plans` for multi-step work
@@ -107,7 +107,7 @@ Which path a task takes depends on size.
 ### Small task (bugfix, doc edit, one-file change)
 
 1. Ask in chat; ponytail keeps the exchange short.
-2. Relevant skills auto-trigger on their frontmatter descriptions (`using-superpowers` enforces the check).
+2. Relevant skills auto-trigger on their frontmatter descriptions; process skills load from this repo's own `skills/` directory.
 3. Bugs go through `systematic-debugging`; features through `brainstorming`, then TDD.
 4. `verification-before-completion` before any "done" claim. Commits wait for explicit instruction, Conventional Commits format.
 

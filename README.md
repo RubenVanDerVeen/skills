@@ -34,7 +34,6 @@ Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `review
 
 Beyond the personal skills in this repo, several external sources are installed in the same environment. See [`external-skills.md`](./external-skills.md) for what each does and when to reach for it; install commands live in [`opencode-install.md`](./opencode-install.md).
 
-- **superpowers** - process discipline skills (TDD, debugging, brainstorming, ...)
 - **caveman** - terse, low-token output style
 - **graphify** - codebase knowledge graph builder
 - **vercel-labs/agent-skills** - React / Next.js / React Native / web-design pack
@@ -48,13 +47,10 @@ See [`opencode-install.md`](./opencode-install.md) for the full 8-step bootstrap
 Quick version:
 
 ```
-# 1. Superpowers - fetch and follow:
-https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
-
-# 2. Caveman
+# 1. Caveman
 npx -y github:JuliusBrussee/caveman -- --only opencode
 
-# 3. Copy the skill folders under skills/ to the agent's skills dir
+# 2. Copy the skill folders under skills/ to the agent's skills dir
 ```
 
 

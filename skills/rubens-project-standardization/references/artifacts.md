@@ -202,15 +202,15 @@ Several planning frameworks ship their own default artifact paths. None of those
 
 Each skill accepts a target path as a user preference. **State the canonical path before the skill writes the file**, or move the artifact straight after. Two working shapes:
 
-- **Pre-write override**: when delegating to `superpowers:brainstorming` or `superpowers:writing-plans`, name the canonical path in the delegation prompt. Both skill bodies explicitly support this: each ends its default-path line with *"User preferences for spec/plan location override this default"*. The agent that delegates is expected to honour that.
+- **Pre-write override**: when delegating to the vendored `brainstorming` or `writing-plans` skills (or any other process skill), name the canonical path in the delegation prompt. The vendored skills ship with that override capability: each ends its default-path line with *"User preferences for spec/plan location override this default"*. The agent that delegates is expected to honour that. Since 2026-09-24 the process skills are vendored in this repo and the paths above are native.
 - **Post-write redirect**: if the skill already wrote to its default path before the override was honoured, `git mv` the file into `docs/artifacts/` in the same commit. Never leave both versions. Two homes rot fast, and you will forget which one is current.
 
 GSD and other frameworks follow the same shape: name `docs/artifacts/features/<feature>/` in the delegation prompt, or move the file once it lands. The target is `docs/artifacts/features/<feature>/` (or `docs/artifacts/reviews/` for reviews) regardless of origin.
 
-### Concrete example (superpowers)
+### Concrete example (vendored process skills)
 
 User: "Brainstorm the foo feature."
-Agent (after loading `superpowers:brainstorming`):
+Agent (after loading `brainstorming`):
 
 > "Saving the design doc to `docs/artifacts/features/foo/2026-06-29-foo-design.md` per the project's artifact convention."
 

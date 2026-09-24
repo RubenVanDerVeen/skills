@@ -190,7 +190,7 @@ Process meta-documents (specs, plans, multi-plan outlines/manifests, execution r
 - `docs/artifacts/reviews/`: flat chronological log of committed audits (`YYYY-MM-DD-<topic>-review.md`).
 - `docs/artifacts/choices/`: cross-feature decision records (`YYYY-MM-DD-<slug>-decision.md`) plus `index.md`. Written by the documenter at close-out; consulted by the planner before locking decisions. Convention: `skills/rubens-project-standardization/references/artifacts.md`.
 
-When delegating to `brainstorming` or `writing-plans` (superpowers) or any GSD-style flow, name the canonical path (`docs/artifacts/features/<feature>/...`) instead of the framework default (`docs/superpowers/...`, `.planning/...`). A `docs/superpowers/` or `.planning/` directory should never land in this repo; if one does, `git mv` its contents into `docs/artifacts/` and remove the emptied dir. See `references/artifacts.md` in the `project-standardization` skill for the full convention.
+The vendored `brainstorming` and `writing-plans` skills write to the canonical paths natively; if any framework default ever reappears, redirect to `docs/artifacts/features/`. A `docs/superpowers/` or `.planning/` directory should never land in this repo; if one does, `git mv` its contents into `docs/artifacts/` and remove the emptied dir. See `references/artifacts.md` in the `project-standardization` skill for the full convention.
 
 ## Git & workflow
 
@@ -207,4 +207,4 @@ When delegating to `brainstorming` or `writing-plans` (superpowers) or any GSD-s
 
 - The `project-standardization` skill (in this repo) is the source of truth for bootstrapping any other project. Use it to scaffold a new project that itself needs agent context.
 - The `AGENTS.md` spec: <https://agents.md>
-- The `writing-skills` skill (from superpowers) is the meta-skill for authoring new skills well.
+- The `writing-skills` skill (vendored in this repo) is the meta-skill for authoring new skills well.

@@ -19,19 +19,13 @@ Install steps for the external skill/tool sources (superpowers, caveman, graphif
 
 Run the commands below in order. They are all idempotent, re-running them is safe.
 
-### 1. Superpowers
-
-```
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
-```
-
-### 2. Caveman
+### 1. Caveman
 
 ```
 npx -y github:JuliusBrussee/caveman -- --only opencode
 ```
 
-### 3. Graphify
+### 2. Graphify
 
 Requires Python 3.10+ and `uv` (install uv with `winget install astral-sh.uv` on Windows).
 
@@ -43,7 +37,7 @@ uv tool install graphifyy
 graphify install --platform opencode
 ```
 
-### 4. Vercel-Labs Agent-Skills
+### 3. Vercel-Labs Agent-Skills
 
 Install the Vercel-curated React/Next.js/React Native/web-design skill pack. The installer is interactive and lets you pick which skills to include (deselect any you don't want, accept the defaults for the full pack):
 
@@ -53,7 +47,7 @@ npx skills add vercel-labs/agent-skills
 
 The current environment has these five selected: `vercel-react-best-practices`, `vercel-react-native-skills`, `vercel-react-view-transitions`, `web-design-guidelines`, `vercel-composition-patterns`. See `external-skills.md` for what each does.
 
-### 5. Stop-Slop
+### 4. Stop-Slop
 
 Single skill that strips AI writing patterns from prose. Aligned with this repo's house rule (no em-dashes), so it reinforces rather than contradicts `AGENTS.md`. The `--skill stop-slop` flag restricts the install to that one skill:
 
@@ -61,7 +55,7 @@ Single skill that strips AI writing patterns from prose. Aligned with this repo'
 npx skills add hardikpandya/stop-slop --skill stop-slop
 ```
 
-### 6. Ponytail
+### 5. Ponytail
 
 Lazy-dev philosophy + six skills (`ponytail`, `ponytail-review`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help`). Ponytail does not yet have an opencode installer; install is `git clone` + plugin-path entry.
 
@@ -82,7 +76,7 @@ Then register the opencode plugin in `~/.opencode/opencode.json` (the global one
 
 The plugin auto-activates `ponytail` at level `full` every session. Change the default via the env var `PONYTAIL_DEFAULT_MODE` (set to `lite`, `full`, `ultra`, or `off`) or via `~/.config/ponytail/config.json` (`{"defaultMode": "lite"}`). See `C:/tools/ponytail/skills/ponytail-help/SKILL.md` for the full reference.
 
-### 7. MarkItDown
+### 6. MarkItDown
 
 Standalone Python CLI (not an opencode plugin) that converts PDF, Word, Excel, PowerPoint, EPUB, HTML, images, and audio to Markdown so the agent can `Read` the result instead of choking on a binary file. Install with `uv` (already on PATH from the graphify step):
 
@@ -92,7 +86,7 @@ uv tool install 'markitdown[all]'
 
 Usage the agent follows: `markitdown <file> -o <file>.md`, then `Read` the `.md`. The `[all]` extra pulls every format converter; use `[pdf,docx,xlsx]` for a leaner install. See `external-skills.md` for the full format list and triggers.
 
-### 8. opencode-see-image
+### 7. opencode-see-image
 
 Lets a text-only primary model (e.g. `zai-coding-plan/glm-5.3`) see images by routing them to a vision model. opencode normally rejects image attachments before a non-vision model ever runs; this plugin registers a `see_image` tool that sends the image to MiniMax-M3 and returns a text description the primary model reasons about.
 
@@ -109,7 +103,7 @@ Then set two persistent user env vars so the plugin reuses the existing `minimax
 
 Restart opencode from a fresh terminal so the new env vars are inherited. The plugin defaults to `opencode-go` (minimax-m3); setting `SEE_IMAGE_PROVIDER` overrides that. For the resolve order and other models, see `external-skills.md`.
 
-### 9. Copy skills, commands, and agents into the agent's directories
+### 8. Copy skills, commands, and agents into the agent's directories
 
 The `skills/`, `commands/`, and `agents/` directories inside this repo are inactive by themselves; all three steps below are required per machine.
 
@@ -126,7 +120,7 @@ The `skills/`, `commands/`, and `agents/` directories inside this repo are inact
 3. Copy each `agents/*.md` file (opencode agent definitions: `planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `doc-standardizer`, `code-standardizer`, `documenter`, `oracle`; `inventree` is optional and only on machines that register the homelab MCP server) to `~/.config/opencode/agents/` (global) or `.opencode/agents/` (per-project). opencode-only; Claude Code subagents use a different frontmatter format. Restart opencode afterwards; see `agents/README.md` for roles and tuning.
 
 
-### 10. Enable the git hooks
+### 9. Enable the git hooks
 
 This repo ships tracked git hooks (`.githooks/`) that reject non-Conventional-Commits messages, em-dashes in markdown, malformed SKILL.md frontmatter, new skills missing from the catalogs, and forbidden paths, so agent-made and manual commits stay compliant. Git does not run hooks from a tracked directory until you point `core.hooksPath` at it. One-time per clone:
 
@@ -140,7 +134,7 @@ The hook is `sh` + `grep` only (no Node, no dependencies) and is tracked executa
 
 After all nine steps, start a new opencode session and confirm each source is reachable:
 
-- A superpowers skill (e.g. `test-driven-development`).
+- A vendored process skill (e.g. `brainstorming`).
 - A caveman skill.
 - A graphify skill: type `/graphify .` in the assistant and confirm a `graphify-out/` folder is produced.
 - A vercel-labs skill (e.g. `vercel-react-best-practices`): ask for a React/Next.js review and confirm Vercel-specific guidance shows up.
