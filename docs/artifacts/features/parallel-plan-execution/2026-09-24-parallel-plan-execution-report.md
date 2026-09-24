@@ -126,6 +126,8 @@ Tasks 1-4 were dispatched in one parallel wave, dogfooding the feature being bui
 
 This is the exact sibling-stage race the Task 3 parallel-safety paragraph warns about. The new rule "stage explicit paths only, never `git add -A`" was followed, but the window between one executor staging and committing still allowed the bundle. Follow-up hardening candidate, out of scope for this plan: add `git restore --staged <sibling paths>` to the executor's race-avoidance guidance so an executor unstages anything it did not stage itself immediately before committing.
 
+Update 2026-09-24: the hardening candidate landed via commit `8f2cfd5`, superseded by a stronger fix than the unstage suggestion above. Every executor commit is now a pathspec commit (`git commit <message> -- <exact files>`): git's `--only` semantics mean a sibling's staged entries cannot enter your commit and stay staged for the sibling, closing the race by construction rather than check-then-fix. The orchestrator now performs the commit-integrity check as the backstop, encoding the same `git reset --soft HEAD~1` split recipe this run improvised. Details: `2026-09-24-commit-race-hardening-report.md`.
+
 ## `ponytail:` deferrals
 
 None. Shortest working diff throughout (six edited lines per file at most); no `ponytail:` comments added.
