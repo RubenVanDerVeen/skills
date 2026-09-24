@@ -25,10 +25,13 @@ Distinct from:
 
 ## Layout
 
-Two top-level directories. Everything for one feature lives in one folder. Filename suffix signals type.
+Three top-level directories: `features/` (one folder per feature), `reviews/` (committed audits), `choices/` (decision records). Everything for one feature lives in one folder. Filename suffix signals type.
 
 ```
 docs/artifacts/
+├── choices/                                  <- cross-feature decision records
+│   ├── index.md                              <- one table row per decision
+│   └── YYYY-MM-DD-<slug>-decision.md         <- one file per choice
 ├── reviews/
 │   └── YYYY-MM-DD-<topic>-review.md          ← flat, chronological review log
 └── features/
@@ -169,7 +172,7 @@ YYYY-MM-DD-<kebab-topic>-<artefact-type>.md
 |-------|-------|
 | `YYYY-MM-DD` | ISO 8601 date: the day the artefact was written, not the day the feature was deployed |
 | `<kebab-topic>` | Short kebab-case slug matching the feature, e.g. `nextcloud-nas-integration`, `auth-oauth-migration`, `repo-structure` |
-| `<artefact-type>` | `design` (spec), `plan`, `outline`, `manifest`, `report`, `review`, `audit` |
+| `<artefact-type>` | `design` (spec), `plan`, `outline`, `manifest`, `report`, `review`, `audit`, `decision` (choices registry entry) |
 
 Examples:
 
@@ -184,7 +187,7 @@ Examples:
 
 ## Per-framework redirect
 
-Several planning frameworks ship their own default artifact paths. None of those paths are authoritative for projects following this convention. **Redirect every spec, plan, outline, manifest, and report to `docs/artifacts/features/<feature>/`**; redirect every review to `docs/artifacts/reviews/`. Origin framework does not matter.
+Several planning frameworks ship their own default artifact paths. None of those paths are authoritative for projects following this convention. **Redirect every spec, plan, outline, manifest, and report to `docs/artifacts/features/<feature>/`**; redirect every review to `docs/artifacts/reviews/`; redirect every decision record to `docs/artifacts/choices/`. Origin framework does not matter.
 
 ### Default vs canonical
 
@@ -237,7 +240,38 @@ Each step's artifact is committed before the next step starts. **Step 1, 3, 6 mu
 
 - `docs/artifacts/` files are **not** auto-imported into `AGENTS.md`. They are project history, not session context.
 - Reference them on demand: "What was the original design for X?" → the agent greps `docs/artifacts/features/<feature>/` for the matching topic and reads that file.
-- If a critical decision in a spec needs to be remembered cross-session (e.g. "we explicitly chose A over B because of constraint C"), capture that fact in a memory entry (`project_<topic>.md` at the active tool's memory location; see `references/memory.md`) **as well as** keeping the full spec under `docs/artifacts/features/<feature>/`.
+- If a constraining decision in a spec needs to be remembered cross-session (e.g. "we explicitly chose A over B because of constraint C"), record it as a choices registry entry (see the Choices section) **as well as** keeping the full spec under `docs/artifacts/features/<feature>/`. Memory entries remain the right home for non-constraining session context.
+
+## Choices
+
+The choices registry (`docs/artifacts/choices/`) records why constraining decisions were made, so future work checks why something exists before removing or contradicting it.
+
+**Threshold.** Record a choice when it constrains future work or a future agent might wrongly undo it: dependency and plugin picks, architecture forks, standards picks, explicit X-over-Y calls. Routine implementation trivia stays in the spec or report.
+
+**Files.** One file per decision: `YYYY-MM-DD-<slug>-decision.md`. `index.md` holds one table row per decision (Date | Decision | Status | File). Template:
+
+````markdown
+# <Slug title>
+
+- Date: YYYY-MM-DD
+- Status: active
+- Source: <path to plan, report, or PR>
+
+## Choice
+<One sentence: what was chosen.>
+
+## Alternatives rejected
+<What was not chosen and why not. One line per alternative.>
+
+## Revisit when
+<The condition that would invalidate this choice.>
+````
+
+**Status values.** `active`, or `superseded by YYYY-MM-DD-<slug>-decision.md`. Superseding never deletes: flip the old entry's status line and cite it from the new one.
+
+**Writers and readers.** The documenter writes entries at close-out from run material and skips silently when nothing qualifies. The planner greps `docs/artifacts/choices/` (all files, full text) before locking spec decisions and carries constraints (or supersessions) into the spec.
+
+**Registry vs spec decisions.** A spec's `## Decisions` section holds run-local detail. The registry holds the durable cross-feature record with rejected alternatives and revisit conditions. When both exist, the registry entry cites the spec; the spec never duplicates registry content. Splitting one feature's artifacts across type buckets to "organize choices" remains forbidden (see anti-patterns).
 
 ## Anti-patterns
 

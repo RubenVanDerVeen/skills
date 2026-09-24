@@ -179,10 +179,11 @@ To modify an existing skill, edit the `SKILL.md` in place. Skill descriptions ar
 
 ## Artifacts
 
-Process meta-documents (specs, plans, multi-plan outlines/manifests, execution reports, reviews) live in `docs/artifacts/`, not next to the code:
+Process meta-documents (specs, plans, multi-plan outlines/manifests, execution reports, reviews, decision records) live in `docs/artifacts/`, not next to the code:
 
 - `docs/artifacts/features/<feature>/`: one folder per feature. Holds its `YYYY-MM-DD-<topic>-design.md` (spec), `-plan.md`, `-outline.md`, `-manifest.md`, `-report.md`. Filename suffix signals type.
 - `docs/artifacts/reviews/`: flat chronological log of committed audits (`YYYY-MM-DD-<topic>-review.md`).
+- `docs/artifacts/choices/`: cross-feature decision records (`YYYY-MM-DD-<slug>-decision.md`) plus `index.md`. Written by the documenter at close-out; consulted by the planner before locking decisions. Convention: `skills/rubens-project-standardization/references/artifacts.md`.
 
 When delegating to `brainstorming` or `writing-plans` (superpowers) or any GSD-style flow, name the canonical path (`docs/artifacts/features/<feature>/...`) instead of the framework default (`docs/superpowers/...`, `.planning/...`). A `docs/superpowers/` or `.planning/` directory should never land in this repo; if one does, `git mv` its contents into `docs/artifacts/` and remove the emptied dir. See `references/artifacts.md` in the `project-standardization` skill for the full convention.
 
