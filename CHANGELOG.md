@@ -35,6 +35,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - `skills/pr-description/`: standardized description for agent-created PRs (Conventional Commits title + Problem / What changed and why / Verification / Docs). Wired into `agents/documenter.md` step 3 and the orchestrator's step-8 dispatch. Spec: `docs/artifacts/features/pr-description/2026-09-16-pr-description-design.md`.
 - Conventional Branch 1.1.0 adopted as the named branch-naming standard: Stack row + section in `STANDARDS.md` (root and `project-standardization` template), floor entry in `references/standards-stack.md`, branch bullet in `AGENTS.md` and the three `templates/AGENTS-*.md`, default-application line in `agents/orchestrator.md`, pointer in `commands/execute-plan.md`. Legacy `plan-<name>` branch scheme removed (no type prefix, invalid per spec). Spec: `docs/artifacts/features/conventional-branch/2026-09-20-conventional-branch-design.md`.
 - lazy-dev subagent: lean-plan gate reviewing plans for over-engineering before orchestrator dispatch
+- Choices registry: cross-feature decision records in `docs/artifacts/choices/` (`YYYY-MM-DD-<slug>-decision.md` + `index.md`), written by the documenter at close-out, consulted by the planner before locking decisions, checked by lazy-dev, and surfaced as a `## Choices` PR section. Spec: `docs/artifacts/features/choices-registry/2026-09-24-choices-registry-design.md`.
 
 ### Changed
 
