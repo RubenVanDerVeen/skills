@@ -52,6 +52,7 @@ Lens: ponytail. Interrogate every task with the ladder, in order:
 3. Does a task build flexibility, abstraction, or configuration nothing asked for?
 4. Would the fewest-tasks, shortest-diff version of this plan be materially worse? If not, collapse the tasks.
 5. Is verification proportional? One runnable check per non-trivial task; no per-function suites, no frameworks unless asked.
+6. Does the plan contradict an active entry in `docs/artifacts/choices/` without explicitly superseding it?
 
 Two passes:
 1. Context: read the spec and plan end to end. The spec defines what was asked; anything in the plan the spec does not require is a finding candidate.

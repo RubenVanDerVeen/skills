@@ -140,7 +140,7 @@ description: <triggering conditions only>
 | `skills/synctool-sync/` | `synctool-sync` | Drive the `synctool` CLI for saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
 | `skills/multi-plan-orchestration/` | `multi-plan-orchestration` | Splits large tasks into foundation + N parallel sub-plans during brainstorming. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to existing brainstorming + writing-plans skills. |
 | `skills/note-syntax/` | `note-syntax` | Full note-writing syntax for the Hermes Console vault (06_notes): YAML frontmatter, wikilinks, `{N%}` image sizing, file embeds, `columns`/`plot`/`mermaid` fences, KaTeX math, PDF export parity. Cheatsheets per topic. |
-| `skills/pr-description/` | `pr-description` | Standardized description for agent-created PRs. Conventional Commits title line plus Problem, What changed and why, Verification, Docs sections. |
+| `skills/pr-description/` | `pr-description` | Standardized description for agent-created PRs. Conventional Commits title line plus Problem, What changed and why, Verification, Choices, Docs sections. |
 | `skills/rubens-project-standardization/` | `project-standardization` | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | `skills/skill-harvest/` | `skill-harvest` | Mines recent opencode sessions for repeated corrections and skill gaps. Report, approve, apply loop with incremental state. Slash command: `/harvest`. |
 | `opencode-install.md` (top-level doc) | `opencode-install` | Bootstrap doc: install commands for superpowers, caveman, graphify, plus the personal skills repo path. |
@@ -179,10 +179,11 @@ To modify an existing skill, edit the `SKILL.md` in place. Skill descriptions ar
 
 ## Artifacts
 
-Process meta-documents (specs, plans, multi-plan outlines/manifests, execution reports, reviews) live in `docs/artifacts/`, not next to the code:
+Process meta-documents (specs, plans, multi-plan outlines/manifests, execution reports, reviews, decision records) live in `docs/artifacts/`, not next to the code:
 
 - `docs/artifacts/features/<feature>/`: one folder per feature. Holds its `YYYY-MM-DD-<topic>-design.md` (spec), `-plan.md`, `-outline.md`, `-manifest.md`, `-report.md`. Filename suffix signals type.
 - `docs/artifacts/reviews/`: flat chronological log of committed audits (`YYYY-MM-DD-<topic>-review.md`).
+- `docs/artifacts/choices/`: cross-feature decision records (`YYYY-MM-DD-<slug>-decision.md`) plus `index.md`. Written by the documenter at close-out; consulted by the planner before locking decisions. Convention: `skills/rubens-project-standardization/references/artifacts.md`.
 
 When delegating to `brainstorming` or `writing-plans` (superpowers) or any GSD-style flow, name the canonical path (`docs/artifacts/features/<feature>/...`) instead of the framework default (`docs/superpowers/...`, `.planning/...`). A `docs/superpowers/` or `.planning/` directory should never land in this repo; if one does, `git mv` its contents into `docs/artifacts/` and remove the emptied dir. See `references/artifacts.md` in the `project-standardization` skill for the full convention.
 
