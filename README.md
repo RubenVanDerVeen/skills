@@ -21,6 +21,7 @@ Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands
 | [`pr-description`](./skills/pr-description/SKILL.md) | Standardized description for agent-created PRs. Conventional Commits title line plus Problem, What changed and why, Verification, Choices, Docs sections. |
 | [`rubens-project-standardization`](./skills/rubens-project-standardization/SKILL.md) | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | [`skill-harvest`](./skills/skill-harvest/SKILL.md) | Mines recent opencode sessions for repeated corrections and skill gaps; report, approve, apply. Slash command: `/harvest`. |
+| [`writing-plans`](./skills/writing-plans/SKILL.md) | Turns an approved spec into bite-sized tasks with exact paths, steps, and verification commands. |
 
 ## Agents
 
