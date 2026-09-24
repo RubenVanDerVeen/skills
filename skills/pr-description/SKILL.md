@@ -26,6 +26,9 @@ First line is the PR title: a Conventional Commits 1.0.0 subject, `<type>(<scope
     ## Verification
     How it was verified: commands run and their outcome (verifier output, tests, dry-runs). Evidence, not claims. Name what stayed unverified.
 
+    ## Choices
+    New or updated `docs/artifacts/choices/` decision files, one line each on why. None if the run made or changed no constraining choices.
+
     ## Docs
     Catalogs and docs updated alongside (README or AGENTS tables, CHANGELOG, command sections). Write None when nothing changed.
 
