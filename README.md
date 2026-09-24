@@ -11,6 +11,7 @@ Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands
 | [`drawio-pro`](./skills/drawio-pro/SKILL.md) | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
 | [`typst-pro`](./skills/typst-pro/SKILL.md) | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
 | [`altium-pro`](./skills/altium-pro/SKILL.md) | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
+| [`brainstorming`](./skills/brainstorming/SKILL.md) | Design-first gate for creative work. Batched questions, 2-3 approaches, spec at `docs/artifacts/features/`. |
 | [`code-standardization`](./skills/code-standardization/SKILL.md) | Source-code structure standard. Formatter/linter/hooks per language, naming, module organization, architecture/dependency boundaries. Multi-language (Python, TS/JS, C/C++, Go, Rust), flat (one standard). Sister to `project-standardization`. |
 | [`deep-research`](./skills/deep-research/SKILL.md) | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then brainstorm or Typst draft. Hermes research profile. |
 | [`inventree-naming`](./skills/inventree-naming/SKILL.md) | InvenTree part naming convention. Dash-separated names, sentence case, ×/⌀ symbols, description structure with feature flags, per-category formats (fasteners, bearings, connectors, switches, dev boards, power modules, motors, displays, tools). |
