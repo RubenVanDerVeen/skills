@@ -68,7 +68,7 @@ digraph flow {
 2. **Identify shared foundation.** Look for a data model, UI shell, shared utils, or theme that multiple sub-projects depend on. If none exists, all sub-projects are independent.
 3. **Propose split: foundation + N sub-projects.** Each sub-project must be independently buildable and testable after the foundation is done.
 4. **Write decomposition outline.** Save to `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-outline.md`. Get user approval before writing any specs.
-5. **For the foundation:** Invoke `superpowers:brainstorming` with the foundation's scope. Pass `docs/artifacts/features/<topic>/` as the spec location. Brainstorming runs its full flow and invokes `superpowers:writing-plans` with `docs/artifacts/features/<topic>/` as the plan location. The foundation plan names its **frozen interfaces**: the exact signatures/types sub-projects consume, marked frozen in the plan's per-task Interfaces blocks (SPs may change internals behind them, never the signatures). This contract is what makes parallel SPs mergeable. User reviews and approves the foundation plan.
+5. **For the foundation:** Invoke `brainstorming` with the foundation's scope. Pass `docs/artifacts/features/<topic>/` as the spec location. Brainstorming runs its full flow and invokes `writing-plans` with `docs/artifacts/features/<topic>/` as the plan location. The foundation plan names its **frozen interfaces**: the exact signatures/types sub-projects consume, marked frozen in the plan's per-task Interfaces blocks (SPs may change internals behind them, never the signatures). This contract is what makes parallel SPs mergeable. User reviews and approves the foundation plan.
 6. **For each sub-project (SP-1, SP-2, ...):** Same as step 5, using the sub-project's scope from the approved outline. SP specs reference the foundation's frozen interfaces by name instead of redefining them. User reviews and approves each plan.
 7. **Write manifest.** After all plans exist, produce `docs/artifacts/features/<topic>/YYYY-MM-DD-<topic>-manifest.md` with the plan table, execution order, per-agent dispatch prompts, integration dispatch prompt, and integration checklist.
 8. **STOP.** Hand off to the user for dispatch. Do not dispatch execution agents.
@@ -142,7 +142,7 @@ Scheme:
 
 ## Execution order
 1. F on `feat/<topic-slug>` - one agent. Commits land directly on the feature branch.
-2. After F is complete (all foundation tasks done, verification checklist green on `feat/<topic-slug>`): SP-1, SP-2, ... in parallel - one cheaper agent each, each branch created from `feat/<topic-slug>`. Parallel agents on one machine use separate worktrees (`git worktree add ../<topic>-spN -b <SP branch> feat/<topic-slug>`); each worktree needs its own dependency install. See superpowers:using-git-worktrees.
+2. After F is complete (all foundation tasks done, verification checklist green on `feat/<topic-slug>`): SP-1, SP-2, ... in parallel - one cheaper agent each, each branch created from `feat/<topic-slug>`. Parallel agents on one machine use separate worktrees (`git worktree add ../<topic>-spN -b <SP branch> feat/<topic-slug>`); each worktree needs its own dependency install. See `using-git-worktrees`.
 3. After all SPs report complete: dispatch the integration prompt below (one agent, or by hand). List expected conflicts here: the outline's "Touches" rows show which SPs overlap on which files; give merge order and a resolution hint per overlapping file.
 4. Merge target mechanics: SPs land on `feat/<topic-slug>` (PR if the repo has a remote, local merge otherwise); `feat/<topic-slug>` lands on base the same way at the end of integration.
 
@@ -150,7 +150,7 @@ Scheme:
 For each row in the table, the dispatch prompt the user sends must contain:
 - Working directory (worktree path for SPs) and branch: <branch from row>, created from `feat/<topic-slug>` (SPs) or worked on directly (foundation)
 - Dependency install step for a fresh worktree (`npm install`, `cargo fetch`, ...)
-- Read plan at <plan file path>; execute with superpowers:subagent-driven-development or executing-plans, commit after every task
+- Read plan at <plan file path>; execute via /execute-plan (commands/execute-plan.md) with the orchestrator agent, commit after every task
 - The SP's constraint line from its spec (e.g. "no Rust changes", "do not change frozen foundation interfaces")
 - Stay on your branch: open a PR back to `feat/<topic-slug>` if the repo has a remote, but never merge yourself; integration is a separate step
 - Report back a one-line status plus any deviations (and the PR URL if the repo has a remote)
@@ -197,8 +197,8 @@ No further action from the orchestrator. The user owns dispatch.
 
 The orchestrator does not re-implement brainstorming or writing-plans. For each sub-project (foundation + each SP):
 
-1. Invoke `superpowers:brainstorming` with the sub-project's scope (from the approved outline) as input. Pass the topic-scoped location: `docs/artifacts/features/<topic>/` for the spec.
-2. Brainstorming runs its normal flow and invokes `superpowers:writing-plans`. Pass `docs/artifacts/features/<topic>/` for the plan.
+1. Invoke `brainstorming` with the sub-project's scope (from the approved outline) as input. Pass the topic-scoped location: `docs/artifacts/features/<topic>/` for the spec.
+2. Brainstorming runs its normal flow and invokes `writing-plans`. Pass `docs/artifacts/features/<topic>/` for the plan.
 3. Note the resulting plan path, add a row to the manifest, move to the next sub-project.
 
 Both skills accept user-preferred locations as an override, so passing the topic-scoped location is a one-line instruction. No changes to the delegated skills.

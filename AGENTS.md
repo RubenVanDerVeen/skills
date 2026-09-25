@@ -134,16 +134,21 @@ description: <triggering conditions only>
 | `skills/drawio-pro/` | `drawio-pro` | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
 | `skills/typst-pro/` | `typst-pro` | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
 | `skills/altium-pro/` | `altium-pro` | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
+| `skills/brainstorming/` | `brainstorming` | Design-first gate for creative work. Batched questions, 2-3 approaches, spec at `docs/artifacts/features/`. |
 | `skills/code-standardization/` | `code-standardization` | Source-code structure standard. Formatter/linter/hooks per language, naming, module organization, architecture/dependency boundaries. Multi-language (Python, TS/JS, C/C++, Go, Rust), flat (one standard). Sister to `project-standardization`. |
 | `skills/deep-research/` | `deep-research` | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then brainstorm or Typst draft. Hermes research profile. |
 | `skills/inventree-naming/` | `inventree-naming` | InvenTree part naming convention: dash-separated names, description structure, per-category formats. Source of truth for the convention; the inventree agents embed a condensed copy. |
 | `skills/synctool-sync/` | `synctool-sync` | Drive the `synctool` CLI for saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
 | `skills/multi-plan-orchestration/` | `multi-plan-orchestration` | Splits large tasks into foundation + N parallel sub-plans during brainstorming. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to existing brainstorming + writing-plans skills. |
+| `skills/systematic-debugging/` | `systematic-debugging` | Hypothesis-first debugging: cheapest test first, follow evidence, fix the root cause. |
 | `skills/note-syntax/` | `note-syntax` | Full note-writing syntax for the Hermes Console vault (06_notes): YAML frontmatter, wikilinks, `{N%}` image sizing, file embeds, `columns`/`plot`/`mermaid` fences, KaTeX math, PDF export parity. Cheatsheets per topic. |
 | `skills/pr-description/` | `pr-description` | Standardized description for agent-created PRs. Conventional Commits title line plus Problem, What changed and why, Verification, Choices, Docs sections. |
 | `skills/rubens-project-standardization/` | `project-standardization` | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | `skills/skill-harvest/` | `skill-harvest` | Mines recent opencode sessions for repeated corrections and skill gaps. Report, approve, apply loop with incremental state. Slash command: `/harvest`. |
-| `opencode-install.md` (top-level doc) | `opencode-install` | Bootstrap doc: install commands for superpowers, caveman, graphify, plus the personal skills repo path. |
+| `skills/using-git-worktrees/` | `using-git-worktrees` | Isolated worktree or plain branch before executing implementation plans. |
+| `skills/writing-plans/` | `writing-plans` | Turns an approved spec into bite-sized tasks with exact paths, steps, and verification commands. |
+| `skills/writing-skills/` | `writing-skills` | Meta-skill for authoring and editing skills: frontmatter, body structure, verify before deployment. |
+| `opencode-install.md` (top-level doc) | `opencode-install` | Bootstrap doc: install commands for caveman, graphify, plus the personal skills repo path. |
 | `external-skills.md` (top-level doc) | `external-skills` | Catalog of external skills/tools (superpowers, caveman, graphify): what each does, when to use, install pointers. |
 
 The `skills/rubens-project-standardization/` directory keeps the old name for backwards compatibility. The skill's identity is `project-standardization`. Renaming the folder is a future chore.
@@ -185,7 +190,7 @@ Process meta-documents (specs, plans, multi-plan outlines/manifests, execution r
 - `docs/artifacts/reviews/`: flat chronological log of committed audits (`YYYY-MM-DD-<topic>-review.md`).
 - `docs/artifacts/choices/`: cross-feature decision records (`YYYY-MM-DD-<slug>-decision.md`) plus `index.md`. Written by the documenter at close-out; consulted by the planner before locking decisions. Convention: `skills/rubens-project-standardization/references/artifacts.md`.
 
-When delegating to `brainstorming` or `writing-plans` (superpowers) or any GSD-style flow, name the canonical path (`docs/artifacts/features/<feature>/...`) instead of the framework default (`docs/superpowers/...`, `.planning/...`). A `docs/superpowers/` or `.planning/` directory should never land in this repo; if one does, `git mv` its contents into `docs/artifacts/` and remove the emptied dir. See `references/artifacts.md` in the `project-standardization` skill for the full convention.
+The vendored `brainstorming` and `writing-plans` skills write to the canonical paths natively; if any framework default ever reappears, redirect to `docs/artifacts/features/`. A `docs/superpowers/` or `.planning/` directory should never land in this repo; if one does, `git mv` its contents into `docs/artifacts/` and remove the emptied dir. See `references/artifacts.md` in the `project-standardization` skill for the full convention.
 
 ## Git & workflow
 
@@ -194,7 +199,7 @@ When delegating to `brainstorming` or `writing-plans` (superpowers) or any GSD-s
 - **Carve-out: spec/plan-driven development and execution.** When the user has approved both a spec (in `docs/artifacts/features/`) and a plan that references it (in `docs/artifacts/features/`), and the agent is currently executing that plan, the agent commits on its own volition at the boundaries the plan specifies (typically per task or per phase). Specs, plans, reviews, and the code they describe ship together. Outside an approved plan, the default rule applies.
 - **Default to a feature branch for non-trivial work.** Branch names follow Conventional Branch 1.1.0 (see `STANDARDS.md`): `<type>/<scope>` such as `feat/<scope>`, `fix/<scope>`, `docs/<scope>`, `chore/<scope>`. Multi-plan runs use `feat/<slug>-spN-<name>`, never nested slashes. Typos, single-line tweaks, and catalog-row syncs can land directly on `main`.
 - **Bundle related changes into a single commit.** One logical change = one commit; never commit per tweak. A new skill ships with its catalog rows and any command file in one commit.
-- Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`). Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`. Enforced by tracked git hooks (`.githooks/`): `commit-msg` rejects non-Conventional-Commits messages; `pre-commit` rejects em-dashes in markdown, bad SKILL.md frontmatter (name, description, size, headings), new skills missing from the README/AGENTS catalogs, and forbidden paths (`temp/`, `old/`, `archive/`, `docs/superpowers/`, `.planning/`). Activate once per clone with `git config core.hooksPath .githooks` (see `opencode-install.md` step 10). Bypass: `git commit --no-verify`.
+- Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`). Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`. Enforced by tracked git hooks (`.githooks/`): `commit-msg` rejects non-Conventional-Commits messages; `pre-commit` rejects em-dashes in markdown, bad SKILL.md frontmatter (name, description, size, headings), new skills missing from the README/AGENTS catalogs, and forbidden paths (`temp/`, `old/`, `archive/`, `docs/superpowers/`, `.planning/`). Activate once per clone with `git config core.hooksPath .githooks` (see `opencode-install.md` step 9). Bypass: `git commit --no-verify`.
 - Branch model: `main`.
 - No secrets in tracked files. No `temp/`, no `old/`, no `archive/`. Git history is the archive.
 
@@ -202,4 +207,4 @@ When delegating to `brainstorming` or `writing-plans` (superpowers) or any GSD-s
 
 - The `project-standardization` skill (in this repo) is the source of truth for bootstrapping any other project. Use it to scaffold a new project that itself needs agent context.
 - The `AGENTS.md` spec: <https://agents.md>
-- The `writing-skills` skill (from superpowers) is the meta-skill for authoring new skills well.
+- The `writing-skills` skill (vendored in this repo) is the meta-skill for authoring new skills well.

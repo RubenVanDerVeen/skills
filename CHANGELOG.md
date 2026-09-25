@@ -36,6 +36,11 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - Conventional Branch 1.1.0 adopted as the named branch-naming standard: Stack row + section in `STANDARDS.md` (root and `project-standardization` template), floor entry in `references/standards-stack.md`, branch bullet in `AGENTS.md` and the three `templates/AGENTS-*.md`, default-application line in `agents/orchestrator.md`, pointer in `commands/execute-plan.md`. Legacy `plan-<name>` branch scheme removed (no type prefix, invalid per spec). Spec: `docs/artifacts/features/conventional-branch/2026-09-20-conventional-branch-design.md`.
 - lazy-dev subagent: lean-plan gate reviewing plans for over-engineering before orchestrator dispatch
 - Choices registry: cross-feature decision records in `docs/artifacts/choices/` (`YYYY-MM-DD-<slug>-decision.md` + `index.md`), written by the documenter at close-out, consulted by the planner before locking decisions, checked by lazy-dev, and surfaced as a `## Choices` PR section. Spec: `docs/artifacts/features/choices-registry/2026-09-24-choices-registry-design.md`.
+- feat(skills): `brainstorming` skill, vendored from superpowers and tailored to repo conventions; spec path per repo standard, batched questions replace one-at-a-time.
+- feat(skills): `writing-plans` skill, vendored from superpowers with native plan paths and the repo's /execute-plan flow.
+- feat(skills): `using-git-worktrees` skill, vendored from superpowers.
+- feat(skills): `systematic-debugging` skill, vendored from superpowers; reference material moved to references/.
+- feat(skills): `writing-skills` skill, vendored from superpowers, examples moved to references/.
 
 ### Changed
 
@@ -58,6 +63,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - Split the `standardizer` agent into `doc-standardizer` (repo/docs conventions, loads `project-standardization`) and `code-standardizer` (code structure, loads `code-standardization`); plan flows now run both audits sequentially with one combined quick-fix executor pass.
 - `agents/executor.md`, `agents/reviewer.md`, `commands/execute-plan.md`: test runs follow the project's AGENTS.md (command, cwd, scope), targeted-first for executors and reviewers; never invoke a test runner from a directory lacking its package manifest. Spec: `docs/artifacts/features/vitest-cwd-discipline/2026-09-16-vitest-cwd-discipline-design.md`.
 - Versioning policy: plan close-out now ship-bumps the project version by default. When a plan branch ships feat or fix commits and the project's `AGENTS.md` declares a canonical version source, the documenter bumps canonical source + sync targets, finalizes the `[Unreleased]` heading, and commits `chore(release): vX.Y.Z`. Docs-only ships and unversioned projects skip; tagging remains a deliberate, user-invoked release cut. Spec: `docs/artifacts/features/version-bump-on-ship/2026-09-19-version-bump-on-ship-design.md`.
+- docs(skills): point live flows at vendored process skills, drop superpowers namespace. 8 doc files updated; `multi-plan-orchestration`, `artifacts.md`, AGENTS delegation rule, `opencode-install.md` install step 1 removed, `external-skills.md` status line, `workflow.md` session-start description, README install block, stack diagram layer-2 label.
 
 ### Fixed
 
