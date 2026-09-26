@@ -86,17 +86,6 @@ TypstTools/
 
 Same shape: one `AGENTS.md`, no `.agents/` subdir. The valuable content is the **architecture** section (entrypoint, types vs templates vs components vs renderers, standards module, styles) plus the **key conventions** (section-DB pattern, Dutch heading numbering, translation file location). All of that would be slow to re-derive from source every session.
 
-## Memory
-
-Cross-session memory is provided by the active tool. The location and format depend on the tool; opencode has no default memory dir, so use a project-local dir such as `docs/memory/`. See `references/memory.md` for the universal structure (the `MEMORY.md` index + `user.md` / `feedback_*.md` / `project_*.md` / `reference_*.md` files) and tool-specific paths.
-
-For a small project, the memory entries are usually just:
-
-- `user.md`: user role, expertise.
-- `feedback_*.md`: any project-specific behavioural rules learned over time.
-
-No `project_*.md` needed for a small project; the project facts fit in `AGENTS.md`.
-
 ## When to graduate to medium
 
 Move to the medium pattern when **any** of these become true:

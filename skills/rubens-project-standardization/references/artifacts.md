@@ -157,7 +157,7 @@ Subdirectory names omit the date: instead use `-<N>` suffixes for iterations of 
 
 ### Review rules
 
-- Reviews are **committed**, not stored in chat history or memory.
+- Reviews are **committed**, not stored in chat history.
 - Repo-structure audits, standards-compliance audits, and project-structure reviews go here, **not** under `.agents/`.
 - Reviews are not auto-loaded; read on demand when revisiting findings or comparing to a later audit.
 - When a review supersedes an earlier one (e.g. `2026-05-09-repo-structure-audit.md` followed by `2026-05-11-standards-compliance-audit.md`), do not delete the older review: both stay so the audit trail is preserved.
@@ -240,7 +240,7 @@ Each step's artifact is committed before the next step starts. **Step 1, 3, 6 mu
 
 - `docs/artifacts/` files are **not** auto-imported into `AGENTS.md`. They are project history, not session context.
 - Reference them on demand: "What was the original design for X?" → the agent greps `docs/artifacts/features/<feature>/` for the matching topic and reads that file.
-- If a constraining decision in a spec needs to be remembered cross-session (e.g. "we explicitly chose A over B because of constraint C"), record it as a choices registry entry (see the Choices section) **as well as** keeping the full spec under `docs/artifacts/features/<feature>/`. Memory entries remain the right home for non-constraining session context.
+- If a constraining decision in a spec needs to be remembered cross-session (e.g. "we explicitly chose A over B because of constraint C"), record it as a choices registry entry (see the Choices section) **as well as** keeping the full spec under `docs/artifacts/features/<feature>/`.
 
 ## Choices
 

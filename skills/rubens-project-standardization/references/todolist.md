@@ -95,13 +95,12 @@ If the project mirrors `todolist.md` to a Plane workspace, add a sync note at th
 
 The Plane MCP tools (`mcp__homelab__plane_*`) are available when MCP is configured for the project. Use the dedicated `plane` subagent for bulk operations; for single-task sync, direct tool calls are fine.
 
-## When to use `todolist.md` vs in-tool task list vs memory
+## When to use `todolist.md` vs in-tool task list
 
 | Use this | For |
 |----------|-----|
 | `.agents/todolist.md` | Persistent backlog. Survives sessions and authors. Committed. |
 | In-tool task list (TodoWrite / todos / plan mode) | Per-session work tracking. Disappears at end of session. |
-| Memory (`project_*.md`) | Cross-session facts, decisions, deadlines. NOT tasks. |
 | `docs/artifacts/features/<feature>/` | Multi-step implementation plans with checkpoints. NOT a backlog. |
 
 A new feature request from the user that will take several sessions to land: `todolist.md` entry + (when starting) an in-tool task per step.

@@ -1,6 +1,6 @@
 ---
 name: project-standardization
-description: Use when bootstrapping or restructuring a project for AI coding agents (opencode, Codex, Cursor, Aider, GitHub Copilot, Hermes, plus Claude Code via a CLAUDE.md shim): creating AGENTS.md + CLAUDE.md shim, scaffolding the on-demand subdirectory at `.agents/`, choosing directory layout, setting up `docs/artifacts/` for specs/plans/reviews/reports from any framework, seeding cross-session memory, or applying the ISO/IEC/IEEE + industry standards stack. Triggers: "set up agent context", "scaffold project", "bootstrap project", "standardize this repo", "create AGENTS.md", "create CLAUDE.md", "project layout", "init repo structure", "where should X go". Three project-size tiers (small/medium/large) with separate references so irrelevant guidance is not loaded.
+description: Use when bootstrapping or restructuring a project for AI coding agents (opencode, Codex, Cursor, Aider, GitHub Copilot, Hermes, plus Claude Code via a CLAUDE.md shim): creating AGENTS.md + CLAUDE.md shim, scaffolding the on-demand subdirectory at `.agents/`, choosing directory layout, setting up `docs/artifacts/` for specs/plans/reviews/reports from any framework, or applying the ISO/IEC/IEEE + industry standards stack. Triggers: "set up agent context", "scaffold project", "bootstrap project", "standardize this repo", "create AGENTS.md", "create CLAUDE.md", "project layout", "init repo structure", "where should X go". Three project-size tiers (small/medium/large) with separate references so irrelevant guidance is not loaded.
 ---
 
 ## Overview
@@ -28,7 +28,7 @@ Most projects adopt the conventions layer. Formal ISO/IEC/IEEE norms are opt-in 
 - **kebab-case ASCII-only paths**: lowercase, hyphens, no spaces / underscores / PascalCase / non-ASCII. `README.md`, `AGENTS.md`, `CLAUDE.md`, `CHANGELOG.md`, `STANDARDS.md` are conventional exceptions.
 - **English structural paths**: dir / file names in English. Document *content* may be Dutch where the deliverable requires it.
 - **ISO 8601 date prefix**: `YYYY-MM-DD-` first, e.g. `2026-05-08-standup.md`.
-- **Conventional Commits 1.0.0 + Keep a Changelog 1.1.0 + SemVer 2.0.0** (shipped-software projects): commits, changelog, and version numbers form one coherent floor. `<type>(<scope>): <description>`; `CHANGELOG.md` grouped by version or sprint; versions follow SemVer 2.0.0 strict (during 0.x, `0.X+1.0` MAY break, `0.X.Y+1` is backwards-compatible only). Commits and doc structure are enforced by the `commit-msg` and `pre-commit` hooks installed in bootstrap step 10. Version policy, bump triggers, and multi-source sync: `references/versioning.md`.
+- **Conventional Commits 1.0.0 + Keep a Changelog 1.1.0 + SemVer 2.0.0** (shipped-software projects): commits, changelog, and version numbers form one coherent floor. `<type>(<scope>): <description>`; `CHANGELOG.md` grouped by version or sprint; versions follow SemVer 2.0.0 strict (during 0.x, `0.X+1.0` MAY break, `0.X.Y+1` is backwards-compatible only). Commits and doc structure are enforced by the `commit-msg` and `pre-commit` hooks installed in bootstrap step 9. Version policy, bump triggers, and multi-source sync: `references/versioning.md`.
 
 Rationale: `references/standards-stack.md`.
 
@@ -37,9 +37,8 @@ Rationale: `references/standards-stack.md`.
 - **Auto-loaded budget**: `AGENTS.md` + auto-imports ≤ 5k tokens. **Minimize auto-imports to what every session actually needs**: when in doubt, on-demand table, not `@import`. Auto-imports fire every session whether the topic is relevant or not.
 - **One authoritative source per deliverable** (ISO 10007): source in `docs/source/`, generated in `docs/deliverables/`. Never siblings.
 - **No `temp/`, no `old/`, no `archive/`**: git history is the archive.
-- **No secrets in any tracked file**: `.env`, tokens, passwords out of git. Memory included.
+- **No secrets in any tracked file**: `.env`, tokens, passwords out of git.
 - **Specs and plans live in the repo**: `docs/artifacts/features/<feature>/` (specs, plans, manifests, reports) plus `docs/artifacts/reviews/` (flat log) and `docs/artifacts/choices/` (decision records), committed alongside the code. **Override clause**: this wins over any per-framework default (superpowers, GSD, `.planning/`). See `references/artifacts.md` § Per-framework redirect for the redirect mechanics; redirect before files land elsewhere.
-- **Memory ≠ plans ≠ tasks**: memory = cross-session facts; plans = committed artefacts; tasks = per-session in-tool items.
 
 ## Token budget
 
@@ -55,14 +54,13 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 
 | File | When to read |
 |------|--------------|
-| `references/bootstrap.md` | The 12-step bootstrap checklist (triage → AGENTS.md → `.agents/` → artifacts → memory → CHANGELOG → STANDARDS + README AI section → commit hook → graphify → verify) |
+| `references/bootstrap.md` | The 11-step bootstrap checklist (triage → AGENTS.md → `.agents/` → artifacts → CHANGELOG → STANDARDS + README AI section → commit hook → graphify → verify) |
 | `references/small.md` | Small project layout, AGENTS.md content, graduation triggers |
 | `references/medium.md` | Medium project layout, auto-import vs on-demand, Homelab example |
 | `references/large.md` | Large project layout, `docs/{source,deliverables,components,project-management}/`, sprint workflow |
 | `references/standards-stack.md` | Standards application, ISO/IEC/IEEE rationale, Diátaxis decision |
 | `references/artifacts.md` | `docs/artifacts/` setup, filename grammar, redirecting per-framework defaults |
 | `references/versioning.md` | When the project ships versions (Tauri apps, CLIs, libraries, installers): SemVer 2.0.0 policy, bump triggers, multi-source sync, release-cut recipe |
-| `references/memory.md` | Cross-session memory, `MEMORY.md` index, tool paths |
 | `references/todolist.md` | `.agents/todolist.md` format, Plane sync |
 | `references/tool-filenames.md` | Tool-specific filename / subdir aliases |
 | `references/migration.md` | Migration from older `CLAUDE.md` / `claude/` / `rubens-project-standardization` |
@@ -81,8 +79,8 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 | `templates/STANDARDS.md` | Human-readable standards summary |
 | `templates/README-ai-assistance.md` | AI-assistance section appended to the project README: involvement level + skills-repo and workflow links |
 | `templates/post-commit-graphify` | Debounced git hook: refresh `graphify-out/` graph after commits (AST-only, no LLM). Copy to `.git/hooks/post-commit`. |
-| `templates/commit-msg` | Conventional Commits 1.0.0 enforcement hook (sh + grep, no deps). Copy to `.githooks/commit-msg`; see bootstrap step 10. |
-| `templates/pre-commit` | Doc-standards enforcement hook (em-dash ban, SKILL.md frontmatter, catalog sync, forbidden paths; sh + grep, no deps). Copy to `.githooks/pre-commit`; see bootstrap step 10. |
+| `templates/commit-msg` | Conventional Commits 1.0.0 enforcement hook (sh + grep, no deps). Copy to `.githooks/commit-msg`; see bootstrap step 9. |
+| `templates/pre-commit` | Doc-standards enforcement hook (em-dash ban, SKILL.md frontmatter, catalog sync, forbidden paths; sh + grep, no deps). Copy to `.githooks/pre-commit`; see bootstrap step 9. |
 
 ## Commands
 

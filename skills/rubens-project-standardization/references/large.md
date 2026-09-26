@@ -132,17 +132,6 @@ For each major physical or logical component (e.g. `main-controller`, `remote-co
 
 Empty subdirectories are fine if a component is in early stages, but each component should have **at least** one populated subdirectory before the next sprint closes: otherwise the structure is decorative.
 
-## Memory
-
-Cross-session memory at the tool's default memory location; opencode has no default dir, so use a project-local dir such as `docs/memory/`. Large projects typically have:
-
-- `user.md`: user role.
-- `feedback_*.md`: behavioural rules.
-- `project_*.md`: decisions, constraints, deadlines.
-- `reference_*.md`: external systems (Plane, Blackboard, school portals).
-
-See `references/memory.md` for the universal structure and tool-specific paths.
-
 ## What "large" looks like in practice: IDP annotated
 
 ```

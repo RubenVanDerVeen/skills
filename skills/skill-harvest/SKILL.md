@@ -23,7 +23,6 @@ Mines recent opencode sessions for repeated corrections, recurring friction, and
 |---|---|---|
 | fix-skill | repeated correction maps to an existing SKILL.md | propose concrete edit |
 | new-skill | recurring friction, no skill matched | propose name + trigger description |
-| memory | fact about user or project, not process | suggest memory write |
 | config | "every time X" automation | flag for hook/settings, do not implement |
 
 5. **Report.** Write `docs/artifacts/reviews/YYYY-MM-DD-harvest.md`: per finding its type, evidence quotes with session file references, target skill, sketched edit. Zero findings: short "nothing recurring" report.
