@@ -53,6 +53,8 @@ Each step is one action (2-5 minutes):
 - Modify: `exact/path/to/existing.py:123-145`
 - Test: `tests/exact/path/to/test.py`
 
+**Depends:** none  (or: Task 2, Task 4)  # listed tasks must be reviewer-passed first
+
 **Interfaces:**
 - Consumes: [what this task uses from earlier tasks, with exact signatures]
 - Produces: [what later tasks rely on, with exact function names, parameter
@@ -92,6 +94,15 @@ git commit -m "feat: add specific feature"
 ```
 ````
 
+## Parallel Readiness
+
+The orchestrator dispatches tasks in parallel waves; the ready set each wave is every task whose `**Depends:**` entries are reviewer-passed.
+
+- Default `**Depends:** none`; list tasks only when the Interfaces `Consumes:` block cites an earlier task's output.
+- All `Depends: none` tasks must have mutually disjoint `**Files:**` sets; overlap → merge the tasks or add a dependency edge.
+- Domain forces a serial chain → maximize independent branches around it.
+- Missing `Depends:` lines forfeit parallelism: the executor runs the whole plan serially, one task at a time.
+
 ## No Placeholders
 
 Every step must contain the actual content an engineer needs. These are **plan failures**: never write them:
@@ -117,6 +128,8 @@ After writing the complete plan, look at the spec with fresh eyes and check the 
 **2. Placeholder scan:** Search your plan for red flags, any of the patterns from the "No Placeholders" section above. Fix them.
 
 **3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
+
+**4. Parallel readiness:** Every task carries a `**Depends:**` line, AND every `none`-dependency task's `**Files:**` set is disjoint from the other `none` tasks.
 
 If you find issues, fix them inline. No need to re-review, just fix and move on. If you find a spec requirement with no task, add the task.
 
