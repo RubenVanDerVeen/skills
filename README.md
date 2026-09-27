@@ -20,6 +20,7 @@ Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands
 | [`systematic-debugging`](./skills/systematic-debugging/SKILL.md) | Hypothesis-first debugging: cheapest test first, follow evidence, fix the root cause. |
 | [`note-syntax`](./skills/note-syntax/SKILL.md) | Full .md note-writing syntax containing my own custom syntax. Usable in [`Klad`](https://github.com/RubenVanDerVeen/klad): YAML frontmatter, wikilinks, `{N%}` image sizing, file embeds, `columns`/`plot`/`mermaid` fences, KaTeX math. Cheatsheets per topic. |
 | [`pr-description`](./skills/pr-description/SKILL.md) | Standardized description for agent-created PRs. Conventional Commits title line plus Problem, What changed and why, Verification, Choices, Docs sections. |
+| [`release-description`](./skills/release-description/SKILL.md) | Standardized body for release descriptions: the `chore(release): vX.Y.Z` commit body, the `git tag -a` annotation, and GitHub or GitLab Release notes. One template, three copy sites: Summary, Highlights, Breaking changes, Internal, Full changelog. |
 | [`rubens-project-standardization`](./skills/rubens-project-standardization/SKILL.md) | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | [`skill-harvest`](./skills/skill-harvest/SKILL.md) | Mines recent opencode sessions for repeated corrections and skill gaps; report, approve, apply. Slash command: `/harvest`. |
 | [`using-git-worktrees`](./skills/using-git-worktrees/SKILL.md) | Isolated worktree or plain branch before executing implementation plans. |
@@ -90,7 +91,8 @@ skills/
     ├── skill-harvest/
     │   ├── SKILL.md
     │   └── references/extraction.md
-    └── pr-description/SKILL.md
+    ├── pr-description/SKILL.md
+    └── release-description/SKILL.md
 ```
 
 ## Adding a skill
