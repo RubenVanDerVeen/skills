@@ -41,6 +41,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - feat(skills): `using-git-worktrees` skill, vendored from superpowers.
 - feat(skills): `systematic-debugging` skill, vendored from superpowers; reference material moved to references/.
 - feat(skills): `writing-skills` skill, vendored from superpowers, examples moved to references/.
+- `skills/release-description/`: one template, three copy sites (`chore(release)` commit body, `git tag -a` annotation, GitHub or GitLab Release notes). Wired into `agents/documenter.md` step 6.1, `agents/orchestrator.md` step 8, and `references/versioning.md` step 5. Spec: `docs/artifacts/features/release-description/2026-09-27-release-description-design.md`.
 
 ### Changed
 
