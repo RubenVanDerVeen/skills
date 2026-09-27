@@ -141,17 +141,6 @@ Create `docs/artifacts/` (per-feature layout: `features/<feature>/` + flat `revi
 
 Until then, the directory is just noise. See `references/artifacts.md` for the full convention.
 
-## Memory
-
-Cross-session memory at the tool's default memory location; opencode has no default dir, so use a project-local dir such as `docs/memory/`. Medium projects typically have:
-
-- `user.md`: user role.
-- `feedback_<topic>.md`: behavioural rules learned per area.
-- `project_<topic>.md`: decisions, constraints not captured in code (e.g. "Docker pinned to 28.2.2 because v29 broke Watchtower").
-- `reference_<topic>.md`: pointers to external systems (Plane workspace, dashboards, ticketing).
-
-See `references/memory.md` for the universal structure and tool-specific paths.
-
 ## When to graduate to large
 
 Graduate to the large pattern when **any** of these become true:
