@@ -103,21 +103,15 @@ Then set two persistent user env vars so the plugin reuses the existing `minimax
 
 Restart opencode from a fresh terminal so the new env vars are inherited. The plugin defaults to `opencode-go` (minimax-m3); setting `SEE_IMAGE_PROVIDER` overrides that. For the resolve order and other models, see `external-skills.md`.
 
-### 8. Copy skills, commands, and agents into the agent's directories
+### 8. Sync skills, commands, and agents into the agent's directories
 
-The `skills/`, `commands/`, and `agents/` directories inside this repo are inactive by themselves; all three steps below are required per machine.
+The `skills/`, `commands/`, and `agents/` directories inside this repo are inactive by themselves; sync them to the agent's directories with the shipped CLI. Run from the clone root:
 
-1. Copy each folder under `skills/` to the agent's skills directory (e.g. `~/.claude/skills/` for Claude Code, `~/.config/opencode/skills/` for opencode).
-2. Copy each `commands/*.md` file to the agent's commands directory:
+```
+bin/skillctl sync
+```
 
-   | Agent | Global | Per-project |
-   |---|---|---|
-   | opencode | `~/.config/opencode/command/` (singular) | `.opencode/command/` |
-   | Claude Code | `~/.claude/commands/` (plural) | `.claude/commands/` |
-
-   opencode uses the singular `command/` directory; Claude Code uses plural `commands/`. Do not normalise across agents.
-
-3. Copy each `agents/*.md` file (opencode agent definitions: `planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `doc-standardizer`, `code-standardizer`, `documenter`, `oracle`; `inventree` is optional and only on machines that register the homelab MCP server) to `~/.config/opencode/agents/` (global) or `.opencode/agents/` (per-project). opencode-only; Claude Code subagents use a different frontmatter format. Restart opencode afterwards; see `agents/README.md` for roles and tuning.
+Use `bin/skillctl sync --check` for a dry run that reports drift without changing anything. The CLI mirrors skills, commands, and agents to the correct directories for both opencode (`~/.config/opencode/skills/`, `~/.config/opencode/command/` singular, `~/.config/opencode/agents/`) and Claude Code (`~/.claude/skills/`, `~/.claude/commands/` plural). opencode-only agents are never copied to Claude Code. Restart opencode afterwards so the new agents load; see `agents/README.md` for roles and tuning.
 
 
 ### 9. Enable the git hooks
