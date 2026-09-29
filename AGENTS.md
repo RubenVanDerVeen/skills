@@ -22,6 +22,7 @@ skills/
 ├── opencode-install.md                        <- bootstrap doc
 ├── external-skills.md                         <- external skill catalog
 ├── AGENTS.md                                  <- this file
+├── bin/                                       <- skillctl maintenance CLI (check, sync)
 ├── commands/                                  <- all slash commands live here
 │   ├── goal.md                                <- /goal: iterate until verifier passes
 │   ├── execute-plan.md                        <- /execute-plan: subagent-driven plan execution
