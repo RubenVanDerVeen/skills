@@ -47,7 +47,7 @@ Lowercase letters, digits, and hyphens only. No spaces, no underscores, no Pasca
 ❌ ESP32_C3_Datasheet.pdf
 ```
 
-Exceptions for conventional uppercase filenames: `README.md`, `AGENTS.md`, `CLAUDE.md` (one-line shim that `@import`s `AGENTS.md` for Claude Code, which does not read `AGENTS.md` natively), `CHANGELOG.md`, `STANDARDS.md`, `LICENSE`, `Makefile`, `Cargo.toml`, `package.json`. Everything else is kebab-case.
+Exceptions for conventional filenames: `README.md`, `AGENTS.md`, `CLAUDE.md`, `CHANGELOG.md`, `STANDARDS.md`, `LICENSE`, `LICENSE.md`, `Makefile`, `Dockerfile`, `SKILL.md`, `Cargo.toml`, `Cargo.lock`, `package.json`, `package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`, `pyproject.toml`, `poetry.lock`, `go.mod`, `go.sum`, `composer.json`, `tauri.conf.json`, `.release-notes.md`, `AGENTS-small.md`, `AGENTS-medium.md`, `AGENTS-large.md`, `README-ai-assistance.md`, dotfiles (any basename starting with a dot). Everything else is kebab-case. `CLAUDE.md` is a one-line shim that `@import`s `AGENTS.md` for Claude Code, which does not read `AGENTS.md` natively.
 
 ### English structural paths
 

@@ -51,6 +51,7 @@ Red flags (any one = stop and fix before committing):
 - Commit messages: Conventional Commits 1.0.0 (`<type>(<scope>): <description>`).
 - Commits are enforced by a tracked `commit-msg` hook (`.githooks/commit-msg`); activate per clone with `git config core.hooksPath .githooks`. Bypass: `git commit --no-verify`.
 - **Bundle related changes into a single commit.** One logical change = one commit; never commit/push per tweak.
+- After bootstrap, the standing verification command is `stdctl check` (exit 0 clean; tool source: `~/projects/Tools/stdctl`, symlinked at `~/.local/bin/stdctl`).
 - <Any other project-specific rules: branch model, hooks, signing.>
 
 ### Versioning

@@ -96,7 +96,7 @@ Lowercase letters, digits, and hyphens. No spaces, no underscores, no PascalCase
 
 **Why:** cross-platform safe (Windows / macOS / Linux), URL-safe, shell-safe, sorts consistently, no case-sensitivity bugs on case-insensitive filesystems.
 
-**Exceptions:** conventional uppercase filenames are kept: `README.md`, `AGENTS.md`, `CLAUDE.md` (one-line shim that `@import`s `AGENTS.md` for Claude Code, which does not read `AGENTS.md` natively), `CHANGELOG.md`, `STANDARDS.md`, `LICENSE`, `Makefile`, `Cargo.toml`, `package.json`. Anything else is kebab-case.
+**Exceptions:** conventional filenames are kept as-is: `README.md`, `AGENTS.md`, `CLAUDE.md`, `CHANGELOG.md`, `STANDARDS.md`, `LICENSE`, `LICENSE.md`, `Makefile`, `Dockerfile`, `SKILL.md`, `Cargo.toml`, `Cargo.lock`, `package.json`, `package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`, `pyproject.toml`, `poetry.lock`, `go.mod`, `go.sum`, `composer.json`, `tauri.conf.json`, `.release-notes.md`, `AGENTS-small.md`, `AGENTS-medium.md`, `AGENTS-large.md`, `README-ai-assistance.md`, dotfiles (any basename starting with a dot). Everything else is kebab-case. The `CLAUDE.md` shim `@import`s `AGENTS.md` because Claude Code does not read `AGENTS.md` natively.
 
 ### English structural paths
 

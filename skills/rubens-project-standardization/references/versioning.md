@@ -15,7 +15,7 @@ Versions follow [SemVer 2.0.0](https://semver.org/spec/v2.0.0.html) strict. Duri
 | Change | Bump in 0.x | Bump in ≥1.0 |
 |---|---|---|
 | Breaking change (any kind) | `0.X+1.0` | `X+1.0.0` |
-| New feature, backwards-compatible | `0.X+1.0` | `0.Y+1.0` |
+| New feature, backwards-compatible | `0.(X+1).0` | `X.(Y+1).0` |
 | Bug fix, backwards-compatible | `0.X.Y+1` | `0.X.Y+1` |
 | Docs / chore / refactor (no behaviour) | no bump | no bump |
 
