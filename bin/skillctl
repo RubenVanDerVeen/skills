@@ -126,7 +126,103 @@ cmd_check() {
   [ "$FAILS" -eq 0 ]
 }
 
+SYNCED_N=0
+MISSING_N=0
+STALE_N=0
+
+mirror() { # repo_kind_dir src_path dest_dir
+  local kind="$1" src="$2" dest_dir="$3" name base e
+  name=$(basename "$src")
+  base="$dest_dir/$name"
+  if [ "$DRY" -eq 1 ]; then
+    if [ ! -e "$base" ]; then
+      echo "MISSING $base"; MISSING_N=$((MISSING_N + 1))
+    elif ! diff -rq "$src" "$base" >/dev/null 2>&1; then
+      echo "STALE  $base"; STALE_N=$((STALE_N + 1))
+    fi
+    for e in "$dest_dir"/*; do
+      [ -e "$e" ] || continue
+      [ -e "$REPO_ROOT/$kind/$(basename "$e")" ] \
+        || { echo "EXTRA  $e"; WARNS=$((WARNS + 1)); }
+    done
+  else
+    mkdir -p "$dest_dir"
+    rm -rf "$base"
+    cp -r "$src" "$base"
+    echo "SYNCED $base"
+    SYNCED_N=$((SYNCED_N + 1))
+  fi
+}
+
+cmd_sync() {
+  local agent="all" DRY=0 a agents oc s c g touched_agents=0
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --agent)
+        [ $# -ge 2 ] || usage
+        agent="$2"; shift 2
+        ;;
+      --check) DRY=1; shift ;;
+      *) usage ;;
+    esac
+  done
+  case "$agent" in
+    opencode|claude|all) ;;
+    *) usage ;;
+  esac
+  case "$agent" in
+    all) agents="opencode claude" ;;
+    *) agents="$agent" ;;
+  esac
+
+  for a in $agents; do
+    case "$a" in
+      opencode)
+        oc="$HOME/.config/opencode"
+        for s in "$REPO_ROOT"/skills/*/; do
+          [ -e "$s" ] || continue
+          mirror skills "$s" "$oc/skills"
+        done
+        for c in "$REPO_ROOT"/commands/*.md; do
+          [ -e "$c" ] || continue
+          mirror commands "$c" "$oc/command"
+        done
+        for g in "$REPO_ROOT"/agents/*.md; do
+          [ -e "$g" ] || continue
+          # README.md is the roster doc, not an agent definition
+          [ "$(basename "$g")" = README.md ] && continue
+          mirror agents "$g" "$oc/agents"
+        done
+        touched_agents=1
+        ;;
+      claude)
+        for s in "$REPO_ROOT"/skills/*/; do
+          [ -e "$s" ] || continue
+          mirror skills "$s" "$HOME/.claude/skills"
+        done
+        for c in "$REPO_ROOT"/commands/*.md; do
+          [ -e "$c" ] || continue
+          mirror commands "$c" "$HOME/.claude/commands"
+        done
+        # agents are opencode-only, never copied for Claude Code
+        ;;
+    esac
+  done
+
+  if [ "$DRY" -eq 1 ]; then
+    echo "---"
+    echo "sync: $MISSING_N missing, $STALE_N stale, $WARNS extra (dry run, nothing changed)"
+    [ "$((MISSING_N + STALE_N))" -eq 0 ]
+  else
+    echo "---"
+    echo "sync: $SYNCED_N synced"
+    [ "$touched_agents" -eq 1 ] && echo "reminder: restart opencode to reload agents"
+    return 0
+  fi
+}
+
 case "${1:-}" in
   check) shift; [ $# -eq 0 ] || usage; cmd_check ;;
+  sync) shift; cmd_sync "$@" ;;
   *) usage ;;
 esac
