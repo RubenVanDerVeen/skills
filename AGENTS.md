@@ -6,6 +6,8 @@ Personal agent environment monorepo for AI coding agents that follow the [agents
 
 The user adds, refines, and shares skills, commands, and agents over time. Auto-loaded for any agent that opens this repo.
 
+Tier: small. One author, single `AGENTS.md` suffices. This file exceeds the tier line budget by design (catalog-heavy convention source). The line budgets in `SKILL.md` target lean agent context for downstream projects, not this repo; the budget is guidance, not a hard rule enforced by `stdctl`. Graduation trigger: when 2+ topic files under `.agents/` become useful.
+
 ## Stack
 
 - **Content:** Markdown only. No build step, no tooling, no runtime. Single exception: `bin/skillctl`, a dependency-free bash maintenance CLI (`check`, `sync`); no other tooling.
@@ -109,7 +111,7 @@ description: <triggering conditions only>
 ---
 ```
 
-- `name`: letters, numbers, hyphens only. No parentheses, no special characters. Must match the folder name.
+- `name`: letters, numbers, hyphens only. Must start with a letter or number. No parentheses, no special characters. Must match the folder name.
 - `description`: starts with "Use when..." and describes **only** when to load the skill. Never summarises the skill's workflow; the body is the source of truth. Third person. Under ~500 characters if possible.
 - Max 1024 characters per skill's frontmatter (the agents.md spec limit).
 - The `description` is what the agent uses to decide whether to load the skill. Optimise for retrieval, not summary.

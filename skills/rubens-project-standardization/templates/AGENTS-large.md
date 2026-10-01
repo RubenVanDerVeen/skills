@@ -51,6 +51,7 @@ This project follows the standards stack documented in `docs/research/<paper>.pd
 - **Bundle related changes into a single commit.** One logical change = one commit; never commit/push per tweak.
 - Changelog: `CHANGELOG.md` grouped by sprint, Keep a Changelog 1.1.0.
 - Naming: kebab-case ASCII paths, English structural paths, ISO 8601 date prefix for time-based filenames.
+- After bootstrap, the standing verification command is `stdctl check` (exit 0 clean; tool source: `~/projects/Tools/stdctl`, symlinked at `~/.local/bin/stdctl`).
 - <Branch model, hooks, signing rules.>
 
 ### Versioning

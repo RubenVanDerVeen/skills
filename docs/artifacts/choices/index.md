@@ -9,3 +9,4 @@ One row per recorded decision. Files: `YYYY-MM-DD-<slug>-decision.md`. Conventio
 | 2026-09-24 | Planner greps `docs/artifacts/choices/` full-text across all files; correctness does not depend on `index.md` staying fresh | active | 2026-09-24-planner-full-text-lookup-decision.md |
 | 2026-09-24 | PR descriptions gain a `## Choices` section between `## Verification` and `## Docs`; `None` when nothing qualifies | active | 2026-09-24-pr-choices-section-decision.md |
 | 2026-09-27 | Release bodies use one template, three copy sites (`chore(release)` commit body, tag annotation, Release notes); `release-description` skill is the source of truth | active | 2026-09-27-release-description-template-decision.md |
+| 2026-09-29 | General standards check CLI lives out-of-tree as `Tools/stdctl` with PATH-symlink distribution; skills repo markdown-only rule preserved, `skillctl` untouched | active | 2026-09-29-stdctl-decision.md |
