@@ -42,6 +42,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - feat(skills): `systematic-debugging` skill, vendored from superpowers; reference material moved to references/.
 - feat(skills): `writing-skills` skill, vendored from superpowers, examples moved to references/.
 - `skills/release-description/`: one template, three copy sites (`chore(release)` commit body, `git tag -a` annotation, GitHub or GitLab Release notes). Wired into `agents/documenter.md` step 6.1, `agents/orchestrator.md` step 8, and `references/versioning.md` step 5. Spec: `docs/artifacts/features/release-description/2026-09-27-release-description-design.md`.
+- `bin/skillctl`: dependency-free bash maintenance CLI with `check` (worktree-wide lint, rules C1-C8) and `sync` (mirror skills/commands/agents to agent directories) subcommands. Stack exception per `AGENTS.md`. Spec at `docs/artifacts/features/skillctl/2026-09-29-skillctl-design.md`.
 
 ### Changed
 
@@ -66,6 +67,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - Versioning policy: plan close-out now ship-bumps the project version by default. When a plan branch ships feat or fix commits and the project's `AGENTS.md` declares a canonical version source, the documenter bumps canonical source + sync targets, finalizes the `[Unreleased]` heading, and commits `chore(release): vX.Y.Z`. Docs-only ships and unversioned projects skip; tagging remains a deliberate, user-invoked release cut. Spec: `docs/artifacts/features/version-bump-on-ship/2026-09-19-version-bump-on-ship-design.md`.
 - docs(skills): point live flows at vendored process skills, drop superpowers namespace. 8 doc files updated; `multi-plan-orchestration`, `artifacts.md`, AGENTS delegation rule, `opencode-install.md` install step 1 removed, `external-skills.md` status line, `workflow.md` session-start description, README install block, stack diagram layer-2 label.
 - writing-plans: plans now require a **Depends:** line per task plus a Parallel Readiness section (disjoint Files for none-dependency tasks, serial fallback when lines are absent), aligning the skill with the planner/orchestrator/execute-plan contract. Spec: docs/artifacts/features/writing-plans-parallel-tasks/2026-09-26-parallel-task-structure-design.md.
+- Agent-dir sync workflow: `AGENTS.md` and `opencode-install.md` replace the manual two-step copy with `bin/skillctl sync` (with `--check` dry-run); destination mapping table retained for reference.
 
 ### Fixed
 

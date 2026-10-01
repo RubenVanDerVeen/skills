@@ -55,17 +55,14 @@ Slash command associated with this skill. Source file lives in the top-level `co
 
 ### Sync pattern
 
-Two-step sync per machine, mirrors `project-standardization`:
-
-1. Copy `skills/code-standardization/` to the agent's skills directory (e.g. `~/.claude/skills/code-standardization/`, `~/.config/opencode/skills/code-standardization/`).
-2. Copy `commands/standardize-code.md` to the agent's commands directory:
+From the skills repo clone root, run `bin/skillctl sync` to mirror skills, commands, and agents into both OpenCode and Claude Code in one step. Add `--check` for a dry-run drift report (MISSING / STALE / EXTRA) without writing. The destination layout the CLI mirrors to:
 
 | Agent | Global | Per-project |
 |-------|--------|-------------|
 | OpenCode | `~/.config/opencode/command/` | `.opencode/command/` |
 | Claude Code | `~/.claude/commands/` | `.claude/commands/` |
 
-The command file is dead weight inside the skills directory until step 2.
+The command file (`commands/standardize-code.md`) is dead weight inside the skills directory until `bin/skillctl sync` copies it to the agent commands directory.
 
 ## Anti-patterns
 

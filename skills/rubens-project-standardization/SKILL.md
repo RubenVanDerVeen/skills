@@ -93,17 +93,14 @@ Slash commands associated with this skill. Source files live in the top-level `c
 
 ### Sync pattern
 
-Agents do not auto-discover commands from the skills directory. Two-step sync:
-
-1. Copy the `skills/rubens-project-standardization/` folder to the agent's skills directory (e.g. `~/.claude/skills/rubens-project-standardization/`).
-2. Copy `commands/standardize.md` and `commands/standardize-migrate.md` to the agent's commands directory:
+From the skills repo clone root, run `bin/skillctl sync` to mirror skills, commands, and agents into both OpenCode and Claude Code in one step. Add `--check` for a dry-run drift report (MISSING / STALE / EXTRA) without writing. The destination layout the CLI mirrors to:
 
 | Agent | Global | Per-project |
 |-------|--------|-------------|
 | OpenCode | `~/.config/opencode/command/` | `.opencode/command/` |
 | Claude Code | `~/.claude/commands/` | `.claude/commands/` |
 
-The command files are dead weight inside the skills directory until step 2.
+The command files (`commands/standardize.md`, `commands/standardize-migrate.md`) are dead weight inside the skills directory until `bin/skillctl sync` copies them to the agent commands directory.
 
 ## Anti-patterns
 

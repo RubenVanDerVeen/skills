@@ -229,14 +229,11 @@ Slash command associated with this skill. Source lives in the top-level `command
 
 ### Sync pattern
 
-Agents do not auto-discover commands from the skills directory. Two-step sync:
-
-1. Copy the `skills/multi-plan-orchestration/` folder to the agent's skills directory (e.g. `~/.claude/skills/multi-plan-orchestration/`).
-2. Copy `commands/multi-plan.md` to the agent's commands directory:
+From the skills repo clone root, run `bin/skillctl sync` to mirror skills, commands, and agents into both OpenCode and Claude Code in one step. Add `--check` for a dry-run drift report (MISSING / STALE / EXTRA) without writing. The destination layout the CLI mirrors to:
 
 | Agent | Global | Per-project |
 |-------|--------|-------------|
 | OpenCode | `~/.config/opencode/command/` | `.opencode/command/` |
 | Claude Code | `~/.claude/commands/` | `.claude/commands/` |
 
-The command file is dead weight inside the skills directory until step 2.
+The command file (`commands/multi-plan.md`) is dead weight inside the skills directory until `bin/skillctl sync` copies it to the agent commands directory.

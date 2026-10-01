@@ -42,4 +42,4 @@ Mines recent opencode sessions for repeated corrections, recurring friction, and
 |---|---|
 | `/harvest [project]` | Run a harvest; optional project-name filter |
 
-Sync: copy `commands/harvest.md` (top-level) to the agent commands directory (Claude Code `~/.claude/commands/`, OpenCode `~/.config/opencode/command/`). The file is dead weight inside the skills directory until copied.
+Sync: from the skills repo clone root, run `bin/skillctl sync` to mirror skills, commands, and agents into both OpenCode and Claude Code in one step (Claude Code `~/.claude/commands/`, OpenCode `~/.config/opencode/command/`). Add `--check` for a dry-run drift report without writing. The command file (`commands/harvest.md`) is dead weight inside the skills directory until `bin/skillctl sync` copies it.

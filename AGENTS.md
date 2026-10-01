@@ -8,7 +8,7 @@ The user adds, refines, and shares skills, commands, and agents over time. Auto-
 
 ## Stack
 
-- **Content:** Markdown only. No build step, no tooling, no runtime.
+- **Content:** Markdown only. No build step, no tooling, no runtime. Single exception: `bin/skillctl`, a dependency-free bash maintenance CLI (`check`, `sync`); no other tooling.
 - **Discovery:** `AGENTS.md` at the repo root; each `SKILL.md` uses YAML frontmatter (`name`, `description`).
 - **Distribution:** Git remote `https://github.com/RubenVanDerVeen/skills.git`, branch `main`.
 
@@ -22,6 +22,7 @@ skills/
 ├── opencode-install.md                        <- bootstrap doc
 ├── external-skills.md                         <- external skill catalog
 ├── AGENTS.md                                  <- this file
+├── bin/                                       <- skillctl maintenance CLI (check, sync)
 ├── commands/                                  <- all slash commands live here
 │   ├── goal.md                                <- /goal: iterate until verifier passes
 │   ├── execute-plan.md                        <- /execute-plan: subagent-driven plan execution
@@ -68,10 +69,9 @@ description: <one-line summary of what the command does>
 
 #### Sync pattern
 
-The `commands/` directory is inactive inside the skills directory. Two-step sync per machine:
+The `commands/` directory is inactive inside the skills directory. Sync skills, commands, and agents in one step per machine:
 
-1. Copy each folder under `skills/` to the agent's skills directory (e.g. `~/.claude/skills/`, `~/.config/opencode/skills/`).
-2. Copy `commands/*.md` to the agent's commands directory:
+Run `bin/skillctl sync` from the clone root to perform both steps plus the agents sync in one command. `bin/skillctl sync --check` reports drift (MISSING / STALE) without changing anything. Mappings are encoded there; the table stays as reference. Manual equivalent (if the CLI is unavailable): copy each folder under `skills/` to the agent's skills directory, then `commands/*.md` to the commands directory per the table below.
 
 | Agent | Global | Per-project |
 |-------|--------|-------------|
@@ -116,7 +116,7 @@ description: <triggering conditions only>
 
 ### `SKILL.md` body rules
 
-- No em-dashes (U+2014, `-`). Use commas, colons, periods, parentheses, or hyphens. The rule applies to every file in this repo AND to chat output. Verify with `(Get-ChildItem -Recurse -Include *.md | Select-String -Pattern ([char]0x2014))` returning empty.
+- No em-dashes (U+2014, `-`). Use commas, colons, periods, parentheses, or hyphens. The rule applies to every file in this repo AND to chat output. Verify with `bin/skillctl check` (rule C1) reporting no em-dashes.
 - Token efficiency: lean skills under 200 words, frequently-loaded under 500. Move heavy reference to `references/<file>.md` and link from the body.
 - Body starts with `## Overview`. Then `## When to use` (or similar). Then the actual content.
 - One excellent example beats many mediocre ones. TypeScript or shell is fine, porting is cheap.
@@ -169,8 +169,8 @@ Steps:
 1. `mkdir skills/<name>`, create `skills/<name>/SKILL.md` with frontmatter.
 2. (Optional) Add a command file to the top-level `commands/` directory and a `## Commands` section to the `SKILL.md`. See the Slash commands section below for format and sync.
 3. Update the catalogs above in the same commit. The folder name, frontmatter `name`, and table entries must match exactly.
-4. Verify the frontmatter passes: `name` in kebab-case, `description` starts with "Use when...", description does not summarise the workflow, under 1024 chars total.
-5. Verify the body: no em-dashes, no top-level `## Skill` heading (use `## Overview` instead), under the token budget for the skill type.
+4. Verify the frontmatter passes: run `bin/skillctl check` (rules C2-C5). `name` in kebab-case, `description` starts with "Use when...", description does not summarise the workflow, under 1024 chars total.
+5. Verify the body: run `bin/skillctl check` (rules C2-C5). no em-dashes, no top-level `## Skill` heading (use `## Overview` instead), under the token budget for the skill type.
 6. Commit. Conventional Commits 1.0.0. Use `feat(skills):` for a new skill, `docs(skills):` if the commit only adds the catalog entries.
 
 Red flags (any one = stop and fix before commit):
