@@ -133,6 +133,8 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`
 ❌ wip
 ```
 
+Agent attribution: every agent-authored commit carries two trailers naming what made the change. `Co-Authored-By: <provider>/<model>` is the model slug in the provider/model form the model registry uses (e.g. `Co-Authored-By: zai/glm-5.3`, `Co-Authored-By: minimax/minimax-m3`). `Agent-Role: <role>` names the pipeline role that executed the change (`planner`, `orchestrator`, `executor`, `reviewer`, `documenter`, `oracle`, `explore`, or the project's own agent name). Never credit a model or role that did not produce the commit. Human-only commits carry no trailers. Trailers come last, after a blank line following the body.
+
 **Why:** machine-parseable history, automation-friendly (release notes, version bumps), traceable changes per configuration item (ties into ISO 10007).
 
 ### Conventional Branch 1.1.0
