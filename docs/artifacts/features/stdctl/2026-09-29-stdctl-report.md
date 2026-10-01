@@ -18,8 +18,8 @@ stdctl shipped: single-file bash CLI (`bin/stdctl check`) linting any standardiz
 | 2 | `bin/stdctl` skeleton + gate + floor G1-G7 | done, `28414d0` + fix `23ba60e` (1 fix round) |
 | 3 | Structure S1-S5 + skills-collection K1-K2 | done, `68402c9` + seed `a9905e0` (1 fix round) |
 | 4 | Symlink install + cross-repo smoke | clean, no commit needed (skills repo FAILs deferred to Task 5 per plan) |
-| 5 | Standard docs fixes + stdctl wiring (skills repo) | done, `3c3801b` |
-| 6 | Final matrix + structure review + close-out | matrix green; quick-fix bundle `726fb8e` + `929f6a4`; this report |
+| 5 | Standard docs fixes + stdctl wiring (skills repo) | done, `84997a3` |
+| 6 | Final matrix + structure review + close-out | matrix green; quick-fix bundle `726fb8e` + `f242e2e`; this report |
 | Phase 2 | Doc/code standardizer quick-fixes | all 7 findings addressed, both repos clean |
 
 ## Branch and commits
@@ -39,9 +39,9 @@ skills repo (`feat/stdctl-docs` vs `main`, 3 commits):
 
 | Hash | Subject |
 |---|---|
-| `63faef7` | docs: add stdctl design and plan |
-| `3c3801b` | docs(standardization): kebab exceptions, tier line, line-budget fix, stdctl wiring |
-| `929f6a4` | chore(standardization): add .editorconfig |
+| `0c01206` | docs: add stdctl design and plan |
+| `84997a3` | docs(standardization): kebab exceptions, tier line, line-budget fix, stdctl wiring |
+| `f242e2e` | chore(standardization): add .editorconfig |
 
 Close-out commit (this report + choices entry): `docs: add stdctl execution report`.
 
@@ -85,7 +85,7 @@ Doc-standardizer: 4 findings, all fixed in Phase 2.
 
 - `docs/artifacts/features/.gitkeep` missing in stdctl repo (S5 fresh-clone FAIL). Fixed in `726fb8e`.
 - `.shellcheckrc` + `.editorconfig` missing in stdctl repo. Fixed in `726fb8e`.
-- `.editorconfig` missing in skills repo. Fixed in `929f6a4`.
+- `.editorconfig` missing in skills repo. Fixed in `f242e2e`.
 - Untracked per-task reports (`task-{1..5}-report.md`) in both repos: removed; canonical report is this file.
 
 Code-standardizer: 2 findings fixed (same shellcheck + editorconfig items, shared with doc pass). 2 findings remain as recommendations, recorded as ponytail deferrals below (GNU-isms: `$'\u2014'`, `\<` word boundary).
@@ -95,7 +95,7 @@ Code-standardizer: 2 findings fixed (same shellcheck + editorconfig items, share
 - `standards-stack.md` + `STANDARDS.md` template: G3 exception list verbatim from spec, single source.
 - `bootstrap.md`: line-budget contradiction resolved (small <60, medium <120, large <200); standing verification command `stdctl check` named at end.
 - `versioning.md`: bump-table row "New feature, backwards-compatible" cells corrected (`0.(X+1).0`, `X.(Y+1).0`).
-- Skills repo `AGENTS.md`: name rule gains "must start with a letter or number"; `Tier: small` declared (line budgets stay guidance, noted in commit body of `3c3801b`).
+- Skills repo `AGENTS.md`: name rule gains "must start with a letter or number"; `Tier: small` declared (line budgets stay guidance, noted in commit body of `84997a3`).
 - `AGENTS-{small,medium,large}.md` templates: stdctl verification wiring line.
 - No catalog rows anywhere: stdctl is not a skill, has no SKILL.md, no frontmatter, no commands.
 
@@ -162,6 +162,6 @@ Nothing self-implemented.
 |---|---|
 | Task 2 fix round (`23ba60e`) | plan verbatim copy carried an unborn-HEAD defect; spec semantics (current branch) won over plan letter |
 | Task 3 fix round (`a9905e0`) | plan-side seed oversight; S5 self-lint required the subdirs Task 1 should have created |
-| Task 6 structure-review quick-fix bundle (`726fb8e` + `929f6a4`) | doc-standardizer + code-standardizer findings merged into one Phase-2 pass; shared items (shellcheck, editorconfig) fixed once per repo |
+| Task 6 structure-review quick-fix bundle (`726fb8e` + `f242e2e`) | doc-standardizer + code-standardizer findings merged into one Phase-2 pass; shared items (shellcheck, editorconfig) fixed once per repo |
 
 Choices superseded during execution: G5 fix approach (spec semantics over plan verbatim), S5 seed ownership (Task 3 retro-fix instead of Task 1), quick-fix bundling (Phase 2 instead of per-audit commits).
