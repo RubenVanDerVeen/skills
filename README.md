@@ -8,6 +8,7 @@ Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands
 
 | Skill | What it does |
 |---|---|
+| [`academic-writing-pro`](./skills/academic-writing-pro/SKILL.md) | Academic writing checks and drafting. FOCSI tone, sentence construction, quoting and plagiarism rules, IEEE citations, lint script. Slash command: `/academic-check`. |
 | [`drawio-pro`](./skills/drawio-pro/SKILL.md) | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
 | [`typst-pro`](./skills/typst-pro/SKILL.md) | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
 | [`altium-pro`](./skills/altium-pro/SKILL.md) | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
