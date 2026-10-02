@@ -15,7 +15,7 @@ Two-mode skill. Check mode is the main use: review written academic text on two 
 
 ## Check workflow
 
-1. **Mechanical pass.** Run `python3 scripts/lint_academic.py <file>` (paths relative to this skill's folder; add `--against <source-file>` when the source text is available). Errors must be fixed; warns must be verified.
+1. **Mechanical pass.** Run `python3 scripts/lint-academic.py <file>` (paths relative to this skill's folder; add `--against <source-file>` when the source text is available). Errors must be fixed; warns must be verified.
 2. **Judgment pass.** Read the full text yourself and check what regex cannot: FOCSI tone, paragraph structure (topic sentence first), old-new flow, quote necessity (sparingly, 4-word rule), paraphrase distance, citation integration phrasing, terminology consistency. Load references as needed.
 3. **Report.** Merge both passes into one severity-ranked list (error, warn, info). Each finding names the violated rule, the location, and a concrete fix. Report only: do not edit unless asked.
 
