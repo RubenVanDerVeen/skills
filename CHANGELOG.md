@@ -44,6 +44,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - `skills/release-description/`: one template, three copy sites (`chore(release)` commit body, `git tag -a` annotation, GitHub or GitLab Release notes). Wired into `agents/documenter.md` step 6.1, `agents/orchestrator.md` step 8, and `references/versioning.md` step 5. Spec: `docs/artifacts/features/release-description/2026-09-27-release-description-design.md`.
 - `bin/skillctl`: dependency-free bash maintenance CLI with `check` (worktree-wide lint, rules C1-C8) and `sync` (mirror skills/commands/agents to agent directories) subcommands. Stack exception per `AGENTS.md`. Spec at `docs/artifacts/features/skillctl/2026-09-29-skillctl-design.md`.
 - Agent attribution trailer convention: agent-authored commits carry `Co-Authored-By: <provider>/<model>` and `Agent-Role: <role>` trailers; documented in `STANDARDS.md`, `AGENTS.md`, and the `project-standardization` skill (stack reference + STANDARDS and AGENTS templates).
+- `academic-writing-pro/`: academic writing checks and drafting. FOCSI tone, sentence construction, quoting and plagiarism rules, IEEE citations, lint script. `/academic-check` slash command. catalog rows added in `README.md` (Skills table) and `AGENTS.md` (Current skills table).
 
 ### Changed
 

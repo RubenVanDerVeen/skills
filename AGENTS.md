@@ -133,6 +133,7 @@ description: <triggering conditions only>
 
 | Folder | `name` in frontmatter | What it does |
 |---|---|---|
+| `skills/academic-writing-pro/` | `academic-writing-pro` | Academic writing checks and drafting. FOCSI tone, sentence construction, quoting and plagiarism rules, IEEE citations, lint script. Slash command: `/academic-check`. |
 | `skills/drawio-pro/` | `drawio-pro` | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
 | `skills/typst-pro/` | `typst-pro` | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
 | `skills/altium-pro/` | `altium-pro` | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
