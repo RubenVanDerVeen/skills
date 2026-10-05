@@ -133,7 +133,7 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`
 ❌ wip
 ```
 
-Agent attribution: every agent-authored commit carries two trailers naming what made the change. `Co-Authored-By: <provider>/<model>` uses the short provider name with canonical model casing, exactly `zai/GLM-5.3` or `minimax/MiniMax-M3`, never the long registry provider ID (e.g. `zai-coding-plan/glm-5.3`). `Agent-Role: <role>` names the pipeline role that executed the change (`planner`, `orchestrator`, `executor`, `reviewer`, `documenter`, `oracle`, `explore`, or the project's own agent name). Never credit a model or role that did not produce the commit. Human-only commits carry no trailers. Trailers come last, after a blank line following the body.
+Agent attribution: every agent-authored commit carries two trailers naming what made the change. `Co-Authored-By: <provider>/<model>` uses the short provider name with canonical model casing of the model that made the change, e.g. `zai/GLM-5.3`, `minimax/MiniMax-M3`, or `zai/GLM-5.3-Flash` for the Flash variant, never the long registry provider ID (e.g. `zai-coding-plan/glm-5.3-flash`). `Agent-Role: <role>` names the pipeline role that executed the change (`planner`, `orchestrator`, `executor`, `reviewer`, `documenter`, `oracle`, `explore`, or the project's own agent name). Never credit a model or role that did not produce the commit. Human-only commits carry no trailers. Trailers come last, after a blank line following the body.
 
 **Why:** machine-parseable history, automation-friendly (release notes, version bumps), traceable changes per configuration item (ties into ISO 10007).
 
