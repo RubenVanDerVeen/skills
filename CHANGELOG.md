@@ -48,6 +48,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 
 ### Changed
 
+- `project-standardization`: the fresh-bootstrap path (`/standardize` with no `AGENTS.md`) dispatches subagents instead of walking the 11 steps in one context. New `references/bootstrap-flow.md` holds the protocol: `explore` reads the tier reference and recon's the project, one `executor` per scaffold cluster (identity, context dirs, hooks + graph), `reviewer` re-runs every `Verification:` predicate with fresh context, `oracle` on two strikes. Triage (step 1) and the context-budget check (step 11) stay inline with the orchestrator.
 - `planner` agent delegates all exploration to the `explore` subagent: body rule covering the whole run plus `webfetch` denied in frontmatter.
 - Repo re-scoped from skills catalog to agent environment monorepo: the eight skill folders moved into a top-level `skills/` directory (`git mv`, history preserved). Catalogs, layout trees, and sync instructions updated in `README.md`, `AGENTS.md`, `STANDARDS.md`, `opencode-install.md`, and the two `SKILL.md` files with self-referencing sync steps.
 - `AGENTS.md`: branch model `master` → `main`; added `synctool-sync` row to the Current skills table.

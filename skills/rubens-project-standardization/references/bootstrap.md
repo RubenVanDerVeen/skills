@@ -6,7 +6,7 @@ When the user asks to bootstrap a project ("set up agent context", "scaffold", "
 
 This checklist runs on two paths, decided by triage in step 1:
 
-- **Fresh bootstrap** (`Test-Path AGENTS.md` returns False): walk the 11 steps linearly in a single agent. Run each step's `Verification:` predicate inline before moving on.
+- **Fresh bootstrap** (`Test-Path AGENTS.md` returns False): dispatch the explore-patch-verify flow in `references/bootstrap-flow.md`. Steps 1 and 11 stay with the orchestrator (triage needs user input, step 11 needs the tool's context indicator); steps 2 through 10 run as explore, then one executor per cluster, then reviewer.
 - **Restructure** (`Test-Path AGENTS.md` returns True): dispatch the three-subagent explore-patch-verify flow in `references/restructure-flow.md`. The explore and verify phases run these same predicates; the verify phase re-runs them with a fresh context.
 
 When adding a requirement to any step below, add or update its `Verification:` predicate in the same edit. A step without a runnable predicate is a step the restructure flow cannot confirm.

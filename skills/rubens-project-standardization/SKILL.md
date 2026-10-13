@@ -65,6 +65,7 @@ Soft targets. Goal: small enough that an unrelated session still fits.
 | `references/tool-filenames.md` | Tool-specific filename / subdir aliases |
 | `references/migration.md` | Migration from older `CLAUDE.md` / `claude/` / `rubens-project-standardization` |
 | `references/restructure-flow.md` | Three-subagent explore-patch-verify dispatch protocol for `/standardize` on the restructure path (existing `AGENTS.md` detected) |
+| `references/bootstrap-flow.md` | Three-subagent explore-patch-verify dispatch protocol for `/standardize` on the fresh path (no `AGENTS.md`): explore reads the tier reference, one executor per scaffold cluster, reviewer re-runs the predicates |
 
 ## Templates
 
