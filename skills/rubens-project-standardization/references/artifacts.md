@@ -246,7 +246,7 @@ Each step's artifact is committed before the next step starts. **Step 1, 3, 6 mu
 
 The choices registry (`docs/artifacts/choices/`) records why constraining decisions were made, so future work checks why something exists before removing or contradicting it.
 
-**Threshold.** Record a choice when it constrains future work or a future agent might wrongly undo it: dependency and plugin picks, architecture forks, standards picks, explicit X-over-Y calls. Routine implementation trivia stays in the spec or report.
+**Threshold.** Record a choice when it constrains future work or a future agent might wrongly undo it: dependency and plugin picks, architecture forks, standards picks, explicit X-over-Y calls. When in doubt, record it: an extra entry is cheap, an unrecorded constraining choice is lost. Only routine implementation trivia (typo fixes, formatting, mechanical corrections that constrain nothing) stays in the spec or report.
 
 **Files.** One file per decision: `YYYY-MM-DD-<slug>-decision.md`. `index.md` holds one table row per decision (Date | Decision | Status | File). Template:
 
@@ -267,9 +267,9 @@ The choices registry (`docs/artifacts/choices/`) records why constraining decisi
 <The condition that would invalidate this choice.>
 ````
 
-**Status values.** `active`, or `superseded by YYYY-MM-DD-<slug>-decision.md`. Superseding never deletes: flip the old entry's status line and cite it from the new one.
+**Status values.** `active`, or `superseded by YYYY-MM-DD-<slug>-decision.md`. Superseding never deletes: flip the old entry's status line and cite it from the new one, and update the old entry's `index.md` row status in the same write pass.
 
-**Writers and readers.** The documenter writes entries at close-out from run material and skips silently when nothing qualifies. The planner greps `docs/artifacts/choices/` (all files, full text) before locking spec decisions and carries constraints (or supersessions) into the spec.
+**Writers and readers.** The documenter writes entries at close-out: it enumerates every candidate from the run material, writes an entry per candidate, and skips one only with a named one-line disqualification in the execution report; a silent skip is a process failure. The planner greps `docs/artifacts/choices/` (all files, full text) before locking spec decisions and carries constraints (or supersessions) into the spec.
 
 **Registry vs spec decisions.** A spec's `## Decisions` section holds run-local detail. The registry holds the durable cross-feature record with rejected alternatives and revisit conditions. When both exist, the registry entry cites the spec; the spec never duplicates registry content. Splitting one feature's artifacts across type buckets to "organize choices" remains forbidden (see anti-patterns).
 
