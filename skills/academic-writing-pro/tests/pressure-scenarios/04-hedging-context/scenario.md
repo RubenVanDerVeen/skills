@@ -1,0 +1,1 @@
+The valve must close within ten milliseconds at the rated pressure.

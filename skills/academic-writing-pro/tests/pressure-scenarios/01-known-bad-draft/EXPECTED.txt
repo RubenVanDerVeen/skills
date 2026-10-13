@@ -1,0 +1,5 @@
+focsi-formal
+focsi-succinct
+focsi-impersonal
+sentence-length
+readability
