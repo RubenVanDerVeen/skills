@@ -28,7 +28,7 @@ v1 non-goal 3 said "no JSON output, no config file: phrase lists are edited in t
 - Replace ad-hoc severity tuples with structured `RULES = [{id, level, regex, message}, ...]`; levels: `error`, `warning`, `info` (Vale's suggestion tier; named `info` to match v1 output vocabulary and existing rule messages).
 - CLI: `--min-level {error,warning,info}` (default `warning`), `--enable id,id`, `--disable id,id`.
 - Level changes: `focsi-impersonal` warn to suggestion; `focsi-cautious` warn to suggestion with message pointing at `references/hedging.md`. Errors unchanged.
-- Vocab: findings whose matched text matches (case-insensitive) an `accept.txt` entry are suppressed; `reject.txt` entries escalate to error. Loaded from skill `vocab/` by default; `--vocab <dir>` overrides for per-project lists.
+- Vocab: line-granular; a finding is suppressed when an `accept.txt` phrase appears anywhere on the finding's line (case-insensitive) and escalated to error when a `reject.txt` phrase appears on that line. Loaded from skill `vocab/` by default; `--vocab <dir>` overrides for per-project lists.
 - `SUMMARY: <file>: N errors, M warnings, K infos` line at end of output. Exit code unchanged: 1 iff any error.
 
 ### S2. Markup-aware scope (script)
