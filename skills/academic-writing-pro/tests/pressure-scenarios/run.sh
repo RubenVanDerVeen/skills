@@ -11,7 +11,7 @@ check() {
   local got want
   got=$(python3 "$LINT" "$BASE/$dir/$file" --format "$fmt" --min-level info 2>/dev/null \
         | grep -oE '\[(ERROR|WARNING|INFO)\] [a-z-]+' | awk '{print $2}' | sort -u) || true
-  want=$(sort -u "$BASE/$dir/EXPECTED.txt" | grep -v '^$' | grep -v '^judgment:')
+  want=$(sort -u "$BASE/$dir/expected.txt" | grep -v '^$' | grep -v '^judgment:')
   if [ "$got" != "$want" ]; then
     echo "FAIL $dir"; echo "got:"; echo "$got"; echo "want:"; echo "$want"; fail=1
   else

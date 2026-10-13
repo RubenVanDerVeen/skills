@@ -82,7 +82,7 @@ SENTENCE_RE = re.compile(r"[^.!?\n]+(?:[.!?]+|$)")
 QUOTE_RE = re.compile(r'["\u201c]([^"\u201d]{2,})["\u201d]')
 
 
-def cite_re(fmt: str):
+def cite_re(fmt: str) -> re.Pattern[str]:
     """Citation forms per format; Typst adds @key."""
     extra = r"|@[A-Za-z][A-Za-z0-9_-]+" if fmt == "typst" else ""
     return re.compile(CITE_BASE + extra)
@@ -198,7 +198,7 @@ def _check_findings(rule, text, masked, fmt, accept, reject):
     return out
 
 
-def readability_finding(text: str):
+def readability_finding(text: str) -> list[tuple]:
     """One info-level guideline per file: sentence and paragraph stats.
 
     Always-on by default; --disable readability silences it. Empty input
@@ -218,8 +218,8 @@ def readability_finding(text: str):
     return [(1, "info", "readability", msg)]
 
 
-def analyze(text: str, fmt: str = "plain", accept=(),
-            reject=(), enabled=None, disabled=None):
+def analyze(text: str, fmt: str = "plain", accept: list[str] = (), reject: list[str] = (),
+            enabled: set[str] | None = None, disabled: set[str] | None = None) -> list[tuple]:
     """Return (line, level, rule_id, message) tuples sorted by line.
 
     Backward compatible: analyze(text) keeps the original one-positional
@@ -244,6 +244,7 @@ def analyze(text: str, fmt: str = "plain", accept=(),
 
 
 def main(argv=None) -> int:
+    """CLI entry point; returns process exit code."""
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("file", nargs="?")
     ap.add_argument("--against", metavar="SOURCE")
