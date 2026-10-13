@@ -71,6 +71,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - docs(skills): point live flows at vendored process skills, drop superpowers namespace. 8 doc files updated; `multi-plan-orchestration`, `artifacts.md`, AGENTS delegation rule, `opencode-install.md` install step 1 removed, `external-skills.md` status line, `workflow.md` session-start description, README install block, stack diagram layer-2 label.
 - writing-plans: plans now require a **Depends:** line per task plus a Parallel Readiness section (disjoint Files for none-dependency tasks, serial fallback when lines are absent), aligning the skill with the planner/orchestrator/execute-plan contract. Spec: docs/artifacts/features/writing-plans-parallel-tasks/2026-09-26-parallel-task-structure-design.md.
 - Agent-dir sync workflow: `AGENTS.md` and `opencode-install.md` replace the manual two-step copy with `bin/skillctl sync` (with `--check` dry-run); destination mapping table retained for reference.
+- academic-writing-pro: tiered finding levels with `--min-level`/`--enable`/`--disable`, vocab accept/reject suppression, markup-aware scanning with `--format` (Typst `@key` citations now recognized), judgment-pass roles reference, hedging taxonomy, reporting-verb and microfluidics terminology appendices, and runnable pressure scenarios under `tests/`.
 
 ### Fixed
 
