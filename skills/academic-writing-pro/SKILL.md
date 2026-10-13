@@ -1,38 +1,49 @@
 ---
 name: academic-writing-pro
-description: Use when writing or reviewing academic text for academic soundness: checking tone, sentence construction, quoting, paraphrasing, or citations, drafting a literature review, research proposal, or paper, deciding quote vs paraphrase, or on /academic-check.
+description: Use when checking or drafting academic text for soundness (FOCSI tone, sentence construction, quoting, paraphrase, citations), drafting a literature review, research proposal, or paper, or on /academic-check. IEEE numbered citations default; venue styles override.
 ---
 
 ## Overview
 
-Two-mode skill. Check mode is the main use: review written academic text on two layers, a mechanical lint script plus an agent judgment pass, and report severity-ranked findings. Write mode drafts academic text under the same rules. Citation style defaults to IEEE numbered; venue styles override.
+Two passes, always both. The lint script catches what regex can catch. Anything contextual (paragraph flow, claim strength, hedging in context, paraphrase distance) needs the judgment pass. Never pass on script output alone. Report only: findings go to the writer; edit nothing unless asked.
+
+Quick start (paths relative to this skill's folder):
+
+```bash
+python3 skills/academic-writing-pro/scripts/lint-academic.py paper.tex
+python3 skills/academic-writing-pro/scripts/lint-academic.py --against source.md paper.md
+python3 skills/academic-writing-pro/scripts/lint-academic.py --self-test
+```
+
+Pass `--against <source>` whenever a source text exists; without it the script cannot detect verbatim overlap. `--format` is auto-detected from the extension.
 
 ## When to use
 
-- Check a draft (literature review, research proposal, paper section) for academic soundness.
-- Check quoting and paraphrasing against source texts.
-- Draft academic text in any of those document types.
+Checking a draft or published text for academic soundness, or drafting one. Loads references on demand; IEEE numbered citations unless the venue says otherwise.
 
 ## Check workflow
 
-1. **Mechanical pass.** Run `python3 scripts/lint-academic.py <file>` (paths relative to this skill's folder; add `--against <source-file>` when the source text is available). Errors must be fixed; warns must be verified.
-2. **Judgment pass.** Read the full text yourself and check what regex cannot: FOCSI tone, paragraph structure (topic sentence first), old-new flow, quote necessity (sparingly, 4-word rule), paraphrase distance, citation integration phrasing, terminology consistency. Load references as needed.
-3. **Report.** Merge both passes into one severity-ranked list (error, warn, info). Each finding names the violated rule, the location, and a concrete fix. Report only: do not edit unless asked.
-
-Never pass a text on script output alone; the script catches obvious surface violations, the judgment pass catches everything contextual.
+1. **Mechanical pass.** Run the script (quick start above). Errors must be fixed; warnings verified; infos are guidelines. Add `--enable`/`--disable` and `--min-level` when the venue or section demands it.
+2. **Judgment pass.** Load `references/judgment-pass.md` and run its four roles: planner, investigator, reviewer, controller. It covers FOCSI tone in context (hedging calls: `references/hedging.md`), paragraph flow, quote necessity, paraphrase distance, citation integration, terminology, and advisory claim checks (`claim-overclaim` and the checklist).
+3. **Report.** One merged, severity-ranked list (error, warning, info). Each finding: rule id, location, one-sentence fix. Report only.
 
 ## Writing mode
 
-Load `tone-terminology.md`, `sentences-paragraphs.md`, and `quoting-plagiarism.md` before drafting, plus `ieee-citations.md` unless the venue fixes another style. Run the check workflow on the draft before declaring the task done.
+Same references, drafting instead of checking: FOCSI tone from `references/tone-terminology.md`, paragraph model from `references/sentences-paragraphs.md`, IEEE citation placement from `references/ieee-citations.md`, reporting verbs from `references/reporting-verbs.md`, field vocabulary from `references/field-terminology-microfluidics.md` when writing microfluidics or EE text.
 
 ## References
 
 | File | Load when |
 |---|---|
 | `references/quoting-plagiarism.md` | Checking quotes, paraphrases, or plagiarism risk |
-| `references/tone-terminology.md` | Checking tone, hedging, or terminology |
+| `references/tone-terminology.md` | Checking tone or terminology |
 | `references/sentences-paragraphs.md` | Checking paragraph structure, flow, or sentence construction |
 | `references/ieee-citations.md` | Formatting or checking citations |
+| `references/hedging.md` | Deciding whether a claim needs hedging |
+| `references/judgment-pass.md` | Running the judgment pass (step 2) |
+| `references/reporting-verbs.md` | Picking a reporting verb by claim strength |
+| `references/field-terminology-microfluidics.md` | Writing or checking microfluidics or EE text |
+| `references/well-known-entities.txt` | Judgment pass: named methods that always need a citation |
 
 ## Commands
 
