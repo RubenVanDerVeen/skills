@@ -47,7 +47,80 @@ no zoom/pan in PDF, and the expression support is a safe subset (implicit
 multiplication and `sqrt` included). Keep exotic expressions out of
 PDF-critical notes.
 
-## Plot or mermaid?
+## 3D surfaces
 
-- Function charts, data series, math curves: `plot`.
+The same ` ```plot ` fence also draws a 3D surface: add `"type": "surface"`.
+Without `type` (or with any other value) the fence renders as a 2D chart, so
+existing 2D notes are unchanged.
+
+````markdown
+```plot
+{ "type": "surface", "fn": "x^2 + y^2", "x": [-3, 3], "y": [-3, 3] }
+```
+````
+
+| Field | Required | Meaning |
+|---|---|---|
+| `type` | no | `"surface"` switches to 3D. Any other value stays 2D. |
+| `fn` | yes (3D) | Expression over `x` and `y`, see below. |
+| `x`, `y` | yes (3D) | `[min, max]` domain per axis. |
+| `samples` | no | Grid resolution, default 48. Viewer clamps to 16..128, PDF to 16..64 per axis. |
+
+Extra fields are ignored.
+
+### Surface expressions
+
+Operators `+ - * / ^ %` (`^` = power), implicit multiplication (`2x`,
+`3(x+1)`, `x y`, `2 sin(x)`), constants `pi`, `tau`, `e`, and these
+whitelisted functions only:
+
+    sin  cos  tan  asin  acos  atan  atan2
+    sinh cosh tanh
+    sqrt cbrt
+    log  log2  log10
+    exp
+    abs  floor  ceil  round  min  max  sign
+
+Anything outside the whitelist (assignment, semicolons, unknown names,
+attributes) fails to compile and the fence falls back to a "could not parse"
+placeholder; the note still renders. Singularities are fine: NaN cells are
+gap-filled (see the sinc example below).
+
+### Surface interaction, rendering, limits
+
+- Viewer: interactive surface. Drag rotates the camera, wheel zooms, Reset view button restores the default camera, Viridis colormap. plotly is lazy-loaded only when a note actually contains a surface.
+- PDF export: static isometric wireframe with the same Viridis colormap; no chromium in the export path.
+- Bad payloads (unknown `type`, missing `fn` / `x` / `y`, unknown tokens, unparseable JSON) fall back to the literal source, exactly like bad JSON in 2D.
+- Fixed limits: Viridis only (no custom colormaps, colorbars, or z-domain clamping), one surface per fence, no parametric plots or contour overlays.
+
+### Surface examples
+
+Saddle:
+
+````markdown
+```plot
+{ "type": "surface", "fn": "x^2 - y^2", "x": [-2, 2], "y": [-2, 2] }
+```
+````
+
+Sinc ring (singularity at the origin is gap-filled):
+
+````markdown
+```plot
+{ "type": "surface", "fn": "sin(sqrt(x^2 + y^2)) / sqrt(x^2 + y^2)", "x": [-10, 10], "y": [-10, 10] }
+```
+````
+
+Higher grid density:
+
+````markdown
+```plot
+{ "type": "surface", "fn": "y * sin(x)", "x": [-3.14, 3.14], "y": [-3, 3], "samples": 64 }
+```
+````
+
+## Plot, surface, or mermaid?
+
+- Function charts, data series, math curves: `plot` (no `type`).
+- 3D landscape of `f(x, y)`: `plot` with `"type": "surface"`.
 - Diagrams, flow, structure: `mermaid`.
