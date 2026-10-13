@@ -30,7 +30,7 @@ asserts, argues, claims, notes, reports, found, observed, suggested, demonstrate
 
 Match the verb to the source's actual strength: "demonstrated" claims more than "suggested".
 
-[expand: full reporting-verb taxonomy, pending Ruben's research.]
+See `references/reporting-verbs.md` for the full verb-by-strength table.
 
 ## Vocabulary precision
 
@@ -42,4 +42,4 @@ Match the verb to the source's actual strength: "demonstrated" claims more than 
 
 "it is important to note that", "it should be noted that", "in order to" (write "to"), "due to the fact that" (write "because"), "the fact that".
 
-[expand: field terminology consistency rules for microfluidics/EE vocabulary, pending Ruben's research.]
+See `references/field-terminology-microfluidics.md` for the starter vocabulary.

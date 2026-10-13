@@ -1,0 +1,2 @@
+# One phrase per line. When a phrase appears on the line of a finding,
+# that finding is escalated to error. Empty by default.

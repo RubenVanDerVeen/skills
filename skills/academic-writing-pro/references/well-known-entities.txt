@@ -1,0 +1,16 @@
+# Named entities that a sentence must cite when used. One per line.
+# Judgment pass reads this; the lint script does not.
+BERT
+GPT
+CRISPR
+Levenshtein
+Foucault
+Kalman filter
+PID controller
+PCA
+Monte Carlo
+Navier-Stokes
+PDMS
+soft lithography
+Lagrangian
+Reynolds number

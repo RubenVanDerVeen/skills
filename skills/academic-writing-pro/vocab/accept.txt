@@ -1,0 +1,8 @@
+# One phrase per line. When a phrase appears on the line of a finding,
+# that finding is suppressed. Line granularity is deliberate: "we" next
+# to "we describe" is fine, "we" alone on a line is not. Override per
+# project with --vocab DIR.
+we describe
+we propose
+we present
+we adopt

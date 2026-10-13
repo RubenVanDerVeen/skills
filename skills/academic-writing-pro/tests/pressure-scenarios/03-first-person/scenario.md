@@ -1,0 +1,1 @@
+We describe the pipeline in three stages. The stages are: acquisition, calibration, and evaluation.
