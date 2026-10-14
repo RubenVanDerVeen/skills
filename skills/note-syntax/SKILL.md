@@ -42,6 +42,8 @@ House style: kebab-case ASCII paths, ISO 8601 dates, regular hyphens only (never
 | Diagram | ` ```mermaid ` fence |
 | Interactive function plot | ` ```plot ` fence with function-plot JSON |
 | 3D surface plot | ` ```plot ` fence with `{"type": "surface", "fn": ..., "x": [min, max], "y": [min, max]}` JSON |
+| 3D line plot | ` ```plot ` fence with `{"type": "line", "curves": [{"fn": ["...", "...", "..."], "t": [t0, t1]}, ...]}` JSON |
+| 3D vector field | ` ```plot ` fence with `{"type": "vector", "vectors": [[x, y, z, dx, dy, dz], ...]}` JSON |
 | Inline math | `$E = mc^2$` |
 | Block math | `$$` fence on its own lines |
 
@@ -52,7 +54,7 @@ House style: kebab-case ASCII paths, ISO 8601 dates, regular hyphens only (never
 | `cheatsheets/frontmatter-and-links.md` | Frontmatter keys, wikilink grammar and resolution, aliases, tags |
 | `cheatsheets/images-and-files.md` | Image paths and `.media/`, width suffix rules, PDF/xlsx file embeds |
 | `cheatsheets/columns.md` | The columns fence, the `||` separator, nesting limits |
-| `cheatsheets/plots.md` | Plot fence JSON: axes, curves, points, colors, interaction; 3D surface fences (`type: surface`) |
+| `cheatsheets/plots.md` | Plot fence JSON: axes, curves, points, colors, interaction; 3D plots (`type: surface`, `line`, `vector`) |
 | `cheatsheets/mermaid.md` | Mermaid fences, diagram quick reference, theme and PDF behavior |
 | `cheatsheets/math-and-misc.md` | Inline math guards, block math, citations, PDF export parity |
 

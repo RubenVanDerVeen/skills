@@ -119,8 +119,121 @@ Higher grid density:
 ```
 ````
 
-## Plot, surface, or mermaid?
+## 3D lines
+
+The same fence also draws 3D parametric curves and point polylines: add `"type": "line"`.
+
+````markdown
+```plot
+{
+  "type": "line",
+  "curves": [
+    {"fn": ["cos(t)", "sin(t)", "t/4"], "t": [0, 6.283], "samples": 200, "color": "#d62728", "label": "helix"}
+  ]
+}
+```
+````
+
+`curves` is a non-empty array; every entry is **either**:
+
+| Form | Shape |
+|---|---|
+| `fn` (parametric) | Three expression strings `[fx, fy, fz]` over parameter `t`, with optional `t: [t0, t1]` (default `[0, 2pi]`) and optional `samples` (default 200, clamped **16..500** on both sides). |
+| `points` (polyline) | Array of `[x, y, z]` triples; each entry is exactly 3 finite numbers. No sampling. |
+
+Both forms accept an optional per-curve `color` (default cycles the same 10-color palette as 2D) and `label` (default = the three `fn` strings joined with `", "`, or `"points"` for a polyline).
+
+### Line expressions
+
+Same safe subset as 3D surfaces: operators `+ - * / ^ %` (`^` = power), implicit multiplication (`2t`, `t(t+1)`, `2 sin(t)`), constants `pi`, `tau`, `e`, and these whitelisted functions only:
+
+    sin  cos  tan  asin  acos  atan  atan2
+    sinh cosh tanh
+    sqrt cbrt
+    log  log2  log10
+    exp
+    abs  floor  ceil  round  min  max  sign
+
+The only variable is `t`; `x` / `y` / `z` are rejected. A non-finite sample or `|value| > 1e6` closes the pen inside one curve, so the next valid sample starts a fresh segment (pen-up gaps, same rule as the 2D path).
+
+### Line interaction, rendering, limits
+
+- Viewer: one plotly `scatter3d` (`mode: "lines"`) trace per curve, with the curve's color; legend chips follow the 2D dot+label convention. Drag rotates, wheel zooms, Reset view restores the default camera.
+- PDF export: static isometric polylines sharing the surface projection (one `<path>` per curve, dot+label legend); pen-up gaps kept.
+- Bad payloads (unknown `type`, malformed top level, all curves invalid) fall back to literal source, like bad JSON in 2D. Invalid curves inside a valid top level are skipped individually, not the whole fence.
+- Fixed limits: one trace type per fence (don't mix surface + line or line + vector), no camera presets, no axis chrome.
+
+### Line examples
+
+Helix (parametric, `t` in `[0, 4π]`):
+
+````markdown
+```plot
+{
+  "type": "line",
+  "curves": [
+    {"fn": ["cos(t)", "sin(t)", "t/4"], "t": [0, 12.566]}
+  ]
+}
+```
+````
+
+Polyline read straight from collected points:
+
+````markdown
+```plot
+{
+  "type": "line",
+  "curves": [
+    {"points": [[0, 0, 0], [1, 1, 0], [2, 0, 1], [1, -1, 1]], "label": "poly"}
+  ]
+}
+```
+````
+
+## 3D vectors
+
+The same fence also draws 3D arrow fields: add `"type": "vector"`.
+
+````markdown
+```plot
+{
+  "type": "vector",
+  "vectors": [[0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0]],
+  "color": "#1f77b4"
+}
+```
+````
+
+| Field | Required | Meaning |
+|---|---|---|
+| `vectors` | yes | Non-empty array of `[x, y, z, dx, dy, dz]` entries (tail position + direction, each exactly 6 finite numbers). |
+| `color` | no | Single stroke color for every arrow. Default `#1f77b4`. |
+
+### Vector interaction, rendering, limits
+
+- Viewer: one plotly `cone` trace (`anchor: "tail"`, absolute sizing) per fence; no legend chips. Drag rotates, wheel zooms, Reset view restores the default camera.
+- PDF export: static isometric shaft + arrowhead per arrow (one `<line>` shaft + two short `<line>` strokes at the projected tip), sharing the surface projection.
+- Bad payloads (unknown `type`, malformed top level, no valid entries) fall back to literal source, like bad JSON in 2D. Invalid entries inside a valid top level are skipped individually, not the whole fence.
+- Fixed limits: one trace type per fence, single shared color (no per-vector colors, no vector labels or legend).
+
+### Vector example
+
+Coordinate basis at the origin:
+
+````markdown
+```plot
+{
+  "type": "vector",
+  "vectors": [[0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 1]]
+}
+```
+````
+
+## Plot, 3D, or mermaid?
 
 - Function charts, data series, math curves: `plot` (no `type`).
 - 3D landscape of `f(x, y)`: `plot` with `"type": "surface"`.
+- 3D parametric curves or point polylines: `plot` with `"type": "line"`.
+- 3D arrows (single or small field): `plot` with `"type": "vector"`.
 - Diagrams, flow, structure: `mermaid`.
