@@ -61,7 +61,7 @@ existing 2D notes are unchanged.
 
 | Field | Required | Meaning |
 |---|---|---|
-| `type` | no | `"surface"` switches to 3D. Any other value stays 2D. |
+| `type` | no | Absent or null = 2D; `"surface"` = 3D. Any other value falls back to literal source. |
 | `fn` | yes (3D) | Expression over `x` and `y`, see below. |
 | `x`, `y` | yes (3D) | `[min, max]` domain per axis. |
 | `samples` | no | Grid resolution, default 48. Viewer clamps to 16..128, PDF to 16..64 per axis. |
@@ -91,7 +91,7 @@ gap-filled (see the sinc example below).
 - Viewer: interactive surface. Drag rotates the camera, wheel zooms, Reset view button restores the default camera, Viridis colormap. plotly is lazy-loaded only when a note actually contains a surface.
 - PDF export: static isometric wireframe with the same Viridis colormap; no chromium in the export path.
 - Bad payloads (unknown `type`, missing `fn` / `x` / `y`, unknown tokens, unparseable JSON) fall back to the literal source, exactly like bad JSON in 2D.
-- Fixed limits: Viridis only (no custom colormaps, colorbars, or z-domain clamping), one surface per fence, no parametric plots or contour overlays.
+- Fixed limits: Viridis only (no custom colormaps, colorbars, or z-domain clamping), one surface per fence, no contour overlays. Parametric curves live in `## 3D lines`.
 
 ### Surface examples
 

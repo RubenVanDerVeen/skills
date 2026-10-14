@@ -1,6 +1,6 @@
 ---
 name: note-syntax
-description: Use when writing or editing notes in the Hermes Console notes vault (Nextcloud 06_notes) - note YAML frontmatter, wikilinks, images and the {N%} width suffix, columns fences, plot fences (2D curves and 3D surface plots), mermaid diagrams, KaTeX math, or file embeds. Triggers write/edit/format/scaffold a note, journal, meeting note, recipe, wiki page, console markdown syntax.
+description: Use when writing or editing notes in the Hermes Console notes vault (Nextcloud 06_notes) - note YAML frontmatter, wikilinks, images and the {N%} width suffix, columns fences, plot fences (2D curves and 3D surface, line, and vector plots), mermaid diagrams, KaTeX math, or file embeds. Triggers write/edit/format/scaffold a note, journal, meeting note, recipe, wiki page, console markdown syntax.
 ---
 
 ## Overview
