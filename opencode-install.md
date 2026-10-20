@@ -113,6 +113,20 @@ bin/skillctl sync
 
 Use `bin/skillctl sync --check` for a dry run that reports drift without changing anything. The CLI mirrors skills, commands, and agents to the correct directories for both opencode (`~/.config/opencode/skills/`, `~/.config/opencode/command/` singular, `~/.config/opencode/agents/`) and Claude Code (`~/.claude/skills/`, `~/.claude/commands/` plural). opencode-only agents are never copied to Claude Code. Restart opencode afterwards so the new agents load; see `agents/README.md` for roles and tuning.
 
+#### Windows notes
+
+The CLI is a bash script written on Linux; on this Windows machine it runs under Git Bash with these verified differences (verified 2026-10-20):
+
+- PowerShell cannot run `./bin/skillctl` directly: `bash` is not on PATH and the extensionless file has no launcher. Invoke it through Git Bash's full path, adjusting the clone path if needed:
+
+  ```powershell
+  & "C:\Program Files\Git\bin\bash.exe" -c "cd /c/Users/ruben/projects/tools/skills && ./bin/skillctl sync"
+  ```
+
+- The checkout has CRLF line endings (`core.autocrlf=true`, no `.gitattributes`). This is tolerated: MSYS2 bash translates line endings transparently, so the script and the `check` rules (C1 em-dash scan included) behave exactly as on Linux. Do not hand-convert the endings; git rewrites them on checkout anyway.
+- `$HOME` inside Git Bash resolves to `C:\Users\ruben`, so the sync lands in `C:\Users\ruben\.config\opencode\` and `C:\Users\ruben\.claude\`, matching the Linux layout.
+- Behavior verified identical to Linux: `sync` mirrored 70 items, `sync --check` reported 0 missing / 0 stale / 0 extra, `check` passed with 0 fail and only the 3 expected C7 warns (universal commands without a parent skill).
+
 
 ### 9. Enable the git hooks
 

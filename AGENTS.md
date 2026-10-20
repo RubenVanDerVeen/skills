@@ -73,7 +73,7 @@ description: <one-line summary of what the command does>
 
 The `commands/` directory is inactive inside the skills directory. Sync skills, commands, and agents in one step per machine:
 
-Run `bin/skillctl sync` from the clone root to perform both steps plus the agents sync in one command. `bin/skillctl sync --check` reports drift (MISSING / STALE) without changing anything. Mappings are encoded there; the table stays as reference. Manual equivalent (if the CLI is unavailable): copy each folder under `skills/` to the agent's skills directory, then `commands/*.md` to the commands directory per the table below.
+Run `bin/skillctl sync` from the clone root to perform both steps plus the agents sync in one command. `bin/skillctl sync --check` reports drift (MISSING / STALE) without changing anything. On Windows, invoke the CLI through Git Bash (see `opencode-install.md` step 8). Mappings are encoded there; the table stays as reference. Manual equivalent (if the CLI is unavailable): copy each folder under `skills/` to the agent's skills directory, then `commands/*.md` to the commands directory per the table below.
 
 | Agent | Global | Per-project |
 |-------|--------|-------------|
