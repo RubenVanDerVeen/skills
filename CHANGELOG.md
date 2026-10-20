@@ -48,6 +48,8 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 
 ### Changed
 
+- MiniMax agents repinned `minimax-coding-plan/MiniMax-M3` (retired) → `minimax-coding-plan/MiniMax-M3.1-Flash` (`orchestrator`, `executor`, `inventree`). The new model exposes no reasoning variants, so the `variant: thinking` pins were dropped; catalogs and workflow diagrams updated (`agents/README.md`, `docs/workflows/`).
+
 - Choices registry flipped from opt-in to default-write: the `documenter` enumerates every candidate choice from the run material into a report Choices ledger, writes an entry per candidate, and may skip one only with a named one-line disqualification (bare "no choices" without the ledger is a process failure). The `orchestrator` feeds a numbered candidate list; the `project-standardization` threshold now reads "when in doubt, record it", and superseded entries update their `index.md` row status in the same write pass.
 
 - `project-standardization`: the fresh-bootstrap path (`/standardize` with no `AGENTS.md`) dispatches subagents instead of walking the 11 steps in one context. New `references/bootstrap-flow.md` holds the protocol: `explore` reads the tier reference and recon's the project, one `executor` per scaffold cluster (identity, context dirs, hooks + graph), `reviewer` re-runs every `Verification:` predicate with fresh context, `oracle` on two strikes. Triage (step 1) and the context-budget check (step 11) stay inline with the orchestrator.

@@ -2,8 +2,7 @@
 description: Executes approved plans. Dispatches executor subagents per task, reviews results via the reviewer subagent, escalates two-strike failures to the oracle, manages the todo list, and reports. Self-implements only trivial tasks (one-line fixes, renames) as a documented fallback; real implementation always goes through executor subagents. Runs as a session agent for standalone /execute-plan, or dispatched by the planner for single-pass /full-cycle (mode: all), and on user-invoked release-cut classifies commits per the SemVer 2.0.0 decision table and dispatches a release-bump executor task.
 mode: all
 color: "#EF4444"
-model: minimax-coding-plan/MiniMax-M3
-variant: thinking
+model: minimax-coding-plan/MiniMax-M3.1-Flash
 tools:
   write: false
   edit: false

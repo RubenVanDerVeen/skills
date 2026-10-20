@@ -10,7 +10,7 @@
                 <mxCell id="ph1hdr" value="PHASE 1 - PLANNER   (/full-cycle, planner agent on glm-5.3; writes only docs/)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
                     <mxGeometry x="60" y="48" width="640" height="18" as="geometry"/>
                 </mxCell>
-                <mxCell id="ph2hdr" value="PHASE 2 - ORCHESTRATOR   (orchestrator agent on MiniMax-M3; standalone /execute-plan OR planner-dispatched in single-pass /full-cycle; edit/write/patch denied, all changes via subagents)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
+                <mxCell id="ph2hdr" value="PHASE 2 - ORCHESTRATOR   (orchestrator agent on MiniMax-M3.1-Flash; standalone /execute-plan OR planner-dispatched in single-pass /full-cycle; edit/write/patch denied, all changes via subagents)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
                     <mxGeometry x="520" y="525" width="840" height="18" as="geometry"/>
                 </mxCell>
                 <mxCell id="n1" value="Feature request" style="ellipse;whiteSpace=wrap;html=1;fontSize=11" parent="1" vertex="1">
@@ -46,7 +46,7 @@
                 <mxCell id="m1" value="Orchestrator setup:&#xa;read plan + spec (explore subagent recon);&#xa;branch &lt;type&gt;/&lt;plan-slug&gt;;&#xa;commit plan+spec as &#39;docs:&#39;;&#xa;build todo (1 item per task)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="810" y="550" width="280" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="m2" value="Dispatch EXECUTOR subagent (MiniMax-M3)&#xa;(1 task: TDD, ponytail, verify, Conventional Commit)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
+                <mxCell id="m2" value="Dispatch EXECUTOR subagent (MiniMax-M3.1-Flash)&#xa;(1 task: TDD, ponytail, verify, Conventional Commit)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">
                     <mxGeometry x="810" y="645" width="280" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="m3" value="Dispatch REVIEWER subagent (glm-5.3, cross-model)&#xa;(spec compliance, then code quality)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9" parent="1" vertex="1">

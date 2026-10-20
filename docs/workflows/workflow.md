@@ -1,6 +1,6 @@
 # AI Workflow
 
-How Ruben works with AI coding agents: the harness, the skill stack, the plugins and agents around it, and the flow a task follows from idea to commit. Snapshot date: 2026-08-04.
+How Ruben works with AI coding agents: the harness, the skill stack, the plugins and agents around it, and the flow a task follows from idea to commit. Snapshot date: 2026-10-19.
 
 ## Harness
 
@@ -9,7 +9,7 @@ opencode is the active harness, running two flat-quota coding-plan models in a c
 | Model | Carries |
 |---|---|
 | `zai-coding-plan/glm-5.3` | Planning, review, consult: long-horizon reasoning (`planner`, `reviewer`, `oracle`, `doc-standardizer`, `code-standardizer`, `documenter`) |
-| `minimax-coding-plan/MiniMax-M3` | Orchestration and implementation: near-par execution, faster and cheaper (`orchestrator`, `executor`, `inventree`) |
+| `minimax-coding-plan/MiniMax-M3.1-Flash` | Orchestration and implementation: near-par execution, faster and cheaper (`orchestrator`, `executor`, `inventree`) |
 
 Config lives in `~/.config/opencode/` and `~/.opencode/opencode.json`; install steps in `opencode-install.md`. The `opencode-see-image` plugin routes image attachments from the text-only GLM 5.3 primary to MiniMax-M3 and returns a text description.
 
@@ -84,10 +84,10 @@ Ten custom agents cover the plan/execute/review split plus inventory. Source of 
 | Agent | Mode | Model | Role |
 |---|---|---|---|
 | `planner` | primary | `glm-5.3` | Brainstorm > spec > plan, then dispatch the orchestrator subagent in the same run (single-pass); `handoff` prints the `/execute-plan` line for a fresh session |
-| `orchestrator` | all | `MiniMax-M3` | Executes approved plans: dispatches executor/reviewer work in parallel waves (ready-set dispatch), pipelines each reviewer against its own task's commit, oracle on two-strike failures, commits at boundaries. Session agent for standalone `/execute-plan`, and dispatchable by the planner for single-pass `/full-cycle` |
+| `orchestrator` | all | `MiniMax-M3.1-Flash` | Executes approved plans: dispatches executor/reviewer work in parallel waves (ready-set dispatch), pipelines each reviewer against its own task's commit, oracle on two-strike failures, commits at boundaries. Session agent for standalone `/execute-plan`, and dispatchable by the planner for single-pass `/full-cycle` |
 | `writer` | primary | unpinned | Focused doc/Typst sessions: direct edits, compile-verify, no ceremony |
-| `inventree` | primary | `MiniMax-M3` | InvenTree inventory via the homelab MCP: AliExpress CSV import, parts/stock/POs, naming convention |
-| `executor` | subagent | `MiniMax-M3` | Implements one plan task: TDD, edit, verify, report |
+| `inventree` | primary | `MiniMax-M3.1-Flash` | InvenTree inventory via the homelab MCP: AliExpress CSV import, parts/stock/POs, naming convention |
+| `executor` | subagent | `MiniMax-M3.1-Flash` | Implements one plan task: TDD, edit, verify, report |
 | `reviewer` | subagent | `glm-5.3` | Spec-compliance and code-quality review of one task (cross-model on purpose) |
 | `oracle` | subagent | `glm-5.3` | Read-only consult after two failed attempts |
 | `doc-standardizer` | subagent | `glm-5.3` | Repo/docs standardization audit after a plan's task loop: kebab-case paths, AGENTS.md sections, docs/artifacts/ layout, changelog, catalog rows, commit hygiene, versioning sync. Loads `project-standardization`. Returns findings tagged quick-fix or recommendation. Read-only. |
