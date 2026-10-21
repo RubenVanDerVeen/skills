@@ -115,7 +115,10 @@ Ponytail governs what gets built, not how the assistant talks (pair with `cavema
 Triggers: "make this less over-engineered", "simplify this", "I want a lazy review", "is this over-engineered?", "review for over-engineering", "audit this codebase for bloat", "what can I delete from this repo", "show ponytail debt", "what did we defer", "show ponytail impact", "ponytail help".
 
 Source: https://github.com/DietrichGebert/ponytail
-Install: see `opencode-install.md` step 6. Manual install (current setup) is `git clone https://github.com/DietrichGebert/ponytail.git C:/tools/ponytail` and add `"C:/tools/ponytail/.opencode/plugins/ponytail.mjs"` to the `plugin` array in `~/.opencode/opencode.json`.
+
+Status: core philosophy skill forked into this repo 2026-10-21; clone at ~/tools/ponytail and plugin registration removed (delegation mechanics covered by own agents).
+
+Install: arrives via `bin/skillctl sync --agent opencode` (vendored skill).
 
 ### opencode-see-image
 
