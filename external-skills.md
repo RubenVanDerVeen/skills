@@ -89,9 +89,11 @@ Source: https://github.com/vercel-labs/agent-skills
 
 ### stop-slop
 
-Removes AI writing patterns from prose. Catches banned phrases (throat-clearing openers, business jargon, lazy adverbs, meta-commentary), structural clichés (binary contrasts, dramatic fragmentation, rhetorical setups, passive voice), and sentence-level rules (no Wh- starters, no em-dashes, no lazy extremes, active voice required). Ships a 1-10 scoring rubric across five dimensions (Directness, Rhythm, Trust, Authenticity, Density); below 35/50 means revise.
+Removes AI writing patterns from prose. Catches banned phrases (throat-clearing openers, business jargon, lazy adverbs, meta-commentary), structural clichés (binary contrasts, dramatic fragmentation, rhetorical setups, passive voice), and sentence-level rules (no Wh- starters, no em-dashes, no lazy extremes, active voice required). Ships a 1-10 scoring rubric across five dimensions (Directness, Rhythm, Trust, Authenticity, Density); below 35/50 means revise. Arrives via `bin/skillctl sync --agent opencode` (vendored skill).
 
 Triggers: "make this sound less like AI", "strip the AI tells from this draft", "review this prose for slop", "tighten this writing", "edit for natural voice".
+
+Status: forked into this repo 2026-10-21; ~/.agents symlink removed, skillctl sync owns the location.
 
 Source: https://github.com/hardikpandya/stop-slop
 

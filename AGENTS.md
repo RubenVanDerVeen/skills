@@ -150,6 +150,7 @@ description: <triggering conditions only>
 | `skills/release-description/` | `release-description` | Standardized body for release descriptions: the `chore(release): vX.Y.Z` commit body, the `git tag -a` annotation, and GitHub or GitLab Release notes. One template, three copy sites: Summary, Highlights, Breaking changes, Internal, Full changelog. |
 | `skills/rubens-project-standardization/` | `project-standardization` | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | `skills/skill-harvest/` | `skill-harvest` | Mines recent opencode sessions for repeated corrections and skill gaps. Report, approve, apply loop with incremental state. Slash command: `/harvest`. |
+| `skills/stop-slop/` | `stop-slop` | Removes AI writing patterns from prose: banned phrases, structural cliches, sentence rules, 5-dimension scoring below 35/50 revise. |
 | `skills/using-git-worktrees/` | `using-git-worktrees` | Isolated worktree or plain branch before executing implementation plans. |
 | `skills/using-superpowers/` | `using-superpowers` | Skill discipline: invoke relevant skills before any response. Priority rules, red flags, opencode tool mapping. |
 | `skills/verification-before-completion/` | `verification-before-completion` | Evidence before assertions: run verification commands and confirm output before claiming done. |

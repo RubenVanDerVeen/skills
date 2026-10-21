@@ -25,6 +25,7 @@ Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands
 | [`release-description`](./skills/release-description/SKILL.md) | Standardized body for release descriptions: the `chore(release): vX.Y.Z` commit body, the `git tag -a` annotation, and GitHub or GitLab Release notes. One template, three copy sites: Summary, Highlights, Breaking changes, Internal, Full changelog. |
 | [`rubens-project-standardization`](./skills/rubens-project-standardization/SKILL.md) | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | [`skill-harvest`](./skills/skill-harvest/SKILL.md) | Mines recent opencode sessions for repeated corrections and skill gaps; report, approve, apply. Slash command: `/harvest`. |
+| [`stop-slop`](./skills/stop-slop/SKILL.md) | Removes AI writing patterns from prose: banned phrases, structural cliches, sentence rules, 5-dimension scoring below 35/50 revise. |
 | [`using-git-worktrees`](./skills/using-git-worktrees/SKILL.md) | Isolated worktree or plain branch before executing implementation plans. |
 | [`using-superpowers`](./skills/using-superpowers/SKILL.md) | Skill discipline: invoke relevant skills before any response. Priority rules, red flags, opencode tool mapping. |
 | [`verification-before-completion`](./skills/verification-before-completion/SKILL.md) | Evidence before assertions: run verification commands and confirm output before claiming done. |
