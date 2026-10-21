@@ -150,6 +150,8 @@ description: <triggering conditions only>
 | `skills/rubens-project-standardization/` | `project-standardization` | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | `skills/skill-harvest/` | `skill-harvest` | Mines recent opencode sessions for repeated corrections and skill gaps. Report, approve, apply loop with incremental state. Slash command: `/harvest`. |
 | `skills/using-git-worktrees/` | `using-git-worktrees` | Isolated worktree or plain branch before executing implementation plans. |
+| `skills/using-superpowers/` | `using-superpowers` | Skill discipline: invoke relevant skills before any response. Priority rules, red flags, opencode tool mapping. |
+| `skills/verification-before-completion/` | `verification-before-completion` | Evidence before assertions: run verification commands and confirm output before claiming done. |
 | `skills/writing-plans/` | `writing-plans` | Turns an approved spec into bite-sized tasks with exact paths, steps, and verification commands. |
 | `skills/writing-skills/` | `writing-skills` | Meta-skill for authoring and editing skills: frontmatter, body structure, verify before deployment. |
 | `opencode-install.md` (top-level doc) | `opencode-install` | Bootstrap doc: install commands for caveman, graphify, plus the personal skills repo path. |

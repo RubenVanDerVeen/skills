@@ -25,6 +25,8 @@ Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands
 | [`rubens-project-standardization`](./skills/rubens-project-standardization/SKILL.md) | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | [`skill-harvest`](./skills/skill-harvest/SKILL.md) | Mines recent opencode sessions for repeated corrections and skill gaps; report, approve, apply. Slash command: `/harvest`. |
 | [`using-git-worktrees`](./skills/using-git-worktrees/SKILL.md) | Isolated worktree or plain branch before executing implementation plans. |
+| [`using-superpowers`](./skills/using-superpowers/SKILL.md) | Skill discipline: invoke relevant skills before any response. Priority rules, red flags, opencode tool mapping. |
+| [`verification-before-completion`](./skills/verification-before-completion/SKILL.md) | Evidence before assertions: run verification commands and confirm output before claiming done. |
 | [`writing-plans`](./skills/writing-plans/SKILL.md) | Turns an approved spec into bite-sized tasks with exact paths, steps, and verification commands. |
 | [`writing-skills`](./skills/writing-skills/SKILL.md) | Meta-skill for authoring and editing skills: frontmatter, body structure, verify before deployment. |
 

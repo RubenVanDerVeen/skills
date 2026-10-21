@@ -33,7 +33,7 @@ For install commands, see `opencode-install.md`.
 
 Process-discipline skills for AI agents. Loaded automatically by opencode once installed; provides the meta-skill layer (using-superpowers, brainstorming, TDD, debugging, ...) that other skills and workflows assume.
 
-Status: process skills forked into this repo 2026-09-24 (brainstorming, writing-plans, using-git-worktrees, systematic-debugging, writing-skills), MIT.
+Status: fully forked into this repo 2026-10-21 (5 skills 2026-09-24 plus using-superpowers, verification-before-completion), upstream plugin registration removed. Upstream ships 15 skills total; remaining 8 not vendored (not used here).
 
 Source: https://github.com/obra/superpowers
 
