@@ -106,7 +106,7 @@ Which path a task takes depends on size.
 
 ### Small task (bugfix, doc edit, one-file change)
 
-1. Ask in chat; ponytail keeps the exchange short.
+1. Ask in chat; keep exchanges short (ponytail style).
 2. Relevant skills auto-trigger on their frontmatter descriptions; process skills load from this repo's own `skills/` directory.
 3. Bugs go through `systematic-debugging`; features through `brainstorming`, then TDD.
 4. `verification-before-completion` before any "done" claim. Commits wait for explicit instruction, Conventional Commits format.
