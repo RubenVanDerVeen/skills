@@ -1,8 +1,8 @@
 # skills
 
-Personal agent environment for AI coding agents that follow the [agents.md](https://agents.md) convention (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.): skills, slash commands, and opencode agent definitions in one repo.
+Personal agent environment for AI coding agents that follow the [agents.md](https://agents.md) convention (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.): skills, slash commands, opencode agent definitions, and plugins in one repo.
 
-Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands/`, agent definitions under `agents/`. The top level holds repo-level docs (this README and the install guide).
+Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands/`, agent definitions under `agents/`, and opencode plugins under `plugins/`. The top level holds repo-level docs (this README and the install guide).
 
 ## Skills
 
@@ -65,6 +65,7 @@ skills/
 ├── opencode-install.md                          <- install / bootstrap
 ├── external-skills.md                           <- external skill catalog
 ├── bin/                                         <- skillctl maintenance CLI (check, sync)
+├── plugins/                                     <- opencode plugins (caveman mode injector)
 ├── commands/                                    <- all slash commands live here
 │   ├── goal.md                                  <- /goal: iterate until verifier passes
 │   ├── execute-plan.md                          <- /execute-plan: subagent-driven plan execution
@@ -74,7 +75,14 @@ skills/
 │   ├── multi-plan.md                            <- /multi-plan: start multi-plan orchestration
 │   ├── standardize.md                           <- /standardize: bootstrap or restructure a project
 │   ├── standardize-code.md                      <- /standardize-code: audit code structure via code-standardization
-│   └── standardize-migrate.md                   <- /standardize-migrate: migrate an older layout
+│   ├── standardize-migrate.md                   <- /standardize-migrate: migrate an older layout
+│   ├── academic-check.md                        <- /academic-check: academic writing lint
+│   ├── caveman.md                               <- /caveman: switch the caveman output level
+│   ├── caveman-commit.md                        <- /caveman-commit: Conventional Commits message, intent only
+│   ├── caveman-compress.md                      <- /caveman-compress: compress a memory file to caveman format
+│   ├── caveman-help.md                          <- /caveman-help: cheat card for the modes and commands
+│   ├── caveman-review.md                        <- /caveman-review: compressed code review, one line per finding
+│   └── caveman-stats.md                         <- /caveman-stats: token usage and estimated caveman savings
 ├── agents/                                      <- opencode agent definitions (orchestrator, executor, reviewer)
 └── skills/                                      <- all skill folders live here
     ├── drawio-pro/SKILL.md

@@ -51,6 +51,8 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - `skills/ponytail/`: vendored core lazy-dev philosophy skill (YAGNI ladder, standard library first); the upstream clone at `~/tools/ponytail` and its plugin registration are retired.
 - `plugins/caveman/`: minimal opencode v2 plugin (`index.js`) that injects the active caveman level into the system instructions, plus a node-stdlib smoke test (`test.mjs`).
 - `bin/skillctl sync`: new `plugins/` mirror loop, so opencode plugins land in `~/.config/opencode/plugins/` next to the skills, commands, and agents.
+- `.githooks/pre-commit`: syntax-checks staged JavaScript with `node --check` under unique temp names; the check skips gracefully when node is absent.
+- `docs/artifacts/features/vendor-external-packs/`: execution report closing out the vendoring branch, plus 20 choices records under `docs/artifacts/choices/`.
 
 ### Changed
 
@@ -84,6 +86,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - academic-writing-pro: tiered finding levels with `--min-level`/`--enable`/`--disable`, vocab accept/reject suppression, markup-aware scanning with `--format` (Typst `@key` citations now recognized), judgment-pass roles reference, hedging taxonomy, reporting-verb and microfluidics terminology appendices, and runnable pressure scenarios under `tests/`.
 - Opencode configuration consolidated into one file, `~/.config/opencode/opencode.jsonc`; the legacy `~/.opencode/opencode.json` is retired.
 - External installs of the superpowers, caveman, stop-slop, and ponytail packs are retired; all four now ship from this repo and arrive with `bin/skillctl sync`.
+- The graphify plugin registration is dropped instead of migrated: the upstream `graphify.js` is v1-shaped, opencode v2 refuses it on every start, and `/graphify` stays available through the graphify skill and CLI.
 
 ### Fixed
 

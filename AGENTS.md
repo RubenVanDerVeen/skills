@@ -41,7 +41,8 @@ skills/
 │   ├── caveman-compress.md                    <- /caveman-compress: compress a memory file to caveman format
 │   ├── caveman-help.md                        <- /caveman-help: cheat card for the modes and commands
 │   ├── caveman-review.md                      <- /caveman-review: compressed code review, one line per finding
-│   └── caveman-stats.md                       <- /caveman-stats: token usage and estimated caveman savings
+│   ├── caveman-stats.md                       <- /caveman-stats: token usage and estimated caveman savings
+│   └── academic-check.md                      <- /academic-check: academic writing lint
 ├── agents/                                    <- opencode agent definitions (planner, orchestrator, writer, executor, reviewer, oracle, inventree)
 └── skills/                                    <- all skill folders live here
     ├── drawio-pro/SKILL.md
