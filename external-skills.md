@@ -41,7 +41,7 @@ Source: https://github.com/obra/superpowers
 
 Cuts down output token usage and rewrites assistant prose in a terse, caveman style (short words, dropped articles, simple sentences). Useful when output is too verbose, when you want to minimise tokens on long sessions, or when you deliberately want the rough register. Arrives via `bin/skillctl sync --agent opencode` (vendored skill, six commands, own plugin). Complements superpowers with additional agent workflows.
 
-Status: forked into this repo 2026-10-21 (skill + 6 commands + minimal own plugin at plugins/caveman/plugin.js); upstream npx pack uninstalled. Cavecrew dropped: roles covered by own explore/executor/reviewer agents.
+Status: forked into this repo 2026-10-21 (skill + 6 commands + minimal own plugin at plugins/caveman/index.js); upstream npx pack uninstalled. Cavecrew dropped: roles covered by own explore/executor/reviewer agents.
 
 Source: https://github.com/JuliusBrussee/caveman
 

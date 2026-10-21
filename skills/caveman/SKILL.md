@@ -9,7 +9,7 @@ Adapted from JuliusBrussee/caveman.
 
 ## Overview
 
-Terse-output mode system. The base ruleset (full) is always on via the caveman block in `~/.config/opencode/AGENTS.md`. This skill controls intensity levels. The minimal plugin (`plugins/caveman/plugin.js`, synced into opencode) reads `~/.config/opencode/.caveman-mode` and reinforces the active level every turn.
+Terse-output mode system. The base ruleset (full) is always on via the caveman block in `~/.config/opencode/AGENTS.md`. This skill controls intensity levels. The minimal plugin (`plugins/caveman/index.js`, synced into opencode) reads `~/.config/opencode/.caveman-mode` and reinforces the active level every turn.
 
 ## Levels
 

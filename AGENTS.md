@@ -10,7 +10,7 @@ Tier: small. One author, single `AGENTS.md` suffices. This file exceeds the tier
 
 ## Stack
 
-- **Content:** Markdown only. No build step, no tooling, no runtime. Single exception: `bin/skillctl`, a dependency-free bash maintenance CLI (`check`, `sync`); no other tooling, and one minimal opencode plugin (`plugins/caveman/plugin.js`, no dependencies).
+- **Content:** Markdown only. No build step, no tooling, no runtime. Single exception: `bin/skillctl`, a dependency-free bash maintenance CLI (`check`, `sync`); no other tooling, and one minimal opencode plugin (`plugins/caveman/index.js`, no dependencies).
 - **Discovery:** `AGENTS.md` at the repo root; each `SKILL.md` uses YAML frontmatter (`name`, `description`).
 - **Distribution:** Git remote `https://github.com/RubenVanDerVeen/skills.git`, branch `main`.
 

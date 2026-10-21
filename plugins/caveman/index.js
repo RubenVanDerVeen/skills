@@ -1,4 +1,4 @@
-// Minimal caveman mode reinforcement plugin.
+// Minimal caveman mode reinforcement plugin for opencode v2.
 // Adapted from JuliusBrussee/caveman (per-turn state handling concept, heavily slimmed).
 // Own version: no command parsing, no manifests, no session heuristics.
 // Switching happens via /caveman (commands/caveman.md) writing the state file directly.
@@ -9,7 +9,10 @@
 // ~/.config/opencode/AGENTS.md (full) apply on their own.
 // Explicit "off" -> inject an override line so the static block is neutralized.
 //
-// Requires opencode >= 1.15.x (experimental.chat.system.transform hook).
+// opencode v2 plugin API: default export {id, setup(ctx)}.
+// The session "context" hook runs right before every agent-loop model call and
+// hands over the assembled system instructions, so the mode line is pushed as
+// one more system part. Verified on opencode v2.0.32.
 
 import { readFileSync } from "node:fs"
 import { homedir } from "node:os"
@@ -46,24 +49,25 @@ function readMode() {
   }
 }
 
-export const CavemanPlugin = async (_ctx) => {
-  return {
-    // Hook contract mirrors upstream (plugin.js:183-214): output.system is a
-    // string ARRAY, mutated in place; the return value is discarded.
-    "experimental.chat.system.transform": async (_input, output) => {
-      try {
-        const mode = readMode()
-        if (mode === null) return
-        const line = LINE[mode]
-        const target = output && typeof output === "object" ? output : {}
-        if (!Array.isArray(target.system)) target.system = []
-        if (target.system.length === 0) target.system.push(line)
-        else target.system[target.system.length - 1] += "\n\n" + line
-      } catch {
-        // never break a session over caveman
-      }
-    },
-  }
+export default {
+  id: "caveman",
+  async setup(ctx) {
+    try {
+      const session = ctx && ctx.session
+      if (!session || typeof session.hook !== "function") return
+      await session.hook("context", (event) => {
+        try {
+          const mode = readMode()
+          if (mode === null) return
+          const system = event && event.system
+          if (!Array.isArray(system)) return
+          system.push({ type: "text", text: LINE[mode] })
+        } catch {
+          // never break a session over caveman
+        }
+      })
+    } catch {
+      // never break a session over caveman
+    }
+  },
 }
-
-export default CavemanPlugin

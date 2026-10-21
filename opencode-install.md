@@ -42,11 +42,7 @@ uv tool install graphifyy
 graphify install --platform opencode
 ```
 
-The installer leaves the plugin file at `~/.opencode/plugins/graphify.js`. Copy it next to the other local plugins and register it in the single config file (see the plugin registration section below):
-
-```
-cp ~/.opencode/plugins/graphify.js ~/.config/opencode/plugins/graphify.js
-```
+The installer leaves the plugin file at `~/.opencode/plugins/graphify.js`. The plugin is not registered: opencode v2 refuses it (`Plugin must export a default definition with an id and an effect or setup function`, the upstream file is a v1 shape). The graphify skill and CLI are untouched, so `/graphify` stays available through the skill.
 
 ### 3. Vercel-Labs Agent-Skills
 
@@ -142,21 +138,14 @@ All opencode plugin entries live in one file: `~/.config/opencode/opencode.jsonc
     "subagent_depth": 3
   },
   "plugin": [
-    "opencode-see-image@1.4.0",
-    "./plugins/caveman/plugin.js",
-    "./plugins/graphify.js"
+    "opencode-see-image@1.4.0"
   ]
 }
 ```
 
-Relative paths resolve from `~/.config/opencode/`, so the two local plugin files are:
-
-- `~/.config/opencode/plugins/caveman/plugin.js` (own minimal plugin, synced from `plugins/caveman/`)
-- `~/.config/opencode/plugins/graphify.js` (graphify plugin, copied from `~/.opencode/plugins/graphify.js`)
+The caveman plugin needs no config entry. opencode auto-discovers every folder under `~/.config/opencode/plugins/` and resolves it as `server.js` or `index.js`, so the sync step (step 8) drops it at `~/.config/opencode/plugins/caveman/index.js` and opencode loads it from there. Adding a config entry for it would load it twice.
 
 Restart opencode after editing the config, the plugin set reloads on start.
-
-Known issue on opencode v2.0.32 (verified 2026-10-21): a config entry that points at a file inside a plugin folder is refused with `configured plugin path must be a directory`, and the upstream graphify plugin is a v1 shape that is refused with `Plugin must export a default definition with an id and an effect or setup function`. The `caveman` and `graphify` skills keep working, only the plugin hooks are affected. Fix by registering the plugin folder instead of the file and by exporting the v2 plugin shape.
 
 ## Verify
 
