@@ -1,8 +1,8 @@
 #!/bin/sh
 # pre-commit hook: enforce repo doc standards on staged files.
 # Checks P1..P8 per docs/artifacts/features/standardization-githooks/ design.
-# ponytail: eight grep checks, no dependencies; node is used only for the
-# P8 JavaScript syntax check and that check is skipped when node is absent.
+# ponytail: seven grep checks plus one node syntax check, no dependencies;
+# the P8 JavaScript syntax check is skipped when node is absent.
 # Ceiling: validates staged content only, word-splits path lists (safe:
 # kebab-case rule bans spaces in paths), and treats a repo's very first commit
 # as a new-skill commit.
@@ -120,13 +120,19 @@ done
 
 if [ -n "$js_files" ] && command -v node >/dev/null 2>&1; then
   js_tmp=$(mktemp -d)
+  n=0
   for f in $js_files; do
-    base=$(basename "$f")
-    git show ":$f" > "$js_tmp/$base" || continue
+    n=$((n + 1))
+    # Unique temp name per staged path: slashes become __ and the counter
+    # keeps same-basename files (a/b/index.js, c/index.js) from overwriting
+    # each other, so every staged file gets checked.
+    flat=$(printf '%s' "$f" | sed 's|/|__|g')
+    tmp_js="$js_tmp/$n-$flat"
+    git show ":$f" > "$tmp_js" || continue
     # Accept either module system: node --check on the file, then an
     # explicit module parse for ESM .js files on older node.
-    if ! out=$(node --check "$js_tmp/$base" 2>&1) \
-      && ! out=$(node --input-type=module --check < "$js_tmp/$base" 2>&1); then
+    if ! out=$(node --check "$tmp_js" 2>&1) \
+      && ! out=$(node --input-type=module --check < "$tmp_js" 2>&1); then
       reject "P8 js-syntax" "$f" "node --check failed on the staged file"
       printf '%s\n' "$out" >&2
     fi
