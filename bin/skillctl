@@ -194,10 +194,9 @@ cmd_sync() {
           mirror agents "$g" "$oc/agents"
         done
         # plugins are opencode-only, mirror each plugin folder
-        mkdir -p "$oc/plugins"
         for g in "$REPO_ROOT"/plugins/*/; do
           [ -e "$g" ] || continue
-          mirror plugins "${g%/}" "$oc/plugins"
+          mirror plugins "$g" "$oc/plugins"
         done
         touched_agents=1
         ;;
