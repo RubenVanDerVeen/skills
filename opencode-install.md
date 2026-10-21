@@ -124,7 +124,7 @@ This repo ships tracked git hooks (`.githooks/`) that reject non-Conventional-Co
 git config core.hooksPath .githooks
 ```
 
-The hook is `sh` + `grep` only (no Node, no dependencies) and is tracked executable, so it works on Windows (via Git's bundled bash), macOS, and Linux. Emergency bypass: `git commit --no-verify`.
+The hook is `sh` + `grep` with no dependencies and is tracked executable, so it works on Windows (via Git's bundled bash), macOS, and Linux. Node is invoked only to syntax-check staged JavaScript (`node --check`); that check is skipped when node is not installed. Emergency bypass: `git commit --no-verify`.
 
 ## Plugin registration
 
