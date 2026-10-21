@@ -1,18 +1,19 @@
 ---
 name: opencode-install
-description: Use when installing the environment's external tools/skills (caveman, graphify, markitdown, vercel-labs/agent-skills, stop-slop, ponytail, opencode-see-image) or syncing this repo's skills and commands into an agent's skills and commands directory.
+description: Use when installing the environment's external tools (graphify, markitdown, vercel-labs/agent-skills, opencode-see-image) or syncing this repo's vendored packs (caveman, stop-slop, ponytail, the superpowers leftovers) plus skills, commands, agents, and plugins into an agent's directories.
 ---
 
 # opencode-install
 
 ## Overview
 
-Install steps for the external skill/tool sources (caveman, graphify, markitdown, vercel-labs/agent-skills, stop-slop, ponytail, opencode-see-image) and the personal skills repo path. For what each source is and when to use it, see `external-skills.md`.
+Install steps for the external tools (graphify, markitdown, vercel-labs/agent-skills, opencode-see-image) and for the packs that now ship from this repo (caveman, stop-slop, ponytail, the superpowers leftovers). For what each source is and when to use it, see `external-skills.md`.
 
 ## When to use
 
 - Setting up opencode on a new machine or after a clean reinstall.
-- "How do I install caveman / graphify / markitdown / vercel-labs / stop-slop / ponytail / opencode-see-image?"
+- "How do I install graphify / markitdown / vercel-labs / opencode-see-image?" (external tools)
+- "How do I install caveman / stop-slop / ponytail / the superpowers leftovers?" (vendored in this repo, installed by the sync step)
 - opencode is not seeing the personal skills in `C:\Users\ruben\Projects\Tools\skills`.
 
 ## Install
@@ -21,20 +22,30 @@ Run the commands below in order. They are all idempotent, re-running them is saf
 
 ### 1. Caveman
 
+Vendored in this repo: the skill in `skills/caveman/`, the six command files in `commands/caveman*.md`, and the minimal mode plugin in `plugins/caveman/`. Install it with the sync step (step 8):
+
 ```
-npx -y github:JuliusBrussee/caveman -- --only opencode
+bin/skillctl sync --agent opencode
 ```
+
+Switch the active level with `/caveman <level>` (`off`, `lite`, `full`, `ultra`, `wenyan-lite`, `wenyan-full`, `wenyan-ultra`). The command writes the level to `~/.config/opencode/.caveman-mode`; the plugin reads that file and injects the matching rules on each turn.
 
 ### 2. Graphify
 
 Requires Python 3.10+ and `uv` (install uv with `winget install astral-sh.uv` on Windows).
 
-Run the install from your home directory, not from a project folder. `graphify install --platform opencode` writes its plugin into `<cwd>/.opencode/`, so launching it from a project pollutes that project with runtime config. The user-level install adds its plugin entry to the global opencode config under `~/.config/opencode/`; keep all plugin entries consolidated in `opencode.json` so they load reliably.
+Run the install from your home directory, not from a project folder. `graphify install --platform opencode` writes its plugin into `<cwd>/.opencode/`, so launching it from a project pollutes that project with runtime config.
 
 ```
 cd ~
 uv tool install graphifyy
 graphify install --platform opencode
+```
+
+The installer leaves the plugin file at `~/.opencode/plugins/graphify.js`. Copy it next to the other local plugins and register it in the single config file (see the plugin registration section below):
+
+```
+cp ~/.opencode/plugins/graphify.js ~/.config/opencode/plugins/graphify.js
 ```
 
 ### 3. Vercel-Labs Agent-Skills
@@ -49,32 +60,13 @@ The current environment has these five selected: `vercel-react-best-practices`, 
 
 ### 4. Stop-Slop
 
-Single skill that strips AI writing patterns from prose. Aligned with this repo's house rule (no em-dashes), so it reinforces rather than contradicts `AGENTS.md`. The `--skill stop-slop` flag restricts the install to that one skill:
-
-```
-npx skills add hardikpandya/stop-slop --skill stop-slop
-```
+Vendored in this repo as `skills/stop-slop/`: one skill that strips AI writing patterns from prose. Aligned with this repo's house rule (no em-dashes), so it reinforces rather than contradicts `AGENTS.md`. It arrives with the sync step (step 8), so there is no separate install to run.
 
 ### 5. Ponytail
 
-Lazy-dev philosophy + six skills (`ponytail`, `ponytail-review`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help`). Ponytail does not yet have an opencode installer; install is `git clone` + plugin-path entry.
+Vendored in this repo as `skills/ponytail/`: the lazy-dev lens (YAGNI, standard library first, shortest working diff) that `agents/lazy-dev.md` points at. It arrives with the sync step (step 8), so there is no clone to make and no plugin to register; the ponytail plugin and the `C:/tools/ponytail` clone are retired.
 
-```
-git clone https://github.com/DietrichGebert/ponytail.git C:/tools/ponytail
-```
-
-Then register the opencode plugin in `~/.opencode/opencode.json` (the global one, not `~/.config/opencode/opencode.json`; opencode reads from both, the global plugin array lives in `~/.opencode/`). Add the plugin path to the `plugin` array:
-
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "plugin": [
-    "C:/tools/ponytail/.opencode/plugins/ponytail.mjs"
-  ]
-}
-```
-
-The plugin auto-activates `ponytail` at level `full` every session. Change the default via the env var `PONYTAIL_DEFAULT_MODE` (set to `lite`, `full`, `ultra`, or `off`) or via `~/.config/ponytail/config.json` (`{"defaultMode": "lite"}`). See `C:/tools/ponytail/skills/ponytail-help/SKILL.md` for the full reference.
+The skill loads on demand for coding work, and the `lazy-dev` agent applies it as a plan gate. There is no default mode and no auto-activation.
 
 ### 6. MarkItDown
 
@@ -103,15 +95,15 @@ Then set two persistent user env vars so the plugin reuses the existing `minimax
 
 Restart opencode from a fresh terminal so the new env vars are inherited. The plugin defaults to `opencode-go` (minimax-m3); setting `SEE_IMAGE_PROVIDER` overrides that. For the resolve order and other models, see `external-skills.md`.
 
-### 8. Sync skills, commands, and agents into the agent's directories
+### 8. Sync skills, commands, agents, and plugins into the agent's directories
 
-The `skills/`, `commands/`, and `agents/` directories inside this repo are inactive by themselves; sync them to the agent's directories with the shipped CLI. Run from the clone root:
+The `skills/`, `commands/`, `agents/`, and `plugins/` directories inside this repo are inactive by themselves; sync them to the agent's directories with the shipped CLI. Run from the clone root:
 
 ```
 bin/skillctl sync
 ```
 
-Use `bin/skillctl sync --check` for a dry run that reports drift without changing anything. The CLI mirrors skills, commands, and agents to the correct directories for both opencode (`~/.config/opencode/skills/`, `~/.config/opencode/command/` singular, `~/.config/opencode/agents/`) and Claude Code (`~/.claude/skills/`, `~/.claude/commands/` plural). opencode-only agents are never copied to Claude Code. Restart opencode afterwards so the new agents load; see `agents/README.md` for roles and tuning.
+Use `bin/skillctl sync --check` for a dry run that reports drift without changing anything, and `--agent opencode` or `--agent claude` to sync one agent only. The CLI mirrors skills, commands, agents, and plugins to the correct directories for opencode (`~/.config/opencode/skills/`, `~/.config/opencode/command/` singular, `~/.config/opencode/agents/`, `~/.config/opencode/plugins/`) and skills plus commands to Claude Code (`~/.claude/skills/`, `~/.claude/commands/` plural). opencode-only agents and plugins are never copied to Claude Code. Restart opencode afterwards so the new agents and plugins load; see `agents/README.md` for roles and tuning.
 
 #### Windows notes
 
@@ -138,6 +130,34 @@ git config core.hooksPath .githooks
 
 The hook is `sh` + `grep` only (no Node, no dependencies) and is tracked executable, so it works on Windows (via Git's bundled bash), macOS, and Linux. Emergency bypass: `git commit --no-verify`.
 
+## Plugin registration
+
+All opencode plugin entries live in one file: `~/.config/opencode/opencode.jsonc`. The legacy `~/.opencode/opencode.json` is retired, it only carried the superpowers and ponytail registrations.
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "subagent_depth": 3,
+  "experimental": {
+    "subagent_depth": 3
+  },
+  "plugin": [
+    "opencode-see-image@1.4.0",
+    "./plugins/caveman/plugin.js",
+    "./plugins/graphify.js"
+  ]
+}
+```
+
+Relative paths resolve from `~/.config/opencode/`, so the two local plugin files are:
+
+- `~/.config/opencode/plugins/caveman/plugin.js` (own minimal plugin, synced from `plugins/caveman/`)
+- `~/.config/opencode/plugins/graphify.js` (graphify plugin, copied from `~/.opencode/plugins/graphify.js`)
+
+Restart opencode after editing the config, the plugin set reloads on start.
+
+Known issue on opencode v2.0.32 (verified 2026-10-21): a config entry that points at a file inside a plugin folder is refused with `configured plugin path must be a directory`, and the upstream graphify plugin is a v1 shape that is refused with `Plugin must export a default definition with an id and an effect or setup function`. The `caveman` and `graphify` skills keep working, only the plugin hooks are affected. Fix by registering the plugin folder instead of the file and by exporting the v2 plugin shape.
+
 ## Verify
 
 After all nine steps, start a new opencode session and confirm each source is reachable:
@@ -147,13 +167,13 @@ After all nine steps, start a new opencode session and confirm each source is re
 - A graphify skill: type `/graphify .` in the assistant and confirm a `graphify-out/` folder is produced.
 - A vercel-labs skill (e.g. `vercel-react-best-practices`): ask for a React/Next.js review and confirm Vercel-specific guidance shows up.
 - The `stop-slop` skill: paste a paragraph of AI-flavored prose and ask for a slop review.
-- The `ponytail` skill: ask for any coding task and confirm the response uses YAGNI/stdlib-first framing (the mode is active by default).
+- The `ponytail` skill: ask for any coding task and confirm the response uses YAGNI/stdlib-first framing (the skill loads on demand, there is no ponytail plugin and no default mode).
 - `markitdown`: run `markitdown --help` and confirm it is on PATH (or convert a small `.pdf` and confirm Markdown output).
 - The `opencode-see-image` plugin: attach an image to a GLM-5.3 session and confirm the `see_image` tool fires instead of a "does not support image input" rejection.
 - A personal skill from this repo (e.g. `drawio-pro`).
 - The custom agents: `opencode agent list` shows `planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `doc-standardizer`, `code-standardizer`, `documenter`, `oracle` (and `inventree` when the homelab MCP server is registered).
 
-If a personal skill is missing, re-check step 9.
+If a personal skill is missing, re-check step 8.
 
 ## Related
 
