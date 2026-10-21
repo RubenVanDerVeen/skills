@@ -45,6 +45,12 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - `bin/skillctl`: dependency-free bash maintenance CLI with `check` (worktree-wide lint, rules C1-C8) and `sync` (mirror skills/commands/agents to agent directories) subcommands. Stack exception per `AGENTS.md`. Spec at `docs/artifacts/features/skillctl/2026-09-29-skillctl-design.md`.
 - Agent attribution trailer convention: agent-authored commits carry `Co-Authored-By: <provider>/<model>` and `Agent-Role: <role>` trailers; documented in `STANDARDS.md`, `AGENTS.md`, and the `project-standardization` skill (stack reference + STANDARDS and AGENTS templates).
 - `academic-writing-pro/`: academic writing checks and drafting. FOCSI tone, sentence construction, quoting and plagiarism rules, IEEE citations, lint script. `/academic-check` slash command. catalog rows added in `README.md` (Skills table) and `AGENTS.md` (Current skills table).
+- `skills/using-superpowers/`, `skills/verification-before-completion/`: vendored from obra/superpowers (skill discipline before any response, evidence before assertions); catalogue rows added in `README.md` and `AGENTS.md`.
+- `skills/caveman/`: vendored caveman skill plus six slash commands (`commands/caveman.md`, `commands/caveman-commit.md`, `commands/caveman-compress.md`, `commands/caveman-help.md`, `commands/caveman-review.md`, `commands/caveman-stats.md`); the upstream npx pack is uninstalled.
+- `skills/stop-slop/`: vendored prose-control skill with its `references/` material; the upstream `~/.agents` symlink is removed, skillctl sync owns the location.
+- `skills/ponytail/`: vendored core lazy-dev philosophy skill (YAGNI ladder, standard library first); the upstream clone at `~/tools/ponytail` and its plugin registration are retired.
+- `plugins/caveman/`: minimal opencode v2 plugin (`index.js`) that injects the active caveman level into the system instructions, plus a node-stdlib smoke test (`test.mjs`).
+- `bin/skillctl sync`: new `plugins/` mirror loop, so opencode plugins land in `~/.config/opencode/plugins/` next to the skills, commands, and agents.
 
 ### Changed
 
@@ -76,6 +82,8 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - writing-plans: plans now require a **Depends:** line per task plus a Parallel Readiness section (disjoint Files for none-dependency tasks, serial fallback when lines are absent), aligning the skill with the planner/orchestrator/execute-plan contract. Spec: docs/artifacts/features/writing-plans-parallel-tasks/2026-09-26-parallel-task-structure-design.md.
 - Agent-dir sync workflow: `AGENTS.md` and `opencode-install.md` replace the manual two-step copy with `bin/skillctl sync` (with `--check` dry-run); destination mapping table retained for reference.
 - academic-writing-pro: tiered finding levels with `--min-level`/`--enable`/`--disable`, vocab accept/reject suppression, markup-aware scanning with `--format` (Typst `@key` citations now recognized), judgment-pass roles reference, hedging taxonomy, reporting-verb and microfluidics terminology appendices, and runnable pressure scenarios under `tests/`.
+- Opencode configuration consolidated into one file, `~/.config/opencode/opencode.jsonc`; the legacy `~/.opencode/opencode.json` is retired.
+- External installs of the superpowers, caveman, stop-slop, and ponytail packs are retired; all four now ship from this repo and arrive with `bin/skillctl sync`.
 
 ### Fixed
 

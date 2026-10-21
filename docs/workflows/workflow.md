@@ -11,7 +11,7 @@ opencode is the active harness, running two flat-quota coding-plan models in a c
 | `zai-coding-plan/glm-5.3` | Planning, review, consult: long-horizon reasoning (`planner`, `reviewer`, `oracle`, `doc-standardizer`, `code-standardizer`, `documenter`) |
 | `minimax-coding-plan/MiniMax-M3.1-Flash` | Orchestration and implementation: near-par execution, faster and cheaper (`orchestrator`, `executor`, `inventree`) |
 
-Config lives in `~/.config/opencode/` and `~/.opencode/opencode.json`; install steps in `opencode-install.md`. The `opencode-see-image` plugin routes image attachments from the text-only GLM 5.3 primary to MiniMax-M3 and returns a text description.
+Config lives in `~/.config/opencode/` and `~/.config/opencode/opencode.jsonc`; install steps in `opencode-install.md`. The `opencode-see-image` plugin routes image attachments from the text-only GLM 5.3 primary to MiniMax-M3 and returns a text description.
 
 The repo follows the [agents.md](https://agents.md) convention and still works with other harnesses (Claude Code via the `CLAUDE.md` shim and the `~/.claude/` sync paths, plus Codex, Cursor, Aider, etc.), but Claude Code is no longer in daily use. The sync tables in `AGENTS.md` and `opencode-install.md` keep those paths as a documented capability.
 
@@ -66,8 +66,8 @@ Skill discipline is enforced by this repo's commands and agents; process skills 
 
 ### 3. Output style
 
-- **ponytail** (plugin): YAGNI-first "lazy senior dev" mode plus over-engineering review/audit skills. Auto-active at level `full` every session; governs what gets built, not how the agent talks.
-- **caveman** (plugin): terse chat register, roughly 75% fewer output tokens. Available for long sessions or when output is too verbose; code, commits, and docs stay normal. Ships `/caveman-commit` and `/caveman-review`. Pair with ponytail (ponytail builds, caveman talks).
+- **ponytail** (skill): YAGNI-first "lazy senior dev" philosophy, vendored as `skills/ponytail/` and loaded on demand; no plugin, no default mode. The `lazy-dev` agent applies it as a plan gate. Governs what gets built, not how the agent talks.
+- **caveman** (skill, plugin, commands): terse chat register, roughly 75% fewer output tokens. Vendored as `skills/caveman/` plus six `/caveman-*` commands and the own plugin at `plugins/caveman/`. Available for long sessions or when output is too verbose; code, commits, and docs stay normal. Pair with ponytail (ponytail builds, caveman talks).
 - **stop-slop** (skill): strips AI tells from prose (banned phrases, structural cliches, no em-dashes). Loaded whenever drafting or editing text. Reinforces the repo-wide no-em-dash rule.
 
 ### 4. Domain packs and utilities

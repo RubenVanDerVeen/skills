@@ -25,7 +25,7 @@ Two layers: formal ISO/IEC/IEEE norms and industry conventions.
 | Conventional Branch 1.1.0 | **yes**    | Git branch names |
 | Keep a Changelog 1.1.0  | **yes**       | `CHANGELOG.md` format |
 
-This is a content-only agent environment repo (skills, slash commands, agent definitions). Single exception: `bin/skillctl`, a dependency-free bash maintenance CLI (`check`, `sync`); no other tooling. Most formal norms are not adopted; the conventions layer is the floor.
+This is a content-only agent environment repo (skills, slash commands, agent definitions, opencode plugins). Two exceptions: `bin/skillctl`, a dependency-free bash maintenance CLI (`check`, `sync`), and `plugins/caveman/`, a minimal opencode plugin (node stdlib only, no dependencies). No other tooling. Most formal norms are not adopted; the conventions layer is the floor.
 
 ---
 
@@ -147,6 +147,7 @@ skills/
 │   └── commit-msg                         <- Conventional Commits enforcement hook
 ├── .claude/                               <- Claude Code tool settings (project)
 ├── bin/                                   <- skillctl maintenance CLI (check, sync)
+├── plugins/                               <- opencode plugins (caveman mode injector)
 ├── commands/                              <- all slash commands live here
 │   ├── goal.md
 │   ├── execute-plan.md

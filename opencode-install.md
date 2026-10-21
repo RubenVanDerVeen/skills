@@ -42,7 +42,7 @@ uv tool install graphifyy
 graphify install --platform opencode
 ```
 
-The installer leaves the plugin file at `~/.opencode/plugins/graphify.js`. The plugin is not registered: opencode v2 refuses it (`Plugin must export a default definition with an id and an effect or setup function`, the upstream file is a v1 shape). The graphify skill and CLI are untouched, so `/graphify` stays available through the skill.
+The installer leaves the plugin file at `~/.opencode/plugins/graphify.js`. That leftover file is still v1-shaped (no default export with an id and an effect or setup function), so opencode v2 keeps picking it up and refuses it on every start, logging a load-failure WARN. The file can be deleted; the graphify skill and CLI are untouched, so `/graphify` stays available through the skill.
 
 ### 3. Vercel-Labs Agent-Skills
 
@@ -111,7 +111,7 @@ The CLI is a bash script written on Linux; on this Windows machine it runs under
   & "C:\Program Files\Git\bin\bash.exe" -c "cd /c/Users/ruben/projects/tools/skills && ./bin/skillctl sync"
   ```
 
-- The checkout has CRLF line endings (`core.autocrlf=true`, no `.gitattributes`). This is tolerated: MSYS2 bash translates line endings transparently, so the script and the `check` rules (C1 em-dash scan included) behave exactly as on Linux. Do not hand-convert the endings; git rewrites them on checkout anyway.
+- The checkout has CRLF line endings (`core.autocrlf=true`), except `.githooks/**`, which the tracked repo-root `.gitattributes` pins to LF so the hook shebangs survive. This is tolerated: MSYS2 bash translates line endings transparently, so the script and the `check` rules (C1 em-dash scan included) behave exactly as on Linux. Do not hand-convert the endings; git rewrites them on checkout anyway.
 - `$HOME` inside Git Bash resolves to `C:\Users\ruben`, so the sync lands in `C:\Users\ruben\.config\opencode\` and `C:\Users\ruben\.claude\`, matching the Linux layout.
 - Behavior verified identical to Linux: `sync` mirrored 70 items, `sync --check` reported 0 missing / 0 stale / 0 extra, `check` passed with 0 fail and only the 3 expected C7 warns (universal commands without a parent skill).
 
@@ -160,7 +160,7 @@ After all nine steps, start a new opencode session and confirm each source is re
 - `markitdown`: run `markitdown --help` and confirm it is on PATH (or convert a small `.pdf` and confirm Markdown output).
 - The `opencode-see-image` plugin: attach an image to a GLM-5.3 session and confirm the `see_image` tool fires instead of a "does not support image input" rejection.
 - A personal skill from this repo (e.g. `drawio-pro`).
-- The custom agents: `opencode agent list` shows `planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `doc-standardizer`, `code-standardizer`, `documenter`, `oracle` (and `inventree` when the homelab MCP server is registered).
+- The custom agents: `opencode agent list` shows `planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `lazy-dev`, `doc-standardizer`, `code-standardizer`, `documenter`, `explore`, `oracle` (and `inventree` when the homelab MCP server is registered).
 
 If a personal skill is missing, re-check step 8.
 
