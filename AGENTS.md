@@ -138,6 +138,7 @@ description: <triggering conditions only>
 | `skills/typst-pro/` | `typst-pro` | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
 | `skills/altium-pro/` | `altium-pro` | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
 | `skills/brainstorming/` | `brainstorming` | Design-first gate for creative work. Batched questions, 2-3 approaches, spec at `docs/artifacts/features/`. |
+| `skills/caveman/` | `caveman` | Terse-output levels (lite/full/ultra plus wenyan variants), auto-clarity carve-outs, /caveman switching, six /caveman-* commands. |
 | `skills/code-standardization/` | `code-standardization` | Source-code structure standard. Formatter/linter/hooks per language, naming, module organization, architecture/dependency boundaries. Multi-language (Python, TS/JS, C/C++, Go, Rust), flat (one standard). Sister to `project-standardization`. |
 | `skills/deep-research/` | `deep-research` | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then brainstorm or Typst draft. Hermes research profile. |
 | `skills/inventree-naming/` | `inventree-naming` | InvenTree part naming convention: dash-separated names, description structure, per-category formats. Source of truth for the convention; the inventree agents embed a condensed copy. |
