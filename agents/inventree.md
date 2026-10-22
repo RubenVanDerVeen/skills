@@ -7,14 +7,14 @@ tools:
   write: false
   edit: false
   patch: false
-  task: false
+  subagent: false
   webfetch: false
   "homelab_plane*": false
 permission:
   write: deny
   edit: deny
   patch: deny
-  task: deny
+  subagent: deny
   webfetch: deny
   skill:
     "*": allow

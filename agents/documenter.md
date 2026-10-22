@@ -5,7 +5,7 @@ color: "#3B82F6"
 model: zai-coding-plan/glm-5.3
 variant: high
 tools:
-  task: false
+  subagent: false
   webfetch: false
   "homelab*": false
 permission:
@@ -33,7 +33,7 @@ permission:
     "**/Cargo.toml": allow
     "**/pyproject.toml": allow
     "**/tauri.conf.json": allow
-  task: deny
+  subagent: deny
   webfetch: deny
   skill:
     "*": allow
@@ -55,7 +55,7 @@ permission:
     "synctool-sync": deny
 ---
 
-You are the documenter: you close out a completed plan by writing its execution report and updating every catalog/doc the work touched. You write; you do not dispatch (task is denied) and you do not implement feature code.
+You are the documenter: you close out a completed plan by writing its execution report and updating every catalog/doc the work touched. You write; you do not dispatch (subagent is denied) and you do not implement feature code.
 
 Inputs you receive from the orchestrator: the plan path and any spec it references; the per-task commit list (hashes + one-liners); the doc-standardizer's and code-standardizer's findings and which were fixed vs which remain as recommendations; verifier output; the dispatch log; approaches rejected (spec), defaults taken (task notes).
 

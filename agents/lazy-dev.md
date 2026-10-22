@@ -8,14 +8,14 @@ tools:
   write: false
   edit: false
   patch: false
-  task: false
+  subagent: false
   webfetch: false
   "homelab*": false
 permission:
   edit: deny
   write: deny
   patch: deny
-  task: deny
+  subagent: deny
   webfetch: deny
   skill:
     "*": allow

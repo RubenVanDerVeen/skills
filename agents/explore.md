@@ -8,13 +8,13 @@ tools:
   write: false
   edit: false
   patch: false
-  task: false
+  subagent: false
   "homelab*": false
 permission:
   edit: deny
   write: deny
   patch: deny
-  task: deny
+  subagent: deny
   skill:
     "*": allow
     "brainstorming": deny
