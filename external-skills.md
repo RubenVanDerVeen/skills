@@ -73,7 +73,9 @@ Source: https://github.com/microsoft/markitdown
 
 ### vercel-labs/agent-skills
 
-Curated skill pack from Vercel Engineering for building production React, Next.js, and React Native apps, plus web-design review. Installed via `npx skills add vercel-labs/agent-skills`; the installer drops selected skills into the opencode skills directory (the five listed below are the ones currently installed in this environment).
+Curated skill pack from Vercel Engineering for building production React, Next.js, and React Native apps, plus web-design review. Installed via `npx skills add vercel-labs/agent-skills`; the installer drops selected skills into the opencode skills directory.
+
+Status: removed 2026-10-22 (all five, no usage; Vercel-stack opinions not worth the skill-list slots). Re-add on demand with the install command above; the table documents what the pack offers.
 
 | Skill | What it covers |
 |---|---|
