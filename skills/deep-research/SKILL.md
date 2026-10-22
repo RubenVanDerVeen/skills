@@ -25,7 +25,7 @@ Use this skill when the user:
 
 Skip this skill for:
 - Quick factual questions (just answer them)
-- Coding tasks (use `subagent-driven-development`)
+- Coding tasks (use the `/execute-plan` command, `commands/execute-plan.md`)
 - File ops, todos, calendar, etc. (use the underlying tools directly)
 
 ## Co-Trigger Skills - Load These At The Same Time

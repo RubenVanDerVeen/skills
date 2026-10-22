@@ -186,8 +186,9 @@ Execution order:
    (ordered merges + checklist + final merge to base)
 
 To dispatch: copy the per-agent dispatch prompt from the manifest for each plan
-and send it to a fresh cheaper agent. Each agent uses subagent-driven-development
-or executing-plans on its assigned plan. Merges land back on `feat/<topic-slug>`
+and send it to a fresh cheaper agent. Each agent uses the `/execute-plan` command
+(`commands/execute-plan.md`) on its assigned plan, following the repo's
+`agents/orchestrator.md` execution rules. Merges land back on `feat/<topic-slug>`
 (PRs if the repo has a remote, local merges otherwise).
 ```
 

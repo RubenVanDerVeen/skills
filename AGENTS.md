@@ -2,7 +2,7 @@
 
 ## What this is
 
-Personal agent environment monorepo for AI coding agents that follow the [agents.md](https://agents.md) convention (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.). Three kinds of content: skills (`skills/<name>/SKILL.md`), slash commands (`commands/`), and opencode agent definitions (`agents/`). Top-level `.md` files (`README.md`, `opencode-install.md`, `external-skills.md`) are repo docs, not skills.
+Personal agent environment monorepo for AI coding agents that follow the [agents.md](https://agents.md) convention (opencode, Claude Code, Codex, Cursor, Aider, GitHub Copilot, Hermes, etc.). Four kinds of content: skills (`skills/<name>/SKILL.md`), slash commands (`commands/`), opencode agent definitions (`agents/`), and opencode plugins (`plugins/`). Top-level `.md` files (`README.md`, `opencode-install.md`, `external-skills.md`) are repo docs, not skills.
 
 The user adds, refines, and shares skills, commands, and agents over time. Auto-loaded for any agent that opens this repo.
 
@@ -10,7 +10,7 @@ Tier: small. One author, single `AGENTS.md` suffices. This file exceeds the tier
 
 ## Stack
 
-- **Content:** Markdown only. No build step, no tooling, no runtime. Single exception: `bin/skillctl`, a dependency-free bash maintenance CLI (`check`, `sync`); no other tooling.
+- **Content:** Markdown only. No build step, no tooling, no runtime. Two exceptions: `bin/skillctl`, a dependency-free bash maintenance CLI (`check`, `sync`), and one minimal opencode plugin (`plugins/caveman/index.js`, node stdlib only, no dependencies). No other tooling.
 - **Discovery:** `AGENTS.md` at the repo root; each `SKILL.md` uses YAML frontmatter (`name`, `description`).
 - **Distribution:** Git remote `https://github.com/RubenVanDerVeen/skills.git`, branch `main`.
 
@@ -25,6 +25,7 @@ skills/
 ├── external-skills.md                         <- external skill catalog
 ├── AGENTS.md                                  <- this file
 ├── bin/                                       <- skillctl maintenance CLI (check, sync)
+├── plugins/                                   <- opencode plugins (caveman mode injector)
 ├── commands/                                  <- all slash commands live here
 │   ├── goal.md                                <- /goal: iterate until verifier passes
 │   ├── execute-plan.md                        <- /execute-plan: subagent-driven plan execution
@@ -34,7 +35,14 @@ skills/
 │   ├── multi-plan.md                          <- /multi-plan: start multi-plan orchestration
 │   ├── standardize.md                         <- /standardize: bootstrap or restructure a project
 │   ├── standardize-code.md                    <- /standardize-code: audit code structure via code-standardization
-│   └── standardize-migrate.md                 <- /standardize-migrate: migrate an older layout
+│   ├── standardize-migrate.md                 <- /standardize-migrate: migrate an older layout
+│   ├── caveman.md                             <- /caveman: switch the caveman output level
+│   ├── caveman-commit.md                      <- /caveman-commit: Conventional Commits message, intent only
+│   ├── caveman-compress.md                    <- /caveman-compress: compress a memory file to caveman format
+│   ├── caveman-help.md                        <- /caveman-help: cheat card for the modes and commands
+│   ├── caveman-review.md                      <- /caveman-review: compressed code review, one line per finding
+│   ├── caveman-stats.md                       <- /caveman-stats: token usage and estimated caveman savings
+│   └── academic-check.md                      <- /academic-check: academic writing lint
 ├── agents/                                    <- opencode agent definitions (planner, orchestrator, writer, executor, reviewer, oracle, inventree)
 └── skills/                                    <- all skill folders live here
     ├── drawio-pro/SKILL.md
@@ -51,7 +59,7 @@ All slash commands live at the top-level `commands/` directory, never inside a s
 
 ### Slash commands
 
-Slash commands give a skill an explicit entry point for when the agent does not pick it up automatically from frontmatter description matching. All commands live as `.md` files in the top-level `commands/` directory, never inside a skill folder. Current examples: `commands/standardize.md` (`/standardize`), `commands/multi-plan.md` (`/multi-plan`), `commands/harvest.md` (`/harvest`), `commands/goal.md` (`/goal`), `commands/execute-plan.md` (`/execute-plan`), `commands/full-cycle.md` (`/full-cycle`), `commands/iterate-skill.md` (`/iterate-skill`), `commands/standardize-migrate.md` (`/standardize-migrate`), `commands/standardize-code.md` (`/standardize-code`).
+Slash commands give a skill an explicit entry point for when the agent does not pick it up automatically from frontmatter description matching. All commands live as `.md` files in the top-level `commands/` directory, never inside a skill folder. Current examples: `commands/standardize.md` (`/standardize`), `commands/multi-plan.md` (`/multi-plan`), `commands/harvest.md` (`/harvest`), `commands/goal.md` (`/goal`), `commands/execute-plan.md` (`/execute-plan`), `commands/full-cycle.md` (`/full-cycle`), `commands/iterate-skill.md` (`/iterate-skill`), `commands/standardize-migrate.md` (`/standardize-migrate`), `commands/standardize-code.md` (`/standardize-code`), `commands/caveman.md` (`/caveman`), `commands/caveman-commit.md` (`/caveman-commit`), `commands/caveman-compress.md` (`/caveman-compress`), `commands/caveman-help.md` (`/caveman-help`), `commands/caveman-review.md` (`/caveman-review`), `commands/caveman-stats.md` (`/caveman-stats`).
 
 #### File format
 
@@ -134,22 +142,27 @@ description: <triggering conditions only>
 | Folder | `name` in frontmatter | What it does |
 |---|---|---|
 | `skills/academic-writing-pro/` | `academic-writing-pro` | Academic writing checks and drafting. FOCSI tone, sentence construction, quoting and plagiarism rules, IEEE citations, lint script. Slash command: `/academic-check`. |
-| `skills/drawio-pro/` | `drawio-pro` | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
-| `skills/typst-pro/` | `typst-pro` | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
 | `skills/altium-pro/` | `altium-pro` | Altium Designer knowledge base. PCB rooms, polygon pours, design rules, query snippets, troubleshooting log. |
 | `skills/brainstorming/` | `brainstorming` | Design-first gate for creative work. Batched questions, 2-3 approaches, spec at `docs/artifacts/features/`. |
+| `skills/caveman/` | `caveman` | Terse-output levels (lite/full/ultra plus wenyan variants), auto-clarity carve-outs, /caveman switching, six /caveman-* commands. |
 | `skills/code-standardization/` | `code-standardization` | Source-code structure standard. Formatter/linter/hooks per language, naming, module organization, architecture/dependency boundaries. Multi-language (Python, TS/JS, C/C++, Go, Rust), flat (one standard). Sister to `project-standardization`. |
 | `skills/deep-research/` | `deep-research` | End-to-end research pipeline: intake, parallel gather (arxiv + web + own vault), synthesized dossier with citations, then brainstorm or Typst draft. Hermes research profile. |
+| `skills/drawio-pro/` | `drawio-pro` | Personal draw.io style. Pastel grouped containers, BPMN flowcharts, light-grey legend boxes. |
 | `skills/inventree-naming/` | `inventree-naming` | InvenTree part naming convention: dash-separated names, description structure, per-category formats. Source of truth for the convention; the inventree agents embed a condensed copy. |
-| `skills/synctool-sync/` | `synctool-sync` | Drive the `synctool` CLI for saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
 | `skills/multi-plan-orchestration/` | `multi-plan-orchestration` | Splits large tasks into foundation + N parallel sub-plans during brainstorming. Decomposition outline, scope-slip handling, manifest with per-agent dispatch prompts. Delegates to existing brainstorming + writing-plans skills. |
-| `skills/systematic-debugging/` | `systematic-debugging` | Hypothesis-first debugging: cheapest test first, follow evidence, fix the root cause. |
 | `skills/note-syntax/` | `note-syntax` | Full note-writing syntax for the Hermes Console vault (06_notes): YAML frontmatter, wikilinks, `{N%}` image sizing, file embeds, `columns`/`plot`/`mermaid` fences, KaTeX math, PDF export parity. Cheatsheets per topic. |
+| `skills/ponytail/` | `ponytail` | Forces the laziest solution that works: YAGNI ladder, standard library before custom code, minimal output. Lens for the lazy-dev plan gate. |
 | `skills/pr-description/` | `pr-description` | Standardized description for agent-created PRs. Conventional Commits title line plus Problem, What changed and why, Verification, Choices, Docs sections. |
 | `skills/release-description/` | `release-description` | Standardized body for release descriptions: the `chore(release): vX.Y.Z` commit body, the `git tag -a` annotation, and GitHub or GitLab Release notes. One template, three copy sites: Summary, Highlights, Breaking changes, Internal, Full changelog. |
 | `skills/rubens-project-standardization/` | `project-standardization` | Universal project bootstrap. `AGENTS.md` convention, kebab-case paths, ISO 8601 dates, Conventional Commits, Keep a Changelog. Three tiers (small/medium/large). |
 | `skills/skill-harvest/` | `skill-harvest` | Mines recent opencode sessions for repeated corrections and skill gaps. Report, approve, apply loop with incremental state. Slash command: `/harvest`. |
+| `skills/stop-slop/` | `stop-slop` | Removes AI writing patterns from prose: banned phrases, structural cliches, sentence rules, 5-dimension scoring below 35/50 revise. |
+| `skills/synctool-sync/` | `synctool-sync` | Drive the `synctool` CLI for saved NAS sync jobs (push/pull, copy/update). Dry-run first, hard rails, never auto-runs destructive mirror. |
+| `skills/systematic-debugging/` | `systematic-debugging` | Hypothesis-first debugging: cheapest test first, follow evidence, fix the root cause. |
+| `skills/typst-pro/` | `typst-pro` | Typst helpers. Academic frontpage, IEEE templates, Dutch project layout, color tokens. |
 | `skills/using-git-worktrees/` | `using-git-worktrees` | Isolated worktree or plain branch before executing implementation plans. |
+| `skills/using-superpowers/` | `using-superpowers` | Skill discipline: invoke relevant skills before any response. Priority rules, red flags, opencode tool mapping. |
+| `skills/verification-before-completion/` | `verification-before-completion` | Evidence before assertions: run verification commands and confirm output before claiming done. |
 | `skills/writing-plans/` | `writing-plans` | Turns an approved spec into bite-sized tasks with exact paths, steps, and verification commands. |
 | `skills/writing-skills/` | `writing-skills` | Meta-skill for authoring and editing skills: frontmatter, body structure, verify before deployment. |
 | `opencode-install.md` (top-level doc) | `opencode-install` | Bootstrap doc: install commands for caveman, graphify, plus the personal skills repo path. |
@@ -165,7 +178,7 @@ Catalogs to update (in the same commit as the new skill):
 
 - `README.md`: the `## Skills` table (one row per skill, alphabetical).
 - `AGENTS.md`: the `## Current skills` table in this file (one row per skill, alphabetical).
-- `opencode-install.md`: only if the `## Verify` section lists this skill by name. Currently it does not; skip if no name reference exists.
+- `opencode-install.md`: only if the `## Verify` section lists this skill by name. It currently names `brainstorming`, `caveman`, `stop-slop`, `ponytail`, and `drawio-pro`, so update it whenever one of those changes.
 
 Steps:
 

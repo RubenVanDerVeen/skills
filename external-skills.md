@@ -18,12 +18,12 @@ For install commands, see `opencode-install.md`.
 | Source | Type | What it does |
 |---|---|---|
 | superpowers | Skill system | Process discipline skills (TDD, debugging, brainstorming, ...) loaded by opencode, Claude Code, and friends. |
-| caveman | Skill pack | Auxiliary skills loaded via `npx github:...`. |
+| caveman | Skill pack (vendored) | Vendored in this repo: the `caveman` skill, six `commands/caveman*.md` files, and the own plugin at `plugins/caveman/`. Installed with `bin/skillctl sync`. |
 | graphify | CLI | Builds a queryable knowledge graph (HTML viewer + JSON + Markdown report) from a folder of code, SQL, scripts, docs, PDFs, images, or video. |
 | markitdown | CLI | Converts PDF/Word/Excel/PowerPoint/EPUB/HTML/images/audio to Markdown so the agent can read binary files. Standalone tool, called via Bash, not an opencode plugin. |
 | vercel-labs/agent-skills | Skill pack | Curated React/Next.js/React Native/web-design skills maintained by Vercel Engineering. |
 | stop-slop | Single skill | Removes AI tells from prose: banned phrases, structural clichés, and sentence-level rules (no em-dashes, no Wh- starters, active voice). |
-| ponytail | Skill pack | Lazy-dev philosophy + six skills that force the laziest solution that works. Default mode (`full`) ships YAGNI-first output and bakes itself into every response. |
+| ponytail | Skill (vendored core) | Forces the laziest solution that works: YAGNI ladder, standard library before custom code, native platform features next. Vendored in this repo as one skill, loads on demand, no default mode. |
 | opencode-see-image | opencode plugin | Lets a text-only primary model (e.g. `glm-5.3`) see images by routing them to a vision model (MiniMax-M3 via `minimax-coding-plan`) and returning a text description. |
 | open-code-review | CLI | Alibaba's AI code-review CLI: hybrid deterministic pipeline + LLM agent, diff or full-file review, line-level comments, OpenAI-compatible endpoints. |
 
@@ -33,13 +33,15 @@ For install commands, see `opencode-install.md`.
 
 Process-discipline skills for AI agents. Loaded automatically by opencode once installed; provides the meta-skill layer (using-superpowers, brainstorming, TDD, debugging, ...) that other skills and workflows assume.
 
-Status: process skills forked into this repo 2026-09-24 (brainstorming, writing-plans, using-git-worktrees, systematic-debugging, writing-skills), MIT.
+Status: fully forked into this repo 2026-10-21 (5 skills 2026-09-24 plus using-superpowers, verification-before-completion), upstream plugin registration removed. Upstream ships 15 skills total; remaining 8 not vendored (not used here).
 
 Source: https://github.com/obra/superpowers
 
 ### caveman
 
-Cuts down output token usage and rewrites assistant prose in a terse, caveman style (short words, dropped articles, simple sentences). Useful when output is too verbose, when you want to minimise tokens on long sessions, or when you deliberately want the rough register. Installed via `npx -y github:JuliusBrussee/caveman -- --only opencode`. Complements superpowers with additional agent workflows.
+Cuts down output token usage and rewrites assistant prose in a terse, caveman style (short words, dropped articles, simple sentences). Useful when output is too verbose, when you want to minimise tokens on long sessions, or when you deliberately want the rough register. Arrives via `bin/skillctl sync --agent opencode` (vendored skill, six commands, own plugin). Complements superpowers with additional agent workflows.
+
+Status: forked into this repo 2026-10-21 (skill + 6 commands + minimal own plugin at plugins/caveman/index.js); upstream npx pack uninstalled. Cavecrew dropped: roles covered by own explore/executor/reviewer agents.
 
 Source: https://github.com/JuliusBrussee/caveman
 
@@ -47,7 +49,7 @@ Source: https://github.com/JuliusBrussee/caveman
 
 Builds a queryable knowledge graph (interactive HTML viewer + `graph.json` + `GRAPH_REPORT.md`) from a folder of code, SQL, scripts, docs, PDFs, images, or video. The CLI ships an `opencode` install target that registers a `/graphify` skill and a hook that nudges the assistant to query the graph before grepping.
 
-Install path note: run `graphify install --platform opencode` from your home directory (`~`), not from a project folder. The installer writes its plugin into `<cwd>/.opencode/`, so launching it from a project pollutes that project with runtime config. The user-level install adds its plugin entry to the global opencode config under `~/.config/opencode/`; keep all plugin entries consolidated in `opencode.json` so they load reliably.
+Install path note: run `graphify install --platform opencode` from your home directory (`~`), not from a project folder. The installer writes its plugin into `<cwd>/.opencode/`, so launching it from a project pollutes that project with runtime config. The user-level install adds its plugin entry to the global opencode config under `~/.config/opencode/`; keep all plugin entries consolidated in `~/.config/opencode/opencode.jsonc` so they load reliably.
 
 Triggers: "I need an overview of this codebase", "find the connections between these modules", "which parts touch the auth flow", "rebuild the project wiki from source".
 
@@ -87,17 +89,31 @@ Source: https://github.com/vercel-labs/agent-skills
 
 ### stop-slop
 
-Removes AI writing patterns from prose. Catches banned phrases (throat-clearing openers, business jargon, lazy adverbs, meta-commentary), structural clichés (binary contrasts, dramatic fragmentation, rhetorical setups, passive voice), and sentence-level rules (no Wh- starters, no em-dashes, no lazy extremes, active voice required). Ships a 1-10 scoring rubric across five dimensions (Directness, Rhythm, Trust, Authenticity, Density); below 35/50 means revise.
+Removes AI writing patterns from prose. Catches banned phrases (throat-clearing openers, business jargon, lazy adverbs, meta-commentary), structural clichés (binary contrasts, dramatic fragmentation, rhetorical setups, passive voice), and sentence-level rules (no Wh- starters, no em-dashes, no lazy extremes, active voice required). Ships a 1-10 scoring rubric across five dimensions (Directness, Rhythm, Trust, Authenticity, Density); below 35/50 means revise. Arrives via `bin/skillctl sync --agent opencode` (vendored skill).
 
 Triggers: "make this sound less like AI", "strip the AI tells from this draft", "review this prose for slop", "tighten this writing", "edit for natural voice".
+
+Status: forked into this repo 2026-10-21; ~/.agents symlink removed, skillctl sync owns the location.
 
 Source: https://github.com/hardikpandya/stop-slop
 
 ### ponytail
 
-Lazy-dev philosophy + six skills. The base `ponytail` skill flips the assistant into a "lazy senior dev" mode by default (level: `full`) that pushes every response toward the smallest correct solution: YAGNI first, stdlib next, native platform features next, already-installed dependencies next, one line before fifty, and only then the minimum code that works. Five sibling skills cover the recurring workflows:
+Lazy-dev philosophy. The vendored `ponytail` skill pushes every response toward the smallest correct solution: YAGNI first, stdlib next, native platform features next, already-installed dependencies next, one line before fifty, and only then the minimum code that works. One skill is vendored here; it loads on demand through its description match, there is no plugin and no `/ponytail` command, and the `lazy-dev` agent applies it as a plan gate.
 
-| Skill | What it does |
+Ponytail governs what gets built, not how the assistant talks (pair with `caveman` for terse prose). Never simplifies away trust-boundary validation, error handling that prevents data loss, security, accessibility basics, or anything explicitly requested.
+
+Triggers: "make this less over-engineered", "simplify this", "is this over-engineered?", "review for over-engineering", "audit this codebase for bloat", "what can I delete from this repo".
+
+Source: https://github.com/DietrichGebert/ponytail
+
+Status: core philosophy skill forked into this repo 2026-10-21; clone at ~/tools/ponytail and plugin registration removed (delegation mechanics covered by own agents). The upstream sibling skills are not vendored.
+
+Install: arrives via `bin/skillctl sync --agent opencode` (vendored skill).
+
+Upstream note (documentation only, not installed here): the upstream pack ships six skills, the core plus five siblings, with a default mode (`full`) and `/ponytail` level switching.
+
+| Skill | Upstream: what it does |
 |---|---|
 | `ponytail` | The mode itself. Auto-active by default; switch levels with `/ponytail lite|full|ultra`, deactivate with "stop ponytail". |
 | `ponytail-review` | Diff-scoped over-engineering review. One finding per line: `<tag> <what to cut>. <replacement>.` Tags: `delete:`, `stdlib:`, `native:`, `yagni:`, `shrink:`. |
@@ -105,13 +121,6 @@ Lazy-dev philosophy + six skills. The base `ponytail` skill flips the assistant 
 | `ponytail-debt` | Harvests every `ponytail:` comment in the codebase into a debt ledger with ceiling + upgrade path per row. |
 | `ponytail-gain` | One-shot benchmark scoreboard (code lines, cost, speed). Honest boundary: never reports a per-repo number. |
 | `ponytail-help` | Quick-reference card: levels, commands, deactivate, update, configure default mode. |
-
-Ponytail governs what gets built, not how the assistant talks (pair with `caveman` for terse prose). Never simplifies away trust-boundary validation, error handling that prevents data loss, security, accessibility basics, or anything explicitly requested.
-
-Triggers: "make this less over-engineered", "simplify this", "I want a lazy review", "is this over-engineered?", "review for over-engineering", "audit this codebase for bloat", "what can I delete from this repo", "show ponytail debt", "what did we defer", "show ponytail impact", "ponytail help".
-
-Source: https://github.com/DietrichGebert/ponytail
-Install: see `opencode-install.md` step 6. Manual install (current setup) is `git clone https://github.com/DietrichGebert/ponytail.git C:/tools/ponytail` and add `"C:/tools/ponytail/.opencode/plugins/ponytail.mjs"` to the `plugin` array in `~/.opencode/opencode.json`.
 
 ### opencode-see-image
 
@@ -130,7 +139,7 @@ Resolve order when env vars are absent: explicit `SEE_IMAGE_API_KEY`, then `SEE_
 Triggers: "GLM-5.3 can't see this image", "what's in this screenshot", any image attached to a text-only primary model that returns "this model does not support image input".
 
 Source: https://github.com/alfaoz/opencode-see-image
-Install: see `opencode-install.md` step 8.
+Install: see `opencode-install.md` step 7.
 
 ### open-code-review
 

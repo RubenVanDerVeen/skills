@@ -1,6 +1,6 @@
 # AI Workflow
 
-How Ruben works with AI coding agents: the harness, the skill stack, the plugins and agents around it, and the flow a task follows from idea to commit. Snapshot date: 2026-10-19.
+How Ruben works with AI coding agents: the harness, the skill stack, the plugins and agents around it, and the flow a task follows from idea to commit. Snapshot date: 2026-10-21.
 
 ## Harness
 
@@ -11,7 +11,7 @@ opencode is the active harness, running two flat-quota coding-plan models in a c
 | `zai-coding-plan/glm-5.3` | Planning, review, consult: long-horizon reasoning (`planner`, `reviewer`, `oracle`, `doc-standardizer`, `code-standardizer`, `documenter`) |
 | `minimax-coding-plan/MiniMax-M3.1-Flash` | Orchestration and implementation: near-par execution, faster and cheaper (`orchestrator`, `executor`, `inventree`) |
 
-Config lives in `~/.config/opencode/` and `~/.opencode/opencode.json`; install steps in `opencode-install.md`. The `opencode-see-image` plugin routes image attachments from the text-only GLM 5.3 primary to MiniMax-M3 and returns a text description.
+Config lives in `~/.config/opencode/` and `~/.config/opencode/opencode.jsonc`; install steps in `opencode-install.md`. The `opencode-see-image` plugin routes image attachments from the text-only GLM 5.3 primary to MiniMax-M3 and returns a text description.
 
 The repo follows the [agents.md](https://agents.md) convention and still works with other harnesses (Claude Code via the `CLAUDE.md` shim and the `~/.claude/` sync paths, plus Codex, Cursor, Aider, etc.), but Claude Code is no longer in daily use. The sync tables in `AGENTS.md` and `opencode-install.md` keep those paths as a documented capability.
 
@@ -46,7 +46,7 @@ Four layers, from personal to generic.
 | `/standardize-code` | `code-standardization` | Run the 4 agent checks (formatter/linter presence, documentation, consistency, boundaries) against a path, language, or the current branch diff. Optional `$ARGUMENTS` for scoping. |
 | `/multi-plan` | `multi-plan-orchestration` | Start multi-plan orchestration |
 | `/goal` | orphan | Iterate a build loop until a verifier passes |
-| `/execute-plan` | orphan | Subagent-driven execution of an approved plan (delegates per-task loop to `subagent-driven-development`, layers on `feat`/`fix` branch naming, docs-first commit, ponytail, behavior verification) |
+| `/execute-plan` | orphan | Subagent-driven execution of an approved plan (per-task executor + reviewer dispatch loop, layers on `feat`/`fix` branch naming, docs-first commit, ponytail, behavior verification) |
 | `/iterate-skill` | orphan | Refine a skill by dispatching subagents, inspecting real output, editing the repo copy across N iterations |
 | `/full-cycle` | orphan | Single-pass: brainstorm > spec > plan > dispatch the orchestrator in the same run (no approval gates). `no brainstorm` skips brainstorming; `handoff` prints the `/execute-plan` line for a fresh session instead |
 | `/harvest` | `skill-harvest` | Mine recent sessions for skill gaps |
@@ -55,40 +55,41 @@ Skills cover what loads automatically; commands are the explicit escape hatch fo
 
 ### 2. Process discipline (vendored skills)
 
-Skill discipline is enforced by this repo's commands and agents; process skills load from the repo's own `skills/` directory. The skills used most:
+Skill discipline is enforced by this repo's commands and agents; process skills load from the repo's own `skills/` directory. Seven superpowers skills are vendored (five since 2026-09-24, plus `using-superpowers` and `verification-before-completion` since 2026-10-21); the other eight upstream siblings were never vendored and left with the plugin. The skills used most:
 
 - `brainstorming` before any creative work (features, components, new skills)
-- `writing-plans` and `executing-plans` for multi-step work
-- `test-driven-development` and `systematic-debugging` during implementation
-- `requesting-code-review`, `receiving-code-review`, `verification-before-completion` before claiming done
+- `writing-plans` for multi-step work
+- `systematic-debugging` during implementation
+- `verification-before-completion` before claiming done; `using-superpowers` for skill-invocation discipline at conversation start
 - `writing-skills` when authoring skills for this repo
-- `subagent-driven-development`, `dispatching-parallel-agents`, `using-git-worktrees` for parallel or isolated work
+- `using-git-worktrees` for isolated work
 
 ### 3. Output style
 
-- **ponytail** (plugin): YAGNI-first "lazy senior dev" mode plus over-engineering review/audit skills. Auto-active at level `full` every session; governs what gets built, not how the agent talks.
-- **caveman** (plugin): terse chat register, roughly 75% fewer output tokens. Available for long sessions or when output is too verbose; code, commits, and docs stay normal. Ships `/caveman-commit` and `/caveman-review`. Pair with ponytail (ponytail builds, caveman talks).
+- **ponytail** (skill): YAGNI-first "lazy senior dev" philosophy, vendored as `skills/ponytail/` and loaded on demand; no plugin, no default mode. The `lazy-dev` agent applies it as a plan gate. Governs what gets built, not how the agent talks.
+- **caveman** (skill, plugin, commands): terse chat register, roughly 75% fewer output tokens. Vendored as `skills/caveman/` plus six `/caveman-*` commands and the own plugin at `plugins/caveman/`. Available for long sessions or when output is too verbose; code, commits, and docs stay normal. Pair with ponytail (ponytail builds, caveman talks).
 - **stop-slop** (skill): strips AI tells from prose (banned phrases, structural cliches, no em-dashes). Loaded whenever drafting or editing text. Reinforces the repo-wide no-em-dash rule.
 
 ### 4. Domain packs and utilities
 
 - **vercel-labs/agent-skills**: `vercel-react-best-practices`, `vercel-composition-patterns`, `vercel-react-native-skills`, `vercel-react-view-transitions`, `web-design-guidelines`
-- **find-skills**: discovers and installs new skills on demand
 - **markitdown** (CLI): converts PDF/Office/EPUB/images/audio to Markdown so the agent can read them
-- **graphify** (CLI): builds a queryable knowledge graph per repo (`graphify-out/`). Economics: a ~1-2K-token `graphify query` replaces a 10-40K-token grep/read exploration whose residue gets re-billed on every later prompt; phrase queries with concrete filenames/symbols, since abstract questions anchor on doc headings instead of code. Harness-agnostic via a "Knowledge graph" section in each graphed repo's AGENTS.md (wired by `/standardize` step 10 at medium/large tiers). Freshness needs no LLM: `graphify update .` is pure AST (~30 s), run by a debounced post-commit hook (`templates/post-commit-graphify` in the standardization skill) and as an end step of `/execute-plan`. opencode also has a `/graphify` skill plus a nudge hook; on other harnesses the AGENTS.md section carries it.
+- **graphify** (CLI): builds a queryable knowledge graph per repo (`graphify-out/`). Economics: a ~1-2K-token `graphify query` replaces a 10-40K-token grep/read exploration whose residue gets re-billed on every later prompt; phrase queries with concrete filenames/symbols, since abstract questions anchor on doc headings instead of code. Harness-agnostic via a "Knowledge graph" section in each graphed repo's AGENTS.md (wired by `/standardize` step 10 at medium/large tiers). Freshness needs no LLM: `graphify update .` is pure AST (~30 s), run by a debounced post-commit hook (`templates/post-commit-graphify` in the standardization skill) and as an end step of `/execute-plan`. opencode also has a `/graphify` skill (its old nudge-hook plugin is v1-shaped and no longer loads on opencode v2); the per-repo AGENTS.md section carries the nudge on every harness.
 
 ## Agents (opencode)
 
-Ten custom agents cover the plan/execute/review split plus inventory. Source of truth in `agents/` (copy to `~/.config/opencode/agents/` to activate); full roster, model pins, denylists, and token measurements in `agents/README.md`.
+Twelve custom agents cover the plan/execute/review split plus inventory. Source of truth in `agents/` (copy to `~/.config/opencode/agents/` to activate); full roster, model pins, denylists, and token measurements in `agents/README.md`.
 
 | Agent | Mode | Model | Role |
 |---|---|---|---|
 | `planner` | primary | `glm-5.3` | Brainstorm > spec > plan, then dispatch the orchestrator subagent in the same run (single-pass); `handoff` prints the `/execute-plan` line for a fresh session |
+| `explore` | subagent | `glm-5.3-flash` (`high` variant) | Read-only recon for planner and orchestrator: codebase exploration plus online lookup; shadows the opencode built-in of the same name, built-in stays the fallback |
 | `orchestrator` | all | `MiniMax-M3.1-Flash` | Executes approved plans: dispatches executor/reviewer work in parallel waves (ready-set dispatch), pipelines each reviewer against its own task's commit, oracle on two-strike failures, commits at boundaries. Session agent for standalone `/execute-plan`, and dispatchable by the planner for single-pass `/full-cycle` |
 | `writer` | primary | unpinned | Focused doc/Typst sessions: direct edits, compile-verify, no ceremony |
 | `inventree` | primary | `MiniMax-M3.1-Flash` | InvenTree inventory via the homelab MCP: AliExpress CSV import, parts/stock/POs, naming convention |
 | `executor` | subagent | `MiniMax-M3.1-Flash` | Implements one plan task: TDD, edit, verify, report |
 | `reviewer` | subagent | `glm-5.3` | Spec-compliance and code-quality review of one task (cross-model on purpose) |
+| `lazy-dev` | subagent | `glm-5.3` | Lean-plan gate: reviews the written plan for over-engineering before orchestrator dispatch; PASS or findings, planner loops to a 2-round cap |
 | `oracle` | subagent | `glm-5.3` | Read-only consult after two failed attempts |
 | `doc-standardizer` | subagent | `glm-5.3` | Repo/docs standardization audit after a plan's task loop: kebab-case paths, AGENTS.md sections, docs/artifacts/ layout, changelog, catalog rows, commit hygiene, versioning sync. Loads `project-standardization`. Returns findings tagged quick-fix or recommendation. Read-only. |
 | `code-standardizer` | subagent | `glm-5.3` | Code-structure audit after the doc-standardizer pass: formatter/linter config presence, per-language naming and module organization, architecture boundaries. Loads `code-standardization`. Returns findings tagged quick-fix or recommendation. Read-only. |
@@ -106,7 +107,7 @@ Which path a task takes depends on size.
 
 ### Small task (bugfix, doc edit, one-file change)
 
-1. Ask in chat; ponytail keeps the exchange short.
+1. Ask in chat; keep exchanges short (ponytail style).
 2. Relevant skills auto-trigger on their frontmatter descriptions; process skills load from this repo's own `skills/` directory.
 3. Bugs go through `systematic-debugging`; features through `brainstorming`, then TDD.
 4. `verification-before-completion` before any "done" claim. Commits wait for explicit instruction, Conventional Commits format.
@@ -138,7 +139,7 @@ Visual companions to this document, in the same `docs/workflows/` folder:
 
 | File | Shows |
 |---|---|
-| `stack.drawio` | The AI stack: opencode harness (cross-model split), the four skill layers, ten custom opencode agents, and the homelab MCP |
+| `stack.drawio` | The AI stack: opencode harness (cross-model split), the four skill layers, twelve custom opencode agents, and the homelab MCP |
 | `plan-flow.drawio` | Single-plan lifecycle: `/full-cycle` single-pass (planner dispatches the orchestrator in the same run) with the `handoff` escape to a fresh-session `/execute-plan`; orchestrator dispatches executor/reviewer/oracle, then runs structure review and documentation phases |
 | `multi-plan-flow.drawio` | Multi-plan orchestration: decomposition outline, foundation + N parallel sub-plans, manifest handoff, fresh-session integration |
 | `sbx-flow.drawio` | The sbx runner pipeline: Plane issue to sandboxed opencode run to agent-authored PR, with the dispatch split |

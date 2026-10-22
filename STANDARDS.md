@@ -25,7 +25,7 @@ Two layers: formal ISO/IEC/IEEE norms and industry conventions.
 | Conventional Branch 1.1.0 | **yes**    | Git branch names |
 | Keep a Changelog 1.1.0  | **yes**       | `CHANGELOG.md` format |
 
-This is a content-only agent environment repo (skills, slash commands, agent definitions). Single exception: `bin/skillctl`, a dependency-free bash maintenance CLI (`check`, `sync`); no other tooling. Most formal norms are not adopted; the conventions layer is the floor.
+This is a content-only agent environment repo (skills, slash commands, agent definitions, opencode plugins). Two exceptions: `bin/skillctl`, a dependency-free bash maintenance CLI (`check`, `sync`), and `plugins/caveman/`, a minimal opencode plugin (node stdlib only, no dependencies). No other tooling. Most formal norms are not adopted; the conventions layer is the floor.
 
 ---
 
@@ -85,7 +85,7 @@ Scope is the **skill folder or repo area** the change touches (`typst-pro`, `dra
 
 Agent attribution: every agent-authored commit carries two trailers naming what made the change. `Co-Authored-By: <provider>/<model>` uses the short provider name with canonical model casing of the model that made the change, e.g. `zai/GLM-5.3`, `minimax/MiniMax-M3`, or `zai/GLM-5.3-Flash` for the Flash variant, never the long registry provider ID (e.g. `zai-coding-plan/glm-5.3-flash`). `Agent-Role: <role>` names the pipeline role that executed the change (`planner`, `orchestrator`, `executor`, `reviewer`, `documenter`, `oracle`, `explore`, or the project's own agent name). Never credit a model or role that did not produce the commit. Human-only commits carry no trailers. Trailers come last, after a blank line following the body.
 
-Enforcement: tracked git hooks in `.githooks/` (commit-msg for Conventional Commits; pre-commit for markdown and skill-structure rules). Activate once per clone: `git config core.hooksPath .githooks` (see `opencode-install.md` step 10).
+Enforcement: tracked git hooks in `.githooks/` (commit-msg for Conventional Commits; pre-commit for markdown and skill-structure rules). Activate once per clone: `git config core.hooksPath .githooks` (see `opencode-install.md` step 9).
 
 ---
 
@@ -147,6 +147,7 @@ skills/
 │   └── commit-msg                         <- Conventional Commits enforcement hook
 ├── .claude/                               <- Claude Code tool settings (project)
 ├── bin/                                   <- skillctl maintenance CLI (check, sync)
+├── plugins/                               <- opencode plugins (caveman mode injector)
 ├── commands/                              <- all slash commands live here
 │   ├── goal.md
 │   ├── execute-plan.md
