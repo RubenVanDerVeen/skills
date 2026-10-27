@@ -18,16 +18,10 @@ One body shape, three copy sites: the `chore(release): vX.Y.Z` commit body, the 
 Five sections, in order. Write to `.release-notes.md` at the repo root, copy verbatim to each surface.
 
     ## Summary
-    One paragraph, plain language. What is in this release and why a user
-    cares. Mention the version and cadence ("weekly", "monthly") when
-    stable, the audience when known. Two to four sentences. No commit
-    hashes.
+    One paragraph, plain language. What is in this release and why a user cares. Mention the version and cadence ("weekly", "monthly") when stable, the audience when known. Two to four sentences. No commit hashes.
 
     ## Highlights
-    Three to five bullets, user-visible changes only. Pull from the
-    [Unreleased] Added and Changed sections of CHANGELOG.md and rephrase
-    for users ("Added dark mode", not "feat(ui): add dark mode toggle").
-    Past-tense verbs. Internal-only work goes in Internal, not here.
+    Three to five bullets, user-visible changes only. Pull from the [Unreleased] Added and Changed sections of CHANGELOG.md and rephrase for users ("Added dark mode", not "feat(ui): add dark mode toggle"). Past-tense verbs. Internal-only work goes in Internal, not here.
 
     ## Breaking changes
     One bullet per BREAKING CHANGE footer since the last tag:
@@ -35,9 +29,7 @@ Five sections, in order. Write to `.release-notes.md` at the repo root, copy ver
     Write "None" when there are none; empty is information.
 
     ## Internal
-    Refactors, chores, dependency bumps, test changes that are not
-    user-visible. Write "None" when none. Skip only for trivial patch
-    releases with zero user signal.
+    Refactors, chores, dependency bumps, test changes that are not user-visible. Write "None" when none. Skip only for trivial patch releases with zero user signal.
 
     ## Full changelog
     Link to the diff range or the CHANGELOG section:
@@ -53,6 +45,7 @@ Five sections, in order. Write to `.release-notes.md` at the repo root, copy ver
 - Three copy sites, same text character-for-character; no platform-specific rewording.
 - Skip the Release page copy when the project publishes none; commit body and tag annotation are always written.
 - The `[Unreleased]` rename to `## [X.Y.Z] - YYYY-MM-DD` stays per `references/versioning.md` step 3.
+- Write every paragraph and bullet as one single source line; never hard-wrap mid-sentence. Same text at all three copy sites.
 - No em-dashes.
 
 ## Audience and tone

@@ -56,6 +56,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 
 ### Changed
 
+- `pr-description` and `release-description`: description bodies now write every paragraph and bullet as one single source line (the renderer wraps long lines), and PR bodies link commits as explicit markdown links instead of bare or backticked shas (backticks block GitHub autolinking). Decision: `docs/artifacts/choices/2026-10-27-pr-body-no-hard-wrap-decision.md`.
 - MiniMax agents repinned `minimax-coding-plan/MiniMax-M3` (retired) → `minimax-coding-plan/MiniMax-M3.1-Flash` (`orchestrator`, `executor`, `inventree`). The new model exposes no reasoning variants, so the `variant: thinking` pins were dropped; catalogs and workflow diagrams updated (`agents/README.md`, `docs/workflows/`).
 
 - Choices registry flipped from opt-in to default-write: the `documenter` enumerates every candidate choice from the run material into a report Choices ledger, writes an entry per candidate, and may skip one only with a named one-line disqualification (bare "no choices" without the ledger is a process failure). The `orchestrator` feeds a numbered candidate list; the `project-standardization` threshold now reads "when in doubt, record it", and superseded entries update their `index.md` row status in the same write pass.

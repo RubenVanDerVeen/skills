@@ -31,3 +31,4 @@ One row per recorded decision. Files: `YYYY-MM-DD-<slug>-decision.md`. Conventio
 | 2026-10-21 | Both catalog tables sorted alphabetically across all rows (24 each), not only branch-added rows | active | 2026-10-21-catalogs-fully-alphabetical-decision.md |
 | 2026-10-21 | Follow-up task 6b added beyond the plan's seven tasks: the plugin contract was unmeetable on opencode v2.0.32 as written | active | 2026-10-21-followup-task-v2-port-decision.md |
 | 2026-10-21 | Frozen spec keeps naming `plugin.js`; deviations recorded in report + choices, spec not edited | active | 2026-10-21-frozen-spec-not-amended-decision.md |
+| 2026-10-27 | Agent-written PR and release description bodies use one source line per paragraph and bullet (the renderer wraps); PR bodies link commits as markdown links, never bare or backticked shas | active | 2026-10-27-pr-body-no-hard-wrap-decision.md |

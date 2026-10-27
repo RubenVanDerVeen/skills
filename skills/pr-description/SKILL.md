@@ -21,7 +21,7 @@ First line is the PR title: a Conventional Commits 1.0.0 subject, `<type>(<scope
     The problem or reason for the change. Link the issue or task source (Plane issue, GitHub issue) when one exists. One short paragraph.
 
     ## What changed and why
-    Technical summary, grouped per change or area: what changed, and the why. Commits and diff stats when useful. No file-list dump; the diff is one click away.
+    Technical summary, grouped per change or area: what changed, and the why. Linked commits and diff stats when useful. No file-list dump; the diff is one click away.
 
     ## Verification
     How it was verified: commands run and their outcome (verifier output, tests, dry-runs). Evidence, not claims. Name what stayed unverified.
@@ -37,4 +37,6 @@ First line is the PR title: a Conventional Commits 1.0.0 subject, `<type>(<scope
 - Every section present; write None when a section has no content. Never drop a section.
 - Derive the description from the execution report when one exists; it already carries the same information.
 - On the sbx path, keep PR_DESCRIPTION.md uncommitted at repo root (the daemon amends committed copies out of the push).
+- Write every paragraph and bullet as one single source line. Never hard-wrap mid-sentence; newlines only separate paragraphs, bullets, and sections. The renderer wraps long lines.
+- Link commits inline as markdown links, e.g. [`abc1234`](https://github.com/<owner>/<repo>/commit/abc1234). Never bare or backticked shas; backticks block GitHub autolinking.
 - No em-dashes.
