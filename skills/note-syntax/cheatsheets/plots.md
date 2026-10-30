@@ -23,29 +23,142 @@ A ` ```plot ` fence draws an interactive function chart. The fence body is
 | `xAxis.domain`, `yAxis.domain` | `[min, max]` axis ranges. Set them explicitly; plots without ranges are hard to read. |
 | `grid` | Grid lines. On by default; `"grid": false` turns them off. |
 | `data[].fn` | Function of `x` drawn as a curve. |
-| `data[].points` | Point series: `[[1, 2], [2, 4], ...]`. |
+| `data[].points` | Point series: `[[1, 2], [2, 4], ...]`. Needs `fnType` **and** `graphType`, see `## Point series`. |
 | `data[].color` | Per-series hex color. Omitted series get the default palette in order: blue, orange, green, red, purple, brown, pink, grey, olive, cyan. |
-| `data[].graphType` | `"scatter"` for point clouds (points default to connected polylines otherwise). |
+| `data[].graphType` | `"polyline"` for a smooth line, `"scatter"` for point clouds, `"interval"` for the boxy default. |
+| `data[].fnType` | `"points"` for a point series (with `graphType`), otherwise `"linear"`. |
+
+## Which renderer evaluates your `fn`
+
+The fence body is raw function-plot JSON. Only the `data[].fn` strings are
+rewritten before evaluation (constants to numeric literals, implicit
+multiplication to explicit `*`); every other key is passed through
+untouched.
+
+| Path | Trigger | How `fn` is evaluated |
+|---|---|---|
+| 2D default | no `graphType` | function-plot's `interval` sampler (interval arithmetic) - the boxy interval look |
+| 2D smooth | `"graphType": "polyline"` | function-plot's `builtIn` sampler over `Math` |
+| 3D viewer | `"type": "surface"`, `"line"`, `"vector"` | the shared safe-subset compiler (a JS closure) |
+| PDF export | any plot fence | the same safe-subset grammar, compiled to Python |
+
+The two 2D samplers expose **different** function sets, so the same `fn`
+string can work in one and fail in the other. A function outside the path's
+set fails the fence: the chart is replaced by an error box with the raw
+source.
 
 ## Function expressions
 
-In `fn`, use `x`, operators `+ - * / ^`, parentheses, and the usual functions:
-`sin cos tan sqrt exp log abs`, constants `pi`, `e`. Implicit multiplication
-works: `2x`, `3sin(x)`.
+In `fn`, use `x`, the operators `+ - * / ^`, parentheses, and the constants
+`pi`, `tau`, `e`. The constants are substituted as numeric literals before
+evaluation, so they work in every path. Implicit multiplication works:
+`2x`, `3sin(x)`.
+
+## Symbol tables
+
+| Function | 2D default | 2D `polyline` | 3D viewer | PDF export |
+|---|---|---|---|---|
+| `sin cos tan asin acos atan sinh cosh tanh` | yes | yes | yes | yes |
+| `sqrt exp abs log` | yes | yes | yes | yes |
+| `min max` | yes | yes | yes | yes |
+| `cbrt floor ceil round` | no | yes | yes | yes |
+| `sign` | no | yes | yes | yes |
+| `atan2 log2 log10` | no | no | no | yes |
+
+`sign`, `cbrt`, `floor`, `ceil` and `round` need an explicit
+`"graphType": "polyline"` in 2D - the default interval namespace has no
+`sign` and no `cbrt`, and its `round` is not callable.
+
+`atan2`, `log2` and `log10` end in a digit, and the viewer tokenizer splits
+the digit off (`log` + `2`); they are rejected or silently mangled there.
+Only the PDF export accepts them. Keep notes viewer-safe and use `log(...)`.
+
+## Powers and the exponential
+
+`^` is the power operator, but the 2D default path only computes **integer**
+powers: `x^2` and `x^3` draw, while `2^x`, `e^x` and `x^0.5` produce an empty
+interval and draw nothing at all - axes and grid only, no error box.
+
+Use `exp(...)` for an exponential; it is safe in every path:
+
+    exp(x)                # instead of e^x
+    exp(-60*x)            # instead of e^(-60*x)
+    exp(-60*(x-t))        # a logistic step, see below
+
+A constant integer exponent (`x^2`) is fine everywhere.
+
+## Step and piecewise signals
+
+### Continuous branches: clamp, do not build an indicator
+
+Where two branches meet continuously, one closed form reproduces the signal
+exactly (verified max error 2.2e-16) and renders as a single continuous
+stroke:
+
+    min(max(x, 0), 2) + 0.5 * (min(max(x, 2), 4) - 4)^2 - 2
+
+The trailing `- 2` cancels the ramp term's constant leftover for `x <= 2`.
+
+### A genuine jump: the logistic
+
+A jump has no closed form; approximate it with a logistic (safe in every
+engine):
+
+    1/(1+exp(-60*x))              # rising step u(x)
+    1/(1+exp(60*(x-t)))           # falling step u(t-x)
+    0.5*(2/(1+exp(-60*x)) - 1)    # half sign function
+
+A ramp on `[a, b]` is `body(t)` times two window factors - the first switches
+on at `a`, the second off at `b`:
+
+    body(t) * 1/(1+exp(-60*(t-a))) * 1/(1+exp(60*(t-b)))
+
+Know the artifacts before you trust the curve:
+
+- At the jump the plotted value is half the exact value (the logistic passes
+  through 1/2).
+- The error decays exponentially: about 5e-2 at a distance of 0.05 from the
+  jump, 2.7e-3 at 0.1, 7e-6 at 0.2, machine precision beyond 0.5.
+- The curve keeps an exponentially small tail on the wrong side of a jump
+  (~1e-6 at a distance of 0.2), so the plotted signal is never exactly zero
+  off-support.
+- Never test the plotted curve for an exact zero - take the support from the
+  branch definition.
+
+## Point series
+
+A `points` series needs the full key set: `fnType: "points"` **and**
+`graphType: "polyline"` (or `"scatter"`). Anything less fails the fence - the
+error box replaces the chart.
+
+````markdown
+```plot
+{
+  "data": [
+    {"fnType": "points", "graphType": "polyline", "points": [[0, 0], [1, 1], [2, 0]]},
+    {"fnType": "points", "graphType": "scatter", "attr": {"r": 5, "opacity": 1}, "points": [[0, 0], [1, 1]]}
+  ]
+}
+```
+````
+
+Use `polyline` when the shape of the signal is the point. Scatter dots are
+2 px by default and effectively invisible - add `"attr": {"r": 5, "opacity": 1}`.
 
 ## Interaction and failure modes
 
 - Drag pans, the mouse wheel zooms, and a Reset view button restores the default ranges. Viewer-only; none of this changes the note.
-- Legend chips show each curve's formula (math-rendered) in its series color.
+- Legend chips show each curve's formula (math-rendered) in its series color. The legend collapses with the chevron at its right edge - a viewer affordance, no syntax needed.
 - Invalid JSON or a render failure shows the raw source in an error box inside the note; fix the JSON and it renders live in the editor.
 - Width follows the container; height is fixed (about 280px).
 
 ## PDF export
 
 Plots export as static SVG with the same palette, grid, and legend. There is
-no zoom/pan in PDF, and the expression support is a safe subset (implicit
-multiplication and `sqrt` included). Keep exotic expressions out of
-PDF-critical notes.
+no zoom/pan in PDF. The expression support is the shared safe subset
+(implicit multiplication, `sqrt`, `sign`, `min`, `max` included), plus
+`atan2`, `log2` and `log10`, which the viewer paths reject. Keep exotic
+expressions out of PDF-critical notes.
 
 ## 3D surfaces
 
@@ -74,12 +187,16 @@ Operators `+ - * / ^ %` (`^` = power), implicit multiplication (`2x`,
 `3(x+1)`, `x y`, `2 sin(x)`), constants `pi`, `tau`, `e`, and these
 whitelisted functions only:
 
-    sin  cos  tan  asin  acos  atan  atan2
+    sin  cos  tan  asin  acos  atan
     sinh cosh tanh
     sqrt cbrt
-    log  log2  log10
+    log
     exp
     abs  floor  ceil  round  min  max  sign
+
+`atan2`, `log2` and `log10` are **not** in the viewer whitelist: a function
+name that ends in a digit is split by the tokenizer (`atan` + `2`). The PDF
+export accepts them; the 3D viewer does not.
 
 Anything outside the whitelist (assignment, semicolons, unknown names,
 attributes) fails to compile and the fence falls back to a "could not parse"
@@ -147,12 +264,15 @@ Both forms accept an optional per-curve `color` (default cycles the same 10-colo
 
 Same safe subset as 3D surfaces: operators `+ - * / ^ %` (`^` = power), implicit multiplication (`2t`, `t(t+1)`, `2 sin(t)`), constants `pi`, `tau`, `e`, and these whitelisted functions only:
 
-    sin  cos  tan  asin  acos  atan  atan2
+    sin  cos  tan  asin  acos  atan
     sinh cosh tanh
     sqrt cbrt
-    log  log2  log10
+    log
     exp
     abs  floor  ceil  round  min  max  sign
+
+As with surfaces, `atan2`, `log2` and `log10` are rejected by the viewer
+(tokenizer splits the trailing digit); the PDF export accepts them.
 
 The only variable is `t`; `x` / `y` / `z` are rejected. A non-finite sample or `|value| > 1e6` closes the pen inside one curve, so the next valid sample starts a fresh segment (pen-up gaps, same rule as the 2D path).
 

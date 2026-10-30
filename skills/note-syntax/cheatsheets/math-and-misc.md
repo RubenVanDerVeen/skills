@@ -25,6 +25,35 @@ $$
 $$
 ````
 
+Adjacent block-math blocks must be separated by a blank line. Written
+without one, the editor parses the whole run as a single math block and
+renders it merged and broken:
+
+````markdown
+$$
+a = 1
+$$
+$$
+b = 2
+$$
+````
+
+Write it with the blank line:
+
+````markdown
+$$
+a = 1
+$$
+
+$$
+b = 2
+$$
+````
+
+One blank line between every pair of `$$` blocks. The same rule holds for two
+fences of the same kind back to back (`mermaid`, `plot`): without a blank
+line they merge into one block. Inline `$...$` is unaffected.
+
 ## Citations
 
 Three kinds only - the grammar is fixed on both console sides, do not invent variants:

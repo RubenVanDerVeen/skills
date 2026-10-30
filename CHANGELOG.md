@@ -56,6 +56,8 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 
 ### Changed
 
+- `note-syntax` skill: the plot cheatsheet now names the renderer that evaluates a 2D `fn` (default interval sampler vs `"graphType": "polyline"` vs the shared 3D/PDF compiler), lists the symbol table per renderer, flags the interval path's integer-power limit (`2^x` draws nothing - use `exp(...)`), gives the clamp and logistic recipes for continuous and jumping signals, and states the full key set a `points` series needs (`fnType` + `graphType`); the math cheatsheet now requires a blank line between adjacent `$$` blocks. Symbol tables cross-checked against the console renderer after the 2026-10-22 2D plot fix.
+
 - `pr-description` and `release-description`: description bodies now write every paragraph and bullet as one single source line (the renderer wraps long lines), and PR bodies link commits as explicit markdown links instead of bare or backticked shas (backticks block GitHub autolinking). Decision: `docs/artifacts/choices/2026-10-27-pr-body-no-hard-wrap-decision.md`.
 - MiniMax agents repinned `minimax-coding-plan/MiniMax-M3` (retired) → `minimax-coding-plan/MiniMax-M3.1-Flash` (`orchestrator`, `executor`, `inventree`). The new model exposes no reasoning variants, so the `variant: thinking` pins were dropped; catalogs and workflow diagrams updated (`agents/README.md`, `docs/workflows/`).
 

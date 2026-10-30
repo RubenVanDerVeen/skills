@@ -45,7 +45,7 @@ House style: kebab-case ASCII paths, ISO 8601 dates, regular hyphens only (never
 | 3D line plot | ` ```plot ` fence with `{"type": "line", "curves": [{"fn": ["...", "...", "..."], "t": [t0, t1]}, ...]}` JSON |
 | 3D vector field | ` ```plot ` fence with `{"type": "vector", "vectors": [[x, y, z, dx, dy, dz], ...]}` JSON |
 | Inline math | `$E = mc^2$` |
-| Block math | `$$` fence on its own lines |
+| Block math | `$$` fence on its own lines, one blank line between blocks |
 
 ## Cheatsheets
 
@@ -54,7 +54,7 @@ House style: kebab-case ASCII paths, ISO 8601 dates, regular hyphens only (never
 | `cheatsheets/frontmatter-and-links.md` | Frontmatter keys, wikilink grammar and resolution, aliases, tags |
 | `cheatsheets/images-and-files.md` | Image paths and `.media/`, width suffix rules, PDF/xlsx file embeds |
 | `cheatsheets/columns.md` | The columns fence, the `||` separator, nesting limits |
-| `cheatsheets/plots.md` | Plot fence JSON: axes, curves, points, colors, interaction; 3D plots (`type: surface`, `line`, `vector`) |
+| `cheatsheets/plots.md` | Plot fence JSON: axes, curves, points, colors, interaction; which renderer evaluates your `fn`; the symbol table per renderer; 3D plots (`type: surface`, `line`, `vector`) |
 | `cheatsheets/mermaid.md` | Mermaid fences, diagram quick reference, theme and PDF behavior |
 | `cheatsheets/math-and-misc.md` | Inline math guards, block math, citations, PDF export parity |
 
@@ -65,6 +65,9 @@ Read the relevant cheatsheet before writing non-trivial markup; they are short.
 - `{150%}`, `{0%}`, `{50 %}` do not resize: the image renders unsized and the brace text stays literal. Only `0 < pct <= 100` (decimals allowed) applies.
 - The columns separator is a line containing exactly `||` - not `|^|`, not `| |`.
 - Fences cannot nest: a ` ```mermaid ` or ` ```plot ` block inside ` ```columns ` terminates the columns fence.
+- Two `$$` blocks back to back need a blank line between them, or the editor merges them into one broken math block.
+- A 2D plot's `fn` uses a different function set per renderer: `sign`, `cbrt`, `floor`, `ceil`, `round` need `"graphType": "polyline"`, and `atan2`, `log2`, `log10` do not work in the viewer at all.
+- A `points` series needs both `"fnType": "points"` and `"graphType": "polyline"` (or `"scatter"`); without both, the plot fence fails.
 - `$100$` stays literal currency text by design (pure amounts never become math). Escape a literal dollar with `\$`.
 - Raw HTML is stripped by the sanitizer; use markdown constructs only.
 - Lowercase fence names (`mermaid`, `plot`, `columns`) - the live editor round-trip is case-sensitive on them.
