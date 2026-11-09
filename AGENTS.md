@@ -29,6 +29,7 @@ skills/
 ├── commands/                                  <- all slash commands live here
 │   ├── goal.md                                <- /goal: iterate until verifier passes
 │   ├── execute-plan.md                        <- /execute-plan: subagent-driven plan execution
+│   ├── finish.md                              <- /finish: shipper subagent for PR + tag + release
 │   ├── full-cycle.md                          <- /full-cycle: single-pass brainstorm > spec > plan > dispatch orchestrator (or handoff)
 │   ├── iterate-skill.md                       <- /iterate-skill: refine a skill via subagent review loops
 │   ├── harvest.md                             <- /harvest: mine sessions for skill improvements
@@ -59,7 +60,7 @@ All slash commands live at the top-level `commands/` directory, never inside a s
 
 ### Slash commands
 
-Slash commands give a skill an explicit entry point for when the agent does not pick it up automatically from frontmatter description matching. All commands live as `.md` files in the top-level `commands/` directory, never inside a skill folder. Current examples: `commands/standardize.md` (`/standardize`), `commands/multi-plan.md` (`/multi-plan`), `commands/harvest.md` (`/harvest`), `commands/goal.md` (`/goal`), `commands/execute-plan.md` (`/execute-plan`), `commands/full-cycle.md` (`/full-cycle`), `commands/iterate-skill.md` (`/iterate-skill`), `commands/standardize-migrate.md` (`/standardize-migrate`), `commands/standardize-code.md` (`/standardize-code`), `commands/caveman.md` (`/caveman`), `commands/caveman-commit.md` (`/caveman-commit`), `commands/caveman-compress.md` (`/caveman-compress`), `commands/caveman-help.md` (`/caveman-help`), `commands/caveman-review.md` (`/caveman-review`), `commands/caveman-stats.md` (`/caveman-stats`).
+Slash commands give a skill an explicit entry point for when the agent does not pick it up automatically from frontmatter description matching. All commands live as `.md` files in the top-level `commands/` directory, never inside a skill folder. Current examples: `commands/standardize.md` (`/standardize`), `commands/multi-plan.md` (`/multi-plan`), `commands/harvest.md` (`/harvest`), `commands/goal.md` (`/goal`), `commands/execute-plan.md` (`/execute-plan`), `commands/finish.md` (`/finish`), `commands/full-cycle.md` (`/full-cycle`), `commands/iterate-skill.md` (`/iterate-skill`), `commands/standardize-migrate.md` (`/standardize-migrate`), `commands/standardize-code.md` (`/standardize-code`), `commands/caveman.md` (`/caveman`), `commands/caveman-commit.md` (`/caveman-commit`), `commands/caveman-compress.md` (`/caveman-compress`), `commands/caveman-help.md` (`/caveman-help`), `commands/caveman-review.md` (`/caveman-review`), `commands/caveman-stats.md` (`/caveman-stats`).
 
 #### File format
 
@@ -108,7 +109,7 @@ Do not add a command for every skill. If the frontmatter description reliably tr
 
 ### Agent definitions
 
-Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `lazy-dev` (lean-plan gate), `doc-standardizer`, `code-standardizer`, `documenter`, `explore`, `oracle`) and `inventree` (InvenTree inventory sessions via the homelab MCP) live in the top-level `agents/` directory. Same pattern as `commands/`: source of truth here, inactive until copied to `~/.config/opencode/agents/`. They pair with `/full-cycle` (runs as `planner`; single-pass dispatches the `orchestrator` to execute in the same run) and `/execute-plan` (implementer tasks go to `executor`, reviews to `reviewer`, two-strike failures to the `oracle` consult, post-implementation structure review goes to `doc-standardizer` + `code-standardizer`, dispatched concurrently, and the documentation/report phase goes to `documenter`). opencode-only; do not copy to Claude Code. Format, sync, token measurements, and tuning rules: `agents/README.md`.
+Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `lazy-dev` (lean-plan gate), `doc-standardizer`, `code-standardizer`, `documenter`, `shipper` (feature finish: PR, merge question, tag and release), `explore`, `oracle`) and `inventree` (InvenTree inventory sessions via the homelab MCP) live in the top-level `agents/` directory. Same pattern as `commands/`: source of truth here, inactive until copied to `~/.config/opencode/agents/`. They pair with `/full-cycle` (runs as `planner`; single-pass dispatches the `orchestrator` to execute in the same run) and `/execute-plan` (implementer tasks go to `executor`, reviews to `reviewer`, two-strike failures to the `oracle` consult, post-implementation structure review goes to `doc-standardizer` + `code-standardizer`, dispatched concurrently, and the documentation/report phase goes to `documenter`). opencode-only; do not copy to Claude Code. Format, sync, token measurements, and tuning rules: `agents/README.md`.
 
 ### `SKILL.md` frontmatter rules
 

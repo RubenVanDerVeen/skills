@@ -35,7 +35,7 @@ Skills live under `skills/` as `<name>/SKILL.md`, slash commands under `commands
 
 ## Agents
 
-Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `lazy-dev` (lean-plan gate), `doc-standardizer`, `code-standardizer`, `documenter`, `explore`, `oracle`, and `inventree` for InvenTree inventory sessions via the homelab MCP; see [`agents/README.md`](./agents/README.md) for the full roster) live in the top-level `agents/` directory. Per-agent skill denylists cut startup context ~2-4k tokens per session. Source of truth in `agents/`; copy each `agents/*.md` to `~/.config/opencode/agents/` to activate.
+Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `lazy-dev` (lean-plan gate), `doc-standardizer`, `code-standardizer`, `documenter`, `shipper` (feature finish: PR, merge question, tag and release), `explore`, `oracle`, and `inventree` for InvenTree inventory sessions via the homelab MCP; see [`agents/README.md`](./agents/README.md) for the full roster) live in the top-level `agents/` directory. Per-agent skill denylists cut startup context ~2-4k tokens per session. Source of truth in `agents/`; copy each `agents/*.md` to `~/.config/opencode/agents/` to activate.
 
 ## External skills
 
@@ -69,6 +69,7 @@ skills/
 ├── commands/                                    <- all slash commands live here
 │   ├── goal.md                                  <- /goal: iterate until verifier passes
 │   ├── execute-plan.md                          <- /execute-plan: subagent-driven plan execution
+│   ├── finish.md                                <- /finish: shipper subagent for PR + tag + release
 │   ├── full-cycle.md                          <- /full-cycle: single-pass brainstorm > spec > plan > dispatch orchestrator (or handoff)
 │   ├── iterate-skill.md                         <- /iterate-skill: refine a skill via subagent review loops
 │   ├── harvest.md                               <- /harvest: mine sessions for skill improvements
