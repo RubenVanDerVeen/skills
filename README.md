@@ -70,7 +70,7 @@ skills/
 │   ├── goal.md                                  <- /goal: iterate until verifier passes
 │   ├── execute-plan.md                          <- /execute-plan: subagent-driven plan execution
 │   ├── finish.md                                <- /finish: shipper subagent for PR + tag + release
-│   ├── full-cycle.md                          <- /full-cycle: single-pass brainstorm > spec > plan > dispatch orchestrator (or handoff)
+│   ├── full-cycle.md                          <- /full-cycle: single-pass brainstorm > spec > plan > dispatch orchestrator, quick path for small fixes (or handoff)
 │   ├── iterate-skill.md                         <- /iterate-skill: refine a skill via subagent review loops
 │   ├── harvest.md                               <- /harvest: mine sessions for skill improvements
 │   ├── multi-plan.md                            <- /multi-plan: start multi-plan orchestration
