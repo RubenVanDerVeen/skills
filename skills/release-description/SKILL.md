@@ -10,7 +10,7 @@ One body shape, three copy sites: the `chore(release): vX.Y.Z` commit body, the 
 ## When to use
 
 - Writing the body of a `chore(release): vX.Y.Z` commit.
-- Running `git tag -a vX.Y.Z -m "<message>"`.
+- Running `git tag -a vX.Y.Z --cleanup=verbatim --file .release-notes.md`.
 - Publishing a Release page (`gh release create --notes-file`, `glab`, or the UI).
 
 ## Template

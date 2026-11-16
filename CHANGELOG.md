@@ -96,6 +96,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 
 - `multi-plan-orchestration`: SP branch scheme `feat/<slug>/sp-N-<name>` was impossible; git cannot hold it alongside `feat/<slug>` (ref file/dir conflict, `fatal: cannot lock ref`). Now `feat/<slug>-spN-<name>`. Also removed em-dashes the edit introduced and the stale "not a prefix of any other existing branch" constraint that contradicted the new scheme.
 - `deep-research`: frontmatter now uses only `name` + `description` (dropped Hermes-only `title`, `version`, `author`, `license`, `platforms`, `metadata` fields that other agents cannot parse). Description rewritten to start with "Use when..." so it matches the trigger-only convention in `AGENTS.md` § `SKILL.md` frontmatter rules. Body now opens with `## Overview` per the same section. Frontmatter total: 539 chars (was 884).
+- Tag annotations now cut with `git tag -a --cleanup=verbatim --file .release-notes.md`; the old `-m "$(cat ...)"` form stripped every markdown heading from the stored tag object. Applied to `references/versioning.md` step 5, the `release-description` skill, and the documenter and shipper agents.
 
 ### TODO (backfill)
 

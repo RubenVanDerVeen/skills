@@ -70,7 +70,7 @@ Scoped to semver projects. Sprint-based and continuous-delivery projects cut hea
 2. **Confirm**: the user approves, or picks a different bump.
 3. **Apply**: edit the canonical source and every sync target. Rename `[Unreleased]` to `## [X.Y.Z] - YYYY-MM-DD` in `CHANGELOG.md`, move its entries under the new heading, add the link ref line at the bottom.
 4. **Commit**: single commit, Conventional Commits subject `chore(release): vX.Y.Z` (or `release(<scope>): ...` when a scope is meaningful). Bundle the version-source edits and the CHANGELOG edit; never split them across commits.
-5. **Tag** (optional): `git tag -a vX.Y.Z -m "$(cat .release-notes.md)"`, using the release-description body written per the `release-description` skill. Only when the project's CI triggers release builds from tags (Tauri release workflow: yes; library without a release pipeline: no).
+5. **Tag** (optional): `git tag -a vX.Y.Z --cleanup=verbatim --file .release-notes.md`, using the release-description body written per the `release-description` skill. `--cleanup=verbatim` keeps the markdown headings intact; git's default cleanup strips every `#`-prefixed line. Only when the project's CI triggers release builds from tags (Tauri release workflow: yes; library without a release pipeline: no).
 
 ## The 3 doc-standardizer checks
 
