@@ -1,11 +1,13 @@
 # Quick path: one executor, no reviewer, scope-creep stop
 
 - Date: 2026-11-13
-- Status: active
+- Status: superseded by 2026-11-16-single-commit-fixes-direct-to-main-decision.md
 - Source: `docs/artifacts/features/quick-fix-path/2026-11-13-quick-fix-path-report.md` (spec: `docs/artifacts/features/quick-fix-path/2026-11-13-quick-fix-path-design.md`, user-locked fork 3)
 
 ## Choice
 On the quick path the planner dispatches exactly one executor with an inline brief (branch name, target files, the fix, one verification command) and no reviewer. Skipped: the lazy-dev gate (nothing to gate), the orchestrator, the per-task reviewer, the structure review, and the documenter report. The single safety valve is the scope-creep stop: when the real fix exceeds the brief (more files than the brief names, new logic branches, a new interface, a second task emerging), the executor stops before committing the expanded scope and reports back, and the planner converts the run to the full pipeline with the findings as recon input. Never silently expand a quick fix. The shipper tail (PR, merge question, tag and release) runs after the relay on both paths. The choices registry is never written on the quick path; `2026-09-24-documenter-single-writer-decision.md` stands un-superseded: its revisit condition (a flow without a documenter step) is now met by the quick path, and its substance holds because no other writer exists.
+
+Superseded in part by `2026-11-16-single-commit-fixes-direct-to-main-decision.md`: the shipper tail no longer runs after the relay on the quick path, and a quick fix lands as one commit on the default branch with no branch and no PR.
 
 ## Alternatives rejected
 - Always one reviewer pass on quick fixes: safer, but re-adds the dispatch the path exists to remove; the scope-creep stop plus the shipper's PR review cover the risk.
