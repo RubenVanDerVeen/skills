@@ -53,6 +53,7 @@ Grouping for this repo: continuous-delivery content catalog. Use [YYYY-MM-DD] he
 - `bin/skillctl sync`: new `plugins/` mirror loop, so opencode plugins land in `~/.config/opencode/plugins/` next to the skills, commands, and agents.
 - `.githooks/pre-commit`: syntax-checks staged JavaScript with `node --check` under unique temp names; the check skips gracefully when node is absent.
 - `docs/artifacts/features/vendor-external-packs/`: execution report closing out the vendoring branch, plus 20 choices records under `docs/artifacts/choices/`.
+- Quick-fix fast path in the planner pipeline: `agents/planner.md` classifies each request at intake and routes small fixes (one obvious fix, about 1-2 files, no design alternatives) to a single executor with an inline brief, no spec/plan/report artifacts; `quick` forces the fast path, `full` forces the full pipeline. `agents/executor.md` takes planner-dispatched quick-fix briefs without a plan file (branch, one commit, changelog and patch bump per project conventions, scope-creep stop) and `commands/full-cycle.md` mirrors the branch. Spec: `docs/artifacts/features/quick-fix-path/2026-11-13-quick-fix-path-design.md`. Decision: `docs/artifacts/choices/2026-11-13-quick-fix-intake-classification-decision.md`.
 
 ### Changed
 

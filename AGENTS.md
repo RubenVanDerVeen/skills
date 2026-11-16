@@ -30,7 +30,7 @@ skills/
 │   ├── goal.md                                <- /goal: iterate until verifier passes
 │   ├── execute-plan.md                        <- /execute-plan: subagent-driven plan execution
 │   ├── finish.md                              <- /finish: shipper subagent for PR + tag + release
-│   ├── full-cycle.md                          <- /full-cycle: single-pass brainstorm > spec > plan > dispatch orchestrator (or handoff)
+│   ├── full-cycle.md                          <- /full-cycle: single-pass brainstorm > spec > plan > dispatch orchestrator, quick path for small fixes (or handoff)
 │   ├── iterate-skill.md                       <- /iterate-skill: refine a skill via subagent review loops
 │   ├── harvest.md                             <- /harvest: mine sessions for skill improvements
 │   ├── multi-plan.md                          <- /multi-plan: start multi-plan orchestration
@@ -109,7 +109,7 @@ Do not add a command for every skill. If the frontmatter description reliably tr
 
 ### Agent definitions
 
-Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `lazy-dev` (lean-plan gate), `doc-standardizer`, `code-standardizer`, `documenter`, `shipper` (feature finish: PR, merge question, tag and release), `explore`, `oracle`) and `inventree` (InvenTree inventory sessions via the homelab MCP) live in the top-level `agents/` directory. Same pattern as `commands/`: source of truth here, inactive until copied to `~/.config/opencode/agents/`. They pair with `/full-cycle` (runs as `planner`; single-pass dispatches the `orchestrator` to execute in the same run) and `/execute-plan` (implementer tasks go to `executor`, reviews to `reviewer`, two-strike failures to the `oracle` consult, post-implementation structure review goes to `doc-standardizer` + `code-standardizer`, dispatched concurrently, and the documentation/report phase goes to `documenter`). opencode-only; do not copy to Claude Code. Format, sync, token measurements, and tuning rules: `agents/README.md`.
+Custom opencode agents (`planner`, `orchestrator`, `writer`, `executor`, `reviewer`, `lazy-dev` (lean-plan gate), `doc-standardizer`, `code-standardizer`, `documenter`, `shipper` (feature finish: PR, merge question, tag and release), `explore`, `oracle`) and `inventree` (InvenTree inventory sessions via the homelab MCP) live in the top-level `agents/` directory. Same pattern as `commands/`: source of truth here, inactive until copied to `~/.config/opencode/agents/`. They pair with `/full-cycle` (runs as `planner`; single-pass dispatches the `orchestrator` to execute in the same run; small fixes classify at intake into a quick path, one executor with an inline brief and no spec/plan/report artifacts) and `/execute-plan` (implementer tasks go to `executor`, reviews to `reviewer`, two-strike failures to the `oracle` consult, post-implementation structure review goes to `doc-standardizer` + `code-standardizer`, dispatched concurrently, and the documentation/report phase goes to `documenter`). opencode-only; do not copy to Claude Code. Format, sync, token measurements, and tuning rules: `agents/README.md`.
 
 ### `SKILL.md` frontmatter rules
 
